@@ -152,7 +152,7 @@ template <class T> inline void clampRange(T& v, const T bottom, const T top)noex
  * Serialize 16 bit value, less significant byte first.
  * @param value - the value.
  * @param out_buf - pointer to the 2 byte buffer where the result will be placed.
- * @retrun pointer to the next byte after serialized value.
+ * @return pointer to the next byte after serialized value.
  */
 inline std::uint8_t* serialize16LE(std::uint16_t value, std::uint8_t* out_buf)noexcept{
 	*out_buf = value & 0xff;
@@ -169,7 +169,7 @@ inline std::uint8_t* serialize16LE(std::uint16_t value, std::uint8_t* out_buf)no
  * Serialize 32 bit value, less significant byte first.
  * @param value - the value.
  * @param out_buf - pointer to the 4 byte buffer where the result will be placed.
- * @retrun pointer to the next byte after serialized value.
+ * @return pointer to the next byte after serialized value.
  */
 inline std::uint8_t* serialize32LE(std::uint32_t value, std::uint8_t* out_buf)noexcept{
 	*out_buf = std::uint8_t(value & 0xff);
@@ -193,7 +193,7 @@ inline std::uint8_t* serialize32LE(std::uint32_t value, std::uint8_t* out_buf)no
  * Serialize 64 bit value, less significant byte first.
  * @param value - the value.
  * @param out_buf - pointer to the 8 byte buffer where the result will be placed.
- * @retrun pointer to the next byte after serialized value.
+ * @return pointer to the next byte after serialized value.
  */
 inline std::uint8_t* serialize64LE(std::uint64_t value, std::uint8_t* out_buf)noexcept{
 	*out_buf = std::uint8_t(value & 0xff);
@@ -306,7 +306,7 @@ inline std::uint64_t deserialize64LE(const std::uint8_t* buf)noexcept{
  * Serialize 16 bit value, most significant byte first.
  * @param value - the value.
  * @param out_buf - pointer to the 2 byte buffer where the result will be placed.
- * @retrun pointer to the next byte after serialized value.
+ * @return pointer to the next byte after serialized value.
  */
 inline std::uint8_t* serialize16BE(std::uint16_t value, std::uint8_t* out_buf)noexcept{
 	*out_buf = value >> 8;
@@ -323,7 +323,7 @@ inline std::uint8_t* serialize16BE(std::uint16_t value, std::uint8_t* out_buf)no
  * Serialize 32 bit value, most significant byte first.
  * @param value - the value.
  * @param out_buf - pointer to the 4 byte buffer where the result will be placed.
- * @retrun pointer to the next byte after serialized value.
+ * @return pointer to the next byte after serialized value.
  */
 inline std::uint8_t* serialize32BE(std::uint32_t value, std::uint8_t* out_buf)noexcept{
 	*out_buf = std::uint8_t((value >> 24) & 0xff);
@@ -344,7 +344,7 @@ inline std::uint8_t* serialize32BE(std::uint32_t value, std::uint8_t* out_buf)no
  * Serialize 64 bit value, most significant byte first.
  * @param value - the value.
  * @param out_buf - pointer to the 8 byte buffer where the result will be placed.
- * @retrun pointer to the next byte after serialized value.
+ * @return pointer to the next byte after serialized value.
  */
 inline std::uint8_t* serialize64BE(std::uint64_t value, std::uint8_t* out_buf)noexcept{
 	*out_buf = std::uint8_t((value >> 56) & 0xff);
