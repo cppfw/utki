@@ -104,4 +104,4 @@ template <typename T> inline T pow6(T x)noexcept{
 
 
 
-}//~namespace ting
+}
