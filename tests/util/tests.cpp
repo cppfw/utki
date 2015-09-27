@@ -1,7 +1,7 @@
 #include "../../src/utki/debug.hpp"
 #include "../../src/utki/types.hpp"
 #include "../../src/utki/util.hpp"
-#include "../../src/utki/Buffer.hpp"
+#include "../../src/utki/Buf.hpp"
 
 #include "tests.hpp"
 

@@ -6,11 +6,8 @@
 
 #pragma once
 
-#include <string.h>
 #include <string>
 #include <exception>
-
-#include "util.hpp"
 
 namespace utki{
 
@@ -22,9 +19,9 @@ class Exc : public std::exception{
 public:
 	/**
 	 * @brief Constructor.
-     * @param message - human friendly error description.
-     */
-	inline Exc(const std::string& message = std::string()) :
+	 * @param message - human friendly error description.
+	 */
+	Exc(const std::string& message = std::string()) :
 			message(message)
 	{}
 
@@ -37,15 +34,7 @@ public:
 	 *         Note, that after the exception object is destroyed
 	 *         the pointer returned by this method become invalid.
 	 */
-	const char *What()const noexcept{
-		return this->what();
-	}
-
-
-
-private:
-	//override from std::exception
-	const char *what()const noexcept{
+	const char *what()const noexcept override{
 		return this->message.c_str();
 	}
 };

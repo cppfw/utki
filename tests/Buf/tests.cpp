@@ -1,4 +1,4 @@
-#include "../../src/utki/Buffer.hpp"
+#include "../../src/utki/Buf.hpp"
 
 #include "tests.hpp"
 
@@ -98,7 +98,7 @@ public:
 };
 
 
-int Func2(const utki::Buffer<TestClass> buf){
+int Func2(const utki::Buf<TestClass> buf){
 	if(buf.size() == 0){
 		return 0;
 	}
@@ -122,7 +122,7 @@ void Run(){
 	}
 	
 //	Func(ting::Buffer<TestClass>(0, 0));
-	Func2(utki::Buffer<TestClass>(0, 0));
+	Func2(utki::Buf<TestClass>(0, 0));
 }
 
 }//~namespace

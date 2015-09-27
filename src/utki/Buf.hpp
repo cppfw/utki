@@ -8,6 +8,7 @@
 
 #include <array>
 #include <vector>
+#include <ostream>
 
 #ifdef DEBUG
 #	include <iostream>
@@ -27,7 +28,7 @@ namespace utki{
  * This class is a wrapper of continuous memory buffer, it encapsulates pointer to memory block and size of that memory block.
  * It does not own the memory.
  */
-template <class T> class Buffer final{
+template <class T> class Buf final{
 public:
 	typedef T value_type;
 	typedef value_type* pointer;
@@ -47,8 +48,8 @@ private:
 	
 public:
 
-	Buffer(const Buffer&) = default;
-	Buffer& operator=(const Buffer&) = default;
+	Buf(const Buf&) = default;
+	Buf& operator=(const Buf&) = default;
 	
 	
 	/**
@@ -59,13 +60,13 @@ public:
 	 * @param bufPtr - pointer to the memory buffer.
 	 * @param bufSize - size of the memory buffer.
 	 */
-	Buffer(pointer bufPtr, size_type bufSize)noexcept :
+	Buf(pointer bufPtr, size_type bufSize)noexcept :
 			buf(bufPtr),
 			bufSize(bufSize)
 	{}
 
 	
-	Buffer()noexcept{}
+	Buf()noexcept{}
 	
 	
 	/**
@@ -73,12 +74,12 @@ public:
 	 * Creates a Buffer object pointing to the contents of given std::array.
      * @param a - reference to instance of std::array.
      */
-	template <std::size_t array_size> Buffer(const std::array<typename std::remove_const<T>::type, array_size>& a) :
+	template <std::size_t array_size> Buf(const std::array<typename std::remove_const<T>::type, array_size>& a) :
 			buf(a.size() == 0 ? 0 : &*a.begin()), //operator* on invalid pointer may cause crash
 			bufSize(a.size())
 	{}
 	
-	template <std::size_t array_size> Buffer(std::array<T, array_size>& a) :
+	template <std::size_t array_size> Buf(std::array<T, array_size>& a) :
 			buf(a.size() == 0 ? 0 : &*a.begin()), //operator* on invalid pointer may cause crash
 			bufSize(a.size())
 	{}
@@ -89,12 +90,12 @@ public:
 	 * Creates a Buffer object pointing to the contents of given std::vector.
      * @param v - reference to instance of std::vector.
      */
-	Buffer(const std::vector<typename std::remove_const<T>::type>& v) :
+	Buf(const std::vector<typename std::remove_const<T>::type>& v) :
 			buf(v.size() == 0 ? 0 : &*v.begin()), //operator* on invalid pointer may cause crash
 			bufSize(v.size())
 	{}
 	
-	Buffer(std::vector<T>& v) :
+	Buf(std::vector<T>& v) :
 			buf(v.size() == 0 ? 0 : &*v.begin()), //operator* on invalid pointer may cause crash
 			bufSize(v.size())
 	{}
@@ -104,8 +105,8 @@ public:
 	 * @brief Automatic conversion to const type.
      * @return 
      */
-	operator Buffer<const T>()const{
-		return Buffer<const T>(this->buf, this->size());
+	operator Buf<const T>()const{
+		return Buf<const T>(this->buf, this->size());
 	}
 	
 	
@@ -124,7 +125,7 @@ public:
 	 * @brief get size of element.
 	 * @return size of element in bytes.
 	 */
-	size_type SizeOfElem()const noexcept{
+	size_type sizeOfElem()const noexcept{
 		return sizeof(this->buf[0]);
 	}
 
@@ -134,8 +135,8 @@ public:
 	 * @brief get size of buffer in bytes.
 	 * @return size of array in bytes.
 	 */
-	size_type SizeInBytes()const noexcept{
-		return this->size() * this->SizeOfElem();
+	size_type sizeInBytes()const noexcept{
+		return this->size() * this->sizeOfElem();
 	}
 
 
@@ -251,21 +252,19 @@ public:
 	 * @return true - if pointer passed as argument points somewhere within the buffer.
 	 * @return false otherwise.
 	 */
-	bool Overlaps(const_pointer p)const noexcept{
+	bool overlaps(const_pointer p)const noexcept{
 		return this->begin() <= p && p <= (this->end() - 1);
 	}
 
 
 
-#ifdef DEBUG
-	friend std::ostream& operator<<(std::ostream& s, const Buffer<T>& buf){
+	friend std::ostream& operator<<(std::ostream& s, const Buf<T>& buf){
 		for(auto i = buf.begin(); i != buf.end(); ++i){
 			s << "\t" << (*i) << std::endl;
 		}
 		return s;
 	}
-#endif
-};//~template class Buffer
+};
 
 
 
