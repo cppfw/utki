@@ -1,0 +1,23 @@
+Source: libutki
+Section: misc
+Priority: extra
+Maintainer: Ivan Gagis <igagis@gmail.com>
+Build-Depends: debhelper (>= 9)
+Build-Depends-Indep: doxygen
+Standards-Version: 3.9.2
+
+
+Package: libutki-dev
+Section: devel
+Architecture: all
+Depends: ${misc:Depends}
+Suggests: libutki-doc
+Description: cross-platform C++ utility library.
+ Different C++ utility classes and functions.
+
+Package: libutki-doc
+Section: devel
+Architecture: all
+Depends: ${misc:Depends}
+Description: documentation for libutki - cross-platform C++ library.
+ For more details see description to libutki-dev package.
