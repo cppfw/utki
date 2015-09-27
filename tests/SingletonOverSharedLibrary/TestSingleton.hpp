@@ -4,7 +4,7 @@
 
 
 
-class TestSingleton : public ting::Singleton<TestSingleton>{
+class TestSingleton : public utki::Singleton<TestSingleton>{
 public:
 	int a;
 

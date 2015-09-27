@@ -11,7 +11,7 @@
 #include <cstring>
 
 
-namespace ting{
+namespace utki{
 
 //TODO: rewrite using C++11
 
@@ -52,7 +52,7 @@ namespace ting{
  */
 template <class T_Enum> class Flags{
 public:
-	typedef typename ting::UnsignedTypeForSize<sizeof(T_Enum)>::Type index_t;
+	typedef typename utki::UnsignedTypeForSize<sizeof(T_Enum)>::Type index_t;
 	
 private:
 	std::uint8_t flags[index_t(T_Enum::ENUM_SIZE) / 8 + 1];

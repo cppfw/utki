@@ -5,7 +5,7 @@
 
 
 
-using namespace ting;
+using namespace utki;
 
 
 
@@ -57,19 +57,19 @@ enum class TestEnum{
 
 
 void Run(){
-	ting::Flags<TestEnum> fs;
+	utki::Flags<TestEnum> fs;
 	
 	fs.SetTo(TestEnum::EIGHTH, true).SetTo(TestEnum::SECOND, true).SetTo(TestEnum::EIGHTH, false);
 	ASSERT_ALWAYS(!fs.Get(TestEnum::EIGHTH))
 	ASSERT_ALWAYS(fs.Get(TestEnum::SECOND))
 	
 	
-	TRACE_ALWAYS(<< "ENUM_SIZE = " << size_t(TestEnum::ENUM_SIZE) << " sizeof(fs) = " << sizeof(fs) << " sizeof(index_t) = " << sizeof(ting::Flags<TestEnum>::index_t) << std::endl)
+	TRACE_ALWAYS(<< "ENUM_SIZE = " << size_t(TestEnum::ENUM_SIZE) << " sizeof(fs) = " << sizeof(fs) << " sizeof(index_t) = " << sizeof(utki::Flags<TestEnum>::index_t) << std::endl)
 			
 	TRACE_ALWAYS(<< "fs = " << fs << std::endl)
 	
 	{
-		ting::Flags<TestEnum> fs;
+		utki::Flags<TestEnum> fs;
 		ASSERT_ALWAYS(fs.IsAllClear())
 		ASSERT_ALWAYS(!fs.IsAllSet())
 		
@@ -84,7 +84,7 @@ void Run(){
 		ASSERT_ALWAYS(!fs.IsAllSet())
 	}
 	{
-		ting::Flags<TestEnum> fs(true);
+		utki::Flags<TestEnum> fs(true);
 		ASSERT_ALWAYS(!fs.IsAllClear())
 		ASSERT_ALWAYS(fs.IsAllSet())
 		

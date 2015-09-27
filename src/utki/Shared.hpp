@@ -8,7 +8,7 @@
 
 #include "util.hpp"
 
-namespace ting{
+namespace utki{
 
 template< class T, class... Args > std::shared_ptr<T> New(Args&&... args);
 
@@ -17,7 +17,7 @@ template< class T, class... Args > std::shared_ptr<T> New(Args&&... args);
  * @brief Base class for objects managed by std::shared_ptr.
  */
 class Shared : public std::enable_shared_from_this<Shared>{
-	template< class T, class... Args > friend std::shared_ptr<T> ting::New(Args&&...);
+	template< class T, class... Args > friend std::shared_ptr<T> utki::New(Args&&...);
 	
 	static void* operator new(size_t size){
 		return ::operator new(size);

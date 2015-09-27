@@ -12,7 +12,7 @@
 #include "util.hpp"
 
 
-namespace ting{
+namespace utki{
 namespace math{
 
 /**

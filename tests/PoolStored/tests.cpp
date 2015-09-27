@@ -10,7 +10,7 @@
 
 namespace BasicPoolStoredTest{
 
-class TestClass : public ting::PoolStored<TestClass, 2>{
+class TestClass : public utki::PoolStored<TestClass, 2>{
 public:
 	int a;
 	int b;

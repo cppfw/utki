@@ -27,7 +27,7 @@
 #	define M_POOL_TRACE(x)
 #endif
 
-namespace ting{
+namespace utki{
 
 
 
@@ -184,7 +184,7 @@ public:
 
 
 
-template <size_t element_size, size_t num_elements_in_chunk> typename ting::MemoryPool<element_size, num_elements_in_chunk> ting::StaticMemoryPool<element_size, num_elements_in_chunk>::instance;
+template <size_t element_size, size_t num_elements_in_chunk> typename utki::MemoryPool<element_size, num_elements_in_chunk> utki::StaticMemoryPool<element_size, num_elements_in_chunk>::instance;
 
 
 
@@ -210,7 +210,7 @@ public:
 	static void* operator new(size_t size){
 		M_POOL_TRACE(<< "new(): size = " << size << std::endl)
 		if(size != sizeof(T)){
-			throw ting::Exc("PoolStored::operator new(): attempt to allocate memory block of incorrect size");
+			throw utki::Exc("PoolStored::operator new(): attempt to allocate memory block of incorrect size");
 		}
 
 		return StaticMemoryPool<sizeof(T), num_elements_in_chunk>::Alloc_ts();

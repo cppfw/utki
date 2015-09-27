@@ -12,7 +12,7 @@
 #include <memory>
 
 
-namespace ting{
+namespace utki{
 
 
 
@@ -48,7 +48,7 @@ template <class T, class T_InstanceOwner = T> class IntrusiveSingleton{
 protected://use only as a base class
 	IntrusiveSingleton(){
 		if(T_InstanceOwner::instance){
-			throw ting::Exc("Singleton::Singleton(): instance is already created");
+			throw utki::Exc("Singleton::Singleton(): instance is already created");
 		}
 
 		T_InstanceOwner::instance.reset(static_cast<T*>(this));
@@ -128,6 +128,6 @@ private:
 	static typename IntrusiveSingleton<T, Singleton<T> >::T_Instance instance;
 };
 
-template <class T> typename ting::IntrusiveSingleton<T, Singleton<T> >::T_Instance ting::Singleton<T>::instance;
+template <class T> typename utki::IntrusiveSingleton<T, Singleton<T> >::T_Instance utki::Singleton<T>::instance;
 
 }//~namespace ting
