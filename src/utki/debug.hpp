@@ -38,7 +38,7 @@
 
 #ifndef M_DOXYGEN_DONT_EXTRACT //for doxygen
 namespace utki{
-namespace ting_debug{
+namespace utki_debug{
 #	if M_OS == M_OS_SYMBIAN
 #	elif M_OS_NAME == M_OS_NAME_ANDROID
 #	else
@@ -50,7 +50,7 @@ inline std::ofstream& DebugLogger(){
 	return *logger;
 }
 #	endif
-}//~namespace ting_debug
+}//~namespace utki_debug
 }//~namespace ting
 #endif //~M_DOXYGEN_DONT_EXTRACT //for doxygen
 
@@ -65,12 +65,12 @@ inline std::ofstream& DebugLogger(){
 		{ \
 			std::stringstream ss; \
 			ss x; \
-			__android_log_write(ANDROID_LOG_INFO, "ting_debug", ss.str().c_str()); \
+			__android_log_write(ANDROID_LOG_INFO, "utki_debug", ss.str().c_str()); \
 		}
 #	define LOG_ALWAYS(x) //logging is not supported on Android, yet.
 
 #else
-#	define LOG_ALWAYS(x) utki::ting_debug::DebugLogger() x; utki::ting_debug::DebugLogger().flush();
+#	define LOG_ALWAYS(x) utki::utki_debug::DebugLogger() x; utki::utki_debug::DebugLogger().flush();
 #	define TRACE_ALWAYS(x) std::cout x; std::cout.flush();
 
 #endif
@@ -107,7 +107,7 @@ inline std::ofstream& DebugLogger(){
 //
 //
 namespace utki{
-namespace ting_debug{
+namespace utki_debug{
 inline void LogAssert(const char* msg, const char* file, int line){
 	TRACE_AND_LOG_ALWAYS(<< "[!!!fatal] Assertion failed at:\n\t"<< file << ":" << line << "| " << msg << std::endl)
 }
@@ -121,7 +121,7 @@ inline void LogAssert(const char* msg, const char* file, int line){
 #	define ASSERT_INFO_ALWAYS(x, y) if(!(x)){ \
 						std::stringstream ss; \
 						ss << y; \
-						utki::ting_debug::LogAssert(ss.str().c_str(), __FILE__, __LINE__); \
+						utki::utki_debug::LogAssert(ss.str().c_str(), __FILE__, __LINE__); \
 						assert(false); \
 					}
 
@@ -140,8 +140,8 @@ inline void LogAssert(const char* msg, const char* file, int line){
 #		define ASSCOND(x, cond) (x)
 
 #	else //Assume system supporting standard assert() (including Android)
-#		define ASS(x) ( (x) ? (x) : (utki::ting_debug::LogAssert("ASS() assertion macro", __FILE__, __LINE__), (assert(false)), (x)) )
-#		define ASSCOND(x, cond) ( ((x) cond) ? (x) : (utki::ting_debug::LogAssert("ASS() assertion macro", __FILE__, __LINE__), (assert(false)), (x)) )
+#		define ASS(x) ( (x) ? (x) : (utki::utki_debug::LogAssert("ASS() assertion macro", __FILE__, __LINE__), (assert(false)), (x)) )
+#		define ASSCOND(x, cond) ( ((x) cond) ? (x) : (utki::utki_debug::LogAssert("ASS() assertion macro", __FILE__, __LINE__), (assert(false)), (x)) )
 
 #	endif
 

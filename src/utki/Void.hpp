@@ -4,9 +4,8 @@
 
 #pragma once
 
-#include "util.hpp" //TODO: remove when noexcept is fully supported in MSVC
 
-namespace ting{
+namespace utki{
 
 
 /**
