@@ -59,9 +59,9 @@ enum class TestEnum{
 void Run(){
 	utki::Flags<TestEnum> fs;
 	
-	fs.SetTo(TestEnum::EIGHTH, true).SetTo(TestEnum::SECOND, true).SetTo(TestEnum::EIGHTH, false);
-	ASSERT_ALWAYS(!fs.Get(TestEnum::EIGHTH))
-	ASSERT_ALWAYS(fs.Get(TestEnum::SECOND))
+	fs.set(TestEnum::EIGHTH, true).set(TestEnum::SECOND, true).set(TestEnum::EIGHTH, false);
+	ASSERT_ALWAYS(!fs.get(TestEnum::EIGHTH))
+	ASSERT_ALWAYS(fs.get(TestEnum::SECOND))
 	
 	
 	TRACE_ALWAYS(<< "ENUM_SIZE = " << size_t(TestEnum::ENUM_SIZE) << " sizeof(fs) = " << sizeof(fs) << " sizeof(index_t) = " << sizeof(utki::Flags<TestEnum>::index_t) << std::endl)
@@ -70,33 +70,33 @@ void Run(){
 	
 	{
 		utki::Flags<TestEnum> fs;
-		ASSERT_ALWAYS(fs.IsAllClear())
-		ASSERT_ALWAYS(!fs.IsAllSet())
+		ASSERT_ALWAYS(fs.isAllClear())
+		ASSERT_ALWAYS(!fs.isAllSet())
 		
-		fs.SetTo(fs.Size() - 1, true);
-		ASSERT_ALWAYS(!fs.IsAllClear())
-		ASSERT_ALWAYS(!fs.IsAllSet())
+		fs.set(fs.size() - 1, true);
+		ASSERT_ALWAYS(!fs.isAllClear())
+		ASSERT_ALWAYS(!fs.isAllSet())
 		
-		fs.SetAllTo(false);
+		fs.setAll(false);
 		
-		fs.SetTo(TestEnum::EIGHTH, true);
-		ASSERT_ALWAYS(!fs.IsAllClear())
-		ASSERT_ALWAYS(!fs.IsAllSet())
+		fs.set(TestEnum::EIGHTH, true);
+		ASSERT_ALWAYS(!fs.isAllClear())
+		ASSERT_ALWAYS(!fs.isAllSet())
 	}
 	{
 		utki::Flags<TestEnum> fs(true);
-		ASSERT_ALWAYS(!fs.IsAllClear())
-		ASSERT_ALWAYS(fs.IsAllSet())
+		ASSERT_ALWAYS(!fs.isAllClear())
+		ASSERT_ALWAYS(fs.isAllSet())
 		
-		fs.SetTo(fs.Size() - 1, false);
-		ASSERT_ALWAYS(!fs.IsAllClear())
-		ASSERT_ALWAYS(!fs.IsAllSet())
+		fs.set(fs.size() - 1, false);
+		ASSERT_ALWAYS(!fs.isAllClear())
+		ASSERT_ALWAYS(!fs.isAllSet())
 				
-		fs.SetAllTo(true);
+		fs.setAll(true);
 		
-		fs.SetTo(TestEnum::EIGHTH, false);
-		ASSERT_ALWAYS(!fs.IsAllClear())
-		ASSERT_ALWAYS(!fs.IsAllSet())
+		fs.set(TestEnum::EIGHTH, false);
+		ASSERT_ALWAYS(!fs.isAllClear())
+		ASSERT_ALWAYS(!fs.isAllSet())
 	}
 }
 

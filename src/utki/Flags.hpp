@@ -9,6 +9,7 @@
 #include "util.hpp"
 
 #include <cstring>
+#include <ostream>
 
 
 namespace utki{
@@ -66,14 +67,14 @@ public:
 	 * @param initialValueOfAllFlags - value to initialize all flags to.
 	 */
 	Flags(bool initialValueOfAllFlags = false){
-		this->SetAllTo(initialValueOfAllFlags);
+		this->setAll(initialValueOfAllFlags);
 	}
 
 	/**
 	 * @brief Size of the flag set.
 	 * @return Number of flags in this flag set.
 	 */
-	index_t Size()const noexcept{
+	index_t size()const noexcept{
 		return index_t(T_Enum::ENUM_SIZE);
 	}
 
@@ -83,7 +84,7 @@ public:
 	 * @return true if the flag is set.
 	 * @return false otherwise.
 	 */
-	bool Get(T_Enum flag)const noexcept{
+	bool get(T_Enum flag)const noexcept{
 		ASSERT(flag < T_Enum::ENUM_SIZE)
 		return (this->flags[index_t(flag) / 8] & (1 << (index_t(flag) % 8))) != 0;
 	}
@@ -96,8 +97,8 @@ public:
 	 * @param i - index of the flag to get value of.
 	 * @return value of the flag given by index.
 	 */
-	bool Get(index_t i)const noexcept{
-		return this->Get(T_Enum(i));
+	bool get(index_t i)const noexcept{
+		return this->get(T_Enum(i));
 	}
 
 	/**
@@ -106,7 +107,7 @@ public:
 	 * @param value - value to set.
 	 * @return Reference to this Flags.
 	 */
-	Flags& SetTo(T_Enum flag, bool value)noexcept{
+	Flags& set(T_Enum flag, bool value = true)noexcept{
 		ASSERT(flag < T_Enum::ENUM_SIZE)
 		if(value){
 			this->flags[index_t(flag) / 8] |= (1 << (index_t(flag) % 8));
@@ -117,21 +118,12 @@ public:
 	}
 
 	/**
-	 * @brief Set given flag.
-	 * @param flag - flag to set.
-	 * @return Reference to this Flags.
-	 */
-	Flags& Set(T_Enum flag)noexcept{
-		return this->SetTo(flag, true);
-	}
-
-	/**
 	 * @brief Clear given flag.
 	 * @param flag - flag to clear.
 	 * @return Reference to this Flags.
 	 */
-	Flags& Clear(T_Enum flag)noexcept{
-		return this->SetTo(flag, false);
+	Flags& clear(T_Enum flag)noexcept{
+		return this->set(flag, false);
 	}
 
 	/**
@@ -143,19 +135,8 @@ public:
 	 * @param value - value to set.
 	 * @return Reference to this Flags.
 	 */
-	Flags& SetTo(index_t i, bool value)noexcept{
-		return this->SetTo(T_Enum(i), value);
-	}
-
-	/**
-	 * @brief Set flag given by index.
-	 * Note, the index must be less than enumeration size,
-	 * otherwise the behavior is undefined.
-	 * @param i - index of the flag to set.
-	 * @return Reference to this Flags.
-	 */
-	Flags& Set(index_t i)noexcept{
-		return this->SetTo(i, true);
+	Flags& set(index_t i, bool value = true)noexcept{
+		return this->set(T_Enum(i), value);
 	}
 
 	/**
@@ -165,8 +146,8 @@ public:
 	 * @param i - index of the flag to clear.
 	 * @return Reference to this Flags.
 	 */
-	Flags& Clear(index_t i)noexcept{
-		return this->SetTo(i, false);
+	Flags& clear(index_t i)noexcept{
+		return this->set(i, false);
 	}
 
 	/**
@@ -174,7 +155,7 @@ public:
 	 * @param value - value to set all flags to.
 	 * @return Reference to this Flags.
 	 */
-	Flags& SetAllTo(bool value)noexcept{
+	Flags& setAll(bool value = true)noexcept{
 		memset(this->flags, value ? std::uint8_t(-1) : 0, sizeof(this->flags));
 		return *this;
 	}
@@ -184,15 +165,15 @@ public:
 	 * @return true if all flags are cleared.
 	 * @return false otherwise.
 	 */
-	bool IsAllClear()const noexcept{
+	bool isAllClear()const noexcept{
 		ASSERT(sizeof(this->flags) > 0)
 		for(size_t i = 0; i != sizeof(this->flags) - 1; ++i){
 			if(this->flags[i] != 0){
 				return false;
 			}
 		}
-		for(index_t i = (this->Size() / 8) * 8; i != this->Size(); ++i){
-			if(this->Get(i)){
+		for(index_t i = (this->size() / 8) * 8; i != this->size(); ++i){
+			if(this->get(i)){
 				return false;
 			}
 		}
@@ -204,15 +185,15 @@ public:
 	 * @return true if all flags are set.
 	 * @return false otherwise.
 	 */
-	bool IsAllSet()const noexcept{
+	bool isAllSet()const noexcept{
 		ASSERT(sizeof(this->flags) > 0)
 		for(size_t i = 0; i != sizeof(this->flags) - 1; ++i){
 			if(this->flags[i] != std::uint8_t(-1)){
 				return false;
 			}
 		}
-		for(index_t i = (this->Size() / 8) * 8; i != this->Size(); ++i){
-			if(!this->Get(i)){
+		for(index_t i = (this->size() / 8) * 8; i != this->size(); ++i){
+			if(!this->get(i)){
 				return false;
 			}
 		}
@@ -223,7 +204,7 @@ public:
 	 * @brief Inverts all the flags.
 	 * @return Reference to this Flags.
 	 */
-	Flags& Invert()noexcept{
+	Flags& invert()noexcept{
 		for(size_t i = 0; i != sizeof(this->flags); ++i){
 			this->flags[i] = ~this->flags[i];
 		}
@@ -235,7 +216,7 @@ public:
 	 * @return Inverted instance of Flags.
 	 */
 	Flags operator~()const noexcept{
-		return Flags(*this).Invert();
+		return Flags(*this).invert();
 	}
 
 	/**
@@ -301,18 +282,17 @@ public:
 		return Flags(*this).operator^=(f);
 	}
 	
-#ifdef DEBUG
+
 	friend std::ostream& operator<<(std::ostream& s, const Flags& fs){
 		s << "(";
 
-		for(index_t i = 0; i != fs.Size(); ++i){
-			s << (fs.Get(i) ? "1" : "0");
+		for(index_t i = 0; i != fs.size(); ++i){
+			s << (fs.get(i) ? "1" : "0");
 		}
 
 		s << ")";
 		return s;
 	}
-#endif
 };
 
 
