@@ -8,6 +8,7 @@
 
 #include <cstdint>
 #include <cstddef>
+#include <memory>
 
 
 namespace utki{
@@ -39,6 +40,17 @@ template <> struct int_size<8>{typedef std::int64_t type;};
 template <typename T> struct remove_constptr{
 	typedef typename std::remove_const<typename std::remove_pointer<T>::type>::type type;
 };
+
+
+
+/**
+ * @brief Construct new unique_ptr managed object.
+ * @param args - arguments of object class constructor.
+ * @return std::unique_ptr pointing to a newly created object.
+ */
+template< class T, class... Args > std::unique_ptr<T> makeUnique(Args&&... args){
+	return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
+}
 
 
 

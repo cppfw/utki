@@ -39,12 +39,12 @@ public:
 
 
 /**
- * @brief Function to construct new Shared objects.
+ * @brief Construct new Shared objects.
  * @param args - arguments of object class constructor.
  * @return std::shared_ptr pointing to a newly created object.
  */
 template< class T, class... Args > std::shared_ptr<T> makeShared(Args&&... args){
-	return std::move(std::shared_ptr<T>(new T(std::forward<Args>(args)...)));
+	return std::shared_ptr<T>(new T(std::forward<Args>(args)...));
 }
 
 
