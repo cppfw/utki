@@ -7,7 +7,7 @@
       </df>
     </df>
     <df root="tests" name="1">
-      <df name="Buffer">
+      <df name="Buf">
         <in>main.cpp</in>
         <in>main.hpp</in>
         <in>tests.cpp</in>
@@ -96,13 +96,13 @@
       </makefileType>
       <item path="src/utki/SpinLock.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="tests/Buffer/main.cpp" ex="false" tool="1" flavor2="0">
+      <item path="tests/Buf/main.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="tests/Buffer/main.hpp" ex="false" tool="3" flavor2="0">
+      <item path="tests/Buf/main.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="tests/Buffer/tests.cpp" ex="false" tool="1" flavor2="0">
+      <item path="tests/Buf/tests.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="tests/Buffer/tests.hpp" ex="false" tool="3" flavor2="0">
+      <item path="tests/Buf/tests.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tests/Flags/main.cpp" ex="false" tool="1" flavor2="0">
       </item>
