@@ -1,8 +1,8 @@
 #include <deque>
 #include <memory>
 
-#include "../../src/ting/debug.hpp"
-#include "../../src/ting/PoolStored.hpp"
+#include "../../src/utki/debug.hpp"
+#include "../../src/utki/PoolStored.hpp"
 
 #include "tests.hpp"
 

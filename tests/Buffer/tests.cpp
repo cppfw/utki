@@ -1,4 +1,4 @@
-#include "../../src/ting/Buffer.hpp"
+#include "../../src/utki/Buffer.hpp"
 
 #include "tests.hpp"
 

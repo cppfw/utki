@@ -1,5 +1,5 @@
-#include "../../src/ting/debug.hpp"
-#include "../../src/ting/Flags.hpp"
+#include "../../src/utki/debug.hpp"
+#include "../../src/utki/Flags.hpp"
 
 #include "tests.hpp"
 

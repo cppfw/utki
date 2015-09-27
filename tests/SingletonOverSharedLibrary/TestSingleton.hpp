@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../src/ting/Singleton.hpp"
+#include "../../src/utki/Singleton.hpp"
 
 
 

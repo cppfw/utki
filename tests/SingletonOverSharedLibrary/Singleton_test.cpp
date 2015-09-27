@@ -1,4 +1,4 @@
-#include "../../src/ting/debug.hpp"
+#include "../../src/utki/debug.hpp"
 
 #include "TestSingleton.hpp"
 #include "testso.hpp"
