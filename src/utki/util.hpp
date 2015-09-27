@@ -21,7 +21,6 @@
 
 
 namespace utki{
-namespace util{
 
 
 class ScopeExit{
@@ -31,7 +30,7 @@ public:
 	ScopeExit(const ScopeExit&) = delete;
 	ScopeExit& operator=(const ScopeExit&) = delete;
 	
-	ScopeExit(decltype(ScopeExit::f)&& f) :
+	ScopeExit(decltype(f)&& f) :
 			f(std::move(f))
 	{}
 	
@@ -306,5 +305,5 @@ template <typename T> struct remove_constptr{
 
 
 
-}//~namespace
-}//~namespace ting
+
+}
