@@ -53,7 +53,7 @@ namespace utki{
  */
 template <class T_Enum> class Flags{
 public:
-	typedef typename utki::UnsignedTypeForSize<sizeof(T_Enum)>::Type index_t;
+	typedef typename utki::uint_size<sizeof(T_Enum)>::type index_t;
 	
 private:
 	std::uint8_t flags[index_t(T_Enum::ENUM_SIZE) / 8 + 1];
