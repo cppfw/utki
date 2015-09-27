@@ -28,7 +28,7 @@ namespace utki{
  *		static ting::IntrusiveSingleton<MySingleton, MySingleton>::T_Instance instance;
  * 
  *	public:
- *		void DoSomething(){
+ *		void doSomething(){
  *			//...
  *		}
  *  };
@@ -39,7 +39,7 @@ namespace utki{
  *	int main(int, char**){
  *		MySingleton mySingleton;
  *
- *		MySingleton::Inst().DoSomething();
+ *		MySingleton::inst().doSomething();
  *	}
  * @endcode
  */
@@ -70,7 +70,7 @@ public:
 	 * @return true if object is created.
 	 * @return false otherwise.
 	 */
-	inline static bool IsCreated(){
+	inline static bool isCreated(){
 		return T_InstanceOwner::instance != 0;
 	}
 
@@ -78,8 +78,8 @@ public:
 	 * @brief get singleton instance.
 	 * @return reference to singleton object instance.
 	 */
-	static T& Inst(){
-		ASSERT_INFO(IsCreated(), "IntrusiveSingleton::Inst(): Singleton object is not created")
+	static T& inst(){
+		ASSERT_INFO(isCreated(), "IntrusiveSingleton::Inst(): Singleton object is not created")
 		return *T_InstanceOwner::instance;
 	}
 

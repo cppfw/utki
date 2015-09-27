@@ -6,20 +6,20 @@
 
 
 int& GetA(){
-	ASSERT_ALWAYS(TestSingleton::IsCreated())
-	return TestSingleton::Inst().a;
+	ASSERT_ALWAYS(TestSingleton::isCreated())
+	return TestSingleton::inst().a;
 }
 
 
 
 void IncA(){
-	ASSERT_ALWAYS(TestSingleton::IsCreated())
-	++(TestSingleton::Inst().a);
+	ASSERT_ALWAYS(TestSingleton::isCreated())
+	++(TestSingleton::inst().a);
 }
 
 
 
 void PrintA(){
-	ASSERT_ALWAYS(TestSingleton::IsCreated())
-	TRACE_ALWAYS(<< "PrintA(): a = " << TestSingleton::Inst().a << std::endl)
+	ASSERT_ALWAYS(TestSingleton::isCreated())
+	TRACE_ALWAYS(<< "PrintA(): a = " << TestSingleton::inst().a << std::endl)
 }
