@@ -36,4 +36,10 @@ template <> struct int_size<8>{typedef std::int64_t type;};
 
 
 
+template <typename T> struct remove_constptr{
+	typedef typename std::remove_const<typename std::remove_pointer<T>::type>::type type;
+};
+
+
+
 }//~namespace ting
