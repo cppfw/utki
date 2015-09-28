@@ -96,6 +96,7 @@ public:
 			bufSize(v.size())
 	{}
 	
+	//TODO: remove vector and array constructors and add corresponding wrapBuf() overloads
 	Buf(std::vector<T>& v) :
 			buf(v.size() == 0 ? 0 : &*v.begin()), //operator* on invalid pointer may cause crash
 			bufSize(v.size())
