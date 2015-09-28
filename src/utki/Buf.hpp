@@ -66,6 +66,7 @@ public:
 	{}
 
 	
+	//TODO: make constructor for automatic conversion from nullptr
 	Buf()noexcept{}
 	
 	
