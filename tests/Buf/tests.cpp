@@ -111,14 +111,14 @@ void Run(){
 		std::array<TestClass, 20> buf;
 		
 //		Func(buf);
-		Func2(buf);
+		Func2(utki::wrapBuf(buf));
 	}
 	
 	{
 		std::vector<TestClass> buf(20);
 		
 //		Func(buf);
-		Func2(buf);
+		Func2(utki::wrapBuf(buf));
 	}
 	
 //	Func(ting::Buffer<TestClass>(0, 0));

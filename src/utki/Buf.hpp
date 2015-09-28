@@ -66,50 +66,15 @@ public:
 	{}
 
 	
-	//TODO: make constructor for automatic conversion from nullptr
 	Buf()noexcept{}
 	
-	
 	/**
-	 * @brief Create Buffer from std::array.
-	 * Creates a Buffer object pointing to the contents of given std::array.
-     * @param a - reference to instance of std::array.
+	 * @brief Constructor for automatic conversion from nullptr.
+     * @param bufPtr - pointer to the memory buffer. Makes not much sense, because size is 0 anyway.
      */
-	template <std::size_t array_size> Buf(const std::array<typename std::remove_const<T>::type, array_size>& a) :
-			buf(a.size() == 0 ? 0 : &*a.begin()), //operator* on invalid pointer may cause crash
-			bufSize(a.size())
+	Buf(pointer bufPtr)noexcept :
+			buf(bufPtr)
 	{}
-	
-	template <std::size_t array_size> Buf(std::array<T, array_size>& a) :
-			buf(a.size() == 0 ? 0 : &*a.begin()), //operator* on invalid pointer may cause crash
-			bufSize(a.size())
-	{}
-	
-	
-	/**
-	 * @brief Create Buffer from std::vector.
-	 * Creates a Buffer object pointing to the contents of given std::vector.
-     * @param v - reference to instance of std::vector.
-     */
-	Buf(const std::vector<typename std::remove_const<T>::type>& v) :
-			buf(v.size() == 0 ? 0 : &*v.begin()), //operator* on invalid pointer may cause crash
-			bufSize(v.size())
-	{}
-	
-	//TODO: remove vector and array constructors and add corresponding wrapBuf() overloads
-	Buf(std::vector<T>& v) :
-			buf(v.size() == 0 ? 0 : &*v.begin()), //operator* on invalid pointer may cause crash
-			bufSize(v.size())
-	{}
-	
-	
-	/**
-	 * @brief Automatic conversion to const type.
-     * @return 
-     */
-	operator Buf<const T>()const{
-		return Buf<const T>(this->buf, this->size());
-	}
 	
 	
 	
@@ -276,6 +241,22 @@ template <class T> inline utki::Buf<T> wrapBuf(T* buf, size_t size){
 
 template <class T> inline const utki::Buf<T> wrapBuf(const T* buf, size_t size){
 	return utki::Buf<T>(const_cast<T*>(buf), size);
+}
+
+template <class T, std::size_t array_size> inline utki::Buf<T> wrapBuf(std::array<T, array_size>& a){
+	return wrapBuf(a.size() == 0 ? nullptr : &*a.begin(), a.size());
+}
+
+template <class T, std::size_t array_size> inline const utki::Buf<T> wrapBuf(const std::array<T, array_size>& a){
+	return wrapBuf(a.size() == 0 ? nullptr : &*a.begin(), a.size());
+}
+
+template <class T> inline utki::Buf<T> wrapBuf(std::vector<T>& v){
+	return wrapBuf(v.size() == 0 ? nullptr : &*v.begin(), v.size());
+}
+
+template <class T> inline const utki::Buf<T> wrapBuf(const std::vector<T>& v){
+	return wrapBuf(v.size() == 0 ? nullptr : &*v.begin(), v.size());
 }
 
 
