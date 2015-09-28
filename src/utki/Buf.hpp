@@ -268,4 +268,14 @@ public:
 
 
 
+template <class T> inline utki::Buf<T> wrapBuf(T* buf, size_t size){
+	return utki::Buf<T>(buf, size);
+}
+
+template <class T> inline const utki::Buf<T> wrapBuf(const T* buf, size_t size){
+	return utki::Buf<T>(const_cast<T*>(buf), size);
+}
+
+
+
 }//~namespace

@@ -81,6 +81,14 @@
       <item path="tests/Buf/main.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="tests/Buf/tests.cpp" ex="false" tool="1" flavor2="8">
+        <ccTool flags="0">
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>DEBUG</Elem>
+          </preprocessorList>
+        </ccTool>
       </item>
       <item path="tests/Flags/main.cpp" ex="false" tool="1" flavor2="8">
       </item>

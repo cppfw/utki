@@ -122,7 +122,7 @@ void Run(){
 	}
 	
 //	Func(ting::Buffer<TestClass>(0, 0));
-	Func2(utki::Buf<TestClass>(0, 0));
+	Func2(utki::wrapBuf<TestClass>(0, 0));
 }
 
 }//~namespace
