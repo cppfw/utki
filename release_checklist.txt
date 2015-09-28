@@ -1,0 +1,12 @@
+* add new entry to debian/changelog file
+
+* update the PROJECT_NUMBER variable in the docs/doxygen.cfg file to latest version number
+
+* update Version in pkg-config/ting.pc file
+
+* Check if SO-name needs increment and update debian/control, debian/libting*.install and src/makefile files accordingly if needed
+
+* make version tag in version control system
+
+* generate debian package using dpkg-buildpackage
+
