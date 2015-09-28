@@ -43,15 +43,4 @@ template <typename T> struct remove_constptr{
 
 
 
-/**
- * @brief Construct new unique_ptr managed object.
- * @param args - arguments of object class constructor.
- * @return std::unique_ptr pointing to a newly created object.
- */
-template< class T, class... Args > std::unique_ptr<T> makeUnique(Args&&... args){
-	return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
-}
-
-
-
 }//~namespace ting
