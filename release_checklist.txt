@@ -1,12 +1,17 @@
-* add new entry to debian/changelog file
+* add new entry to debian/changelog file if it has not beed added yet:
+	$ dch -v"1.0.1-1" "Unique added"
 
-* update the PROJECT_NUMBER variable in the docs/doxygen.cfg file to latest version number
+* mark debian/changelog entry as released:
+	$ dch -r -D stable ""
 
-* update Version in pkg-config/ting.pc file
+* update the PROJECT_NUMBER variable in the doc/doxygen.cfg file to latest version number
 
-* Check if SO-name needs increment and update debian/control, debian/libting*.install and src/makefile files accordingly if needed
+* update Version in pkg-config/*.pc file
+
+* Check if SO-name needs increment and update src/soname.txt if needed
 
 * make version tag in version control system
 
-* generate debian package using dpkg-buildpackage
+* generate debian package:
+	$ make deb
 
