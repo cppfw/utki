@@ -1,3 +1,9 @@
+libutki (1.0.4-1) stable; urgency=medium
+
+  * bumping version
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 29 Sep 2015 15:42:45 +0300
+
 libutki (1.0.3-1) stable; urgency=medium
 
   * wrapBuf() overloads
