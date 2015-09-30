@@ -1,7 +1,7 @@
 nuget{
     nuspec{
 		id = libutki;
-        version : 1.0.4.2;
+        version : 1.0.4.3;
         title: C++ utility library;
         authors: {Ivan Gagis};
         owners: {Ivan Gagis};
@@ -18,29 +18,33 @@ nuget{
     }
 	dependencies {
         packages : {
-
         };
     }
 	files {
         include: { "src\**\*.hpp" };
 		
 		[x86,release] {
-//			lib: msvs_solution\Release\libutki.lib;
-//			symbols: msvs_solution\stob\Release\stob.pdb;
-//			bin: ${SDK_2010}bin\x86\Release\libutki.dll;
+//			lib: msvs_solution\Release\utki.lib;
+//			symbols: msvs_solution\Release\utki.pdb;
+//			bin: msvs_solution\Release\utki.dll;
 		}
 
 		[x86,debug] { 
-//			lib: msvs_solution\Debug\libutki.lib;
-//			symbols: msvs_solution\stob\Debug\stob.pdb;
-//			bin: ${SDK_2010}bin\x86\Debug\casablanca100.dll;
-		}    
+//			lib: msvs_solution\Debug\utki.lib;
+//			symbols: msvs_solution\Debug\utki.pdb;
+//			bin: msvs_solution\Debug\utki.dll;
+		}
 
-		/*
-		[x86,v140,release] { 
-			lib: ${SDK_2010}lib\x86\Release\casablanca100.lib;
-			symbols: ${SDK_2010}bin\x86\Release\casablanca100.pdb;
-			bin: ${SDK_2010}bin\x86\Release\casablanca100.dll;
-		}*/
+		[x64,release] {
+//			lib: msvs_solution\x64\Release\utki.lib;
+//			symbols: msvs_solution\x64\Release\utki.pdb;
+//			bin: msvs_solution\x64\Release\utki.dll;
+		}
+
+		[x64,debug] { 
+//			lib: msvs_solution\x64\Debug\utki.lib;
+//			symbols: msvs_solution\x64\Debug\utki.pdb;
+//			bin: msvs_solution\x64\Debug\utki.dll;
+		}
     }
 }
