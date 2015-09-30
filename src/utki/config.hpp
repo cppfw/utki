@@ -162,3 +162,16 @@
 #	define M_OS M_OS_UNKNOWN
 #	define M_OS_NAME M_OS_NAME_UNKNOWN
 #endif
+
+
+
+
+#if MS_OS == M_OS_WINDOWS
+#	ifdef  BUILDINGDLL
+#		define DLLEXPORT __declspec(dllexport)  
+#	else
+#		define DLLEXPORT __declspec(dllimport)  
+#	endif
+#else
+#	define DLLEXPORT
+#endif
