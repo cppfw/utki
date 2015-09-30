@@ -1,0 +1,46 @@
+nuget{
+    nuspec{
+		id = libutki;
+        version : 1.0.4.1;
+        title: C++ utility library;
+        authors: {Ivan Gagis};
+        owners: {Ivan Gagis};
+        licenseUrl: "https://raw.githubusercontent.com/igagis/utki/master/LICENSE";
+        projectUrl: "https://github.com/igagis/utki";
+        iconUrl: "https://github.com/igagis/utki/blob/master/logo.svg";
+        requireLicenseAcceptance:false;
+        summary: C++ utility library. Stuff missing from std:: namespace;
+
+        description: @"C++ utility library. Stuff missing from std:: namespace";
+        releaseNotes: "initial release";
+        copyright: Copyright 2015 Ivan Gagis;
+        tags: {native};
+    }
+	dependencies {
+        packages : {
+            libutki/1.0.4.1
+        };
+    }
+	files {
+        include: { "src\**\*.hpp" };
+		
+		[x86,release] {
+//			lib: msvs_solution\Release\libutki.lib;
+//			symbols: msvs_solution\stob\Release\stob.pdb;
+//			bin: ${SDK_2010}bin\x86\Release\libutki.dll;
+		}
+
+		[x86,debug] { 
+//			lib: msvs_solution\Debug\libutki.lib;
+//			symbols: msvs_solution\stob\Debug\stob.pdb;
+//			bin: ${SDK_2010}bin\x86\Debug\casablanca100.dll;
+		}    
+
+		/*
+		[x86,v140,release] { 
+			lib: ${SDK_2010}lib\x86\Release\casablanca100.lib;
+			symbols: ${SDK_2010}bin\x86\Release\casablanca100.pdb;
+			bin: ${SDK_2010}bin\x86\Release\casablanca100.dll;
+		}*/
+    }
+}
