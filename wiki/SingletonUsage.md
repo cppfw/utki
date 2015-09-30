@@ -2,14 +2,14 @@
 
 It is often required to create singleton objects in the program, i.e. use the singleton pattern.
 
-**ting** provides a template for quick creation of singleton classes.
+**utki** provides a template for quick creation of singleton classes.
 
 
 
 <br>
 <h1>Header file</h1>
-In order to use <i>ting::Singleton</i> one needs to include the following header file:<br>
-<pre><code>#include &lt;ting/Singleton.hpp&gt;<br>
+In order to use <i>utki::Singleton</i> one needs to include the following header file:<br>
+<pre><code>#include &lt;utki/Singleton.hpp&gt;<br>
 </code></pre>
 
 
@@ -18,7 +18,7 @@ In order to use <i>ting::Singleton</i> one needs to include the following header
 <h1>Usage</h1>
 The usage is simple:<br>
 <br>
-<pre><code>class MySingletonClass : public ting::Singleton&lt;MySingletonClass&gt;{<br>
+<pre><code>class MySingletonClass : public utki::Singleton&lt;MySingletonClass&gt;{<br>
 public:<br>
     int a;<br>
     int b;<br>
@@ -34,10 +34,10 @@ int main(int argc, char** argv){<br>
     //      instances of this class will cause an exception to be thrown.<br>
 <br>
     //access the members of singleton object<br>
-    MySingletonClass::Inst().a = 355;<br>
-    MySingletonClass::Inst().b = 13;<br>
+    MySingletonClass::inst().a = 355;<br>
+    MySingletonClass::inst().b = 13;<br>
 <br>
-    int k = MySingletonClass::Inst().b;<br>
+    int k = MySingletonClass::inst().b;<br>
 }<br>
 </code></pre>
 
