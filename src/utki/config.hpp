@@ -166,7 +166,7 @@
 
 
 
-#if MS_OS == M_OS_WINDOWS
+#if M_OS == M_OS_WINDOWS
 #	if M_COMPILER == M_COMPILER_MSVC
 #		ifdef _USRDLL
 #			define DLLEXPORT __declspec(dllexport)  
