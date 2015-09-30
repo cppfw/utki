@@ -44,3 +44,8 @@ sudo brew update
 ```
 sudo brew install libutki
 ```
+
+
+#WiKi
+
+[Main WiKi page](wiki/MainPage.md)
