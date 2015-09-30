@@ -167,10 +167,14 @@
 
 
 #if MS_OS == M_OS_WINDOWS
-#	ifdef  BUILDINGDLL
-#		define DLLEXPORT __declspec(dllexport)  
+#	if M_COMPILER == M_COMPILER_MSVC
+#		ifdef _USRDLL
+#			define DLLEXPORT __declspec(dllexport)  
+#		else
+#			define DLLEXPORT __declspec(dllimport)  
+#		endif
 #	else
-#		define DLLEXPORT __declspec(dllimport)  
+#		define DLLEXPORT
 #	endif
 #else
 #	define DLLEXPORT
