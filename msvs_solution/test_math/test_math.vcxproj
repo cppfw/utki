@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{E00129C0-817B-421E-8A15-1ADD5DCFFEC4}</ProjectGuid>
+    <ProjectGuid>{E4D115A5-4338-47A7-B1C0-15610E38A2CA}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>test_math</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>

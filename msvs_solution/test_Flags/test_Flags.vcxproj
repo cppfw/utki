@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{BCCBD75F-804F-4D73-99E1-12E5348FEAF6}</ProjectGuid>
+    <ProjectGuid>{DA68AA3C-C8DD-43B3-BA21-CA308B70C936}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>test_Flags</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>

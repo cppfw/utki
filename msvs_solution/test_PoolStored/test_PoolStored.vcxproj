@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{1A8FE101-D77A-433A-B325-DD5964A5D0A1}</ProjectGuid>
+    <ProjectGuid>{90DD0366-0B1A-4494-8D69-9A0A660102FC}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>test_PoolStored</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
