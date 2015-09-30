@@ -63,15 +63,15 @@ void Run(){
 	}
 
 	T_TestStaticBuffer brr;
-	TestClass* oldArrBegin = arr.begin();
-	TestClass* oldBrrBegin = brr.begin();
-	ASSERT_ALWAYS(brr.begin() != arr.begin())
+	TestClass* oldArrBegin = &*arr.begin();
+	TestClass* oldBrrBegin = &*brr.begin();
+	ASSERT_ALWAYS(&*brr.begin() != &*arr.begin())
 	
 	brr = arr;
 	
-	ASSERT_ALWAYS(brr.begin() != arr.begin())
-	ASSERT_ALWAYS(arr.begin() == oldArrBegin)
-	ASSERT_ALWAYS(brr.begin() == oldBrrBegin)
+	ASSERT_ALWAYS(&*brr.begin() != &*arr.begin())
+	ASSERT_ALWAYS(&*arr.begin() == oldArrBegin)
+	ASSERT_ALWAYS(&*brr.begin() == oldBrrBegin)
 
 	ASSERT_ALWAYS(arr.size() == brr.size())
 	for(size_t i = 0; i < arr.size(); ++i){
