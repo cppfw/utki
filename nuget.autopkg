@@ -1,7 +1,7 @@
 nuget{
     nuspec{
 		id = libutki;
-        version : 1.0.4.3;
+        version : 1.0.4.4;
         title: C++ utility library;
         authors: {Ivan Gagis};
         owners: {Ivan Gagis};
@@ -24,27 +24,27 @@ nuget{
         include: { "src\**\*.hpp" };
 		
 		[x86,release] {
-//			lib: msvs_solution\Release\utki.lib;
-//			symbols: msvs_solution\Release\utki.pdb;
-//			bin: msvs_solution\Release\utki.dll;
+//			lib: msvs_solution\Release\libutki.lib;
+//			symbols: msvs_solution\Release\libutki.pdb;
+//			bin: msvs_solution\Release\libutki.dll;
 		}
 
 		[x86,debug] { 
-//			lib: msvs_solution\Debug\utki.lib;
-//			symbols: msvs_solution\Debug\utki.pdb;
-//			bin: msvs_solution\Debug\utki.dll;
+//			lib: msvs_solution\Debug\libutki.lib;
+//			symbols: msvs_solution\Debug\libutki.pdb;
+//			bin: msvs_solution\Debug\libutki.dll;
 		}
 
 		[x64,release] {
-//			lib: msvs_solution\x64\Release\utki.lib;
-//			symbols: msvs_solution\x64\Release\utki.pdb;
-//			bin: msvs_solution\x64\Release\utki.dll;
+//			lib: msvs_solution\x64\Release\libutki.lib;
+//			symbols: msvs_solution\x64\Release\libutki.pdb;
+//			bin: msvs_solution\x64\Release\libutki.dll;
 		}
 
 		[x64,debug] { 
-//			lib: msvs_solution\x64\Debug\utki.lib;
-//			symbols: msvs_solution\x64\Debug\utki.pdb;
-//			bin: msvs_solution\x64\Debug\utki.dll;
+//			lib: msvs_solution\x64\Debug\libutki.lib;
+//			symbols: msvs_solution\x64\Debug\libutki.pdb;
+//			bin: msvs_solution\x64\Debug\libutki.dll;
 		}
     }
 }
