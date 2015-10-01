@@ -169,13 +169,17 @@
 #if M_OS == M_OS_WINDOWS
 #	if M_COMPILER == M_COMPILER_MSVC
 #		ifdef _USRDLL
-#			define DLLEXPORT __declspec(dllexport)  
+#			define DLLEXPORT __declspec(dllexport)
+#			define DLLEXTERN
 #		else
-#			define DLLEXPORT __declspec(dllimport)  
+#			define DLLEXPORT __declspec(dllimport)
+#			define DLLEXTERN extern
 #		endif
 #	else
 #		define DLLEXPORT
+#		define DLLEXTERN
 #	endif
 #else
 #	define DLLEXPORT
+#	define DLLEXTERN
 #endif
