@@ -9,6 +9,8 @@
 #include <string>
 #include <exception>
 
+#include "config.hpp"
+
 namespace utki{
 
 /**
@@ -39,4 +41,4 @@ public:
 	}
 };
 
-}//~namespace ting
+}//~namespace

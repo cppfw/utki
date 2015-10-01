@@ -23,9 +23,9 @@ namespace utki{
  * In most cases T_InstanceOwner is the same as T.
  * Usage as follows:
  * @code
- *	class MySingleton : public ting::IntrusiveSingleton<MySingleton, MySingleton>{
- *		friend class ting::IntrusiveSingleton<MySingleton, MySingleton>;
- *		static ting::IntrusiveSingleton<MySingleton, MySingleton>::T_Instance instance;
+ *	class MySingleton : public utki::IntrusiveSingleton<MySingleton, MySingleton>{
+ *		friend class utki::IntrusiveSingleton<MySingleton, MySingleton>;
+ *		static utki::IntrusiveSingleton<MySingleton, MySingleton>::T_Instance instance;
  * 
  *	public:
  *		void doSomething(){
@@ -34,7 +34,7 @@ namespace utki{
  *  };
  * 
  *	//define the static variable somewhere in .cpp file.
- *  ting::IntrusiveSingleton<MySingleton, MySingleton>::T_Instance MySingleton::instance;
+ *  utki::IntrusiveSingleton<MySingleton, MySingleton>::T_Instance MySingleton::instance;
  *
  *	int main(int, char**){
  *		MySingleton mySingleton;
@@ -56,11 +56,10 @@ protected://use only as a base class
 
 	typedef std::unique_ptr<T> T_Instance;
 	
-private:
+public:
 
-	//copying is not allowed
-	IntrusiveSingleton(const IntrusiveSingleton&);
-	IntrusiveSingleton& operator=(const IntrusiveSingleton&);
+	IntrusiveSingleton(const IntrusiveSingleton&) = delete;
+	IntrusiveSingleton& operator=(const IntrusiveSingleton&) = delete;
 	
 public:
 	
@@ -70,7 +69,7 @@ public:
 	 * @return true if object is created.
 	 * @return false otherwise.
 	 */
-	inline static bool isCreated(){
+	static bool isCreated(){
 		return T_InstanceOwner::instance != 0;
 	}
 
@@ -98,7 +97,7 @@ public:
  * its static methods, the most important one is Inst().
  * Usage as follows:
  * @code
- *	class MySingleton : public ting::Singleton<MySingleton>{
+ *	class MySingleton : public utki::Singleton<MySingleton>{
  *	public:
  *		void DoSomething(){
  *			//...
@@ -117,11 +116,9 @@ template <class T> class Singleton : public IntrusiveSingleton<T, Singleton<T> >
 protected:
 	Singleton(){}
 	
-private:
-
-	//copying is not allowed
-	Singleton(const Singleton&);
-	Singleton& operator=(const Singleton&);
+public:
+	Singleton(const Singleton&) = delete;
+	Singleton& operator=(const Singleton&) = delete;
 
 private:
 	
@@ -130,4 +127,4 @@ private:
 
 template <class T> typename utki::IntrusiveSingleton<T, Singleton<T> >::T_Instance utki::Singleton<T>::instance;
 
-}//~namespace ting
+}//~namespace
