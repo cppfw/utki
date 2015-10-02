@@ -173,6 +173,7 @@
 #		else
 #			define DLLEXPORT __declspec(dllimport)
 #		endif
+#		pragma warning( disable : 4251)
 #	else
 #		define DLLEXPORT
 #	endif
