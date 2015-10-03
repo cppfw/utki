@@ -42,7 +42,7 @@ namespace TestStaticBufferOperatorEquals{
 
 class TestClass{
 public:
-	unsigned id;
+	size_t id;
 	int a;
 
 	TestClass() :
