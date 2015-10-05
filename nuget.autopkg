@@ -1,7 +1,7 @@
 nuget{
 	nuspec{
 		id = libutki;
-		version : 1.0.8.4;
+		version : 1.0.8.5;
 		title: C++ utility library;
 		authors: {Ivan Gagis};
 		owners: {Ivan Gagis};

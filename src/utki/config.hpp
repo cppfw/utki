@@ -173,8 +173,9 @@
 #		else
 #			define DLLEXPORT __declspec(dllimport)
 #		endif
-#		pragma warning( disable : 4251)
-#		pragma warning( disable : 4275)
+#		pragma warning(disable : 4251) //member variable needs to have dll-interface to be used by clients of class
+#		pragma warning(disable : 4275) //non dll-interface class used as base for dll-interface class
+#		pragma warning(disable : 4250) //method inherited via dominance
 #	else
 #		define DLLEXPORT
 #	endif
