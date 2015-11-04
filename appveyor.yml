@@ -20,7 +20,7 @@ deploy:
   skip_symbols: true
   artifact: /.*\.nupkg/
   on:
-    appveyor_repo_tag: false #TODO: true
+    appveyor_repo_tag: true
 
 artifacts:
   - path: .\nuget\*.nupkg
