@@ -21,30 +21,30 @@ nuget{
 		};
 	}
 	files {
-		include: { "src\**\*.hpp" };
+		include: { "..\src\**\*.hpp" };
 			
 		[x86,release] {
-//			lib: msvs_solution\Release\libutki.lib;
-//			symbols: msvs_solution\Release\libutki.pdb;
-//			bin: msvs_solution\Release\libutki.dll;
+//			lib: ..\msvs_solution\Release\libutki.lib;
+//			symbols: ..\msvs_solution\Release\libutki.pdb;
+//			bin: ..\msvs_solution\Release\libutki.dll;
 		}
 
 		[x86,debug] { 
-//			lib: msvs_solution\Debug\libutki.lib;
-//			symbols: msvs_solution\Debug\libutki.pdb;
-//			bin: msvs_solution\Debug\libutki.dll;
+//			lib: ..\msvs_solution\Debug\libutki.lib;
+//			symbols: ..\msvs_solution\Debug\libutki.pdb;
+//			bin: ..\msvs_solution\Debug\libutki.dll;
 		}
 
 		[x64,release] {
-//			lib: msvs_solution\x64\Release\libutki.lib;
-//			symbols: msvs_solution\x64\Release\libutki.pdb;
-//			bin: msvs_solution\x64\Release\libutki.dll;
+//			lib: ..\msvs_solution\x64\Release\libutki.lib;
+//			symbols: ..\msvs_solution\x64\Release\libutki.pdb;
+//			bin: ..\msvs_solution\x64\Release\libutki.dll;
 		}
 
 		[x64,debug] { 
-//			lib: msvs_solution\x64\Debug\libutki.lib;
-//			symbols: msvs_solution\x64\Debug\libutki.pdb;
-//			bin: msvs_solution\x64\Debug\libutki.dll;
+//			lib: ..\msvs_solution\x64\Debug\libutki.lib;
+//			symbols: ..\msvs_solution\x64\Debug\libutki.pdb;
+//			bin: ..\msvs_solution\x64\Debug\libutki.dll;
 		}
 	}
 }
