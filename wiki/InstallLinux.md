@@ -3,7 +3,7 @@ For Debian based distributions it is easy, packages reside in *https://repo.fury
 - Add the repo to your sources (needs to be done once):
 
   ```
-  sudo echo "deb https://repo.fury.io/igagis/ /" > /etc/apt/sources.list.d/igagis.list
+  echo "deb https://dl.bintray.com/igagis/deb /" | sudo tee /etc/apt/sources.list.d/igagis.list > /dev/null
   ```
 
 - Update apt packages
