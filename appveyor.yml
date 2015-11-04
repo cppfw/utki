@@ -7,6 +7,9 @@ install:
   - ps: $env:PSModulePath = $env:PSModulePath + ';C:\Program Files (x86)\Outercurve Foundation\Modules'
   - ps: Import-Module CoApp
 
+before_build:
+  - nuget restore msvs_solution/msvs_solution.sln
+
 build_script:
   - ps: .\nuget\build_nuget.ps1
 
