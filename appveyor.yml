@@ -8,7 +8,7 @@ install:
   - ps: Import-Module CoApp
 
 build_script:
-  - ps: .\nuget\build_nuget.bat
+  - ps: .\nuget\build_nuget.ps1
 
 #test_script:
 #  - ps: .\tests\autotest-appveyor.ps1
