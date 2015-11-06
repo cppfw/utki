@@ -1,0 +1,51 @@
+language: cpp
+sudo: required
+dist: trusty
+
+os:
+  - linux
+  - osx
+
+env:
+  global:
+  #encrypted HOMEBREW_GITHUB_ACCESS_TOKEN for publishing to homebrew-tap
+  - secure: "Wmt2VTt52QrAeXSU2oBDeS9d5/79BOFV4JikeTYi+Wsk+Kh9aGkqxnonTwrHQa2XAxqLIOIjIWoBWDr7GouhsjsOt9gWSk96w12zxvSWb3IZLlPqNGlnV1koENjtKc91hnwDUJch8zi+KS1iq4a5X0NWa6kjlXDDIuncQJ6XVExdkawgGSyw0V/eGAomz8yMGs+a87W1o1iaXGe9hW6mP8xeNz/IGlm27nMLPnPiePIkyypLjCyVXrRcCQRrM1NGo2Ko/fA/4v8IgItwCtUJZHWVPnYfNBCpfR9rfo42UBFbZ/aiqLrjWvKgkszRicaYwtosD3+cCB4ajXm8z0cDOWa4xqEuYDep92B9eA+RKV2xdVWrQqIYyWASPmnhm1ysJAxWXdBFoT0zXpOeBXFwg3sEO7S+/4ShICKdbXaZEgCtl5MQs5F3EXk8vMPFDipu1EbZLVZJCDzBUK/ov7DcGPVw3WxKTuaeROY+flhqXHLyeiCTH1vRzty5ltpIZqLKT0RfDcvUgaylf3DcP+4w63G2AHrqQbQxVhIVcQRGslQefGJftTOIG6qREepg+YjRDjQ9KMGUYVk1U98ER4qMJwlI7sP356VenisqkfTUQMimGcf4EzRT9Zh27urtQyIxRMSyI34gFo8QgXEyrxkjZH7vMHgRKvRhhyuKd4pwM0c="
+  - HOMEBREW_GITHUB_USERNAME=igagis
+
+before_install:
+- if [ "$TRAVIS_OS_NAME" == "linux" ]; then
+    sudo apt-get update -qq;
+    sudo apt-get install debhelper -qq;
+  fi
+- if [ "$TRAVIS_OS_NAME" == "osx" ]; then
+    brew update;
+    brew install prorab;
+  fi
+
+
+script:
+- if [ "$TRAVIS_OS_NAME" == "linux" ]; then
+    make deb;
+  fi
+- if [ "$TRAVIS_OS_NAME" == "osx" ]; then
+    make;
+    make test;
+  fi
+
+deploy:
+- provider: bintray
+  skip_cleanup: true
+  on:
+    tags: true
+    condition: $TRAVIS_OS_NAME = linux
+  file: travis_bintray.json
+  user: igagis
+  key:
+    secure: lzwel5dBXpkklB4USNwKSjFLTYZ4nYHFVuQUY3PKwfz6srCGVcl8R6ryOn4GD6qUJiwdv+q8lXCnFAP5IwlOdsXKyndgVs4047eQbNUq6nrKHRI9xmIc3IY/h3D68vt+akortZFDxI2mBxQImpWaNML+rlI4Hts13WB5EL18UVZjthZZmViSvo1M/VuYy46NBvw6YIGOIYuM7t/dkewFcnOLrU+KLH9ANRRUoTymiw5jYvXGXEdqG/Lg7bLvm5TutyHqW6P+mSh97T5qAGANsbgeguF77jxmK4dS7GoIeBFKm43Iv6T9KoL+45Z9qe+5L7J3EXacEPEtQBmi5ta7jKnrSnzeeftXkhz5wxNStS988QhgGDeHlW585XfTtAyehjegOI2h3jBmpJDrWJHhxCDHA4H+younQYALtrRfr0paVtaehZ9Ov7q1bBnhVYA8+5BMTQPbIJqCv3nMoGuvHaVnllxGmghXG/cKKN0dMFFY87cxbVxrS0NvXvE6FQf3wl/g+4yazG5IcAj//eq6UOHNlRHT0VG6HDr7l/wJU3kxXHK4lrRo0jWqUsEfR7fmBnv/Nvgn4+p21mAWM63zwXaV+Inx75Tvc0NqnuiKmChGxWf1JcLuXmdc5cQ3LWjx4OrF8Lo8NEDiSulXm7f2rVSTGs5xgyd6T5WcdGSynnA=
+  dry-run: false
+- provider: script
+  skip_cleanup: true
+  script: prorab-deploy-homebrew.sh igagis/tap
+  on:
+    tags: true
+    condition: $TRAVIS_OS_NAME = osx
