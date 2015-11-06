@@ -7,7 +7,6 @@ class Libutki < Formula
   depends_on "prorab" => :build
 
   def install
-    system "make", "ver"
     system "make", "install"
   end
 
