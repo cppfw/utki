@@ -18,6 +18,7 @@ before_install:
     sudo apt-get install debhelper -qq;
   fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then
+    brew tap igagis/tap;
     brew update;
     brew install prorab;
   fi
