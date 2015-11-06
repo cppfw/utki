@@ -44,7 +44,7 @@ deploy:
   skip_cleanup: true
   on:
     tags: true
-    condition: $TRAVIS_OS_NAME = linux
+    condition: $TRAVIS_OS_NAME = linux && $CC = gcc
   file: travis_bintray.json
   user: igagis
   key:
@@ -55,4 +55,4 @@ deploy:
   script: prorab-deploy-homebrew.sh igagis/tap
   on:
     tags: true
-    condition: $TRAVIS_OS_NAME = osx
+    condition: $TRAVIS_OS_NAME = osx && $CC = clang
