@@ -15,7 +15,7 @@ env:
 before_install:
 - if [ "$TRAVIS_OS_NAME" == "linux" ]; then
     echo "deb https://dl.bintray.com/igagis/deb /" | sudo tee /etc/apt/sources.list.d/igagis.list > /dev/null;
-    sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 379CE192D401AB61; #fetch bintray key
+    sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 379CE192D401AB61;
     sudo apt-get update -qq;
     sudo apt-get install -qq debhelper prorab;
   fi
