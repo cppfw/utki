@@ -1,0 +1,17 @@
+class Libutki < Formula
+  desc "C++ utility functions library. Stuff missing from std:: namespace."
+  homepage "https://github.com/igagis/utki"
+  url "https://github.com/igagis/utki/archive/$(version).tar.gz"
+  sha256 "$(sha256)"
+
+  depends_on "prorab" => :build
+
+  def install
+    system "make", "ver"
+    system "make", "install"
+  end
+
+  test do
+    system "make", "test"
+  end
+end
