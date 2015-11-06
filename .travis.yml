@@ -19,7 +19,7 @@ before_install:
   fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then
     brew tap igagis/tap;
-    brew update;
+    brew update -q;
     brew install prorab;
   fi
 
