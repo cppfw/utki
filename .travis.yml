@@ -6,6 +6,10 @@ os:
   - linux
   - osx
 
+compiler:
+  - clang
+  - gcc
+
 env:
   global:
   #encrypted HOMEBREW_GITHUB_ACCESS_TOKEN for publishing to homebrew-tap
