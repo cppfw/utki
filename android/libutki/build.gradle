@@ -28,6 +28,7 @@ model {
             jni {
                 source {
                     srcDirs '../../tests'
+                    exclude '*/main.cpp'
                 }
             }
         }
