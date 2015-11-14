@@ -16,6 +16,35 @@ model {
 
     }
 
+    android.ndk {
+        moduleName = "utki"
+        ldLibs.add('log')
+        cppFlags.add("-std=c++11")
+        cppFlags.add("-fexceptions")
+        cppFlags.add("-frtti")
+        stl = 'gnustl_shared'
+//            ldFlags += ""
+//            toolchain = "clang"
+//            toolchainVersion = "3.9"
+//            abiFilters += "x86"
+//            CFlags += ""
+//            debuggable = false
+//            renderscriptNdkMode = false
+//            stl = "system"
+//            platformVersion = 15
+    }
+
+    android.sources {
+        main {
+            jni {
+                source {
+                    srcDirs '../../tests'
+                    exclude '*/main.cpp'
+                }
+            }
+        }
+    }
+
     android.buildTypes {
         debug {
             ndk.with {

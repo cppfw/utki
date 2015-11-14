@@ -23,24 +23,13 @@ model {
         }
     }
 
-    android.sources {
-        main {
-            jni {
-                source {
-                    srcDirs '../../tests'
-                    exclude '*/main.cpp'
-                }
-            }
-        }
-    }
-
     android.ndk {
         moduleName = "utki"
             ldLibs.add('log')
             cppFlags.add("-std=c++11")
             cppFlags.add("-fexceptions")
             cppFlags.add("-frtti")
-            stl = 'gnustl_shared'
+//            stl = 'gnustl_shared'
 //            ldFlags += ""
 //            toolchain = "clang"
 //            toolchainVersion = "3.9"
