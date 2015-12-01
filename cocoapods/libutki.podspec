@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name         = "libutki"
   s.version      = "1.0.8"
-  s.summary      = "A short description of libutki."
+  s.summary      = "C++ utility library. Stuff missing from std:: namespace."
   s.homepage     = "https://github.com/igagis/utki"
   s.license      = 'MIT'
   s.author             = { "Ivan Gagis" => "igagis@gmail.com" }
