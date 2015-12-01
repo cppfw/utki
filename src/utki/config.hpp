@@ -142,7 +142,7 @@
 #elif defined(__APPLE__)
 #	define M_OS M_OS_MACOSX
 #	include <TargetConditionals.h>
-#	if TARGET_OS_IPHONE == 1 //iOS
+#	if TARGET_OS_IPHONE == 1 || TARGET_IPHONE_SIMULATOR == 1 //iOS
 #		define M_OS_NAME M_OS_NAME_IOS
 #	else
 #		define M_OS_NAME M_OS_NAME_MACOSX
