@@ -43,6 +43,7 @@
                    kind="IMPORTANT_FILES_FOLDER">
       <itemPath>.gitignore</itemPath>
       <itemPath>nbproject/private/launcher.properties</itemPath>
+      <itemPath>cocoapods/libutki.podspec</itemPath>
       <itemPath>makefile</itemPath>
     </logicalFolder>
   </logicalFolder>
