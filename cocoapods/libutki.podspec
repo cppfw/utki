@@ -16,5 +16,5 @@ Pod::Spec.new do |s|
 
   s.source = { :git => "https://github.com/igagis/utki.git", :tag => s.version }
 
-  s.source_files  = "Classes", "src/utki/**/*.{hpp,cpp}"
+  s.source_files  = "Classes", "src/**/*.{hpp,cpp}"
 end
