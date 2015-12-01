@@ -3,7 +3,7 @@ Pod::Spec.new do |s|
   s.version      = "1.0.8"
   s.summary      = "A short description of libutki."
   s.homepage     = "https://github.com/igagis/utki"
-  s.license      = { :type => "MIT", :file => "https://raw.githubusercontent.com/igagis/utki/master/LICENSE" }
+  s.license      = 'MIT'
   s.author             = { "Ivan Gagis" => "igagis@gmail.com" }
   s.platform     = :ios
   # s.platform     = :ios, "5.0"
