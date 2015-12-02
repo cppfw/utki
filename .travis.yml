@@ -42,7 +42,7 @@ script:
     make;
     make test;
     
-    xcodebuild -project ios/tests.xcodeproj/ -alltargets
+    xcodebuild -project ios/tests.xcodeproj/ -alltargets;
   fi
 
 deploy:
