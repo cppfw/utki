@@ -42,6 +42,7 @@
                    projectFiles="false"
                    kind="IMPORTANT_FILES_FOLDER">
       <itemPath>.gitignore</itemPath>
+      <itemPath>.travis.yml</itemPath>
       <itemPath>nbproject/private/launcher.properties</itemPath>
       <itemPath>cocoapods/libutki.podspec</itemPath>
       <itemPath>makefile</itemPath>
