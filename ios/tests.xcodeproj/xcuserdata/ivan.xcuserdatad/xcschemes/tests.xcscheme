@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2C0F19D51C0E7C1B007730C2"
-               BuildableName = "utki_test.app"
-               BlueprintName = "utki_test"
-               ReferencedContainer = "container:utki_test.xcodeproj">
+               BlueprintIdentifier = "2C1380971C0E851300E0ABE1"
+               BuildableName = "tests.app"
+               BlueprintName = "tests"
+               ReferencedContainer = "container:tests.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,10 +32,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2C0F19D51C0E7C1B007730C2"
-            BuildableName = "utki_test.app"
-            BlueprintName = "utki_test"
-            ReferencedContainer = "container:utki_test.xcodeproj">
+            BlueprintIdentifier = "2C1380971C0E851300E0ABE1"
+            BuildableName = "tests.app"
+            BlueprintName = "tests"
+            ReferencedContainer = "container:tests.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -55,10 +55,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2C0F19D51C0E7C1B007730C2"
-            BuildableName = "utki_test.app"
-            BlueprintName = "utki_test"
-            ReferencedContainer = "container:utki_test.xcodeproj">
+            BlueprintIdentifier = "2C1380971C0E851300E0ABE1"
+            BuildableName = "tests.app"
+            BlueprintName = "tests"
+            ReferencedContainer = "container:tests.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -74,10 +74,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2C0F19D51C0E7C1B007730C2"
-            BuildableName = "utki_test.app"
-            BlueprintName = "utki_test"
-            ReferencedContainer = "container:utki_test.xcodeproj">
+            BlueprintIdentifier = "2C1380971C0E851300E0ABE1"
+            BuildableName = "tests.app"
+            BlueprintName = "tests"
+            ReferencedContainer = "container:tests.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

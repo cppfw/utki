@@ -34,7 +34,6 @@ before_install:
     brew install prorab;
   fi
 
-
 script:
 - if [ "$TRAVIS_OS_NAME" == "linux" ]; then
     make deb;
@@ -42,6 +41,8 @@ script:
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then
     make;
     make test;
+    
+    xcodebuild -project ios/tests.xcodeproj/ -alltargets
   fi
 
 deploy:

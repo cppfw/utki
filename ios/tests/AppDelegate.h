@@ -1,6 +1,6 @@
 //
 //  AppDelegate.h
-//  utki_test
+//  tests
 //
 //  Created by Ivan Gagis on 02/12/15.
 //  Copyright © 2015 Ivan Gagis. All rights reserved.
