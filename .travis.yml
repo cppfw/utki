@@ -29,7 +29,7 @@ before_install:
     sudo apt-get install -qq debhelper prorab doxygen;
   fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then
-    pod repo add igagis https://$HOMEBREW_GITHUB_USERNAME:$HOMEBREW_GITHUB_ACCESS_TOKEN@github.com/igagis/cocoapods-repo.git;
+    pod repo add --silent igagis https://$HOMEBREW_GITHUB_USERNAME:$HOMEBREW_GITHUB_ACCESS_TOKEN@github.com/igagis/cocoapods-repo.git;
 
     brew tap igagis/tap;
     brew update > /dev/null;
