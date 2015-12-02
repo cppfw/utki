@@ -44,7 +44,7 @@
       <itemPath>.gitignore</itemPath>
       <itemPath>.travis.yml</itemPath>
       <itemPath>nbproject/private/launcher.properties</itemPath>
-      <itemPath>cocoapods/libutki.podspec</itemPath>
+      <itemPath>cocoapods/libutki.podspec.in</itemPath>
       <itemPath>makefile</itemPath>
     </logicalFolder>
   </logicalFolder>
