@@ -5,7 +5,7 @@ Pod::Spec.new do |s|
   s.homepage     = "https://github.com/igagis/utki"
   s.license      = 'MIT'
   s.author       = { "Ivan Gagis" => "igagis@gmail.com" }
-  s.platform     = :ios
+  s.platform     = :ios, "7.0"
   
   s.source = { :git => "https://github.com/igagis/utki.git", :tag => s.version }
 
