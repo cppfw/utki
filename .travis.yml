@@ -41,10 +41,12 @@ script:
     make deb;
   fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then
-    make;
-    make test;
+    make &&
+    make test &&
+
+    xcodebuild -project ios/tests.xcodeproj/ -alltargets CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO &&
     
-    xcodebuild -project ios/tests.xcodeproj/ -alltargets CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO;
+    if [ -n "$TRAVIS_TAG" ]; then prorab-deploy-cocoapods.sh igagis; else echo "Skip deploying to cocoapods because not a tagged commit!!!"; fi;
   fi
 
 deploy:
