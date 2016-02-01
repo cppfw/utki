@@ -1,3 +1,9 @@
+libutki (1.0.9) stable; urgency=medium
+
+  * homebrew prefix
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 01 Feb 2016 19:37:25 +0200
+
 libutki (1.0.8-1) stable; urgency=medium
 
   * bug fix
