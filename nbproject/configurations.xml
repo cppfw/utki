@@ -45,6 +45,7 @@
       <itemPath>.travis.yml</itemPath>
       <itemPath>nbproject/private/launcher.properties</itemPath>
       <itemPath>cocoapods/libutki.podspec.in</itemPath>
+      <itemPath>homebrew/libutki.rb.in</itemPath>
       <itemPath>makefile</itemPath>
     </logicalFolder>
   </logicalFolder>
