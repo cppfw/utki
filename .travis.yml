@@ -68,9 +68,3 @@ deploy:
   on:
     tags: true
     condition: $TRAVIS_OS_NAME = osx && $CC = clang
-- provider: script
-  skip_cleanup: true
-  script: prorab-deploy-cocoapods.sh igagis
-  on:
-    tags: true
-    condition: $TRAVIS_OS_NAME = osx && $CC = clang
