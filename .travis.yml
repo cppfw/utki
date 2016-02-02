@@ -30,12 +30,7 @@ before_install:
     sudo apt-get install -qq debhelper prorab doxygen;
   fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then
-    rvm list rubies &&
-    ruby -v &&
-    rvm install ruby-2.2.0 &&
-    ruby -v &&
-    rvm use ruby-2.2.0 &&
-    ruby -v &&
+    rvm use ruby-2.2.1 &&
     pod repo add --silent igagis https://$HOMEBREW_GITHUB_USERNAME:$HOMEBREW_GITHUB_ACCESS_TOKEN@github.com/igagis/cocoapods-repo.git &&
 
     brew tap igagis/tap &&
