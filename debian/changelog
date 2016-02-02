@@ -1,3 +1,9 @@
+libutki (1.0.10) stable; urgency=medium
+
+  * homebrew do not install tests
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 02 Feb 2016 15:45:48 +0200
+
 libutki (1.0.9) stable; urgency=medium
 
   * homebrew prefix
