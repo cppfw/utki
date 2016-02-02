@@ -3,9 +3,6 @@ sudo: required
 dist: trusty
 osx_image: xcode7.3
 
-rvm:
-  - 2.1.3
-
 os:
   - linux
   - osx
@@ -27,16 +24,22 @@ env:
 
 before_install:
 - if [ "$TRAVIS_OS_NAME" == "linux" ]; then
-    echo "deb https://dl.bintray.com/igagis/deb /" | sudo tee /etc/apt/sources.list.d/igagis.list > /dev/null;
-    sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 379CE192D401AB61;
-    sudo apt-get update -qq;
+    echo "deb https://dl.bintray.com/igagis/deb /" | sudo tee /etc/apt/sources.list.d/igagis.list > /dev/null &&
+    sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 379CE192D401AB61 &&
+    sudo apt-get update -qq &&
     sudo apt-get install -qq debhelper prorab doxygen;
   fi
 - if [ "$TRAVIS_OS_NAME" == "osx" ]; then
-    pod repo add --silent igagis https://$HOMEBREW_GITHUB_USERNAME:$HOMEBREW_GITHUB_ACCESS_TOKEN@github.com/igagis/cocoapods-repo.git;
+    rvm list rubies &&
+    ruby -v &&
+    rvm install ruby-2.2.0 &&
+    ruby -v &&
+    rvm use ruby-2.2.0 &&
+    ruby -v &&
+    pod repo add --silent igagis https://$HOMEBREW_GITHUB_USERNAME:$HOMEBREW_GITHUB_ACCESS_TOKEN@github.com/igagis/cocoapods-repo.git &&
 
-    brew tap igagis/tap;
-    brew update > /dev/null;
+    brew tap igagis/tap &&
+    brew update > /dev/null &&
     brew install prorab;
   fi
 
