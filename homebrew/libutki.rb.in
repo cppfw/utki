@@ -9,6 +9,7 @@ class Libutki < Formula
   def install
     ENV['PATH'] += ':/usr/local/bin'
     system "make", "install", "PREFIX=#{prefix}"
+    system "rm", "#{prefix}/bin/tests"
   end
 
   test do
