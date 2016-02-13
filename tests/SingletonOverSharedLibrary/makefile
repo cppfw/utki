@@ -5,17 +5,17 @@ include prorab.mk
 this_name := testso
 this_soname := 0
 
-this_cflags += -std=c++11
-this_cflags += -Wall
-this_cflags += #-DDEBUG
-this_cflags += -fstrict-aliasing #strict aliasing!!!
+this_cxxflags += -std=c++11
+this_cxxflags += -Wall
+this_cxxflags += #-DDEBUG
+this_cxxflags += -fstrict-aliasing #strict aliasing!!!
 
 ifeq ($(prorab_os),macosx)
-    this_cflags += -stdlib=libc++ #this is needed to be able to use c++11 std lib
+    this_cxxflags += -stdlib=libc++ #this is needed to be able to use c++11 std lib
     this_ldlibs += -lc++
 else ifeq ($(prorab_os),windows)
 else
-    this_cflags += -fPIC
+    this_cxxflags += -fPIC
 endif
 
 this_srcs += testso.cpp
@@ -35,17 +35,17 @@ this_name := tests
 
 
 #compiler flags
-this_cflags += -std=c++11
-this_cflags += -Wall
-this_cflags += -DDEBUG
-this_cflags += -fstrict-aliasing #strict aliasing!!!
+this_cxxflags += -std=c++11
+this_cxxflags += -Wall
+this_cxxflags += -DDEBUG
+this_cxxflags += -fstrict-aliasing #strict aliasing!!!
 
 this_srcs += Singleton_test.cpp
 
 this_ldlibs += $(lib_target_name)
 
 ifeq ($(prorab_os),macosx)
-    this_cflags += -stdlib=libc++ #this is needed to be able to use c++11 std lib
+    this_cxxflags += -stdlib=libc++ #this is needed to be able to use c++11 std lib
     this_ldlibs += -lc++
 endif
 
