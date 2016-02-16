@@ -48,6 +48,7 @@
       <itemPath>cocoapods/libutki.podspec.in</itemPath>
       <itemPath>homebrew/libutki.rb.in</itemPath>
       <itemPath>makefile</itemPath>
+      <itemPath>nuget/nuget.autopkg.in</itemPath>
     </logicalFolder>
   </logicalFolder>
   <sourceFolderFilter>^(nbproject)$</sourceFolderFilter>

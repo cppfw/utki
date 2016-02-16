@@ -1,3 +1,9 @@
+libutki (1.0.13) stable; urgency=medium
+
+  * nuget fix
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 16 Feb 2016 17:24:16 +0200
+
 libutki (1.0.12) stable; urgency=medium
 
   * updating to latest prorab
