@@ -21,7 +21,6 @@ endif
 
 this_srcs += testso.cpp
 
-#$(info $(prorab-build-lib))
 $(eval $(prorab-build-lib))
 
 lib_target_name := $(prorab_this_name)

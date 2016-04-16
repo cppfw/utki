@@ -1,7 +1,7 @@
 #include "../../src/utki/debug.hpp"
 
-#include "testso.hpp"
-#include "TestSingleton.hpp"
+#include "testso.hpp_"
+#include "TestSingleton.hpp_"
 
 
 

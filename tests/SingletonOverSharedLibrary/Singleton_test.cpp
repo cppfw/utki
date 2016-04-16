@@ -1,6 +1,6 @@
 #include "../../src/utki/debug.hpp"
 
-#include "TestSingleton.hpp"
+#include "TestSingleton.hpp_"
 #include "testso.hpp"
 
 
