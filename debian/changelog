@@ -1,3 +1,9 @@
+libutki (1.0.15) stable; urgency=medium
+
+  * homebrew do not install test header files
+
+ -- Ivan Gagis <igagis@gmail.com>  Sat, 16 Apr 2016 13:05:51 +0300
+
 libutki (1.0.14) stable; urgency=medium
 
   * homebrew do not install test header files
