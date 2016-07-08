@@ -42,5 +42,14 @@ template <typename T> struct remove_constptr{
 };
 
 
+/**
+ * @brief Cast pointer to pointer-to-const.
+ * @param p - pointer to cast.
+ * @return Pointer to const.
+ */
+template <class T> inline const T* makePtrToConst(T* p){
+	return const_cast<const T*>(p);
+}
 
-}//~namespace ting
+
+}

@@ -1,3 +1,9 @@
+libutki (1.0.18) unstable; urgency=medium
+
+  * added makePtrToConst() function
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 08 Jul 2016 17:09:22 +0300
+
 libutki (1.0.17) unstable; urgency=medium
 
   * bintray version fix
