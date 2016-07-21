@@ -20,13 +20,13 @@ model {
 	}
 
     android {
-		compileSdkVersion = 23
-		buildToolsVersion = '23.0.2'
+		compileSdkVersion = 24
+		buildToolsVersion = '24.0.0'
 
         defaultConfig{
             applicationId = "org.igagis.utkitest"
-			minSdkVersion.apiLevel = 13
-			targetSdkVersion.apiLevel = 23
+			minSdkVersion.apiLevel = 9
+			targetSdkVersion.apiLevel = 9
 			versionCode = 1
 			versionName = '1.0'
         }
