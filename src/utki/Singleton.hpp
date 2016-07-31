@@ -49,6 +49,8 @@ protected://use only as a base class
 	}
 
 	typedef IntrusiveSingleton<T> T_Singleton;
+	
+	//Use unique_ptr because it is automatically initialized to nullptr. Automatic object destruction is not used.
 	typedef std::unique_ptr<T> T_Instance;
 	
 public:
@@ -65,7 +67,7 @@ public:
 	 * @return false otherwise.
 	 */
 	static bool isCreated(){
-		return T_InstanceOwner::instance != 0;
+		return T_InstanceOwner::instance.operator bool();
 	}
 
 	/**
