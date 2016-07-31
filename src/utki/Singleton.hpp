@@ -1,9 +1,3 @@
-/**
- * @file Singleton.hpp
- * @author Ivan Gagis <igagis@gmail.com>
- * @brief Singleton base class (template).
- */
-
 #pragma once
 
 #include "Exc.hpp"
@@ -54,6 +48,7 @@ protected://use only as a base class
 		T_InstanceOwner::instance.reset(static_cast<T*>(this));
 	}
 
+	typedef IntrusiveSingleton<T> T_Singleton;
 	typedef std::unique_ptr<T> T_Instance;
 	
 public:
@@ -127,4 +122,4 @@ private:
 
 template <class T> typename utki::IntrusiveSingleton<T, Singleton<T> >::T_Instance utki::Singleton<T>::instance;
 
-}//~namespace
+}

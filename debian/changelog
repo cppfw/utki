@@ -1,3 +1,9 @@
+libutki (1.0.19) unstable; urgency=medium
+
+  * T_Singleton typedef
+
+ -- Ivan Gagis <igagis@gmail.com>  Sun, 31 Jul 2016 14:10:37 +0300
+
 libutki (1.0.18) unstable; urgency=medium
 
   * added makePtrToConst() function
