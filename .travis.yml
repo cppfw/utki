@@ -71,3 +71,9 @@ deploy:
   on:
     tags: true
     condition: $TRAVIS_OS_NAME = osx && $CC = clang
+- provider: script
+  skip_cleanup: true
+  script: rvm 2.2.1 do prorab-deploy-cocoapods.sh igagis
+  on:
+    tags: false
+    condition: $TRAVIS_OS_NAME = osx && $CC = clang
