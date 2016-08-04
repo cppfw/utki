@@ -1,3 +1,45 @@
+libutki (1.0.21) unstable; urgency=medium
+
+  * LOG macro removed
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 04 Aug 2016 15:30:02 +0300
+
+libutki (1.0.20) unstable; urgency=medium
+
+  * refactoring
+
+ -- Ivan Gagis <igagis@gmail.com>  Sun, 31 Jul 2016 14:31:06 +0300
+
+libutki (1.0.19) unstable; urgency=medium
+
+  * T_Singleton typedef
+
+ -- Ivan Gagis <igagis@gmail.com>  Sun, 31 Jul 2016 14:10:37 +0300
+
+libutki (1.0.18) unstable; urgency=medium
+
+  * added makePtrToConst() function
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 08 Jul 2016 17:09:22 +0300
+
+libutki (1.0.17) unstable; urgency=medium
+
+  * bintray version fix
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 29 Jun 2016 18:00:55 +0300
+
+libutki (1.0.16) unstable; urgency=medium
+
+  * undfine min macro after including windows.h
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 27 Jun 2016 18:36:10 +0300
+
+libutki (1.0.15) stable; urgency=medium
+
+  * homebrew do not install test header files
+
+ -- Ivan Gagis <igagis@gmail.com>  Sat, 16 Apr 2016 13:05:51 +0300
+
 libutki (1.0.14) stable; urgency=medium
 
   * homebrew do not install test header files

@@ -1,8 +1,3 @@
-/**
- * @author Ivan Gagis <igagis@gmail.com>
- * @brief Debug utilities.
- */
-
 #pragma once
 
 #include "config.hpp"
@@ -30,34 +25,9 @@
 #	define DEBUG
 #endif
 
-//
-//
-//  Logging definitions
-//
-//
-
-#ifndef M_DOXYGEN_DONT_EXTRACT //for doxygen
-namespace utki{
-namespace utki_debug{
-#	if M_OS == M_OS_SYMBIAN
-#	elif M_OS_NAME == M_OS_NAME_ANDROID
-#	else
-inline std::ofstream& DebugLogger(){
-	//this allows to make debug output even if main() is not called yet and even if
-	//standard std::cout object is not created since static global variables initialization
-	//order is undetermined in C++ if these variables are located in separate cpp files!
-	static std::ofstream* logger = new std::ofstream("output.log");
-	return *logger;
-}
-#	endif
-}//~namespace utki_debug
-}//~namespace ting
-#endif //~M_DOXYGEN_DONT_EXTRACT //for doxygen
-
 
 
 #if M_OS == M_OS_SYMBIAN
-#	define LOG_ALWAYS(x)
 #	define TRACE_ALWAYS(x)
 
 #elif M_OS_NAME == M_OS_NAME_ANDROID
@@ -65,39 +35,21 @@ inline std::ofstream& DebugLogger(){
 		{ \
 			std::stringstream ss; \
 			ss x; \
-			__android_log_write(ANDROID_LOG_INFO, "utki_debug", ss.str().c_str()); \
+			__android_log_write(ANDROID_LOG_INFO, "utki", ss.str().c_str()); \
 		}
-#	define LOG_ALWAYS(x) //logging is not supported on Android, yet.
 
 #else
-#	define LOG_ALWAYS(x) utki::utki_debug::DebugLogger() x; utki::utki_debug::DebugLogger().flush();
 #	define TRACE_ALWAYS(x) std::cout x; std::cout.flush();
 
 #endif
 
-#define TRACE_AND_LOG_ALWAYS(x) LOG_ALWAYS(x) TRACE_ALWAYS(x)
-
 
 
 #ifdef DEBUG
-
-#	define LOG(x) LOG_ALWAYS(x)
 #	define TRACE(x) TRACE_ALWAYS(x)
-#	define TRACE_AND_LOG(x) TRACE_AND_LOG_ALWAYS(x)
-
-#	define LOG_IF_TRUE(x, y) if(x){ LOG(y) }
-
-#	define DEBUG_CODE(x) x
-
-#else//#ifdef DEBUG
-
-#	define LOG(x)
+#else
 #	define TRACE(x)
-#	define TRACE_AND_LOG(x)
-#	define LOG_IF_TRUE(x, y)
-#	define DEBUG_CODE(x)
-
-#endif//~#ifdef DEBUG
+#endif
 
 
 
@@ -107,11 +59,11 @@ inline std::ofstream& DebugLogger(){
 //
 //
 namespace utki{
-namespace utki_debug{
-inline void LogAssert(const char* msg, const char* file, int line){
-	TRACE_AND_LOG_ALWAYS(<< "[!!!fatal] Assertion failed at:\n\t"<< file << ":" << line << "| " << msg << std::endl)
+
+inline void logAssert(const char* msg, const char* file, int line){
+	TRACE_ALWAYS(<< "[!!!fatal] Assertion failed at:\n\t"<< file << ":" << line << "| " << msg << std::endl)
 }
-}
+
 }
 #if M_OS == M_OS_SYMBIAN
 #	define ASSERT_INFO_ALWAYS(x, y) __ASSERT_ALWAYS((x), User::Panic(_L("ASSERTION FAILED!"),3));
@@ -121,7 +73,7 @@ inline void LogAssert(const char* msg, const char* file, int line){
 #	define ASSERT_INFO_ALWAYS(x, y) if(!(x)){ \
 						std::stringstream ss; \
 						ss << y; \
-						utki::utki_debug::LogAssert(ss.str().c_str(), __FILE__, __LINE__); \
+						utki::logAssert(ss.str().c_str(), __FILE__, __LINE__); \
 						assert(false); \
 					}
 
@@ -140,8 +92,8 @@ inline void LogAssert(const char* msg, const char* file, int line){
 #		define ASSCOND(x, cond) (x)
 
 #	else //Assume system supporting standard assert() (including Android)
-#		define ASS(x) ( (x) ? (x) : (utki::utki_debug::LogAssert("ASS() assertion macro", __FILE__, __LINE__), (assert(false)), (x)) )
-#		define ASSCOND(x, cond) ( ((x) cond) ? (x) : (utki::utki_debug::LogAssert("ASS() assertion macro", __FILE__, __LINE__), (assert(false)), (x)) )
+#		define ASS(x) ( (x) ? (x) : (utki::logAssert("ASS() assertion macro", __FILE__, __LINE__), (assert(false)), (x)) )
+#		define ASSCOND(x, cond) ( ((x) cond) ? (x) : (utki::logAssert("ASS() assertion macro", __FILE__, __LINE__), (assert(false)), (x)) )
 
 #	endif
 
