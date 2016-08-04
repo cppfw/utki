@@ -1,3 +1,9 @@
+libutki (1.0.21) unstable; urgency=medium
+
+  * LOG macro removed
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 04 Aug 2016 15:30:02 +0300
+
 libutki (1.0.20) unstable; urgency=medium
 
   * refactoring
