@@ -1,10 +1,3 @@
-/**
- * @author Ivan Gagis <igagis@gmail.com>
- * @brief Workaround for including windows.h file.
- * This is a workaround for including a windows.h file to make it in a clean way
- * without breaking anything.
- */
-
 #pragma once
 
 #include "config.hpp"
@@ -46,4 +39,8 @@
 
 #ifdef min
 #	undef min
+#endif
+
+#ifdef DELETE
+#	undef DELETE
 #endif
