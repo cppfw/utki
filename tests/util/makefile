@@ -19,6 +19,8 @@ ifeq ($(prorab_os),macosx)
     this_ldlibs += -lc++
 endif
 
+this_ldlibs += -lstdc++
+
 $(eval $(prorab-build-app))
 
 include $(prorab_this_dir)../test_target.mk

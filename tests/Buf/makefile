@@ -19,7 +19,7 @@ endif
 
 this_srcs := main.cpp tests.cpp
 
-
+this_ldlibs += -lstdc++
 
 $(eval $(prorab-build-app))
 

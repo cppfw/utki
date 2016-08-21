@@ -11,6 +11,7 @@ this_cxxflags += -Wall
 this_cxxflags += -DDEBUG
 this_cxxflags += -fstrict-aliasing #strict aliasing!!!
 this_cxxflags += -O3
+this_cxxflags += -fPIC
 
 this_srcs += main.cpp tests.cpp
 
@@ -19,6 +20,7 @@ ifeq ($(prorab_os),macosx)
     this_ldlibs += -lc++
 endif
 
+this_ldlibs += -lstdc++
 
 $(eval $(prorab-build-app))
 

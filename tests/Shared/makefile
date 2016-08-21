@@ -26,6 +26,7 @@ endif
 
 this_ldflags += -L$(prorab_this_dir)../../src/
 
+this_ldlibs += -lstdc++
 
 $(eval $(prorab-build-app))
 

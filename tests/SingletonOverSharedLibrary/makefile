@@ -42,12 +42,14 @@ this_cxxflags += -fstrict-aliasing #strict aliasing!!!
 
 this_srcs += Singleton_test.cpp
 
-this_ldlibs += $(lib_target_name)
+this_ldlibs += $(lib_target_name) -lstdc++
 
 ifeq ($(prorab_os),macosx)
     this_cxxflags += -stdlib=libc++ #this is needed to be able to use c++11 std lib
     this_ldlibs += -lc++
 endif
+
+prorab_obj_dir := obj2
 
 $(eval $(prorab-build-app))
 
