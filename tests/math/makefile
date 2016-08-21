@@ -18,7 +18,7 @@ ifeq ($(prorab_os),macosx)
     this_ldlibs += -lc++
 endif
 
-this_ldlibs += -lstdc++
+this_ldlibs += -lstdc++ -lm
 
 $(eval $(prorab-build-app))
 
