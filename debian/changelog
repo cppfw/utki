@@ -1,3 +1,9 @@
+libutki (1.0.23) unstable; urgency=medium
+
+  * deploy to rasp
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 31 Aug 2016 23:34:17 +0300
+
 libutki (1.0.22) unstable; urgency=medium
 
   * undefine DELETE in windows
