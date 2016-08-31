@@ -1,3 +1,9 @@
+libutki (1.0.24) unstable; urgency=medium
+
+  * deploy to rasp, fixed
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 31 Aug 2016 23:39:10 +0300
+
 libutki (1.0.23) unstable; urgency=medium
 
   * deploy to rasp

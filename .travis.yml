@@ -53,7 +53,7 @@ script:
 
 before_deploy:
   - prorab-apply-version.sh -v `prorab-deb-version.sh debian/changelog` travis_bintray_deb.json.in
-  - prorab-apply-version.sh -v `prorab-deb-version.sh debian/changelog` travis_bintray_resp.json.in
+  - prorab-apply-version.sh -v `prorab-deb-version.sh debian/changelog` travis_bintray_rasp.json.in
 
 deploy:
 - provider: bintray
