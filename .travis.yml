@@ -25,7 +25,7 @@ env:
 
 before_install:
 - if [ "$TRAVIS_OS_NAME" == "linux" ]; then
-    echo "deb https://dl.bintray.com/igagis/deb /" | sudo tee /etc/apt/sources.list.d/igagis.list > /dev/null &&
+    echo "deb https://dl.bintray.com/igagis/ubu unstable main" | sudo tee /etc/apt/sources.list.d/igagis.list > /dev/null &&
     sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 379CE192D401AB61 &&
     sudo apt-get update -qq &&
     sudo apt-get install -qq debhelper prorab doxygen;
@@ -62,6 +62,16 @@ deploy:
     tags: true
     condition: $TRAVIS_OS_NAME = linux && $CC = gcc
   file: travis_bintray_deb.json
+  user: igagis
+  key:
+    secure: "E3q8rPR8oqmLX4ZNqh0V0hTzPxS6lB5sqtCa3nGNZH7nnRpHTjU4zkQkpgXCRC0ebuizdjiXlGvLRoFFpVWu0walPKSsN6GRdwoxQDBrFYlsX63xkF4CTTzPZnbWPWJhZcFAU4qUGwXuKhKjSUWSTlXSZSV924DQPUcqZ2yM6kyzdg0wKPRw5mYfVlt1ccn22oCgVOnKM9d8RA6P8HOGYbQK5M6yJsgzKO+1lFrADPI7uWd7plJqq/S9Ta6W7yFFeJaU1m7D1Uvjvl96C8PhTH4UZ+cpchvdB2tGL9rJ14j9gBUpxQ2HwlADNC/o+UuRGEbw28boKterpsO2tjstI6hAJpJu2Qpim8Wz1SHr0hSCoiomEigtktXA61UcivKFbbdCGv4vMCXQV9wQ8RJVHMvh0CoX8ibrc60F6piVIp+ZQwdmtutNb9osx3DdUd/Hp1ITcf5Q2uKzGypas+u1ILDktXf7kGIRjMtMZr+vwGLR6gjMAx+I4LhlYVTTY7e3BmR5/2IpUIHMSlTntETMUv6eC4xIHmHYjfv8Ypd/j3qmrB11V81pGc+NBUC7wiNyMfEMzIZ3vbhhDhIGn7bZ4NyH4gb/bDVXzN4riFsou2/CP7p96Hm5bO60iq+hsqYxdzwfsf0nR/dvrfpv9dNhjbnldmAKJChXGQ2sKn3xswE="
+  dry-run: false
+- provider: bintray
+  skip_cleanup: true
+  on:
+    tags: true
+    condition: $TRAVIS_OS_NAME = linux && $CC = gcc
+  file: travis_bintray_ubu.json
   user: igagis
   key:
     secure: "E3q8rPR8oqmLX4ZNqh0V0hTzPxS6lB5sqtCa3nGNZH7nnRpHTjU4zkQkpgXCRC0ebuizdjiXlGvLRoFFpVWu0walPKSsN6GRdwoxQDBrFYlsX63xkF4CTTzPZnbWPWJhZcFAU4qUGwXuKhKjSUWSTlXSZSV924DQPUcqZ2yM6kyzdg0wKPRw5mYfVlt1ccn22oCgVOnKM9d8RA6P8HOGYbQK5M6yJsgzKO+1lFrADPI7uWd7plJqq/S9Ta6W7yFFeJaU1m7D1Uvjvl96C8PhTH4UZ+cpchvdB2tGL9rJ14j9gBUpxQ2HwlADNC/o+UuRGEbw28boKterpsO2tjstI6hAJpJu2Qpim8Wz1SHr0hSCoiomEigtktXA61UcivKFbbdCGv4vMCXQV9wQ8RJVHMvh0CoX8ibrc60F6piVIp+ZQwdmtutNb9osx3DdUd/Hp1ITcf5Q2uKzGypas+u1ILDktXf7kGIRjMtMZr+vwGLR6gjMAx+I4LhlYVTTY7e3BmR5/2IpUIHMSlTntETMUv6eC4xIHmHYjfv8Ypd/j3qmrB11V81pGc+NBUC7wiNyMfEMzIZ3vbhhDhIGn7bZ4NyH4gb/bDVXzN4riFsou2/CP7p96Hm5bO60iq+hsqYxdzwfsf0nR/dvrfpv9dNhjbnldmAKJChXGQ2sKn3xswE="

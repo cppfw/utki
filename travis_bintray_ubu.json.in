@@ -1,7 +1,7 @@
 {
 	"package": {
 		"name": "libutki",
-		"repo": "rasp",
+		"repo": "ubu",
 		"subject": "igagis"
 	},
 	
@@ -16,10 +16,10 @@
                         "matrixParams": {
 				"deb_distribution": "unstable",
 				"deb_component": "main",
-				"deb_architecture": "armhf"
+				"deb_architecture": "amd64"
 			}
 		}
 	],
 	"publish": true,
-	"override": false
+	"override": true
 }

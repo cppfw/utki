@@ -1,3 +1,9 @@
+libutki (1.0.26) unstable; urgency=medium
+
+  * bintray deploy
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 14 Sep 2016 22:37:21 +0300
+
 libutki (1.0.25) unstable; urgency=medium
 
   * build fix
