@@ -66,3 +66,4 @@ endef
 $(eval $(this_rules))
 endif
 
+prorab_obj_dir := obj/
