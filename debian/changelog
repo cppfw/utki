@@ -1,3 +1,9 @@
+libutki (1.0.28) unstable; urgency=medium
+
+  * lintian corrections
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 16 Sep 2016 00:41:19 +0300
+
 libutki (1.0.27) unstable; urgency=medium
 
   * bintray deploy

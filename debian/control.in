@@ -1,5 +1,5 @@
 Source: libutki
-Section: misc
+Section: libs
 Priority: extra
 Maintainer: Ivan Gagis <igagis@gmail.com>
 Build-Depends: debhelper (>= 9), dpkg-dev (>=1.17.0), prorab
@@ -8,7 +8,7 @@ Standards-Version: 3.9.2
 
 
 Package: libutki-dev
-Section: devel
+Section: libdevel
 Architecture: all
 Depends: ${misc:Depends}
 Suggests: libutki-doc
@@ -16,7 +16,7 @@ Description: cross-platform C++ utility library.
  Different C++ utility classes and functions.
 
 Package: libutki-doc
-Section: devel
+Section: doc
 Architecture: all
 Depends: ${misc:Depends}
 Description: documentation for libutki - cross-platform C++ library.
