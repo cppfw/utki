@@ -13,7 +13,7 @@
 		{
 			"includePattern": "../(.[^/]*(\\.deb)$)",
 			"uploadPattern": "$1",
-                        "matrixParams": {
+			"matrixParams": {
 				"deb_distribution": "unstable",
 				"deb_component": "main",
 				"deb_architecture": "armhf"
