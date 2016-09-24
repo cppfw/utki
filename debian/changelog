@@ -1,3 +1,9 @@
+libutki (1.0.30) unstable; urgency=medium
+
+  * mac os build fix
+
+ -- Ivan Gagis <igagis@gmail.com>  Sat, 24 Sep 2016 17:21:53 +0300
+
 libutki (1.0.29) unstable; urgency=medium
 
   * added ScopeExit::reset() method
