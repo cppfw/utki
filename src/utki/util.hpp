@@ -1,15 +1,4 @@
-/**
- * @file utils.hpp
- * @author Ivan Gagis <igagis@gmail.com>
- * @brief Utility functions and classes.
- */
-
 #pragma once
-
-//TODO: is it needed?
-//#if M_COMPILER == M_COMPILER_MSVC
-//#	pragma warning(disable:4290)
-//#endif
 
 
 #include <functional>
@@ -21,21 +10,50 @@
 namespace utki{
 
 
+/**
+ * @brief Execute a function on scope exit.
+ * This class can be used to perform some function when the object of this class
+ * is destroyed due to leave of the scope where it was created.
+ * 
+ * Example:
+ * @code
+ * {
+ *     utki::ScopeExit scopeExit([](){
+ *         std::cout << "Leaving scope" << std::endl;
+ *     });
+ * }
+ * @endcode
+ */
 class ScopeExit{
-	std::function<void()> f;
+	std::function<void()noexcept> f;
 
 public:
 	ScopeExit(const ScopeExit&) = delete;
 	ScopeExit& operator=(const ScopeExit&) = delete;
 	
+	/**
+	 * @brief Constructor.
+	 * @param f - function to call on object destruction.
+	 */
 	ScopeExit(decltype(f)&& f) :
 			f(std::move(f))
 	{}
 	
-    ~ScopeExit(){
+    ~ScopeExit()noexcept{
 		if(this->f){
 			this->f();
 		}
+	}
+	
+	/**
+	 * @brief Disarm scope exit object.
+	 * This function disarms the ScopeExit object, so that it will not do any action on destruction.
+	 * @return the previous function which had to be executed on object's destruction.
+	 */
+	decltype(f) reset()noexcept{
+		auto ret = std::move(this->f);
+		this->f = nullptr;
+		return ret;
 	}
 };
 

@@ -78,7 +78,7 @@
           <buildCommandWorkingDir>.</buildCommandWorkingDir>
           <buildCommand>${MAKE} -f makefile</buildCommand>
           <cleanCommand>${MAKE} -f makefile clean</cleanCommand>
-          <executablePath></executablePath>
+          <executablePath>tests/util/tests</executablePath>
           <ccTool>
             <standard>8</standard>
             <incDir>

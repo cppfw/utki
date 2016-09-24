@@ -67,12 +67,26 @@ void Run(){
 
 namespace TestScopeExit{
 void Run(){
-	bool flag = false;
 	{
-		utki::ScopeExit se([&flag](){
-			flag = true;
-		});
+		bool flag = false;
+		{
+			utki::ScopeExit se([&flag](){
+				flag = true;
+			});
+		}
+		ASSERT_ALWAYS(flag)
 	}
-	ASSERT_ALWAYS(flag)
+	
+	{
+		bool flag = false;
+		{
+			utki::ScopeExit se([&flag](){
+				flag = true;
+			});
+			
+			se.reset();
+		}
+		ASSERT_ALWAYS(!flag)
+	}
 }
 }
