@@ -89,7 +89,7 @@ deploy:
   dry-run: false
 - provider: script
   skip_cleanup: true
-  script: prorab-deploy-homebrew.sh igagis/tap
+  script: prorab-deploy-homebrew.sh -t igagis/tap
   on:
     tags: true
     condition: $TRAVIS_OS_NAME = osx && $CC = clang
