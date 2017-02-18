@@ -1,3 +1,9 @@
+libutki (1.0.32) unstable; urgency=medium
+
+  * ios deploy fix
+
+ -- Ivan Gagis <igagis@gmail.com>  Sun, 19 Feb 2017 00:53:46 +0200
+
 libutki (1.0.31) unstable; urgency=medium
 
   * ios deploy fix
