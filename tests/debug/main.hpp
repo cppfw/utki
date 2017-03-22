@@ -7,6 +7,4 @@
 
 inline void TestTingDebug(){
 	TestBasicDebugStuff::Run();
-	
-	TRACE_ALWAYS(<< "[PASSED]: debug test" << std::endl)	
 }

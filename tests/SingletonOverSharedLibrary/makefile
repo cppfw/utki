@@ -57,11 +57,12 @@ $(prorab_this_name): $(lib_target_name)
 
 
 #no test under windows, it will fails there
-ifneq ($(prorab_os),windows)
+ifneq ($(os),windows)
 define this_rules
 test:: $(prorab_this_name)
-	@echo running $$^...
-	@(cd $(prorab_this_dir); $(if $(filter windows,$(prorab_os)), $$^, LD_LIBRARY_PATH=. $$^))
+	@prorab-running-test.sh $$^
+	@(cd $(prorab_this_dir); $(if $(filter windows,$(os)), $$^, LD_LIBRARY_PATH=. $$^))
+	@prorab-passed.sh
 endef
 $(eval $(this_rules))
 endif

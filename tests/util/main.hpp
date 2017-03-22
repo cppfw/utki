@@ -8,6 +8,4 @@
 inline void TestTingUtil(){
 	TestSerialization::Run();
 	TestScopeExit::Run();
-	
-	TRACE_ALWAYS(<< "[PASSED]: utils test" << std::endl)
 }

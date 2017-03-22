@@ -8,6 +8,4 @@
 
 inline void TestTingMath(){
 	TestBasicMathStuff::Run();
-
-	TRACE_ALWAYS(<<"[PASSED]: math test"<<std::endl)
 }

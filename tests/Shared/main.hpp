@@ -3,8 +3,6 @@
 #include "tests.hpp"
 
 
-inline void TestTingShared(){
+inline void TestShared(){
 	TestBasicTingShared::Run();
-
-	TRACE_ALWAYS(<< "[PASSED]: Shared test" << std::endl)
 }

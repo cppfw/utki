@@ -32,7 +32,5 @@ int main(int argc, char *argv[]){
 	ASSERT_ALWAYS(ts.a == 145)
 	ASSERT_ALWAYS(TestSingleton::inst().a == 145)
 
-	TRACE_ALWAYS(<< "[PASSED]: Singleton over shared library test" << std::endl)
-
 	return 0;
 }

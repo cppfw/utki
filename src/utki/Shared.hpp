@@ -46,7 +46,7 @@ public:
  */
 template< class T, class... Args > std::shared_ptr<T> makeShared(Args&&... args){
 	static_assert(std::is_base_of<Shared, T>::value, "Class does not inherit utki::Shared, cannot create object.");
-	return std::shared_ptr<T>(new T(std::forward<Args>(args)...));
+	return std::make_shared<T>(std::forward<Args>(args)...);
 }
 
 

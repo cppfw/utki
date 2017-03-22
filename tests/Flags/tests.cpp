@@ -64,9 +64,9 @@ void Run(){
 	ASSERT_ALWAYS(fs.get(TestEnum::SECOND))
 	
 	
-	TRACE_ALWAYS(<< "ENUM_SIZE = " << size_t(TestEnum::ENUM_SIZE) << " sizeof(fs) = " << sizeof(fs) << " sizeof(index_t) = " << sizeof(utki::Flags<TestEnum>::index_t) << std::endl)
+	TRACE(<< "ENUM_SIZE = " << size_t(TestEnum::ENUM_SIZE) << " sizeof(fs) = " << sizeof(fs) << " sizeof(index_t) = " << sizeof(utki::Flags<TestEnum>::index_t) << std::endl)
 			
-	TRACE_ALWAYS(<< "fs = " << fs << std::endl)
+	TRACE(<< "fs = " << fs << std::endl)
 	
 	{
 		utki::Flags<TestEnum> fs;
