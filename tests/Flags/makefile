@@ -10,7 +10,10 @@ this_cxxflags += -std=c++11
 this_cxxflags += -Wall
 this_cxxflags += -fstrict-aliasing #strict aliasing!!!
 this_cxxflags += -O3
-this_cxxflags += -fPIC
+
+ifneq ($(os),windows)
+    this_cxxflags += -fPIC
+endif
 
 this_srcs += main.cpp tests.cpp
 

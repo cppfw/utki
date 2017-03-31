@@ -11,10 +11,11 @@ this_cxxflags += #-DDEBUG
 this_cxxflags += -fstrict-aliasing #strict aliasing!!!
 this_cxxflags += -O3
 
-ifeq ($(prorab_os),macosx)
+ifeq ($(os),macosx)
     this_cxxflags += -stdlib=libc++ #this is needed to be able to use c++11 std lib
     this_ldlibs += -lc++
-else ifeq ($(prorab_os),windows)
+else ifeq ($(os),windows)
+    this_ldlibs += -lstdc++
 else
     this_cxxflags += -fPIC
 endif
