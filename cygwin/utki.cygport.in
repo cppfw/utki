@@ -1,0 +1,23 @@
+NAME="utki"
+VERSION=$(version)
+RELEASE=1
+
+CATEGORY="Devel"
+SUMMARY="C++ utility library"
+DESCRIPTION="A GNU make based build systemC++ utility library.
+Stuff missing from std namespace."
+
+SRC_URI="https://github.com/igagis/utki/archive/${VERSION}.tar.gz"
+
+src_compile() {
+  cd ${B}
+  lndirs
+  cygmake
+}
+
+src_install() {
+  cd ${B}
+  cyginstall PREFIX=/usr
+}
+
+# use the standard src_test
