@@ -23,12 +23,16 @@ before_build:
   - nuget restore msvs_solution/msvs_solution.sln
 
 build_script:
-  - cmd: C:\cygwin64\bin\bash -e -l -c "prorab-apply-version.sh -v `prorab-deb-version.sh debian/changelog` cygwin/*.in"
-  - cmd: C:\cygwin64\bin\bash -e -l -c "cygport cygwin/*.cygport download"
-  - cmd: C:\cygwin64\bin\bash -e -l -c "cygport cygwin/*.cygport all"
-  - cmd: C:\cygwin\bin\bash -e -l -c "prorab-apply-version.sh -v `prorab-deb-version.sh debian/changelog` cygwin/*.in"
-  - cmd: C:\cygwin\bin\bash -e -l -c "cygport cygwin/*.cygport download"
-  - cmd: C:\cygwin\bin\bash -e -l -c "cygport cygwin/*.cygport all"
+  - cmd: if "%APPVEYOR_REPO_TAG%"=="true"
+           C:\cygwin64\bin\bash -e -l -c "prorab-apply-version.sh -v `prorab-deb-version.sh debian/changelog` cygwin/*.in" &&
+           C:\cygwin64\bin\bash -e -l -c "cygport cygwin/*.cygport download" &&
+           C:\cygwin64\bin\bash -e -l -c "cygport cygwin/*.cygport all" &&
+           C:\cygwin\bin\bash -e -l -c "prorab-apply-version.sh -v `prorab-deb-version.sh debian/changelog` cygwin/*.in" &&
+           C:\cygwin\bin\bash -e -l -c "cygport cygwin/*.cygport download" &&
+           C:\cygwin\bin\bash -e -l -c "cygport cygwin/*.cygport all"
+         else
+           C:\cygwin64\bin\bash -e -l -c "make" &&
+           C:\cygwin\bin\bash -e -l -c "make"
   - ps: .\nuget\build_nuget.ps1
 
 test_script:
