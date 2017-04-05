@@ -1,3 +1,9 @@
+libutki (1.0.33) unstable; urgency=medium
+
+  * deploying to cygwin
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 05 Apr 2017 16:45:21 +0300
+
 libutki (1.0.32) unstable; urgency=medium
 
   * ios deploy fix
