@@ -17,7 +17,7 @@ src_compile() {
 
 src_install() {
   cd ${B}
-  make -C src install PREFIX=/usr
+  cyginstall MAKEOPTS="-C src" PREFIX=/usr
 }
 
 # use the standard src_test
