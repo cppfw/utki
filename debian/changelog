@@ -1,3 +1,9 @@
+libutki (1.0.38) unstable; urgency=medium
+
+  * check for __CYGWIN__ macro when determining OS
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 11 Apr 2017 13:50:38 +0300
+
 libutki (1.0.37) unstable; urgency=medium
 
   * deploy to cygwin
