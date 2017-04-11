@@ -136,7 +136,9 @@
 #		define M_OS_NAME M_OS_NAME_UNKNOWN
 #	endif
 
-#elif defined(_WIN32) || defined(WIN32) // _WIN32 macro is defined for both win32 and win64. _WIN32 is the correct one, WIN32 not always defined.
+// _WIN32 macro is defined for both win32 and win64. _WIN32 is the correct one, WIN32 not always defined.
+// On Cygwin none of WIN32 or _WIN32 are defined, so need to check for __CYGWIN__
+#elif defined(_WIN32) || defined(WIN32) || defined(__CYGWIN__)
 #	define M_OS M_OS_WINDOWS
 #	define M_OS_NAME M_OS_NAME_UNKNOWN
 #elif defined(__APPLE__)
