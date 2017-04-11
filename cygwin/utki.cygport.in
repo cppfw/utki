@@ -4,7 +4,7 @@ RELEASE=1
 
 CATEGORY="Devel"
 SUMMARY="C++ utility library"
-DESCRIPTION="A GNU make based build systemC++ utility library.
+DESCRIPTION="C++ utility library.
 Stuff missing from std namespace."
 
 SRC_URI="https://github.com/igagis/utki/archive/${VERSION}.tar.gz"
