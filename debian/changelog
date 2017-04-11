@@ -1,3 +1,9 @@
+libutki (1.0.37) unstable; urgency=medium
+
+  * deploy to cygwin
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 11 Apr 2017 13:15:03 +0300
+
 libutki (1.0.36) unstable; urgency=medium
 
   * deploying to cygwin
