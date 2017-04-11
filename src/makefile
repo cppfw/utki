@@ -4,7 +4,11 @@ this_name := utki
 
 this_soname := 0
 
-$(eval ph := $(patsubst $(d)%,%,$(shell find $(d) -type f -name "*.hpp" -o -name "*.h")))
+rwildcard = $(foreach dd,$(wildcard $1*),$(call rwildcard,$(dd)/,$2) $(filter $(subst *,%,$2),$(dd)))
+
+$(info rw = $(call rwildcard, $(d), *.h *.hpp))
+
+$(eval ph := $(patsubst $(d)%,%,$(call rwildcard, $(d), *.h *.hpp)))
 $(info ph = $(ph))
 
 $(eval $(prorab-build-lib))
