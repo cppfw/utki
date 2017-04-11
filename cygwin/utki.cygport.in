@@ -9,6 +9,9 @@ Stuff missing from std namespace."
 
 SRC_URI="https://github.com/igagis/utki/archive/${VERSION}.tar.gz"
 
+#compile time dependencies
+DEPEND="prorab"
+
 src_compile() {
   cd ${B}
   lndirs
