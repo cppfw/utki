@@ -9,8 +9,6 @@ Stuff missing from std namespace."
 
 SRC_URI="https://github.com/igagis/utki/archive/${VERSION}.tar.gz"
 
-MAKEOPTS="-C src"
-
 src_compile() {
   cd ${B}
   lndirs
@@ -19,7 +17,7 @@ src_compile() {
 
 src_install() {
   cd ${B}
-  cyginstall PREFIX=/usr
+  cyginstall -C src PREFIX=/usr
 }
 
 # use the standard src_test
