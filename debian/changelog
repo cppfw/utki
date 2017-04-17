@@ -1,3 +1,9 @@
+libutki (1.0.39) unstable; urgency=medium
+
+  * release branch
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 17 Apr 2017 21:54:25 +0300
+
 libutki (1.0.38) unstable; urgency=medium
 
   * check for __CYGWIN__ macro when determining OS
