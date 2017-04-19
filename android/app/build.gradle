@@ -7,15 +7,15 @@ model {
 
 	repositories {
 		libs(PrebuiltLibraries) {
-			// Configure one pre-built lib: shared
-			utki {
-				// Inform Android Studio where header file dir for this lib
-				headers.srcDir "${lib_distribution_root}/utki"
-				// Inform Android Studio where lib is -- each ABI should have a lib file
-//				binaries.withType(StaticLibraryBinary) {
-//					staticLibraryFile = file("${lib_distribution_root}/${targetPlatform.getName()}/libutki.a")
-//				}
-			}
+//			// Configure one pre-built lib: shared
+//			utki {
+//				// Inform Android Studio where header file dir for this lib
+//				headers.srcDir "${lib_distribution_root}/utki"
+//				// Inform Android Studio where lib is -- each ABI should have a lib file
+////				binaries.withType(StaticLibraryBinary) {
+////					staticLibraryFile = file("${lib_distribution_root}/${targetPlatform.getName()}/libutki.a")
+////				}
+//			}
 		}
 	}
 
@@ -35,7 +35,7 @@ model {
 			platformVersion = 21
 			moduleName = 'utki-tests'
 			toolchain = 'clang'
-			stl = 'gnustl_shared'
+			stl = 'c++_shared'
 			cppFlags.add("-std=c++11")
 			cppFlags.add("-fexceptions")
 			cppFlags.add("-frtti")
@@ -46,9 +46,9 @@ model {
 		sources {
 			main {
 				jni {
-					dependencies {
-						library 'utki' linkage 'static'
-					}
+//					dependencies {
+//						library 'utki' linkage 'static'
+//					}
 					source {
 						srcDirs '../../tests'
 						exclude '*/main.cpp'
