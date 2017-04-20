@@ -13,8 +13,7 @@ matrix:
       compiler: clang
       language: cpp
       env: BUILD_NAME=macosx
-    - os: linux
-      language: android
+    - language: android
       env: BUILD_NAME=android
 
       
