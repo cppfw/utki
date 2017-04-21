@@ -1,4 +1,5 @@
 apply plugin: "com.android.model.library"
+apply plugin: 'com.github.dcendents.android-maven'
 
 model {
 
@@ -36,20 +37,30 @@ model {
 
 }
 
+install {
+    repositories.mavenInstaller {
+        pom.project {
+            groupId "org.igagis"
+            artifactId "libutki"
+            version "1.1.0"
+        }
+    }
+}
+
 // This is just copy out the header file and built lib into distribution
 // directory, for clint application to use, it is the overhead of this sample:
 //    both lib and app are put inside one project space
-task(distributeLib, type : Copy) {
-	// trigger build library
-	dependsOn assemble
-	into '../distribution/'
-	from('../../src/utki/*.hpp') {
-		into 'utki/'
-	}
-	from('build/outputs/native/release/lib') {
-		into './'
-	}
-}
+//task(distributeLib, type : Copy) {
+//	// trigger build library
+//	dependsOn assemble
+//	into '../distribution/'
+//	from('../../src/utki/*.hpp') {
+//		into 'utki/'
+//	}
+//	from('build/outputs/native/release/lib') {
+//		into './'
+//	}
+//}
 
 
 //apply plugin: 'com.android.model.library'
