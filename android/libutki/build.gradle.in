@@ -26,6 +26,9 @@ model {
 
     }
 
+    android.lintOptions {
+        abortOnError false
+    }
 
     android.sources {
         main {
