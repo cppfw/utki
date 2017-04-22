@@ -12,11 +12,11 @@
 	"files": [
 		{
 			"includePattern": "android/(.[^/]*(\\.aar)$)",
-			"uploadPattern": "$1"
+			"uploadPattern": "io/github/igagis/libutki/$(version)/$1"
 		},
 		{
 			"includePattern": "android/(.[^/]*(\\.pom)$)",
-			"uploadPattern": "$1"
+			"uploadPattern": "io/github/igagis/libutki/$(version)/$1"
 		}
 	],
 	"publish": true,
