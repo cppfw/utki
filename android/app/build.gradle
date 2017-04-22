@@ -76,6 +76,10 @@ model {
 		}
     }
 
+	android.lintOptions {
+		abortOnError false
+	}
+
 //    android.ndk {
 //        moduleName = "utki"
 //        ldLibs.add('log')
