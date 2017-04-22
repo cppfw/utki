@@ -34,11 +34,17 @@ env:
   - PRORAB_GIT_ACCESS_TOKEN=$HOMEBREW_GITHUB_ACCESS_TOKEN
 
 before_install:
-- if [ "$BUILD_NAME" == "debian" ] || [ "$BUILD_NAME" == "android" ]; then
+- if [ "$BUILD_NAME" == "debian" ]; then
     echo "deb https://dl.bintray.com/igagis/ubu unstable main" | sudo tee /etc/apt/sources.list.d/igagis.list > /dev/null &&
     sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 379CE192D401AB61 &&
     sudo apt-get update -qq &&
     sudo apt-get install -qq debhelper prorab doxygen;
+  fi
+- if [ "$BUILD_NAME" == "android" ]; then
+    echo "deb https://dl.bintray.com/igagis/ubu unstable main" | sudo tee /etc/apt/sources.list.d/igagis.list > /dev/null &&
+    sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 379CE192D401AB61 &&
+    sudo apt-get update -qq &&
+    sudo apt-get install -qq prorab;
   fi
 - if [ "$BUILD_NAME" == "macosx" ]; then
     rvm install ruby-2.2.2 &&
@@ -85,7 +91,8 @@ script:
   fi
 - if [ "$BUILD_NAME" == "android" ]; then
     prorab-apply-version.sh -v `prorab-deb-version.sh debian/changelog` `find android -name *.gradle.in` &&
-    (cd android && ./gradlew build) &&
+    (cd android && ./gradlew build);
+    cat /home/travis/build/igagis/utki/android/app/build/reports/lint-results.html &&
     ls android;
   fi
 
