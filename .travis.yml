@@ -57,6 +57,7 @@ before_install:
 
 
 before_script:
+  # download and install android NDK
   - if [ "$BUILD_NAME" == "android" ]; then
       export TERM=dumb &&
       curl -L http://dl.google.com/android/ndk/android-ndk-r10e-linux-x86_64.bin -O &&
@@ -83,7 +84,9 @@ script:
     xcodebuild -project ios/tests.xcodeproj/ -alltargets CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO;
   fi
 - if [ "$BUILD_NAME" == "android" ]; then
-    (cd android && ./gradlew assembleRelease);
+    prorab-apply-version.sh -v `prorab-deb-version.sh debian/changelog` `find android -name *.gradle.in` &&
+    (cd android && ./gradlew build);
+    ls android;
   fi
 
 before_deploy:
