@@ -11,13 +11,12 @@
 
 	"files": [
 		{
-			"includePattern": "../(.[^/]*(\\.deb)$)",
-			"uploadPattern": "$1",
-                        "matrixParams": {
-				"deb_distribution": "unstable",
-				"deb_component": "main",
-				"deb_architecture": "amd64"
-			}
+			"includePattern": "android/(.[^/]*(\\.aar)$)",
+			"uploadPattern": "$1"
+		},
+		{
+			"includePattern": "android/(.[^/]*(\\.pom)$)",
+			"uploadPattern": "$1"
 		}
 	],
 	"publish": true,
