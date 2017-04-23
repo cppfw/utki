@@ -56,7 +56,7 @@ task copyNdkLibsToAAR(type: Zip) {
     from("../../src") {
         exclude('makefile')
         exclude('soname.txt')
-        into('ndkLibs')
+        into('ndkLibs/include')
     }
 }
 
