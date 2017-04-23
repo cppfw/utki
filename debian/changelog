@@ -1,3 +1,9 @@
+libutki (1.1.4) unstable; urgency=medium
+
+  * deploy to android
+
+ -- Ivan Gagis <igagis@gmail.com>  Sun, 23 Apr 2017 21:38:33 +0300
+
 libutki (1.1.3) unstable; urgency=medium
 
   * android deploy
