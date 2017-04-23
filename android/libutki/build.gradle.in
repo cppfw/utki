@@ -49,6 +49,7 @@ def aarName = name
 
 task copyNdkLibsToAAR(type: Zip) {
     baseName = aarName
+    version = "$(version)"
     extension = 'aar'
     destinationDir = file('..') //put resulting AAR file to upper level directory
 
@@ -76,7 +77,7 @@ build.finalizedBy('install')
 
 task copyPomFile(type: Copy){
     from('build/poms/pom-default.xml'){
-        rename(".*", aarName + ".pom")
+        rename(".*", aarName + "-$(version).pom")
     }
     into("../")
 }
