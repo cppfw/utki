@@ -1,5 +1,4 @@
 apply plugin: "com.android.model.library"
-apply plugin: 'com.github.dcendents.android-maven'
 
 model {
 
@@ -44,13 +43,15 @@ model {
 
 
 
+//============================
+//=== Copy NDK libs to AAR ===
 
 def aarName = name
 
 task copyNdkLibsToAAR(type: Zip) {
     baseName = aarName
-    version = "$(version)"
-    extension = 'aar'
+    version = "\$(version)"
+    extension = 'aar.in'
     destinationDir = file('..') //put resulting AAR file to upper level directory
 
     from zipTree("build/outputs/aar/" + aarName + "-release.aar")
@@ -62,27 +63,3 @@ task copyNdkLibsToAAR(type: Zip) {
 }
 
 build.finalizedBy('copyNdkLibsToAAR')
-
-//This is needed for POM generation
-install {
-    repositories.mavenInstaller {
-        pom.project {
-            groupId "io.github.igagis"
-            artifactId "libutki"
-            version "$(version)"
-        }
-    }
-}
-build.finalizedBy('install')
-
-task copyPomFile(type: Copy){
-    from('build/poms/pom-default.xml'){
-        rename(".*", aarName + "-$(version).pom")
-    }
-    into("../")
-}
-
-
-install.finalizedBy('copyPomFile')
-
-

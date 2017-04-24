@@ -90,9 +90,9 @@ script:
     xcodebuild -project ios/tests.xcodeproj/ -alltargets CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO;
   fi
 - if [ "$BUILD_NAME" == "android" ]; then
-    prorab-apply-version.sh -v `prorab-deb-version.sh debian/changelog` `find android -name *.gradle.in` &&
     (cd android && ./gradlew build) &&
-    ls android;
+    prorab-apply-version.sh -v `prorab-deb-version.sh debian/changelog` android/*.pom.in &&
+    prorab-apply-version.sh -v `prorab-deb-version.sh debian/changelog` android/*.aar.in --filename-only;
   fi
 
 before_deploy:

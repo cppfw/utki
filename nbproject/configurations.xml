@@ -45,6 +45,7 @@
       <itemPath>.travis.yml</itemPath>
       <itemPath>debian/changelog</itemPath>
       <itemPath>debian/control.in</itemPath>
+      <itemPath>android/libutki-$(version).pom.in</itemPath>
       <itemPath>cocoapods/libutki.podspec.in</itemPath>
       <itemPath>homebrew/libutki.rb.in</itemPath>
       <itemPath>makefile</itemPath>
