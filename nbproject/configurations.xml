@@ -43,6 +43,7 @@
                    kind="IMPORTANT_FILES_FOLDER">
       <itemPath>.gitignore</itemPath>
       <itemPath>.travis.yml</itemPath>
+      <itemPath>appveyor.yml</itemPath>
       <itemPath>debian/changelog</itemPath>
       <itemPath>debian/control.in</itemPath>
       <itemPath>android/libutki-$(version).pom.in</itemPath>
