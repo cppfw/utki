@@ -44,10 +44,10 @@ void Run(){
 
 	{
 		TestClass *c = new TestClass();
-
+		
 		//make sure, "c" is not 0 before accessing member a.
-		ASS(c)->a = 13;
-		int b = ASS(c)->a;
+		c->a = 13;
+		int b = c->a;
 		ASSERT_ALWAYS(b == 13)
 		delete c;
 	}
@@ -56,8 +56,8 @@ void Run(){
 		std::unique_ptr<TestClass> pc(new TestClass());
 
 		//make sure, "pc" is valid before accessing member a.
-		ASS(pc)->a = 13;
-		int b = ASS(pc)->a;
+		pc->a = 13;
+		int b = pc->a;
 		ASSERT_ALWAYS(b == 13)
 	}
 }

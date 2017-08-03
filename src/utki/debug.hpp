@@ -82,25 +82,12 @@ inline void logAssert(const char* msg, const char* file, int line){
 #define ASSERT_ALWAYS(x) ASSERT_INFO_ALWAYS((x), "no additional info")
 
 
-
 #ifdef DEBUG
 #	define ASSERT_INFO(x, y) ASSERT_INFO_ALWAYS((x), y)
 #	define ASSERT(x) ASSERT_ALWAYS(x)
 
-#	if M_OS == M_OS_SYMBIAN
-#		define ASS(x) (x)
-#		define ASSCOND(x, cond) (x)
-
-#	else //Assume system supporting standard assert() (including Android)
-#		define ASS(x) ( (x) ? (x) : (utki::logAssert("ASS() assertion macro", __FILE__, __LINE__), (assert(false)), (x)) )
-#		define ASSCOND(x, cond) ( ((x) cond) ? (x) : (utki::logAssert("ASS() assertion macro", __FILE__, __LINE__), (assert(false)), (x)) )
-
-#	endif
-
 #else //No DEBUG macro defined
 #	define ASSERT_INFO(x, y)
 #	define ASSERT(x)
-#	define ASS(x) (x)
-#	define ASSCOND(x, cond) (x)
 
 #endif//~#ifdef DEBUG
