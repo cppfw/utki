@@ -1,3 +1,9 @@
+libutki (1.1.8) unstable; urgency=medium
+
+  * removed ASS and ASSCOND macros
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 03 Aug 2017 16:27:17 +0300
+
 libutki (1.1.7) unstable; urgency=medium
 
   * remove rubbish from android manifest
