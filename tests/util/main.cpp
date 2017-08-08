@@ -2,7 +2,7 @@
 
 
 int main(int argc, char *argv[]){
-	TestTingUtil();
+	TestUtkiUtil();
 	
 	return 0;
 }

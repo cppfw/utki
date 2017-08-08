@@ -5,7 +5,8 @@
 #include "tests.hpp"
 
 
-inline void TestTingUtil(){
+inline void TestUtkiUtil(){
 	TestSerialization::Run();
 	TestScopeExit::Run();
+	testFlipMap::run();
 }

@@ -2,6 +2,8 @@
 
 
 #include <functional>
+#include <map>
+#include <algorithm>
 
 #include "debug.hpp"
 
@@ -9,6 +11,16 @@
 
 namespace utki{
 
+
+template<typename T_A, typename T_B> std::pair<T_B, T_A> flipPair(const std::pair<T_A, T_B> &p){
+    return std::pair<T_B, T_A>(p.second, p.first);
+}
+
+template<typename T_A, typename T_B> std::map<T_B, T_A> flipMap(const std::map<T_A, T_B> &m){
+    std::map<T_B, T_A> ret;
+    std::transform(m.begin(), m.end(), std::inserter(ret, ret.begin()), flipPair<T_A, T_B>);
+    return ret;
+}
 
 /**
  * @brief Execute a function on scope exit.

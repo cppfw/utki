@@ -90,3 +90,20 @@ void Run(){
 	}
 }
 }
+
+namespace testFlipMap{
+void run(){
+	std::map<int, std::string> m = {
+		{10, "10"},
+		{13, "13"},
+		{42, "42"}
+	};
+	
+	auto fm = utki::flipMap(m);
+	
+	ASSERT_ALWAYS(fm.size() == 3)
+	ASSERT_ALWAYS(fm["10"] == 10)
+	ASSERT_ALWAYS(fm["13"] == 13)
+	ASSERT_ALWAYS(fm["42"] == 42)
+}
+}

@@ -9,3 +9,7 @@ void Run();
 namespace TestScopeExit{
 void Run();
 }
+
+namespace testFlipMap{
+void run();
+}

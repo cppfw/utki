@@ -72,7 +72,9 @@
       </toolsSet>
       <flagsDictionary>
         <element flagsID="0" commonFlags="-std=c++11"/>
-        <element flagsID="1" commonFlags="-std=c++11 -fPIC"/>
+        <element flagsID="1" commonFlags="-std=c++11 -O3"/>
+        <element flagsID="2" commonFlags="-std=c++11 -O3 -fPIC"/>
+        <element flagsID="3" commonFlags="-std=c++11 -fPIC"/>
       </flagsDictionary>
       <codeAssistance>
       </codeAssistance>
@@ -95,13 +97,6 @@
         </preBuild>
       </makefileType>
       <folder path="1/Buf">
-        <ccTool>
-          <preprocessorList>
-            <Elem>DEBUG</Elem>
-          </preprocessorList>
-        </ccTool>
-      </folder>
-      <folder path="1/Flags">
         <ccTool>
           <preprocessorList>
             <Elem>DEBUG</Elem>
@@ -148,15 +143,18 @@
         </ccTool>
       </item>
       <item path="tests/Buf/tests.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
+        <ccTool flags="1">
         </ccTool>
       </item>
       <item path="tests/Flags/main.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
+          <preprocessorList>
+            <Elem>DEBUG</Elem>
+          </preprocessorList>
         </ccTool>
       </item>
       <item path="tests/Flags/tests.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
+        <ccTool flags="2">
         </ccTool>
       </item>
       <item path="tests/PoolStored/main.cpp" ex="false" tool="1" flavor2="8">
@@ -189,7 +187,7 @@
             ex="false"
             tool="1"
             flavor2="8">
-        <ccTool flags="1">
+        <ccTool flags="3">
         </ccTool>
       </item>
       <item path="tests/debug/main.cpp" ex="false" tool="1" flavor2="8">
@@ -205,7 +203,7 @@
         </ccTool>
       </item>
       <item path="tests/math/tests.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
+        <ccTool flags="1">
         </ccTool>
       </item>
       <item path="tests/util/main.cpp" ex="false" tool="1" flavor2="8">
@@ -213,7 +211,7 @@
         </ccTool>
       </item>
       <item path="tests/util/tests.cpp" ex="false" tool="1" flavor2="8">
-        <ccTool flags="0">
+        <ccTool flags="1">
         </ccTool>
       </item>
     </conf>
