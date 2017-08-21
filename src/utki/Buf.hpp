@@ -1,9 +1,3 @@
-/**
- * @author Ivan Gagis <igagis@gmail.com>
- * @brief buffer wrapper class.
- */
-
-
 #pragma once
 
 #include <array>
@@ -226,8 +220,8 @@ public:
 
 
 	friend std::ostream& operator<<(std::ostream& s, const Buf<T>& buf){
-		for(auto i = buf.begin(); i != buf.end(); ++i){
-			s << "\t" << (*i) << std::endl;
+		for(auto& e : buf){
+			s << e;
 		}
 		return s;
 	}
@@ -259,6 +253,8 @@ template <class T> inline const utki::Buf<T> wrapBuf(const std::vector<T>& v){
 	return wrapBuf(v.size() == 0 ? nullptr : &*v.begin(), v.size());
 }
 
+std::string toString(const Buf<char>& buf){
+	return std::string(&*buf.begin(), buf.size());
+}
 
-
-}//~namespace
+}

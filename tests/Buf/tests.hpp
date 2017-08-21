@@ -12,3 +12,7 @@ void Run();
 namespace TestBufferConstCast{
 void Run();
 }//~namespace
+
+namespace testOutputToStream{
+void run();
+}

@@ -1,7 +1,10 @@
-#include "main.hpp"
+#include "tests.hpp"
 
 int main(int argc, char *argv[]){
-	TestTingBuffer();
+	TestStaticBufferCopyConstructor::Run();
+	TestStaticBufferOperatorEquals::Run();
+	TestBufferConstCast::Run();
+	testOutputToStream::run();
 	
 	return 0;
 }

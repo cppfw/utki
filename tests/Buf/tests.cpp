@@ -34,8 +34,7 @@ void Run(){
 	}
 }
 
-}//~namespace
-
+}
 
 
 namespace TestStaticBufferOperatorEquals{
@@ -82,7 +81,7 @@ void Run(){
 	}
 }
 
-}//~namespace
+}
 
 
 
@@ -125,4 +124,23 @@ void Run(){
 	Func2(utki::wrapBuf<TestClass>(0, 0));
 }
 
-}//~namespace
+}
+
+
+namespace testOutputToStream{
+void run(){
+	{
+		std::array<char, 12> buf = {{'H', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', '!'}};
+
+		std::stringstream ss;
+
+		ss << utki::wrapBuf(buf);
+
+		ASSERT_ALWAYS(ss.str() == "Hello world!")
+	}
+	{
+		std::array<char, 12> buf = {{'H', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', '!'}};
+		ASSERT_ALWAYS(toString(utki::wrapBuf(buf)) == "Hello world!")
+	}
+}
+}
