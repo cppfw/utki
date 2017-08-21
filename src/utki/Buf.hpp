@@ -253,7 +253,7 @@ template <class T> inline const utki::Buf<T> wrapBuf(const std::vector<T>& v){
 	return wrapBuf(v.size() == 0 ? nullptr : &*v.begin(), v.size());
 }
 
-std::string toString(const Buf<char>& buf){
+inline std::string toString(const Buf<char>& buf){
 	return std::string(&*buf.begin(), buf.size());
 }
 
