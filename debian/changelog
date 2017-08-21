@@ -1,3 +1,9 @@
+libutki (1.1.12) unstable; urgency=medium
+
+  * added toString(Buf<char>) function
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 21 Aug 2017 17:32:34 +0300
+
 libutki (1.1.11) unstable; urgency=medium
 
   * flipMap() function added
