@@ -47,6 +47,7 @@ public:
  * @param args - arguments of object class constructor.
  * @return std::shared_ptr pointing to a newly created object.
  */
+//TODO: this is deprecated in favor of std::make_shared, remove this function in version 2.0.0
 template< class T, class... Args > std::shared_ptr<T> makeShared(Args&&... args){
 	static_assert(std::is_base_of<Shared, T>::value, "Class does not inherit utki::Shared, cannot create object.");
 	TRACE(<< "utki::makeShared() is deprecated, use std::make_shared() instead" << std::endl)
