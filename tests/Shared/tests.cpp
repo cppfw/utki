@@ -25,9 +25,9 @@ public:
 
 
 void Run(){
-	std::shared_ptr<TestClass> p1 = utki::makeShared<TestClass>();
+	std::shared_ptr<TestClass> p1 = std::make_shared<TestClass>();
 	
-	std::shared_ptr<TestClass> p2 = utki::makeShared<TestClass>(21);
+	std::shared_ptr<TestClass> p2 = std::make_shared<TestClass>(21);
 	
 	ASSERT_ALWAYS(p1->a == 4)
 	ASSERT_ALWAYS(p2->a == 21)
@@ -36,4 +36,4 @@ void Run(){
 }
 
 
-}//~namespace
+}

@@ -29,10 +29,13 @@ protected:
      * @param thisPtr - 'this' used to determine type for casting.
      * @return shared_ptr to this object.
      */
-	template <class T> std::shared_ptr<T> sharedFromThis(T* thisPtr)const{
-		return std::move(std::dynamic_pointer_cast<T>(const_cast<Shared*>(this)->shared_from_this()));
+	template <class T> std::shared_ptr<T> sharedFromThis(T* thisPtr){
+		return std::move(std::dynamic_pointer_cast<T>(this->shared_from_this()));
 	}
 	
+	template <class T> std::shared_ptr<const T> sharedFromThis(T* thisPtr)const{
+		return std::move(std::dynamic_pointer_cast<const T>(this->shared_from_this()));
+	}
 public:
 	virtual ~Shared()noexcept{}
 };
@@ -46,6 +49,7 @@ public:
  */
 template< class T, class... Args > std::shared_ptr<T> makeShared(Args&&... args){
 	static_assert(std::is_base_of<Shared, T>::value, "Class does not inherit utki::Shared, cannot create object.");
+	TRACE(<< "utki::makeShared() is deprecated, use std::make_shared() instead" << std::endl)
 	return std::make_shared<T>(std::forward<Args>(args)...);
 }
 
