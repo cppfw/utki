@@ -1,12 +1,9 @@
-/**
- * @author Ivan Gagis <igagis@gmail.com>
- */
-
 #pragma once
 
 #include <memory>
 
 #include "config.hpp"
+#include "debug.hpp"
 
 namespace utki{
 

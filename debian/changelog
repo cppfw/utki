@@ -1,3 +1,9 @@
+libutki (1.1.15) unstable; urgency=medium
+
+  * fix
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 05 Sep 2017 10:01:06 +0300
+
 libutki (1.1.14) unstable; urgency=medium
 
   * makeShared() deprecated
