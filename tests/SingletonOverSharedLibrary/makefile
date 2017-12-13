@@ -61,9 +61,9 @@ $(prorab_this_name): $(lib_target_name)
 ifneq ($(os),windows)
 define this_rules
 test:: $(prorab_this_name)
-	@prorab-running-test.sh $$^
+	@myci-running-test.sh $$^
 	@(cd $(prorab_this_dir); $(if $(filter windows,$(os)), $$^, LD_LIBRARY_PATH=. $$^))
-	@prorab-passed.sh
+	@myci-passed.sh
 endef
 $(eval $(this_rules))
 endif
