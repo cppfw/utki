@@ -5,6 +5,7 @@ class Libutki < Formula
   sha256 "$(sha256)"
 
   depends_on "prorab" => :build
+  depends_on "prorab-extra" => :build
 
   def install
     ENV['PATH'] += ':/usr/local/bin'
