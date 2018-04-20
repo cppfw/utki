@@ -1,3 +1,11 @@
+configurations {
+	UserPlatformToolset {
+		// Needed because autopackage lacks VS2015+ support
+		key = "PlatformToolset";
+		choices: "v140,v141";
+	};
+}
+
 nuget{
 	nuspec{
 		id = libutki;
@@ -27,20 +35,28 @@ nuget{
 			"..\src\utki\**\*.hpp"
 		};
 			
-		[x86,release] {
-
+		[x86,v140,release] {
 		}
 
-		[x86,debug] { 
-
+		[x86,v140,debug] {
 		}
 
-		[x64,release] {
-
+		[x64,v140,release] {
 		}
 
-		[x64,debug] { 
+		[x64,v140,debug] {
+		}
+		
+		[x86,v141,release] {
+		}
 
+		[x86,v141,debug] {
+		}
+
+		[x64,v141,release] {
+		}
+
+		[x64,v141,debug] {
 		}
 	}
 }
