@@ -1,3 +1,9 @@
+libutki (1.1.16) unstable; urgency=medium
+
+  * removing noexcept from scopeexit to support C++17
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 20 Apr 2018 13:21:10 +0300
+
 libutki (1.1.15) unstable; urgency=medium
 
   * fix
