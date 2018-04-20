@@ -195,7 +195,7 @@ deploy:
   skip_cleanup: true
   on:
     tags: true
-    condition: $BUILD_NAME = debian
+    condition: $BUILD_NAME = ubuntu
   file: travis_bintray_ubu.json
   user: igagis
   key:
@@ -205,7 +205,7 @@ deploy:
   skip_cleanup: true
   on:
     tags: true
-    condition: $BUILD_NAME = debian
+    condition: $BUILD_NAME = raspberry_pi
   file: travis_bintray_rasp.json
   user: igagis
   key:
@@ -232,4 +232,4 @@ deploy:
   script: myci-deploy-cocoapods.sh -r igagis
   on:
     tags: true
-    condition: $BUILD_NAME = macosx
+    condition: $BUILD_NAME = ios
