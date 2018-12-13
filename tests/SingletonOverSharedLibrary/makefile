@@ -28,7 +28,7 @@ lib_target_name := $(prorab_this_name)
 
 
 
-$(prorab-clear-this-vars)
+$(eval $(prorab-clear-this-vars))
 
 
 
