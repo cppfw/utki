@@ -1,5 +1,5 @@
 # Maintainer: Ivan Gagis <igagis@gmail.com>
-pkgname=prorab
+pkgname=mingw-w64-utki
 pkgver=$(version)
 pkgrel=1
 epoch=

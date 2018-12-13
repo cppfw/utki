@@ -50,8 +50,6 @@ ifeq ($(prorab_os),macosx)
     this_ldlibs += -lc++
 endif
 
-prorab_obj_dir := obj2/
-
 $(eval $(prorab-build-app))
 
 $(prorab_this_name): $(lib_target_name)
@@ -68,4 +66,3 @@ endef
 $(eval $(this_rules))
 endif
 
-prorab_obj_dir := obj/
