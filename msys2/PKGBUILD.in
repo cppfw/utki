@@ -1,0 +1,49 @@
+# Maintainer: Ivan Gagis <igagis@gmail.com>
+pkgname=prorab
+pkgver=$(version)
+pkgrel=1
+epoch=
+pkgdesc="C++ utilities"
+arch=('any')
+url="http://github.com/igagis/utki"
+license=('MIT')
+groups=()
+
+#Need 'diffutils' package for 'cmp' program
+depends=('make' 'diffutils')
+
+makedepends=('myci')
+checkdepends=('myci')
+optdepends=()
+provides=()
+conflicts=()
+replaces=()
+backup=()
+options=()
+install=
+changelog=
+source=() # Do not download any sources
+noextract=()
+md5sums=()
+validpgpkeys=()
+
+rootDir=$(pwd)/.. # project root directory
+
+prepare() {
+	cd "$rootDir"
+}
+
+build() {
+	cd "$rootDir"
+	make autojobs=true
+}
+
+check() {
+	cd "$rootDir"
+	make test
+}
+
+package() {
+	cd "$rootDir"
+	make DESTDIR="$pkgdir" PREFIX=/usr install
+}
