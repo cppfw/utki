@@ -31,7 +31,7 @@ build_script:
 test_script:
 #  - ps: .\tests\autotest-appveyor.ps1
 
-deploy_script:
+before_deploy:
 - cmd: if "%APPVEYOR_REPO_TAG%"=="true" (%BASH% -lc "cd /c/build && myci-deploy-pacman-bintray.sh -u igagis -r msys2 -p mingw/x86_64 msys2/*.tar.xz") else (echo Skipping deploy because not a tagged commit.)
 
 deploy:
