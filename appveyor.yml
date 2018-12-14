@@ -45,4 +45,4 @@ deploy:
 
 artifacts:
   - path: .\nuget\*.nupkg
-
+  - path: .\msys2\*.tar.xz
