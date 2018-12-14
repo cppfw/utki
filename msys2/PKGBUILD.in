@@ -45,5 +45,5 @@ check() {
 
 package() {
 	cd "$rootDir"
-	make -C src DESTDIR="$pkgdir" PREFIX=/usr install
+	make DESTDIR="$pkgdir" PREFIX=/usr install
 }

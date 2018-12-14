@@ -21,6 +21,8 @@ endif
 
 this_ldlibs += -lstdc++
 
+this_no_install := true
+
 $(eval $(prorab-build-app))
 
 include $(prorab_this_dir)../test_target.mk
