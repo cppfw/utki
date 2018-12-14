@@ -25,7 +25,7 @@ before_build:
 
 build_script:
   - cmd: "%BASH% -lc \"cd /c/build/ && myci-apply-version.sh -v `myci-deb-version.sh debian/changelog` msys2/PKGBUILD.in\""
-  - cmd: "%BASH% -lc \"cd /c/build/msys2 && makepkg --syncdeps --noconfirm --skipinteg\""
+  - cmd: "%BASH% -lc \"cd /c/build/msys2 && makepkg-mingw --syncdeps --noconfirm --skipinteg\""
   - ps: .\nuget\build_nuget.ps1
 
 test_script:
