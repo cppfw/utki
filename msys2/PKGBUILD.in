@@ -44,5 +44,5 @@ check() {
 
 package() {
 	cd "$rootDir"
-	make DESTDIR="$pkgdir" PREFIX=/usr install
+	make DESTDIR="$pkgdir" PREFIX=/mingw64 install
 }

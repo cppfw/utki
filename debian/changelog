@@ -1,3 +1,9 @@
+libutki (1.1.21) unstable; urgency=medium
+
+  * msys install to /mingw64 prefix
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 19 Dec 2018 01:25:34 +0200
+
 libutki (1.1.20) unstable; urgency=medium
 
   * msys2 deployment, do not package tests
