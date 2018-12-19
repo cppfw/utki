@@ -1,10 +1,28 @@
 # Maintainer: Ivan Gagis <igagis@gmail.com>
-pkgname=mingw-w64-utki
+
+if [ "$MSYSTEM" -e "MSYS" ]; then
+	pkgPrefix=
+	dirPrefix=/usr
+	arch=('x86_64' 'i686')
+elif [ "$MSYSTEM" -e "MINGW32" ]; then
+	pkgPrefix=mingw-w64-i686-
+	dirPrefix=/mingw32
+	arch=('any')
+elif [ "$MSYSTEM" -e "MINGW64" ]; then
+	pkgPrefix=mingw-w64-x86_64-
+	dirPrefix=/mingw64
+	arch=('any')
+else
+	echo "ERROR: unknown MSYS shell: $MSYSTEM"
+	exit 1
+fi
+
+pkgname="${pkgPrefix}utki"
 pkgver=$(version)
 pkgrel=1
 epoch=
 pkgdesc="C++ utilities"
-arch=('any')
+#arch=('any') # defined above
 url="http://github.com/igagis/utki"
 license=('MIT')
 groups=()
@@ -44,5 +62,5 @@ check() {
 
 package() {
 	cd "$rootDir"
-	make DESTDIR="$pkgdir" PREFIX=/mingw64 install
+	make DESTDIR="$pkgdir" PREFIX="$dirPrefix" install
 }
