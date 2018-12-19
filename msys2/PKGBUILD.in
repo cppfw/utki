@@ -1,14 +1,14 @@
 # Maintainer: Ivan Gagis <igagis@gmail.com>
 
-if [ "$MSYSTEM" -eq "MSYS" ]; then
+if [ "$MSYSTEM" == "MSYS" ]; then
 	pkgPrefix=
 	dirPrefix=/usr
 	arch=('x86_64' 'i686')
-elif [ "$MSYSTEM" -eq "MINGW32" ]; then
+elif [ "$MSYSTEM" == "MINGW32" ]; then
 	pkgPrefix=mingw-w64-i686-
 	dirPrefix=/mingw32
 	arch=('any')
-elif [ "$MSYSTEM" -eq "MINGW64" ]; then
+elif [ "$MSYSTEM" == "MINGW64" ]; then
 	pkgPrefix=mingw-w64-x86_64-
 	dirPrefix=/mingw64
 	arch=('any')
