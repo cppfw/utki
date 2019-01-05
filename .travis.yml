@@ -166,9 +166,45 @@ script:
             | sed -e "s/-iquote [^ ]*/%/g"
             | sed -e "s/-isysroot [^ ]*/%/g";
   fi
-- if [ "$BUILD_NAME" == "raspberry_pi" ]; then
-    sudo chroot /srv/chroot/rasp-armhf bash -c "cd /build && myci-deb-prepare.sh" &&
-    sudo chroot /srv/chroot/rasp-armhf bash -c "cd /build && dpkg-buildpackage -us -uc";
+- if [ "$BUILD_NAME" == "raspberry_pi" ]; then- provider: script
+  skip_cleanup: true
+  script: prorab-deploy-homebrew.sh -t igagis/tap
+  on:
+    tags: true
+    condition: $BUILD_NAME = macosx
+- provider: script
+  skip_cleanup: true
+  script: rvm 2.2.1 do prorab-deploy-cocoapods.sh -r igagis
+  on:
+    tags: true
+    condition: $BUILD_NAME = macosx
+
+    sudo chroot /srv/chroot/rasp-armhf bash -c "cd /build && myci-deb-- provider: script
+  skip_cleanup: true
+  script: prorab-deploy-homebrew.sh -t igagis/tap
+  on:
+    tags: true
+    condition: $BUILD_NAME = macosx
+- provider: script
+  skip_cleanup: true
+  script: rvm 2.2.1 do prorab-deploy-cocoapods.sh -r igagis
+  on:
+    tags: true
+    condition: $BUILD_NAME = macosx
+prepare.sh" &&
+    sudo chroot /srv/chroot/rasp-armhf bash -c "cd /build && dpkg-buil- provider: script
+  skip_cleanup: true
+  script: prorab-deploy-homebrew.sh -t igagis/tap
+  on:
+    tags: true
+    condition: $BUILD_NAME = macosx
+- provider: script
+  skip_cleanup: true
+  script: rvm 2.2.1 do prorab-deploy-cocoapods.sh -r igagis
+  on:
+    tags: true
+    condition: $BUILD_NAME = macosx
+dpackage -us -uc";
   fi
 - if [ "$BUILD_NAME" == "android" ]; then
     (cd android && ./gradlew build) &&
@@ -228,7 +264,7 @@ deploy:
     condition: $BUILD_NAME = macosx
 - provider: script
   skip_cleanup: true
-  script: myci-deploy-cocoapods.sh -r igagis
+  script: rvm 2.3.3 do myci-deploy-cocoapods.sh -r igagis
   on:
     tags: true
     condition: $BUILD_NAME = ios
