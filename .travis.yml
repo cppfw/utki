@@ -34,7 +34,7 @@ matrix:
       os: osx
       compiler: clang
       osx_image: xcode8.3
-    - env: TRAVIS_JOB_NAME=android
+    - name: android
       language: android
       android:
         components:
