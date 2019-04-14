@@ -1,3 +1,9 @@
+libutki (1.1.26) unstable; urgency=medium
+
+  * deploy to bionic
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 15 Apr 2019 00:23:19 +0300
+
 libutki (1.1.25) unstable; urgency=medium
 
   * redeploying to msys
