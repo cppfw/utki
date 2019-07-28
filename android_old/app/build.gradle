@@ -1,0 +1,89 @@
+apply plugin: 'com.android.model.application'
+
+// Root of 3rd party lib(s): location could be anywhere on the host system
+def lib_distribution_root = '../distribution'
+
+model {
+
+	repositories {
+		libs(PrebuiltLibraries) {
+//			// Configure one pre-built lib: shared
+//			utki {
+//				// Inform Android Studio where header file dir for this lib
+//				headers.srcDir "${lib_distribution_root}/utki"
+//				// Inform Android Studio where lib is -- each ABI should have a lib file
+////				binaries.withType(StaticLibraryBinary) {
+////					staticLibraryFile = file("${lib_distribution_root}/${targetPlatform.getName()}/libutki.a")
+////				}
+//			}
+		}
+	}
+
+    android {
+		compileSdkVersion = 25
+		buildToolsVersion = '25.0.2'
+
+        defaultConfig{
+            applicationId = "org.igagis.utkitest"
+			minSdkVersion.apiLevel = 9
+			targetSdkVersion.apiLevel = 9
+			versionCode = 1
+			versionName = '1.0'
+        }
+
+		ndk {
+			platformVersion = 21
+			moduleName = 'utki-tests'
+			toolchain = 'clang'
+			stl = 'c++_shared'
+			cppFlags.add("-std=c++11")
+			cppFlags.add("-fexceptions")
+			cppFlags.add("-frtti")
+			cppFlags.add("-fintegrated-as") //needed to avoid assembler error since NDK r15
+			ldLibs.addAll(['android', 'log'])
+			// build a default combined apk including all ABIs.
+			// abiFilters.addAll(['x86'])
+		}
+		sources {
+			main {
+				jni {
+//					dependencies {
+//						library 'utki' linkage 'static'
+//					}
+					source {
+						srcDirs '../../tests'
+						exclude '*/main.cpp'
+					}
+				}
+				jniLibs {
+					// for shared lib, lib need to be pushed to the target too
+					// Once libs are copied into app/src/main/jniLibs directory,
+					// Android Studio will pack them into APK's lib/ directory
+					// Here we like to avoid another duplication by pointing
+					// to the files that containing our libs' distribution location
+					// so the same file is used by compiler at host, also packed
+					// into APk to be used at Target (phone/tablet)
+					source {
+						srcDir "${lib_distribution_root}/"
+					}
+				}
+			}
+		}
+		buildTypes {
+			release {
+				minifyEnabled false
+				proguardFiles.add(file('proguard-rules.pro'))
+			}
+		}
+    }
+
+	android.lintOptions {
+		abortOnError false
+	}
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+//    testCompile 'junit:junit:4.12'
+//    compile 'com.android.support:appcompat-v7:23.1.0'
+}
