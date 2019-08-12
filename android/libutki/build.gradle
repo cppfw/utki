@@ -64,10 +64,6 @@ task copyNdkLibsToAAR(type: Zip) {
     }
 }
 
-task afterTheBuild << {
-    println 'do it after build'
-}
-
 afterEvaluate {
     bundleReleaseAar.finalizedBy copyNdkLibsToAAR
 }
