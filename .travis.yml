@@ -114,6 +114,10 @@ install:
 - if [ "$TRAVIS_OS_NAME" == "linux" ] && [ -z "$TRAVIS_JOB_NAME" ]; then
     docker exec ccc myci-deb-install-build-deps.sh;
   fi
+# Accept android SDK licenses
+- if [ "$TRAVIS_JOB_NAME" == "android" ]; then
+    echo y | sdkmanager "cmake;3.6.4111459";
+  fi
 
 
 script:
@@ -139,7 +143,7 @@ script:
             | sed -e "s/-isysroot [^ ]*/%/g";
   fi
 - if [ "$TRAVIS_JOB_NAME" == "android" ]; then
-    (cd android && ./gradlew build) &&
+    (cd android && ./gradlew build --warning-mode all) &&
     myci-apply-version.sh -v `myci-deb-version.sh debian/changelog` android/*.pom.in &&
     myci-apply-version.sh -v `myci-deb-version.sh debian/changelog` android/*.aar.in --filename-only;
   fi
