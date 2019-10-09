@@ -2,7 +2,7 @@ configurations {
 	UserPlatformToolset {
 		// Needed because autopackage lacks VS2015+ support
 		key = "PlatformToolset";
-		choices: "v140,v141";
+		choices: "v140,v141,v142";
 	};
 }
 
@@ -57,6 +57,18 @@ nuget{
 		}
 
 		[x64,v141,debug] {
+		}
+
+		[x86,v142,release] {
+		}
+
+		[x86,v142,debug] {
+		}
+
+		[x64,v142,release] {
+		}
+
+		[x64,v142,debug] {
 		}
 	}
 }
