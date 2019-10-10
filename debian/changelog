@@ -1,3 +1,9 @@
+libutki (1.1.30) unstable; urgency=medium
+
+  * redeploy to cocoapods
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 10 Oct 2019 12:16:03 +0300
+
 libutki (1.1.29) unstable; urgency=medium
 
   * MSVC tools v142
