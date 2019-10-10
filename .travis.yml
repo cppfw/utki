@@ -148,7 +148,7 @@ script:
             | sed -e "s/-o [^ ]*/%/g"
             | sed -e "s/-iquote [^ ]*/%/g"
             | sed -e "s/-isysroot [^ ]*/%/g" &&
-    myci-create-zip-package.sh -h src -f xcode/build/lib$PACKAGE_NAME.a///lib/ios -f LICENSE $PACKAGE_NAME-`myci-deb-version.sh debian/changelog`.zip;
+    myci-create-zip-package.sh -h src -f LICENSE $PACKAGE_NAME-`myci-deb-version.sh debian/changelog`.zip;
   fi
 - if [ "$TRAVIS_JOB_NAME" == "android" ]; then
     (cd android && ./gradlew build --warning-mode all) &&
