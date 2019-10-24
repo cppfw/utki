@@ -9,7 +9,11 @@ template <class T, template <class, class> class C = std::vector, class A = std:
 public:
 
     tree() = default;
+
     tree(const tree&) = default;
+
+    tree& operator=(const tree&) = default;
+
     tree(tree&& t) = default;
 
     tree(std::initializer_list<tree<T, C, A>> l) :
