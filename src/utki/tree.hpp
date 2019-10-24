@@ -5,8 +5,10 @@
 template <class T, template <class, class> class C = std::vector, class A = std::allocator<T> > class tree :
         public C<tree<T>, A>
 {
-    T value_v;
+    T value;
 public:
+
+    typedef C<tree<T>, A> container_type;
 
     tree() = default;
 
@@ -22,22 +24,22 @@ public:
 
     tree(const T& value, std::initializer_list<tree<T, C, A>> l) :
             C<tree<T>, A>(l),
-            value_v(value)
+            value(value)
     {}
 
     tree(const T& value) :
-            value_v(value)
+            value(value)
     {}
 
     tree(T&& value) :
-            value_v(std::move(value))
+            value(std::move(value))
     {}
 
     T& get(){
-        return this->value_v;
+        return this->value;
     }
 
     const T& get()const{
-        return this->value_v;
+        return this->value;
     }
 };
