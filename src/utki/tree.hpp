@@ -8,7 +8,7 @@ template <class T, template <class, class> class C = std::vector, class A = std:
     T value;
 public:
 
-    typedef C<tree<T, C, A>, A> container_type;
+    typedef C<tree, A> container_type;
 
     tree() = default;
 
@@ -18,12 +18,12 @@ public:
 
     tree(tree&& t) = default;
 
-    tree(std::initializer_list<tree<T, C, A>> l) :
-            C<tree<T, C, A>, A>(l)
+    tree(std::initializer_list<tree> l) :
+            C<tree, A>(l)
     {}
 
-    tree(const T& value, std::initializer_list<tree<T, C, A>> l) :
-            C<tree<T, C, A>, A>(l),
+    tree(const T& value, std::initializer_list<tree> l) :
+            C<tree, A>(l),
             value(value)
     {}
 
