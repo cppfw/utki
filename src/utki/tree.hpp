@@ -2,13 +2,13 @@
 
 #include <vector>
 
-template <class T, template <class, class> class C = std::vector, class A = std::allocator<T> > class tree :
-        public C<tree<T, C, A>, A>
+template <class T, template <class, class> class C = std::vector, template <class> class A = std::allocator > class tree :
+        public C<tree<T, C, A>, A<tree<T, C, A>>>
 {
     T value;
 public:
 
-    typedef C<tree, A> container_type;
+    typedef C<tree, A<tree>> container_type;
 
     tree() = default;
 
@@ -19,11 +19,11 @@ public:
     tree(tree&& t) = default;
 
     tree(std::initializer_list<tree> l) :
-            C<tree, A>(l)
+            container_type(l)
     {}
 
     tree(const T& value, std::initializer_list<tree> l) :
-            C<tree, A>(l),
+            container_type(l),
             value(value)
     {}
 
