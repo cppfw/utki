@@ -91,18 +91,6 @@ before_install:
     sudo gem install cocoapods &&
     pod repo add --silent igagis https://$MYCI_GIT_USERNAME:$MYCI_GIT_ACCESS_TOKEN@github.com/igagis/cocoapods-repo.git;
   fi
-# download and install android NDK
-- if [ "$TRAVIS_JOB_NAME" == "android" ]; then
-    export TERM=dumb &&
-    curl -L https://dl.google.com/android/repository/android-ndk-r$USE_ANDROID_NDK_VERSION-linux-x86_64.zip -O &&
-    unzip ./android-ndk-r$USE_ANDROID_NDK_VERSION-linux-x86_64.zip > /dev/null &&
-    rm android-ndk-r$USE_ANDROID_NDK_VERSION-linux-x86_64.zip &&
-    export ANDROID_NDK_HOME=`pwd`/android-ndk-r$USE_ANDROID_NDK_VERSION &&
-    export LOCAL_ANDROID_NDK_HOME="$ANDROID_NDK_HOME" &&
-    export LOCAL_ANDROID_NDK_HOST_PLATFORM="linux-x86_64" &&
-    export PATH=$PATH:${ANDROID_NDK_HOME} &&
-    env;
-  fi
 
 
 install:
