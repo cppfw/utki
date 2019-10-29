@@ -1,3 +1,9 @@
+libutki (1.1.32) unstable; urgency=medium
+
+  * android package updated
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 30 Oct 2019 00:55:34 +0200
+
 libutki (1.1.31) unstable; urgency=medium
 
   * added tree container
