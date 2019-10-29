@@ -23,11 +23,11 @@ matrix:
     - name: macosx
       os: osx
       compiler: clang
-      osx_image: xcode8.3
+      osx_image: xcode11
     - name: ios
       os: osx
       compiler: clang
-      osx_image: xcode8.3
+      osx_image: xcode11
     - name: android
       language: android
       android:
@@ -48,7 +48,6 @@ env:
   - secure: "a9c0rHQ4xMd3SfxFaOcrw5ot6su3PI+x0eZUCuvYREcoRFIKCcYw+CETZuPAsZ2uT49tONTy5rafOBcCuMl/GQ5ZE5leeou6xiofj4kKv1tiJL1j8Ek1gELJ4dnXHMbpmyYIhuW7LZ1C+BellYIzLizJv+rcdEGQBkFhZPQDPV3cpxhoOctVp4fJR+bD/WOPsmU4gVi7cbc2iOBvGEe0dFch2ZK4M5X0oO75W2vXybFeAzhZdR6lA3mcyEtrVSKEpUGrvWKaMbLaGyZal3kH71Jtl8IcpzhReGb7AOPjWSomRWJHkLS/89zjLgMBe/oXCeZEjEqwOSOwxDo5gmgSxRUyUSmASUA9hi9x2DJBpt8iTdjO+cSG6FWf13KrlyUfJyCjIpVkD8sDvV15kXHr0EeK3p7o5Qj7OP06nv56CzI/ELsvBJKTLAYwiA7saKJvQ3uwmwJafvsXVgPgpdFHYDLUWw5B5DNFXcqt0mo32Cy/I/T9Sr0XWjdpoe7fw/Z4uG4SsUM17T67UnyDZ7DnYUDqcs4g3j3cbc4fR9CrSDU9f0+3AD49XrWYNGSfiL6I1EH3LsdSrTklNs27vx1h4ns8luOOCh5b16388MXp/uXikOIyhEkeYNAwVnMaapK+9p0+MOCqiZQV9ZqF+aXH+jFYVNXNVL4hf77FMGR6+So="
   - MYCI_GIT_USERNAME=igagis
   - MYCI_GIT_ACCESS_TOKEN=$PRORAB_GIT_ACCESS_TOKEN
-  - USE_ANDROID_NDK_VERSION=15c
   - PACKAGE_NAME=utki
   - PACKAGE_VERSION=$(myci-deb-version.sh debian/changelog)
 
@@ -110,8 +109,9 @@ install:
 - if [ "$TRAVIS_OS_NAME" == "linux" ] && [ -z "$TRAVIS_JOB_NAME" ]; then
     docker exec ccc myci-deb-install-build-deps.sh;
   fi
-# Accept android SDK licenses
+# Accept android SDK licenses and install android tools
 - if [ "$TRAVIS_JOB_NAME" == "android" ]; then
+    echo y | sdkmanager "ndk-bundle" &&
     echo y | sdkmanager "cmake;3.6.4111459";
   fi
 
