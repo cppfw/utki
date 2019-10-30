@@ -1,3 +1,9 @@
+libutki (1.1.34) unstable; urgency=medium
+
+  * deployment fix
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 30 Oct 2019 14:35:59 +0200
+
 libutki (1.1.33) unstable; urgency=medium
 
   * cocoapods deployment fix
