@@ -1,3 +1,9 @@
+libutki (1.1.33) unstable; urgency=medium
+
+  * cocoapods deployment fix
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 30 Oct 2019 02:28:16 +0200
+
 libutki (1.1.32) unstable; urgency=medium
 
   * android package updated
