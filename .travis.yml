@@ -49,7 +49,6 @@ env:
   - MYCI_GIT_USERNAME=igagis
   - MYCI_GIT_ACCESS_TOKEN=$PRORAB_GIT_ACCESS_TOKEN
   - PACKAGE_NAME=utki
-  - PACKAGE_VERSION=$(myci-deb-version.sh debian/changelog)
 
   matrix:
   - OS_REL=xenial OS=ubuntu DOCKER_IMAGE=$OS:$OS_REL PACKAGE_TYPE=deb
@@ -88,13 +87,11 @@ before_install:
     brew update > /dev/null &&
     brew install myci &&
 
-    export PACKAGE_VERSION=$(myci-deb-version.sh debian/changelog) &&
-    echo PACKAGE_VERSION=$PACKAGE_VERSION &&
-
     sudo gem install cocoapods &&
     pod repo add --silent igagis https://$MYCI_GIT_USERNAME:$MYCI_GIT_ACCESS_TOKEN@github.com/igagis/cocoapods-repo.git &&
     pod install --project-directory=xcode;
   fi
+- export PACKAGE_VERSION=$(myci-deb-version.sh debian/changelog)
 
 
 install:
@@ -125,7 +122,6 @@ script:
 - if [ "$TRAVIS_JOB_NAME" == "ios" ]; then
     xcodebuild -workspace xcode/$PACKAGE_NAME.xcworkspace -scheme $PACKAGE_NAME CONFIGURATION_BUILD_DIR=../build -configuration Release &&
     myci-create-zip-package.sh -h src -f LICENSE $PACKAGE_NAME-$PACKAGE_VERSION.zip;
-    echo "rvm 2.3.3 do myci-deploy-cocoapods.sh -r igagis -v $PACKAGE_VERSION -u igagis -b cocoapods -p $PACKAGE_NAME-$PACKAGE_VERSION.zip cocoapods/$PACKAGE_NAME.podspec.in";
   fi
 - if [ "$TRAVIS_JOB_NAME" == "android" ]; then
     (cd android && ./gradlew build --warning-mode all) &&
