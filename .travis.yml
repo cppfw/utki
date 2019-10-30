@@ -122,6 +122,7 @@ script:
 - if [ "$TRAVIS_JOB_NAME" == "ios" ]; then
     xcodebuild -workspace xcode/$PACKAGE_NAME.xcworkspace -scheme $PACKAGE_NAME CONFIGURATION_BUILD_DIR=../build -configuration Release &&
     myci-create-zip-package.sh -h src -f LICENSE $PACKAGE_NAME-$PACKAGE_VERSION.zip;
+    echo "rvm 2.3.3 do myci-deploy-cocoapods.sh -r igagis -v $PACKAGE_VERSION -u igagis -b cocoapods -p $PACKAGE_NAME-$PACKAGE_VERSION.zip cocoapods/$PACKAGE_NAME.podspec.in";
   fi
 - if [ "$TRAVIS_JOB_NAME" == "android" ]; then
     (cd android && ./gradlew build --warning-mode all) &&
