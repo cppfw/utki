@@ -2,6 +2,8 @@
 
 #include <vector>
 
+namespace utki{
+
 template <class T, template <class, class> class C = std::vector, template <class> class A = std::allocator > class tree :
         public C<tree<T, C, A>, A<tree<T, C, A>>>
 {
@@ -43,3 +45,5 @@ public:
         return this->value;
     }
 };
+
+}
