@@ -4,6 +4,7 @@
 
 namespace utki{
 
+//TODO: doxygen
 template <class T, template <class, class> class C = std::vector, template <class> class A = std::allocator > class tree :
         public C<tree<T, C, A>, A<tree<T, C, A>>>
 {
@@ -17,6 +18,14 @@ public:
     tree(const tree&) = default;
 
     tree& operator=(const tree&) = default;
+
+    container_type& branches(){
+        return *this;
+    }
+
+    const container_type& branches()const{
+        return *this;
+    }
 
     tree(tree&& t) = default;
 
@@ -37,11 +46,11 @@ public:
             value(std::move(value))
     {}
 
-    T& get(){
+    T& leaf(){
         return this->value;
     }
 
-    const T& get()const{
+    const T& leaf()const{
         return this->value;
     }
 };
