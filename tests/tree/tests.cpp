@@ -103,6 +103,34 @@ void test_assignment(){
 
 	ASSERT_ALWAYS(t[1].size() == 3)
 }
+
+void test_comparison(){
+	tree<int> t{
+		{34, 45},
+
+		{
+			{78, 89, 96},
+			{32, 64, 128},
+			decltype(t)(42, {98, 99, 100})
+		}
+	};
+
+
+	ASSERT_ALWAYS(t.size() == 2)
+
+	ASSERT_ALWAYS(t[1].size() == 3)
+	ASSERT_ALWAYS(t[1][0].size() == 3)
+	ASSERT_ALWAYS(t[1][1].size() == 3)
+
+	ASSERT_ALWAYS(t[1][2].size() == 3)
+	ASSERT_ALWAYS(t[1][2] == 42)
+
+	ASSERT_ALWAYS(t[1][2][0] == 98)
+	ASSERT_ALWAYS(t[1][2][1] == 99)
+	ASSERT_ALWAYS(t[1][2][2] == 100)
+
+	ASSERT_ALWAYS(t[1].size() == 3)
+}
 }
 
 
@@ -110,4 +138,5 @@ void test_utki_tree(){
 	basic();
 	test_assignment();
 	test_move_assignment();
+	test_comparison();
 }

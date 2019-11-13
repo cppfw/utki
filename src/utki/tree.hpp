@@ -19,11 +19,11 @@ public:
 
     tree& operator=(const tree&) = default;
 
-    container_type& branches(){
+    container_type& branches()noexcept{
         return *this;
     }
 
-    const container_type& branches()const{
+    const container_type& branches()const noexcept{
         return *this;
     }
 
@@ -46,12 +46,16 @@ public:
             value(std::move(value))
     {}
 
-    T& leaf(){
+    T& leaf()noexcept{
         return this->value;
     }
 
-    const T& leaf()const{
+    const T& leaf()const noexcept{
         return this->value;
+    }
+
+    bool operator==(const T& value)const noexcept{
+        return this->leaf() == value;
     }
 };
 
