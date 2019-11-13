@@ -46,7 +46,7 @@ public:
             value(std::move(value))
     {}
 
-    T& leaf()noexcept{
+    T& get()noexcept{
         return this->value;
     }
 
