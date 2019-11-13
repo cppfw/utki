@@ -19,11 +19,11 @@ public:
 
     tree& operator=(const tree&) = default;
 
-    container_type& branches()noexcept{
+    container_type& children()noexcept{
         return *this;
     }
 
-    const container_type& branches()const noexcept{
+    const container_type& children()const noexcept{
         return *this;
     }
 
@@ -50,12 +50,12 @@ public:
         return this->value;
     }
 
-    const T& leaf()const noexcept{
+    const T& get()const noexcept{
         return this->value;
     }
 
     bool operator==(const T& value)const noexcept{
-        return this->leaf() == value;
+        return this->get() == value;
     }
 };
 

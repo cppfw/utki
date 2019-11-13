@@ -30,19 +30,19 @@ void basic(){
 		ASSERT_ALWAYS(t.size() == 2)
 
 		ASSERT_ALWAYS(t[0].size() == 2)
-		ASSERT_ALWAYS(t[0][0].leaf() == 34)
-		ASSERT_ALWAYS(t[0][1].leaf() == 45)
+		ASSERT_ALWAYS(t[0][0].get() == 34)
+		ASSERT_ALWAYS(t[0][1].get() == 45)
 
 		ASSERT_ALWAYS(t[1].size() == 3)
 		ASSERT_ALWAYS(t[1][0].size() == 3)
 		ASSERT_ALWAYS(t[1][1].size() == 3)
 
 		ASSERT_ALWAYS(t[1][2].size() == 3)
-		ASSERT_ALWAYS(t[1][2].leaf() == 42)
+		ASSERT_ALWAYS(t[1][2].get() == 42)
 
-		ASSERT_ALWAYS(t[1][2][0].leaf() == 98)
-		ASSERT_ALWAYS(t[1][2][1].leaf() == 99)
-		ASSERT_ALWAYS(t[1][2][2].leaf() == 100)
+		ASSERT_ALWAYS(t[1][2][0].get() == 98)
+		ASSERT_ALWAYS(t[1][2][1].get() == 99)
+		ASSERT_ALWAYS(t[1][2][2].get() == 100)
 	}
 }
 
@@ -57,7 +57,7 @@ void test_move_assignment(){
 		}
 	};
 
-	t[0].branches() = std::move(t[1].branches());
+	t[0].children() = std::move(t[1].children());
 
 	ASSERT_ALWAYS(t.size() == 2)
 
@@ -66,11 +66,11 @@ void test_move_assignment(){
 	ASSERT_ALWAYS(t[0][1].size() == 3)
 
 	ASSERT_ALWAYS(t[0][2].size() == 3)
-	ASSERT_ALWAYS(t[0][2].leaf() == 42)
+	ASSERT_ALWAYS(t[0][2].get() == 42)
 
-	ASSERT_ALWAYS(t[0][2][0].leaf() == 98)
-	ASSERT_ALWAYS(t[0][2][1].leaf() == 99)
-	ASSERT_ALWAYS(t[0][2][2].leaf() == 100)
+	ASSERT_ALWAYS(t[0][2][0].get() == 98)
+	ASSERT_ALWAYS(t[0][2][1].get() == 99)
+	ASSERT_ALWAYS(t[0][2][2].get() == 100)
 
 	ASSERT_ALWAYS(t[1].size() == 0)
 }
@@ -86,7 +86,7 @@ void test_assignment(){
 		}
 	};
 
-	t[0].branches() = t[1].branches();
+	t[0].children() = t[1].children();
 
 	ASSERT_ALWAYS(t.size() == 2)
 
@@ -95,11 +95,11 @@ void test_assignment(){
 	ASSERT_ALWAYS(t[0][1].size() == 3)
 
 	ASSERT_ALWAYS(t[0][2].size() == 3)
-	ASSERT_ALWAYS(t[0][2].leaf() == 42)
+	ASSERT_ALWAYS(t[0][2].get() == 42)
 
-	ASSERT_ALWAYS(t[0][2][0].leaf() == 98)
-	ASSERT_ALWAYS(t[0][2][1].leaf() == 99)
-	ASSERT_ALWAYS(t[0][2][2].leaf() == 100)
+	ASSERT_ALWAYS(t[0][2][0].get() == 98)
+	ASSERT_ALWAYS(t[0][2][1].get() == 99)
+	ASSERT_ALWAYS(t[0][2][2].get() == 100)
 
 	ASSERT_ALWAYS(t[1].size() == 3)
 }
