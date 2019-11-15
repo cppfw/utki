@@ -11,9 +11,9 @@ void basic(){
 	{
 		tree<int> t;
 
-		t.push_back(35);
+		t.children.push_back(35);
 
-		ASSERT_ALWAYS(t.size() == 1)
+		ASSERT_ALWAYS(t.children.size() == 1)
 	}
 
 	{
@@ -27,22 +27,22 @@ void basic(){
 			}
 		};
 
-		ASSERT_ALWAYS(t.size() == 2)
+		ASSERT_ALWAYS(t.children.size() == 2)
 
-		ASSERT_ALWAYS(t[0].size() == 2)
-		ASSERT_ALWAYS(t[0][0].get() == 34)
-		ASSERT_ALWAYS(t[0][1].get() == 45)
+		ASSERT_ALWAYS(t.children[0].children.size() == 2)
+		ASSERT_ALWAYS(t.children[0].children[0].value == 34)
+		ASSERT_ALWAYS(t.children[0].children[1].value == 45)
 
-		ASSERT_ALWAYS(t[1].size() == 3)
-		ASSERT_ALWAYS(t[1][0].size() == 3)
-		ASSERT_ALWAYS(t[1][1].size() == 3)
+		ASSERT_ALWAYS(t.children[1].children.size() == 3)
+		ASSERT_ALWAYS(t.children[1].children[0].children.size() == 3)
+		ASSERT_ALWAYS(t.children[1].children[1].children.size() == 3)
 
-		ASSERT_ALWAYS(t[1][2].size() == 3)
-		ASSERT_ALWAYS(t[1][2].get() == 42)
+		ASSERT_ALWAYS(t.children[1].children[2].children.size() == 3)
+		ASSERT_ALWAYS(t.children[1].children[2].value == 42)
 
-		ASSERT_ALWAYS(t[1][2][0].get() == 98)
-		ASSERT_ALWAYS(t[1][2][1].get() == 99)
-		ASSERT_ALWAYS(t[1][2][2].get() == 100)
+		ASSERT_ALWAYS(t.children[1].children[2].children[0].value == 98)
+		ASSERT_ALWAYS(t.children[1].children[2].children[1].value == 99)
+		ASSERT_ALWAYS(t.children[1].children[2].children[2].value == 100)
 	}
 }
 
@@ -57,22 +57,22 @@ void test_move_assignment(){
 		}
 	};
 
-	t[0].children() = std::move(t[1].children());
+	t.children[0].children = std::move(t.children[1].children);
 
-	ASSERT_ALWAYS(t.size() == 2)
+	ASSERT_ALWAYS(t.children.size() == 2)
 
-	ASSERT_ALWAYS(t[0].size() == 3)
-	ASSERT_ALWAYS(t[0][0].size() == 3)
-	ASSERT_ALWAYS(t[0][1].size() == 3)
+	ASSERT_ALWAYS(t.children[0].children.size() == 3)
+	ASSERT_ALWAYS(t.children[0].children[0].children.size() == 3)
+	ASSERT_ALWAYS(t.children[0].children[1].children.size() == 3)
 
-	ASSERT_ALWAYS(t[0][2].size() == 3)
-	ASSERT_ALWAYS(t[0][2].get() == 42)
+	ASSERT_ALWAYS(t.children[0].children[2].children.size() == 3)
+	ASSERT_ALWAYS(t.children[0].children[2].value == 42)
 
-	ASSERT_ALWAYS(t[0][2][0].get() == 98)
-	ASSERT_ALWAYS(t[0][2][1].get() == 99)
-	ASSERT_ALWAYS(t[0][2][2].get() == 100)
+	ASSERT_ALWAYS(t.children[0].children[2].children[0].value == 98)
+	ASSERT_ALWAYS(t.children[0].children[2].children[1].value == 99)
+	ASSERT_ALWAYS(t.children[0].children[2].children[2].value == 100)
 
-	ASSERT_ALWAYS(t[1].size() == 0)
+	ASSERT_ALWAYS(t.children[1].children.size() == 0)
 }
 
 void test_assignment(){
@@ -86,22 +86,22 @@ void test_assignment(){
 		}
 	};
 
-	t[0].children() = t[1].children();
+	t.children[0].children = t.children[1].children;
 
-	ASSERT_ALWAYS(t.size() == 2)
+	ASSERT_ALWAYS(t.children.size() == 2)
 
-	ASSERT_ALWAYS(t[0].size() == 3)
-	ASSERT_ALWAYS(t[0][0].size() == 3)
-	ASSERT_ALWAYS(t[0][1].size() == 3)
+	ASSERT_ALWAYS(t.children[0].children.size() == 3)
+	ASSERT_ALWAYS(t.children[0].children[0].children.size() == 3)
+	ASSERT_ALWAYS(t.children[0].children[1].children.size() == 3)
 
-	ASSERT_ALWAYS(t[0][2].size() == 3)
-	ASSERT_ALWAYS(t[0][2].get() == 42)
+	ASSERT_ALWAYS(t.children[0].children[2].children.size() == 3)
+	ASSERT_ALWAYS(t.children[0].children[2].value == 42)
 
-	ASSERT_ALWAYS(t[0][2][0].get() == 98)
-	ASSERT_ALWAYS(t[0][2][1].get() == 99)
-	ASSERT_ALWAYS(t[0][2][2].get() == 100)
+	ASSERT_ALWAYS(t.children[0].children[2].children[0].value == 98)
+	ASSERT_ALWAYS(t.children[0].children[2].children[1].value == 99)
+	ASSERT_ALWAYS(t.children[0].children[2].children[2].value == 100)
 
-	ASSERT_ALWAYS(t[1].size() == 3)
+	ASSERT_ALWAYS(t.children[1].children.size() == 3)
 }
 
 void test_comparison(){
@@ -116,20 +116,20 @@ void test_comparison(){
 	};
 
 
-	ASSERT_ALWAYS(t.size() == 2)
+	ASSERT_ALWAYS(t.children.size() == 2)
 
-	ASSERT_ALWAYS(t[1].size() == 3)
-	ASSERT_ALWAYS(t[1][0].size() == 3)
-	ASSERT_ALWAYS(t[1][1].size() == 3)
+	ASSERT_ALWAYS(t.children[1].children.size() == 3)
+	ASSERT_ALWAYS(t.children[1].children[0].children.size() == 3)
+	ASSERT_ALWAYS(t.children[1].children[1].children.size() == 3)
 
-	ASSERT_ALWAYS(t[1][2].size() == 3)
-	ASSERT_ALWAYS(t[1][2] == 42)
+	ASSERT_ALWAYS(t.children[1].children[2].children.size() == 3)
+	ASSERT_ALWAYS(t.children[1].children[2] == 42)
 
-	ASSERT_ALWAYS(t[1][2][0] == 98)
-	ASSERT_ALWAYS(t[1][2][1] == 99)
-	ASSERT_ALWAYS(t[1][2][2] == 100)
+	ASSERT_ALWAYS(t.children[1].children[2].children[0] == 98)
+	ASSERT_ALWAYS(t.children[1].children[2].children[1] == 99)
+	ASSERT_ALWAYS(t.children[1].children[2].children[2] == 100)
 
-	ASSERT_ALWAYS(t[1].size() == 3)
+	ASSERT_ALWAYS(t.children[1].children.size() == 3)
 }
 }
 
