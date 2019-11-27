@@ -8,10 +8,12 @@ elif [ "$MSYSTEM" == "MINGW32" ]; then
 	pkgPrefix=mingw-w64-i686-
 	dirPrefix=/mingw32
 	arch=('any')
+	toolchain=toolchain
 elif [ "$MSYSTEM" == "MINGW64" ]; then
 	pkgPrefix=mingw-w64-x86_64-
 	dirPrefix=/mingw64
 	arch=('any')
+	toolchain=toolchain
 else
 	echo "ERROR: unknown MSYS shell: $MSYSTEM"
 	exit 1
@@ -29,8 +31,8 @@ groups=()
 
 depends=()
 
-makedepends=('myci' 'prorab' 'prorab-extra' 'doxygen')
-checkdepends=('myci')
+makedepends=("${pkgPrefix}${toolchain}" "myci" "prorab" "prorab-extra" "doxygen")
+checkdepends=("myci")
 optdepends=()
 provides=()
 conflicts=()
