@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Exc.hpp"
+#include "exception.hpp"
 #include "debug.hpp"
 
 #include <memory>
@@ -42,7 +42,7 @@ template <class T, class T_InstanceOwner = T> class IntrusiveSingleton{
 protected://use only as a base class
 	IntrusiveSingleton(){
 		if(T_InstanceOwner::instance){
-			throw utki::Exc("Singleton::Singleton(): instance is already created");
+			throw utki::illegal_state("Singleton::Singleton(): instance is already created");
 		}
 
 		T_InstanceOwner::instance.reset(static_cast<T*>(this));

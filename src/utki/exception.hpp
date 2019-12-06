@@ -1,11 +1,3 @@
-//TODO: deprecated, remove whole file.
-
-/**
- * @file Exc.hpp
- * @author Ivan Gagis <igagis@gmail.com>
- * @brief Basic Exception class.
- */
-
 #pragma once
 
 #include <string>
@@ -18,18 +10,18 @@ namespace utki{
 /**
  * @brief Basic exception class
  */
-class Exc : public std::exception{
+class exception : public std::exception{
 	std::string message;
 public:
 	/**
 	 * @brief Constructor.
 	 * @param message - human friendly error description.
 	 */
-	Exc(const std::string& message = std::string()) :
+	exception(const std::string& message = std::string()) :
 			message(message)
 	{}
 
-	virtual ~Exc()noexcept{}
+	virtual ~exception()noexcept{}
 
 	/**
 	 * @brief Returns a pointer to exception message.
@@ -43,4 +35,24 @@ public:
 	}
 };
 
-}//~namespace
+/**
+ * @brief Basic exception class for "object not found" errors.
+ */
+class not_found : public exception{
+public:
+	not_found(const std::string& message) :
+			exception(message)
+	{}
+};
+
+/**
+ * @brief Basic exception class for "illegal state" errors.
+ */
+class illegal_state : public exception{
+public:
+	illegal_state(const std::string& message) :
+			exception(message)
+	{}
+};
+
+}

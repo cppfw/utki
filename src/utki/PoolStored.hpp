@@ -14,7 +14,7 @@
 #include <mutex>
 
 #include "debug.hpp"
-#include "Exc.hpp"
+#include "exception.hpp"
 #include "SpinLock.hpp"
 
 
@@ -208,7 +208,7 @@ public:
 	static void* operator new(size_t size){
 		M_POOL_TRACE(<< "new(): size = " << size << std::endl)
 		if(size != sizeof(T)){
-			throw utki::Exc("PoolStored::operator new(): attempt to allocate memory block of incorrect size");
+			throw utki::exception("PoolStored::operator new(): attempt to allocate memory block of incorrect size");
 		}
 
 		return StaticMemoryPool<sizeof(T), num_elements_in_chunk>::Alloc_ts();
