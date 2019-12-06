@@ -1,3 +1,9 @@
+libutki (1.1.42) unstable; urgency=medium
+
+  * illegal_state and not_found exception classes
+
+ -- Ivan Gagis <igagis@gmail.com>  Sat, 07 Dec 2019 00:36:03 +0200
+
 libutki (1.1.41) unstable; urgency=medium
 
   * deploy to msys2 from travis
