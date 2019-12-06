@@ -1,5 +1,5 @@
 //TODO: deprecated, remove whole file.
-
+#warning utki/Exc.hpp is deprecated, use utki/exception.hpp
 /**
  * @file Exc.hpp
  * @author Ivan Gagis <igagis@gmail.com>
