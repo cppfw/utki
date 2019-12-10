@@ -56,3 +56,8 @@ public:
 };
 
 }
+
+#define DECLARE_EXCEPTION(name, derived_from) \
+		struct name : public derived_from { \
+			name(const std::string& message) : derived_from(message){} \
+		};
