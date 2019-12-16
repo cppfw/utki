@@ -1,3 +1,9 @@
+libutki (1.1.44) unstable; urgency=medium
+
+  * remove #warning because MSVS does not like it
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 16 Dec 2019 23:33:29 +0200
+
 libutki (1.1.43) unstable; urgency=medium
 
   * added more tree constructor overloads
