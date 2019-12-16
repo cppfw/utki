@@ -21,6 +21,22 @@ public:
 
     tree(tree&& t) = default;
 
+    tree(const T& value) :
+            value(value)
+    {}
+
+    tree(T&& value) :
+            value(std::move(value))
+    {}
+
+    tree(const container_type& c) :
+            children(c)
+    {}
+
+    tree(container_type&& c) :
+            children(std::move(c))
+    {}
+
     tree(std::initializer_list<tree> l) :
             children(l)
     {}
@@ -30,12 +46,24 @@ public:
             children(l)
     {}
 
-    tree(const T& value) :
-            value(value)
+    tree(T&& value, std::initializer_list<tree> l) :
+            value(std::move(value)),
+            children(l)
     {}
 
-    tree(T&& value) :
-            value(std::move(value))
+    tree(const T& value, const container_type& c) :
+            value(value),
+            children(c)
+    {}
+
+    tree(const T& value, container_type&& c) :
+            value(value),
+            children(std::move(c))
+    {}
+
+    tree(T&& value, container_type&& c) :
+            value(std::move(value)),
+            children(std::move(c))
     {}
 
     bool operator==(const T& value)const noexcept{
