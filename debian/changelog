@@ -1,3 +1,9 @@
+libutki (1.1.43) unstable; urgency=medium
+
+  * added more tree constructor overloads
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 16 Dec 2019 21:50:04 +0200
+
 libutki (1.1.42) unstable; urgency=medium
 
   * illegal_state and not_found exception classes
