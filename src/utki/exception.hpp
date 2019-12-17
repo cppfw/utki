@@ -46,13 +46,16 @@ public:
 };
 
 /**
- * @brief Basic exception class for "illegal state" errors.
+ * @brief Basic exception class for "invalid state" errors.
  */
-class illegal_state : public exception{
+class invalid_state : public exception{
 public:
-	illegal_state(const std::string& message) :
+	invalid_state(const std::string& message) :
 			exception(message)
 	{}
 };
+
+// TODO: deprecated, remove.
+typedef invalid_state illegal_state;
 
 }
