@@ -1,3 +1,9 @@
+libutki (1.1.45) unstable; urgency=medium
+
+  * illegal_state renamed to invalid_state
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 17 Dec 2019 22:39:21 +0200
+
 libutki (1.1.44) unstable; urgency=medium
 
   * remove #warning because MSVS does not like it
