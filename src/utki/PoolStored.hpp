@@ -17,7 +17,7 @@
 
 #include "debug.hpp"
 #include "exception.hpp"
-#include "SpinLock.hpp"
+#include "spin_lock.hpp"
 
 
 //#define M_ENABLE_POOL_TRACE
@@ -108,7 +108,7 @@ template <size_t element_size, std::uint32_t num_elements_in_chunk = 32> class M
 	T_ChunkList fullChunks;
 	T_ChunkList chunks;
 	
-	utki::SpinLock lock;
+	utki::spin_lock lock;
 	
 public:
 	~MemoryPool()noexcept{

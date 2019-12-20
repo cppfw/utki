@@ -7,7 +7,7 @@ namespace utki{
 /**
  * @brief Spin lock.
  */
-class SpinLock{
+class spin_lock{
     std::atomic_flag flag = ATOMIC_FLAG_INIT ;
 public:
 	/**
