@@ -23,7 +23,7 @@ Description: debugging symbols for libutki$(soname) package.
 Package: libutki-dev
 Section: libdevel
 Architecture: all
-Depends: ${misc:Depends}
+Depends: libutki$(soname) (= ${binary:Version}), libutki$(soname)-dbg (= ${binary:Version}), ${misc:Depends}
 Suggests: libutki-doc
 Description: cross-platform C++ utility library.
  Different C++ utility classes and functions.
