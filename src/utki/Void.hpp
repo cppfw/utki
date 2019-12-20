@@ -1,7 +1,7 @@
 /**
  * @author Ivan Gagis <igagis@gmail.com>
  */
-
+//TODO: deprecated, remove whole file.
 #pragma once
 
 #include "config.hpp"
