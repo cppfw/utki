@@ -24,8 +24,6 @@ class shared : public std::enable_shared_from_this<shared>{
 	}
 	
 protected:
-	using std::enable_shared_from_this<shared>::shared_from_this;
-
 	/**
 	 * @brief Get shared pointer from this.
      * @param this_ptr - 'this' used to determine type for casting.
@@ -49,6 +47,8 @@ protected:
 		return this->shared_from_this(thisPtr);
 	}
 public:
+	using std::enable_shared_from_this<shared>::shared_from_this;
+
 	virtual ~shared()noexcept{}
 };
 
