@@ -4,6 +4,11 @@ configurations {
 		key = "PlatformToolset";
 		choices: "v140,v141,v142";
 	};
+
+	RuntimeLibrary {
+		key = "RuntimeLibrary"; // This is the key you can find in .vcxproj file
+		choices: "MultiThreaded,MultiThreadedDebug,MultiThreadedDLL,MultiThreadedDebugDLL"; // these choices must be valid values for .vcxproj file
+	};
 }
 
 nuget{
@@ -35,40 +40,63 @@ nuget{
 			"..\src\utki\**\*.hpp"
 		};
 			
+		//==== v140 tools =====
+
 		[x86,v140,release] {
+			lib: ..\msvs_solution\v140_Release\libutki.lib;
 		}
-
 		[x86,v140,debug] {
+			lib: ..\msvs_solution\v140_Debug\libutki.lib;
 		}
-
 		[x64,v140,release] {
+			lib: ..\msvs_solution\x64\v140_Release\libutki.lib;
 		}
-
 		[x64,v140,debug] {
+			lib: ..\msvs_solution\x64\v140_Debug\libutki.lib;
 		}
-		
+
+		//==== v141 tools ====
+
 		[x86,v141,release] {
+			lib: ..\msvs_solution\v141_Release\libutki.lib;
 		}
-
 		[x86,v141,debug] {
+			lib: ..\msvs_solution\v141_Debug\libutki.lib;
 		}
-
 		[x64,v141,release] {
+			lib: ..\msvs_solution\x64\v141_Release\libutki.lib;
 		}
-
 		[x64,v141,debug] {
+			lib: ..\msvs_solution\x64\v141_Debug\libutki.lib;
 		}
 
-		[x86,v142,release] {
-		}
+		//==== v142 tools ====
 
-		[x86,v142,debug] {
-		}
+		//==== v142 tools ====
 
-		[x64,v142,release] {
+		[x86,v142,release,MultiThreaded] {
+			lib: ..\msvs_solution\v142_Release_MT\libutki.lib;
 		}
-
-		[x64,v142,debug] {
+		[x86,v142,debug,MultiThreadedDebug] {
+			lib: ..\msvs_solution\v142_Debug_MT\libutki.lib;
+		}
+		[x64,v142,release,MultiThreaded] {
+			lib: ..\msvs_solution\x64\v142_Release_MT\libutki.lib;
+		}
+		[x64,v142,debug,MultiThreadedDebug] {
+			lib: ..\msvs_solution\x64\v142_Debug_MT\libutki.lib;
+		}
+		[x86,v142,release,MultiThreadedDLL] {
+			lib: ..\msvs_solution\v142_Release_MD\libutki.lib;
+		}
+		[x86,v142,debug,MultiThreadedDebugDLL] {
+			lib: ..\msvs_solution\v142_Debug_MD\libutki.lib;
+		}
+		[x64,v142,release,MultiThreadedDLL] {
+			lib: ..\msvs_solution\x64\v142_Release_MD\libutki.lib;
+		}
+		[x64,v142,debug,MultiThreadedDebugDLL] {
+			lib: ..\msvs_solution\x64\v142_Debug_MD\libutki.lib;
 		}
 	}
 }
