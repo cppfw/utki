@@ -1,3 +1,9 @@
+libutki (1.1.51) unstable; urgency=medium
+
+  * make shared_from_this() public
+
+ -- Ivan Gagis <igagis@gmail.com>  Sat, 21 Dec 2019 00:29:00 +0200
+
 libutki (1.1.50) unstable; urgency=medium
 
   * optimization for make_string() function
