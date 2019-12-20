@@ -1,3 +1,9 @@
+libutki (1.1.46) unstable; urgency=medium
+
+  * added make_string() function
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 20 Dec 2019 18:14:41 +0200
+
 libutki (1.1.45) unstable; urgency=medium
 
   * illegal_state renamed to invalid_state
