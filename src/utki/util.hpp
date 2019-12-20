@@ -12,14 +12,19 @@
 namespace utki{
 
 
-template<typename T_A, typename T_B> std::pair<T_B, T_A> flipPair(const std::pair<T_A, T_B> &p){
+template<typename T_A, typename T_B> std::pair<T_B, T_A> flip_pair(const std::pair<T_A, T_B> &p){
     return std::pair<T_B, T_A>(p.second, p.first);
 }
 
-template<typename T_A, typename T_B> std::map<T_B, T_A> flipMap(const std::map<T_A, T_B> &m){
+template<typename T_A, typename T_B> std::map<T_B, T_A> flip_map(const std::map<T_A, T_B> &m){
     std::map<T_B, T_A> ret;
-    std::transform(m.begin(), m.end(), std::inserter(ret, ret.begin()), flipPair<T_A, T_B>);
+    std::transform(m.begin(), m.end(), std::inserter(ret, ret.begin()), flip_pair<T_A, T_B>);
     return ret;
+}
+
+//TODO: deprecated, remove.
+template<typename T_A, typename T_B> std::map<T_B, T_A> flipMap(const std::map<T_A, T_B> &m){
+	return flip_map(m);
 }
 
 /**
@@ -30,28 +35,28 @@ template<typename T_A, typename T_B> std::map<T_B, T_A> flipMap(const std::map<T
  * Example:
  * @code
  * {
- *     utki::ScopeExit scopeExit([](){
+ *     utki::scope_exit some_scope_exit([](){
  *         std::cout << "Leaving scope" << std::endl;
  *     });
  * }
  * @endcode
  */
-class ScopeExit{
+class scope_exit{
 	std::function<void()> f;
 
 public:
-	ScopeExit(const ScopeExit&) = delete;
-	ScopeExit& operator=(const ScopeExit&) = delete;
+	scope_exit(const scope_exit&) = delete;
+	scope_exit& operator=(const scope_exit&) = delete;
 	
 	/**
 	 * @brief Constructor.
 	 * @param f - function to call on object destruction.
 	 */
-	ScopeExit(decltype(f)&& f) :
+	scope_exit(decltype(f)&& f) :
 			f(std::move(f))
 	{}
 	
-    ~ScopeExit()noexcept{
+    ~scope_exit()noexcept{
 		if(this->f){
 			this->f();
 		}
@@ -59,7 +64,7 @@ public:
 	
 	/**
 	 * @brief Disarm scope exit object.
-	 * This function disarms the ScopeExit object, so that it will not do any action on destruction.
+	 * This function disarms the scope_exit object, so that it will not do any action on destruction.
 	 * @return the previous function which had to be executed on object's destruction.
 	 */
 	decltype(f) reset()noexcept{
@@ -69,7 +74,8 @@ public:
 	}
 };
 
-
+//TODO: deprecated, remove.
+typedef scope_exit ScopeExit;
 
 /**
  * @brief Get top-clamped value.
@@ -77,6 +83,7 @@ public:
  * @param top - top to clamp to.
  * @return clamped value.
  */
+//TODO: deprecated, use std::min/max. Remove.
 template <class T> inline T clampedTop(T v, const T top)noexcept{
 	if(v > top){
 		return top;
@@ -111,6 +118,7 @@ template <class T> inline T clampedTop(T v, const T top)noexcept{
  * @param v - reference to the value which top is to be clamped.
  * @param top - value to clamp the top to.
  */
+//TODO: deprecated, use std::min/max. Remove.
 template <class T> inline void clampTop(T& v, const T top)noexcept{
 	v = clampedTop(v, top);
 }
@@ -123,6 +131,7 @@ template <class T> inline void clampTop(T& v, const T top)noexcept{
  * @param bottom - bottom to clamp to.
  * @return clamped value.
  */
+//TODO: deprecated, use std::min/max. Remove.
 template <class T> inline T clampedBottom(T v, const T bottom)noexcept{
 	if(v < bottom){
 		return bottom;
@@ -139,6 +148,7 @@ template <class T> inline T clampedBottom(T v, const T bottom)noexcept{
  * @param v - reference to the value which bottom is to be clamped.
  * @param bottom - value to clamp the bottom to.
  */
+//TODO: deprecated, use std::min/max. Remove.
 template <class T> inline void clampBottom(T& v, const T bottom)noexcept{
 	v = clampedBottom(v, bottom);
 }
@@ -152,6 +162,7 @@ template <class T> inline void clampBottom(T& v, const T bottom)noexcept{
  * @param top - value to clamp the top to.
  * @return clamped value.
  */
+//TODO: deprecated, use std::min/max. Remove.
 template <class T> inline T clampedRange(T v, const T bottom, const T top)noexcept{
 	if(v < bottom){
 		return bottom;
@@ -171,6 +182,7 @@ template <class T> inline T clampedRange(T v, const T bottom, const T top)noexce
  * @param bottom - value to clamp the bottom to.
  * @param top - value to clamp the top to.
  */
+//TODO: deprecated, use std::min/max. Remove.
 template <class T> inline void clampRange(T& v, const T bottom, const T top)noexcept{
 	v = clampedRange(v, bottom, top);
 }
