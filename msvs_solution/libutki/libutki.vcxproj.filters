@@ -15,54 +15,66 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\utki\Buf.hpp">
+    <ClInclude Include="..\..\src\**\*.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\utki\config.hpp">
+    <ClInclude Include="..\..\src\**\*.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\utki\debug.hpp">
+    <ClInclude Include="..\..\src\**\*.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\utki\Exc.hpp">
+    <ClInclude Include="..\..\src\**\*.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\utki\Flags.hpp">
+    <ClInclude Include="..\..\src\**\*.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\utki\math.hpp">
+    <ClInclude Include="..\..\src\**\*.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\utki\PoolStored.hpp">
+    <ClInclude Include="..\..\src\**\*.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\utki\Shared.hpp">
+    <ClInclude Include="..\..\src\**\*.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\utki\Singleton.hpp">
+    <ClInclude Include="..\..\src\**\*.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\utki\SpinLock.hpp">
+    <ClInclude Include="..\..\src\**\*.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\utki\types.hpp">
+    <ClInclude Include="..\..\src\**\*.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\utki\Unique.hpp">
+    <ClInclude Include="..\..\src\**\*.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\utki\util.hpp">
+    <ClInclude Include="..\..\src\**\*.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\utki\Void.hpp">
+    <ClInclude Include="..\..\src\**\*.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\utki\windows.hpp">
+    <ClInclude Include="..\..\src\**\*.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\**\*.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\**\*.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\**\*.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\**\*.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\utki\string.cpp">
+    <ClCompile Include="..\..\src\**\*.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
