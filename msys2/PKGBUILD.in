@@ -1,7 +1,7 @@
 # Maintainer: Ivan Gagis <igagis@gmail.com>
 
 if [ "$MSYSTEM" == "MSYS" ]; then
-	pkgPrefix=
+	pkgPrefix=lib
 	dirPrefix=/usr
 	arch=('x86_64' 'i686')
 elif [ "$MSYSTEM" == "MINGW32" ]; then
