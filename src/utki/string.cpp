@@ -36,7 +36,7 @@ std::string utki::make_string(const char* format, ...){
 			ret.resize(size);
 
 			buf_ptr = &*ret.begin();
-			buf_size = ret.size() + 1; // NOTE: C++11 guarantees that std::stding's internal buffeer has 1 extra byte for null nerminator.
+			buf_size = ret.size() + 1; // NOTE: C++11 guarantees that std::string's internal buffeer has 1 extra byte for null nerminator.
 		}else{
 			ret = std::string(buf_ptr, size);
 			break;
