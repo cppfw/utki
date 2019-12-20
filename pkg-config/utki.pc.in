@@ -1,0 +1,9 @@
+Name: papki   # human-readable name
+Description: C++ utility library # human-readable description
+Version: $(version)
+URL: https://github.com/igagis/utki
+Requires:
+Conflicts:
+Libs: -lutki
+Libs.private:
+Cflags:
