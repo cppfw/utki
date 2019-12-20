@@ -11,6 +11,8 @@ this_cxxflags += -Wall
 this_cxxflags += -fstrict-aliasing #strict aliasing!!!
 this_cxxflags += -O3
 
+this_ldlibs += -lstdc++
+
 this_out_dir := build
 
 $(eval $(prorab-build-lib))
