@@ -14,11 +14,14 @@
 #define M_COMPILER_UNKNOWN                            0
 #define M_COMPILER_GCC                                1
 #define M_COMPILER_MSVC                               2
+#define M_COMPILER_CLANG                              3
 
 #if defined(__GNUC__) || defined(__GNUG__)
 #	define M_COMPILER M_COMPILER_GCC
 #elif defined(_MSC_VER)
 #	define M_COMPILER M_COMPILER_MSVC
+#elif defined(__clang__)
+#	define M_COMPILER M_COMPILER_CLANG
 #else
 #	define M_COMPILER M_COMPILER_UNKNOWN
 #endif
