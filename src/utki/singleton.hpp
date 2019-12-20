@@ -17,30 +17,30 @@ namespace utki{
  * In most cases T_InstanceOwner is the same as T.
  * Usage as follows:
  * @code
- *	class MySingleton : public utki::IntrusiveSingleton<MySingleton, MySingleton>{
- *		friend class utki::IntrusiveSingleton<MySingleton, MySingleton>;
- *		static utki::IntrusiveSingleton<MySingleton, MySingleton>::T_Instance instance;
+ *	class my_singleton : public utki::intrusive_singleton<my_singleton, my_singleton>{
+ *		friend class utki::intrusive_singleton<my_singleton, my_singleton>;
+ *		static utki::intrusive_singleton<my_singleton, my_singleton>::T_Instance instance;
  * 
  *	public:
- *		void doSomething(){
+ *		void do_something(){
  *			//...
  *		}
  *  };
  * 
  *	//define the static variable somewhere in .cpp file.
- *  utki::IntrusiveSingleton<MySingleton, MySingleton>::T_Instance MySingleton::instance;
+ *  utki::intrusive_singleton<my_singleton, my_singleton>::T_Instance my_singleton::instance;
  *
  *	int main(int, char**){
- *		MySingleton mySingleton;
+ *		my_singleton my_singleton_instance;
  *
- *		MySingleton::inst().doSomething();
+ *		my_singleton::inst().do_something();
  *	}
  * @endcode
  */
-template <class T, class T_InstanceOwner = T> class IntrusiveSingleton{
+template <class T, class T_InstanceOwner = T> class intrusive_singleton{
 
 protected://use only as a base class
-	IntrusiveSingleton(){
+	intrusive_singleton(){
 		if(T_InstanceOwner::instance){
 			throw utki::invalid_state("Singleton::Singleton(): instance is already created");
 		}
@@ -48,15 +48,15 @@ protected://use only as a base class
 		T_InstanceOwner::instance.reset(static_cast<T*>(this));
 	}
 
-	typedef IntrusiveSingleton<T> T_Singleton;
+	typedef intrusive_singleton<T> T_Singleton;
 	
 	//Use unique_ptr because it is automatically initialized to nullptr. Automatic object destruction is not used.
 	typedef std::unique_ptr<T> T_Instance;
 	
 public:
 
-	IntrusiveSingleton(const IntrusiveSingleton&) = delete;
-	IntrusiveSingleton& operator=(const IntrusiveSingleton&) = delete;
+	intrusive_singleton(const intrusive_singleton&) = delete;
+	intrusive_singleton& operator=(const intrusive_singleton&) = delete;
 	
 public:
 	
@@ -66,8 +66,13 @@ public:
 	 * @return true if object is created.
 	 * @return false otherwise.
 	 */
-	static bool isCreated(){
+	static bool is_created(){
 		return T_InstanceOwner::instance.operator bool();
+	}
+
+	//TODO: deprecated, remove.
+	static bool isCreated(){
+		return is_created();
 	}
 
 	/**
@@ -75,11 +80,11 @@ public:
 	 * @return reference to singleton object instance.
 	 */
 	static T& inst(){
-		ASSERT_INFO(isCreated(), "IntrusiveSingleton::Inst(): Singleton object is not created")
+		ASSERT_INFO(is_created(), "intrusive_singleton::inst(): singleton object is not created")
 		return *T_InstanceOwner::instance;
 	}
 
-	virtual ~IntrusiveSingleton()noexcept{
+	virtual ~intrusive_singleton()noexcept{
 		ASSERT(T_InstanceOwner::instance.operator->() == static_cast<T*>(this))
 		T_InstanceOwner::instance.release();
 	}
@@ -94,34 +99,34 @@ public:
  * its static methods, the most important one is Inst().
  * Usage as follows:
  * @code
- *	class MySingleton : public utki::Singleton<MySingleton>{
+ *	class my_singleton : public utki::singleton<my_singleton>{
  *	public:
- *		void DoSomething(){
+ *		void do_something(){
  *			//...
  *		}
  *  };
  *
  *	int main(int, char**){
- *		MySingleton mySingleton;
+ *		my_singleton my_singleton_instance;
  *
- *		MySingleton::Inst().DoSomething();
+ *		my_singleton::inst().do_something();
  *	}
  * @endcode
  */
-template <class T> class Singleton : public IntrusiveSingleton<T, Singleton<T> >{
-	friend class IntrusiveSingleton<T, Singleton<T> >;
+template <class T> class singleton : public intrusive_singleton<T, singleton<T> >{
+	friend class intrusive_singleton<T, singleton<T> >;
 protected:
-	Singleton(){}
+	singleton(){}
 	
 public:
-	Singleton(const Singleton&) = delete;
-	Singleton& operator=(const Singleton&) = delete;
+	singleton(const singleton&) = delete;
+	singleton& operator=(const singleton&) = delete;
 
 private:
 	
-	static typename IntrusiveSingleton<T, Singleton<T> >::T_Instance instance;
+	static typename intrusive_singleton<T, singleton<T> >::T_Instance instance;
 };
 
-template <class T> typename utki::IntrusiveSingleton<T, Singleton<T> >::T_Instance utki::Singleton<T>::instance;
+template <class T> typename utki::intrusive_singleton<T, singleton<T> >::T_Instance utki::singleton<T>::instance;
 
 }

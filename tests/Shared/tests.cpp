@@ -1,5 +1,5 @@
 #include "../../src/utki/debug.hpp"
-#include "../../src/utki/Shared.hpp"
+#include "../../src/utki/shared.hpp"
 
 #include "tests.hpp"
 
@@ -7,7 +7,7 @@
 
 namespace TestBasicTingShared{
 
-class TestClass : public utki::Shared{
+class TestClass : public utki::shared{
 public:
 	int a = 4;
 	
@@ -18,7 +18,7 @@ public:
 	TestClass(int i) : a(i) {}
 	
 	std::shared_ptr<TestClass> getPtr(){
-		return this->sharedFromThis(this);
+		return this->shared_from_this(this);
 	}
 };
 

@@ -6,6 +6,8 @@
  * The main purpose of this facilities is to prevent memory fragmentation.
  */
 
+//TODO: deprecated, remove whole file.
+
 #pragma once
 
 #include <new>

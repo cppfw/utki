@@ -7,13 +7,16 @@
 
 namespace utki{
 
+//TODO: deprecated, remove.
 template< class T, class... Args > std::shared_ptr<T> makeShared(Args&&... args);
 
 
 /**
  * @brief Base class for objects managed by std::shared_ptr.
  */
-class Shared : public std::enable_shared_from_this<Shared>{
+class shared : public std::enable_shared_from_this<shared>{
+
+	//TODO: deprecated, remove.
 	template< class T, class... Args > friend std::shared_ptr<T> utki::makeShared(Args&&...);
 	
 	static void* operator new(size_t size){
@@ -21,20 +24,32 @@ class Shared : public std::enable_shared_from_this<Shared>{
 	}
 	
 protected:
+	using std::enable_shared_from_this<shared>::shared_from_this;
+
 	/**
 	 * @brief Get shared pointer from this.
-     * @param thisPtr - 'this' used to determine type for casting.
+     * @param this_ptr - 'this' used to determine type for casting.
      * @return shared_ptr to this object.
      */
-	template <class T> std::shared_ptr<T> sharedFromThis(T* thisPtr){
+	template <class T> std::shared_ptr<T> shared_from_this(T* this_ptr){
 		return std::move(std::dynamic_pointer_cast<T>(this->shared_from_this()));
 	}
+
+	//TODO: deprecated, remove.
+	template <class T> std::shared_ptr<T> sharedFromThis(T* thisPtr){
+		return this->shared_from_this(thisPtr);
+	}
 	
-	template <class T> std::shared_ptr<const T> sharedFromThis(T* thisPtr)const{
+	template <class T> std::shared_ptr<const T> shared_from_this(T* this_ptr)const{
 		return std::move(std::dynamic_pointer_cast<const T>(this->shared_from_this()));
 	}
+
+	//TODO: deprecated, remove.
+	template <class T> std::shared_ptr<const T> sharedFromThis(T* thisPtr)const{
+		return this->shared_from_this(thisPtr);
+	}
 public:
-	virtual ~Shared()noexcept{}
+	virtual ~shared()noexcept{}
 };
 
 
@@ -44,9 +59,9 @@ public:
  * @param args - arguments of object class constructor.
  * @return std::shared_ptr pointing to a newly created object.
  */
-//TODO: this is deprecated in favor of std::make_shared, remove this function in version 2.0.0
+//TODO: this is deprecated in favor of std::make_shared, remove this function.
 template< class T, class... Args > std::shared_ptr<T> makeShared(Args&&... args){
-	static_assert(std::is_base_of<Shared, T>::value, "Class does not inherit utki::Shared, cannot create object.");
+	static_assert(std::is_base_of<shared, T>::value, "Class does not inherit utki::Shared, cannot create object.");
 	TRACE(<< "utki::makeShared() is deprecated, use std::make_shared() instead" << std::endl)
 	return std::make_shared<T>(std::forward<Args>(args)...);
 }
@@ -58,8 +73,13 @@ template< class T, class... Args > std::shared_ptr<T> makeShared(Args&&... args)
  * @param ptr - shared_ptr out of which to make weak_ptr.
  * @return std::weak_ptr created from given std::shared_ptr.
  */
-template <class T> std::weak_ptr<T> makeWeak(const std::shared_ptr<T>& ptr){
+template <class T> std::weak_ptr<T> make_weak(const std::shared_ptr<T>& ptr){
 	return std::weak_ptr<T>(ptr);
+}
+
+//TODO: deprecated, remove.
+template <class T> std::weak_ptr<T> makeWeak(const std::shared_ptr<T>& ptr){
+	return make_weak(ptr);
 }
 
 

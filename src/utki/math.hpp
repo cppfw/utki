@@ -47,8 +47,13 @@ template <typename T> inline T pi()noexcept{
  * @brief Get 2 * Pi.
  * @return 2 * Pi.
  */
-template <typename T> inline T twoPi()noexcept{
+template <typename T> inline T two_pi()noexcept{
 	return T(2) * pi<T>();
+}
+
+//TODO: deprecated, remove.
+template <typename T> inline T twoPi()noexcept{
+	return two_pi<T>();
 }
 
 
@@ -57,8 +62,13 @@ template <typename T> inline T twoPi()noexcept{
  * @brief Get natural logarithm of 2, i.e. ln(2).
  * @return natural logarithm of 2.
  */
-template <typename T> inline T logOf2()noexcept{
+template <typename T> inline T log_2()noexcept{
 	return T(0.693147181);
+}
+
+//TODO: deprecated, remove.
+template <typename T> inline T logOf2()noexcept{
+	return log_2<T>();
 }
 
 

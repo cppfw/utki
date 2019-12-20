@@ -1,10 +1,10 @@
 #pragma once
 
-#include "../../src/utki/Singleton.hpp"
+#include "../../src/utki/singleton.hpp"
 
 
 
-class TestSingleton : public utki::Singleton<TestSingleton>{
+class TestSingleton : public utki::singleton<TestSingleton>{
 public:
 	int a;
 
