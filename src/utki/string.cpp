@@ -7,8 +7,7 @@
 
 using namespace utki;
 
-
-std::string utki::make_string(const char* format, ...){
+std::string utki::make_string_va_list(const char* format, va_list args){
 	std::array<char, 0x400> buf; // first guess is that the resulting string will take less than 1k
 
 	std::string ret;
@@ -17,15 +16,12 @@ std::string utki::make_string(const char* format, ...){
 	auto buf_size = buf.size();
 
 	for(unsigned i = 0;; ++i){
-		va_list args;
-		va_start(args, format);
 		int size = vsnprintf(
 				buf_ptr,
 				buf_size,
 				format,
 				args
 			);
-		va_end(args);
 
 		if(size < 0){
 			throw std::logic_error("snprintf() failed");
@@ -46,4 +42,12 @@ std::string utki::make_string(const char* format, ...){
 	}
     
     return ret;
+}
+
+std::string utki::make_string(const char* format, ...){
+	va_list args;
+	va_start(args, format);
+	auto ret = make_string_va_list(format, args);
+	va_end(args);
+	return ret;
 }
