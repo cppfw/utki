@@ -1,3 +1,9 @@
+libutki (1.1.52) unstable; urgency=medium
+
+  * added va_list version of make_string() function
+
+ -- Ivan Gagis <igagis@gmail.com>  Sun, 22 Dec 2019 01:49:49 +0200
+
 libutki (1.1.51) unstable; urgency=medium
 
   * make shared_from_this() public
