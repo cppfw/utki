@@ -15,12 +15,15 @@ std::string utki::make_string_va_list(const char* format, va_list args){
 	auto buf_ptr = &*buf.begin();
 	auto buf_size = buf.size();
 
+	va_list cur_args;
+	va_copy(cur_args, args);
+
 	for(unsigned i = 0;; ++i){
 		int size = vsnprintf(
 				buf_ptr,
 				buf_size,
 				format,
-				args
+				cur_args
 			);
 
 		if(size < 0){
@@ -33,6 +36,8 @@ std::string utki::make_string_va_list(const char* format, va_list args){
 
 			buf_ptr = &*ret.begin();
 			buf_size = ret.size() + 1; // NOTE: C++11 guarantees that std::string's internal buffeer has 1 extra byte for null nerminator.
+
+			va_copy(cur_args, args);
 		}else{
 			ret = std::string(buf_ptr, size);
 			break;
