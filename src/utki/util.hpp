@@ -197,7 +197,7 @@ template <class T> inline void clampRange(T& v, const T bottom, const T top)noex
  * @param out_buf - pointer to the 2 byte buffer where the result will be placed.
  * @return pointer to the next byte after serialized value.
  */
-inline std::uint8_t* serialize16LE(std::uint16_t value, std::uint8_t* out_buf)noexcept{
+inline std::uint8_t* serialize16le(std::uint16_t value, std::uint8_t* out_buf)noexcept{
 	*out_buf = value & 0xff;
 	++out_buf;
 	*out_buf = value >> 8;
@@ -214,7 +214,7 @@ inline std::uint8_t* serialize16LE(std::uint16_t value, std::uint8_t* out_buf)no
  * @param out_buf - pointer to the 4 byte buffer where the result will be placed.
  * @return pointer to the next byte after serialized value.
  */
-inline std::uint8_t* serialize32LE(std::uint32_t value, std::uint8_t* out_buf)noexcept{
+inline std::uint8_t* serialize32le(std::uint32_t value, std::uint8_t* out_buf)noexcept{
 	*out_buf = std::uint8_t(value & 0xff);
 	++out_buf;
 	value >>= 8;
@@ -238,7 +238,7 @@ inline std::uint8_t* serialize32LE(std::uint32_t value, std::uint8_t* out_buf)no
  * @param out_buf - pointer to the 8 byte buffer where the result will be placed.
  * @return pointer to the next byte after serialized value.
  */
-inline std::uint8_t* serialize64LE(std::uint64_t value, std::uint8_t* out_buf)noexcept{
+inline std::uint8_t* serialize64le(std::uint64_t value, std::uint8_t* out_buf)noexcept{
 	*out_buf = std::uint8_t(value & 0xff);
 	++out_buf;
 	value >>= 8;
@@ -274,7 +274,7 @@ inline std::uint8_t* serialize64LE(std::uint64_t value, std::uint8_t* out_buf)no
  * @param buf - pointer to buffer containing 2 bytes to convert from little-endian format.
  * @return 16 bit unsigned integer converted from little-endian byte order to native byte order.
  */
-inline std::uint16_t deserialize16LE(const std::uint8_t* buf)noexcept{
+inline std::uint16_t deserialize16le(const std::uint8_t* buf)noexcept{
 	std::uint16_t ret;
 
 	//assume little-endian
@@ -294,7 +294,7 @@ inline std::uint16_t deserialize16LE(const std::uint8_t* buf)noexcept{
  * @param buf - pointer to buffer containing 4 bytes to convert from little-endian format.
  * @return 32 bit unsigned integer converted from little-endian byte order to native byte order.
  */
-inline std::uint32_t deserialize32LE(const std::uint8_t* buf)noexcept{
+inline std::uint32_t deserialize32le(const std::uint8_t* buf)noexcept{
 	std::uint32_t ret;
 
 	//assume little-endian
@@ -318,7 +318,7 @@ inline std::uint32_t deserialize32LE(const std::uint8_t* buf)noexcept{
  * @param buf - pointer to buffer containing 8 bytes to convert from little-endian format.
  * @return 64 bit unsigned integer converted from little-endian byte order to native byte order.
  */
-inline std::uint64_t deserialize64LE(const std::uint8_t* buf)noexcept{
+inline std::uint64_t deserialize64le(const std::uint8_t* buf)noexcept{
 	std::uint64_t ret;
 
 	//assume little-endian
@@ -351,7 +351,7 @@ inline std::uint64_t deserialize64LE(const std::uint8_t* buf)noexcept{
  * @param out_buf - pointer to the 2 byte buffer where the result will be placed.
  * @return pointer to the next byte after serialized value.
  */
-inline std::uint8_t* serialize16BE(std::uint16_t value, std::uint8_t* out_buf)noexcept{
+inline std::uint8_t* serialize16be(std::uint16_t value, std::uint8_t* out_buf)noexcept{
 	*out_buf = value >> 8;
 	++out_buf;
 	*out_buf = value & 0xff;
@@ -368,7 +368,7 @@ inline std::uint8_t* serialize16BE(std::uint16_t value, std::uint8_t* out_buf)no
  * @param out_buf - pointer to the 4 byte buffer where the result will be placed.
  * @return pointer to the next byte after serialized value.
  */
-inline std::uint8_t* serialize32BE(std::uint32_t value, std::uint8_t* out_buf)noexcept{
+inline std::uint8_t* serialize32be(std::uint32_t value, std::uint8_t* out_buf)noexcept{
 	*out_buf = std::uint8_t((value >> 24) & 0xff);
 	++out_buf;
 	*out_buf = std::uint8_t((value >> 16) & 0xff);
@@ -389,7 +389,7 @@ inline std::uint8_t* serialize32BE(std::uint32_t value, std::uint8_t* out_buf)no
  * @param out_buf - pointer to the 8 byte buffer where the result will be placed.
  * @return pointer to the next byte after serialized value.
  */
-inline std::uint8_t* serialize64BE(std::uint64_t value, std::uint8_t* out_buf)noexcept{
+inline std::uint8_t* serialize64be(std::uint64_t value, std::uint8_t* out_buf)noexcept{
 	*out_buf = std::uint8_t((value >> 56) & 0xff);
 	++out_buf;
 	*out_buf = std::uint8_t((value >> 48) & 0xff);
@@ -418,7 +418,7 @@ inline std::uint8_t* serialize64BE(std::uint64_t value, std::uint8_t* out_buf)no
  * @param buf - pointer to buffer containing 2 bytes to convert from big-endian format.
  * @return 16 bit unsigned integer converted from big-endian byte order to native byte order.
  */
-inline std::uint16_t deserialize16BE(const std::uint8_t* buf)noexcept{
+inline std::uint16_t deserialize16be(const std::uint8_t* buf)noexcept{
 	std::uint16_t ret;
 
 	//assume big-endian
@@ -438,7 +438,7 @@ inline std::uint16_t deserialize16BE(const std::uint8_t* buf)noexcept{
  * @param buf - pointer to buffer containing 4 bytes to convert from big-endian format.
  * @return 32 bit unsigned integer converted from big-endian byte order to native byte order.
  */
-inline std::uint32_t deserialize32BE(const std::uint8_t* buf)noexcept{
+inline std::uint32_t deserialize32be(const std::uint8_t* buf)noexcept{
 	std::uint32_t ret;
 
 	//assume big-endian
@@ -462,7 +462,7 @@ inline std::uint32_t deserialize32BE(const std::uint8_t* buf)noexcept{
  * @param buf - pointer to buffer containing 4 bytes to convert from big-endian format.
  * @return 64 bit unsigned integer converted from big-endian byte order to native byte order.
  */
-inline std::uint64_t deserialize64BE(const std::uint8_t* buf)noexcept{
+inline std::uint64_t deserialize64be(const std::uint8_t* buf)noexcept{
 	std::uint64_t ret;
 
 	//assume big-endian
