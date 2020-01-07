@@ -2,6 +2,7 @@
 
 #include <string>
 #include <exception>
+#include <stdexcept>
 
 #include "config.hpp"
 
@@ -38,24 +39,21 @@ public:
 /**
  * @brief Basic exception class for "object not found" errors.
  */
-class not_found : public exception{
+class not_found : public std::runtime_error{
 public:
 	not_found(const std::string& message) :
-			exception(message)
+			std::runtime_error(message)
 	{}
 };
 
 /**
  * @brief Basic exception class for "invalid state" errors.
  */
-class invalid_state : public exception{
+class invalid_state : public std::logic_error{
 public:
 	invalid_state(const std::string& message) :
-			exception(message)
+			std::logic_error(message)
 	{}
 };
-
-// TODO: deprecated, remove.
-typedef invalid_state illegal_state;
 
 }
