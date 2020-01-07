@@ -1,4 +1,4 @@
-#include "../../src/utki/Buf.hpp"
+#include "../../src/utki/span.hpp"
 
 #include "tests.hpp"
 
@@ -97,7 +97,7 @@ public:
 };
 
 
-int Func2(const utki::Buf<TestClass> buf){
+int Func2(const utki::span<TestClass> buf){
 	if(buf.size() == 0){
 		return 0;
 	}
@@ -110,18 +110,17 @@ void Run(){
 		std::array<TestClass, 20> buf;
 		
 //		Func(buf);
-		Func2(utki::wrapBuf(buf));
+		Func2(utki::make_span(buf));
 	}
 	
 	{
 		std::vector<TestClass> buf(20);
 		
 //		Func(buf);
-		Func2(utki::wrapBuf(buf));
+		Func2(utki::make_span(buf));
 	}
 	
-//	Func(ting::Buffer<TestClass>(0, 0));
-	Func2(utki::wrapBuf<TestClass>(0, 0));
+	Func2(utki::make_span<TestClass>(0, 0));
 }
 
 }
@@ -134,13 +133,13 @@ void run(){
 
 		std::stringstream ss;
 
-		ss << utki::wrapBuf(buf);
+		ss << utki::make_span(buf);
 
 		ASSERT_ALWAYS(ss.str() == "Hello world!")
 	}
 	{
 		std::array<char, 12> buf = {{'H', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', '!'}};
-		ASSERT_ALWAYS(toString(utki::wrapBuf(buf)) == "Hello world!")
+		ASSERT_ALWAYS(to_string(utki::make_span(buf)) == "Hello world!")
 	}
 }
 }

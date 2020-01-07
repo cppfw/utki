@@ -11,18 +11,17 @@
 #include "util.hpp"
 #include "debug.hpp"
 
-// TODO: deprecated, remove whole file. Use 'span' instedad.
-
 namespace utki{
 
-
+// TODO: remove when C++'20 becomes very common.
 
 /**
- * @brief Buffer template class.
+ * @brief span template class.
  * This class is a wrapper of continuous memory buffer, it encapsulates pointer to memory block and size of that memory block.
  * It does not own the memory.
+ * This is a replacement of std::span when C++'20 is not available.
  */
-template <class T> class Buf final{
+template <class T> class span final{
 public:
 	typedef T value_type;
 	typedef value_type* pointer;
@@ -42,35 +41,33 @@ private:
 	
 public:
 
-	Buf(const Buf&) = default;
-	Buf& operator=(const Buf&) = default;
+	span(const span&) = default;
+	span& operator=(const span&) = default;
 	
 	
 	/**
-	 * @brief Create a Buffer object.
-	 * Creates a Buffer object which wraps given memory buffer of specified size.
+	 * @brief Create a span object.
+	 * Creates a span object which wraps given memory buffer of specified size.
 	 * Note, the memory will not be freed upon this Buffer object destruction,
 	 * Buffer does not own the memory.
 	 * @param bufPtr - pointer to the memory buffer.
 	 * @param bufSize - size of the memory buffer.
 	 */
-	Buf(pointer bufPtr, size_type bufSize)noexcept :
+	span(pointer bufPtr, size_type bufSize)noexcept :
 			buf(bufPtr),
 			bufSize(bufSize)
 	{}
 
 	
-	Buf()noexcept{}
+	span()noexcept{}
 	
 	/**
 	 * @brief Constructor for automatic conversion from nullptr.
      * @param bufPtr - pointer to the memory buffer. Makes not much sense, because size is 0 anyway.
      */
-	Buf(pointer bufPtr)noexcept :
+	span(pointer bufPtr)noexcept :
 			buf(bufPtr)
 	{}
-	
-	
 	
 	/**
 	 * @brief get buffer size.
@@ -80,24 +77,17 @@ public:
 		return this->bufSize;
 	}
 
-
-
-	/**
-	 * @brief get size of element.
-	 * @return size of element in bytes.
-	 */
-	size_type sizeOfElem()const noexcept{
-		return sizeof(this->buf[0]);
-	}
-
-
-
 	/**
 	 * @brief get size of buffer in bytes.
 	 * @return size of array in bytes.
 	 */
+	size_type size_bytes()const noexcept{
+		return this->size() * sizeof(value_type);
+	}
+
+	//TODO: deprecated, remove.
 	size_type sizeInBytes()const noexcept{
-		return this->size() * this->sizeOfElem();
+		return this->size_bytes();
 	}
 
 
@@ -219,7 +209,7 @@ public:
 
 
 
-	friend std::ostream& operator<<(std::ostream& s, const Buf<T>& buf){
+	friend std::ostream& operator<<(std::ostream& s, const span<T>& buf){
 		for(auto& e : buf){
 			s << e;
 		}
@@ -229,31 +219,31 @@ public:
 
 
 
-template <class T> inline utki::Buf<T> wrapBuf(T* buf, size_t size){
-	return utki::Buf<T>(buf, size);
+template <class T> inline utki::span<T> make_span(T* buf, size_t size){
+	return utki::span<T>(buf, size);
 }
 
-template <class T> inline const utki::Buf<T> wrapBuf(const T* buf, size_t size){
-	return utki::Buf<T>(const_cast<T*>(buf), size);
+template <class T> inline const utki::span<T> make_span(const T* buf, size_t size){
+	return utki::span<T>(const_cast<T*>(buf), size);
 }
 
-template <class T, std::size_t array_size> inline utki::Buf<T> wrapBuf(std::array<T, array_size>& a){
-	return wrapBuf(a.size() == 0 ? nullptr : &*a.begin(), a.size());
+template <class T, std::size_t array_size> inline utki::span<T> make_span(std::array<T, array_size>& a){
+	return make_span(a.size() == 0 ? nullptr : &*a.begin(), a.size());
 }
 
-template <class T, std::size_t array_size> inline const utki::Buf<T> wrapBuf(const std::array<T, array_size>& a){
-	return wrapBuf(a.size() == 0 ? nullptr : &*a.begin(), a.size());
+template <class T, std::size_t array_size> inline const utki::span<T> make_span(const std::array<T, array_size>& a){
+	return make_span(a.size() == 0 ? nullptr : &*a.begin(), a.size());
 }
 
-template <class T> inline utki::Buf<T> wrapBuf(std::vector<T>& v){
-	return wrapBuf(v.size() == 0 ? nullptr : &*v.begin(), v.size());
+template <class T> inline utki::span<T> make_span(std::vector<T>& v){
+	return make_span(v.size() == 0 ? nullptr : &*v.begin(), v.size());
 }
 
-template <class T> inline const utki::Buf<T> wrapBuf(const std::vector<T>& v){
-	return wrapBuf(v.size() == 0 ? nullptr : &*v.begin(), v.size());
+template <class T> inline const utki::span<T> make_span(const std::vector<T>& v){
+	return make_span(v.size() == 0 ? nullptr : &*v.begin(), v.size());
 }
 
-inline std::string toString(const Buf<char>& buf){
+inline std::string to_string(const utki::span<char>& buf){
 	return std::string(&*buf.begin(), buf.size());
 }
 
