@@ -1,5 +1,5 @@
 #include "../../src/utki/debug.hpp"
-#include "../../src/utki/Flags.hpp"
+#include "../../src/utki/flags.hpp"
 
 #include "tests.hpp"
 
@@ -57,7 +57,7 @@ enum class TestEnum{
 
 
 void Run(){
-	utki::Flags<TestEnum> fs;
+	utki::flags<TestEnum> fs;
 	
 	fs.set(TestEnum::EIGHTH, true).set(TestEnum::SECOND, true).set(TestEnum::EIGHTH, false);
 	ASSERT_ALWAYS(!fs.get(TestEnum::EIGHTH))
@@ -69,34 +69,34 @@ void Run(){
 	TRACE(<< "fs = " << fs << std::endl)
 	
 	{
-		utki::Flags<TestEnum> fs;
-		ASSERT_ALWAYS(fs.isAllClear())
-		ASSERT_ALWAYS(!fs.isAllSet())
+		utki::flags<TestEnum> fs;
+		ASSERT_ALWAYS(fs.is_all_clear())
+		ASSERT_ALWAYS(!fs.is_all_set())
 		
 		fs.set(fs.size() - 1, true);
-		ASSERT_ALWAYS(!fs.isAllClear())
-		ASSERT_ALWAYS(!fs.isAllSet())
+		ASSERT_ALWAYS(!fs.is_all_clear())
+		ASSERT_ALWAYS(!fs.is_all_set())
 		
-		fs.setAll(false);
+		fs.set_all(false);
 		
 		fs.set(TestEnum::EIGHTH, true);
-		ASSERT_ALWAYS(!fs.isAllClear())
-		ASSERT_ALWAYS(!fs.isAllSet())
+		ASSERT_ALWAYS(!fs.is_all_clear())
+		ASSERT_ALWAYS(!fs.is_all_set())
 	}
 	{
-		utki::Flags<TestEnum> fs(true);
-		ASSERT_ALWAYS(!fs.isAllClear())
-		ASSERT_ALWAYS(fs.isAllSet())
+		utki::flags<TestEnum> fs(true);
+		ASSERT_ALWAYS(!fs.is_all_clear())
+		ASSERT_ALWAYS(fs.is_all_set())
 		
 		fs.set(fs.size() - 1, false);
-		ASSERT_ALWAYS(!fs.isAllClear())
-		ASSERT_ALWAYS(!fs.isAllSet())
+		ASSERT_ALWAYS(!fs.is_all_clear())
+		ASSERT_ALWAYS(!fs.is_all_set())
 				
-		fs.setAll(true);
+		fs.set_all(true);
 		
 		fs.set(TestEnum::EIGHTH, false);
-		ASSERT_ALWAYS(!fs.isAllClear())
-		ASSERT_ALWAYS(!fs.isAllSet())
+		ASSERT_ALWAYS(!fs.is_all_clear())
+		ASSERT_ALWAYS(!fs.is_all_set())
 	}
 }
 

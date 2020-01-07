@@ -1,7 +1,3 @@
-/**
- * @author Ivan Gagis <igagis@gmail.com>
- */
-
 #pragma once
 
 #include "types.hpp"
@@ -10,11 +6,10 @@
 
 #include <cstring>
 #include <ostream>
+#include <array>
 
 
 namespace utki{
-
-//TODO: rewrite using C++11
 
 /**
  * @brief class representing a set of flags.
@@ -25,57 +20,56 @@ namespace utki{
  * 
  * For example:
  * @code
- * enum class MyEnum{
- *     MY_ZEROTH_ITEM,
- *     MY_FIRST_ITEM,
- *     MY_SECOND_ITEM,
- *     MY_THIRD_ITEM,
+ * enum class my_enum{
+ *     zeroth_item,
+ *     first_item,
+ *     second_item,
+ *     third_item,
  *     ...
  *     ENUM_SIZE
  * };
  * 
  * @endcode
- * Then, the Flags can be used as follows:
+ * Then, the 'flags' can be used as follows:
  * @code
- * ting::Flags<MyEnum> fs;
+ * utki::flags<my_enum> fs;
  * 
- * fs.Set(MyEnum::MY_FIRST_ITEM, true).Set(MyEnum::MY_THIRD_ITEM, true);
+ * fs.set(my_enum::first_item, true).set(my_enum::third_item, true);
  * 
- * if(fs.Get(MyEnum::MY_FIRST_ITEM)){
- *     //MY_FIRST_ITEM flag is set
+ * if(fs.get(my_enum::first_item)){
+ *     //first_item flag is set
  * }
  * 
- * if(fs.Get(MyEnum::MY_ZEROTH_ITEM)){
- *     //Will not get here, since MY_ZEROTH_ITEM flag is not set
+ * if(fs.get(my_enum::zeroth_item)){
+ *     //Will not get here, since zeroth_item flag is not set
  * }
  * 
  * @endcode
  */
-template <class T_Enum> class Flags{
+template <class T_Enum> class flags{
 public:
-	typedef typename utki::uint_size<sizeof(T_Enum)>::type index_t;
+	typedef typename utki::uint_size<sizeof(T_Enum)>::type index_type;
 	
 private:
-	std::uint8_t flags[index_t(T_Enum::ENUM_SIZE) / 8 + 1];
+	std::array<std::uint8_t, index_type(T_Enum::ENUM_SIZE) / 8 + 1> f;
 
 public:
-
 
 	/**
 	 * @brief Constructor.
-	 * Creates a Flags with all flags initialized to a given value.
-	 * @param initialValueOfAllFlags - value to initialize all flags to.
+	 * All flags are initialized to the same given value.
+	 * @param iinitial_value - value which initializes all flags.
 	 */
-	Flags(bool initialValueOfAllFlags = false){
-		this->setAll(initialValueOfAllFlags);
+	flags(bool initial_value = false){
+		this->set_all(initial_value);
 	}
 
 	/**
 	 * @brief Size of the flag set.
 	 * @return Number of flags in this flag set.
 	 */
-	index_t size()const noexcept{
-		return index_t(T_Enum::ENUM_SIZE);
+	index_type size()const noexcept{
+		return index_type(T_Enum::ENUM_SIZE);
 	}
 
 	/**
@@ -86,7 +80,7 @@ public:
 	 */
 	bool get(T_Enum flag)const noexcept{
 		ASSERT(flag < T_Enum::ENUM_SIZE)
-		return (this->flags[index_t(flag) / 8] & (1 << (index_t(flag) % 8))) != 0;
+		return (this->f[index_type(flag) / 8] & (1 << (index_type(flag) % 8))) != 0;
 	}
 
 	/**
@@ -97,7 +91,7 @@ public:
 	 * @param i - index of the flag to get value of.
 	 * @return value of the flag given by index.
 	 */
-	bool get(index_t i)const noexcept{
+	bool get(index_type i)const noexcept{
 		return this->get(T_Enum(i));
 	}
 
@@ -107,12 +101,12 @@ public:
 	 * @param value - value to set.
 	 * @return Reference to this Flags.
 	 */
-	Flags& set(T_Enum flag, bool value = true)noexcept{
+	flags& set(T_Enum flag, bool value = true)noexcept{
 		ASSERT(flag < T_Enum::ENUM_SIZE)
 		if(value){
-			this->flags[index_t(flag) / 8] |= (1 << (index_t(flag) % 8));
+			this->f[index_type(flag) / 8] |= (1 << (index_type(flag) % 8));
 		}else{
-			this->flags[index_t(flag) / 8] &= (~(1 << (index_t(flag) % 8)));
+			this->f[index_type(flag) / 8] &= (~(1 << (index_type(flag) % 8)));
 		}
 		return *this;
 	}
@@ -122,7 +116,7 @@ public:
 	 * @param flag - flag to clear.
 	 * @return Reference to this Flags.
 	 */
-	Flags& clear(T_Enum flag)noexcept{
+	flags& clear(T_Enum flag)noexcept{
 		return this->set(flag, false);
 	}
 
@@ -135,7 +129,7 @@ public:
 	 * @param value - value to set.
 	 * @return Reference to this Flags.
 	 */
-	Flags& set(index_t i, bool value = true)noexcept{
+	flags& set(index_type i, bool value = true)noexcept{
 		return this->set(T_Enum(i), value);
 	}
 
@@ -146,7 +140,7 @@ public:
 	 * @param i - index of the flag to clear.
 	 * @return Reference to this Flags.
 	 */
-	Flags& clear(index_t i)noexcept{
+	flags& clear(index_type i)noexcept{
 		return this->set(i, false);
 	}
 
@@ -155,8 +149,8 @@ public:
 	 * @param value - value to set all flags to.
 	 * @return Reference to this Flags.
 	 */
-	Flags& setAll(bool value = true)noexcept{
-		memset(this->flags, value ? std::uint8_t(-1) : 0, sizeof(this->flags));
+	flags& set_all(bool value = true)noexcept{
+		std::fill(this->f.begin(), this->f.end(), value ? std::uint8_t(-1) : 0);
 		return *this;
 	}
 
@@ -165,14 +159,14 @@ public:
 	 * @return true if all flags are cleared.
 	 * @return false otherwise.
 	 */
-	bool isAllClear()const noexcept{
-		ASSERT(sizeof(this->flags) > 0)
-		for(size_t i = 0; i != sizeof(this->flags) - 1; ++i){
-			if(this->flags[i] != 0){
+	bool is_all_clear()const noexcept{
+		ASSERT_INFO(this->f.size() != 0, "given flags enumeration is empty")
+		for(size_t i = 0; i != this->f.size() - 1; ++i){
+			if(this->f[i] != 0){
 				return false;
 			}
 		}
-		for(index_t i = (this->size() / 8) * 8; i != this->size(); ++i){
+		for(index_type i = (this->size() / 8) * 8; i != this->size(); ++i){
 			if(this->get(i)){
 				return false;
 			}
@@ -185,14 +179,14 @@ public:
 	 * @return true if all flags are set.
 	 * @return false otherwise.
 	 */
-	bool isAllSet()const noexcept{
-		ASSERT(sizeof(this->flags) > 0)
-		for(size_t i = 0; i != sizeof(this->flags) - 1; ++i){
-			if(this->flags[i] != std::uint8_t(-1)){
+	bool is_all_set()const noexcept{
+		ASSERT_INFO(this->f.size() != 0, "given flags enumeration is empty")
+		for(size_t i = 0; i != this->f.size() - 1; ++i){
+			if(this->f[i] != std::uint8_t(-1)){
 				return false;
 			}
 		}
-		for(index_t i = (this->size() / 8) * 8; i != this->size(); ++i){
+		for(index_type i = (this->size() / 8) * 8; i != this->size(); ++i){
 			if(!this->get(i)){
 				return false;
 			}
@@ -204,9 +198,9 @@ public:
 	 * @brief Inverts all the flags.
 	 * @return Reference to this Flags.
 	 */
-	Flags& invert()noexcept{
-		for(size_t i = 0; i != sizeof(this->flags); ++i){
-			this->flags[i] = ~this->flags[i];
+	flags& invert()noexcept{
+		for(size_t i = 0; i != this->f.size(); ++i){
+			this->f[i] = ~this->f[i];
 		}
 		return *this;
 	}
@@ -215,8 +209,8 @@ public:
 	 * @brief Operator NOT.
 	 * @return Inverted instance of Flags.
 	 */
-	Flags operator~()const noexcept{
-		return Flags(*this).invert();
+	flags operator~()const noexcept{
+		return flags(*this).invert();
 	}
 
 	/**
@@ -224,9 +218,9 @@ public:
      * @param f - flags to perform AND operation with.
      * @return Reference to this Flags.
      */
-	Flags& operator&=(const Flags& f)noexcept{
-		for(size_t i = 0; i != sizeof(this->flags); ++i){
-			this->flags[i] &= f.flags[i];
+	flags& operator&=(const flags& f)noexcept{
+		for(size_t i = 0; i != this->f.size(); ++i){
+			this->f[i] &= f.f[i];
 		}
 		return *this;
 	}
@@ -236,8 +230,8 @@ public:
      * @param f - flags to perform AND operation with.
      * @return Instance of Flags resulting from AND operation.
      */
-	Flags operator&(const Flags& f)const noexcept{
-		return Flags(*this).operator&=(f);
+	flags operator&(const flags& f)const noexcept{
+		return flags(*this).operator&=(f);
 	}
 	
 	/**
@@ -245,9 +239,9 @@ public:
      * @param f - flags to perform OR operation with.
      * @return Reference to this Flags.
      */
-	Flags& operator|=(const Flags& f)noexcept{
-		for(size_t i = 0; i != sizeof(this->flags); ++i){
-			this->flags[i] |= f.flags[i];
+	flags& operator|=(const flags& f)noexcept{
+		for(size_t i = 0; i != this->f.size(); ++i){
+			this->f[i] |= f.f[i];
 		}
 		return *this;
 	}
@@ -257,8 +251,8 @@ public:
      * @param f - flags to perform OR operation with.
      * @return Instance of Flags resulting from OR operation.
      */
-	Flags operator|(const Flags& f)const noexcept{
-		return Flags(*this).operator|=(f);
+	flags operator|(const flags& f)const noexcept{
+		return flags(*this).operator|=(f);
 	}
 	
 	/**
@@ -266,9 +260,9 @@ public:
      * @param f - flags to perform XOR operation with.
      * @return Reference to this Flags.
      */
-	Flags& operator^=(const Flags& f)noexcept{
-		for(size_t i = 0; i != sizeof(this->flags); ++i){
-			this->flags[i] ^= f.flags[i];
+	flags& operator^=(const flags& f)noexcept{
+		for(size_t i = 0; i != this->f.size(); ++i){
+			this->f[i] ^= f.f[i];
 		}
 		return *this;
 	}
@@ -278,15 +272,15 @@ public:
      * @param f - flags to perform OR operation with.
      * @return Instance of Flags resulting from OR operation.
      */
-	Flags operator^(const Flags& f)const noexcept{
-		return Flags(*this).operator^=(f);
+	flags operator^(const flags& f)const noexcept{
+		return flags(*this).operator^=(f);
 	}
 	
 
-	friend std::ostream& operator<<(std::ostream& s, const Flags& fs){
+	friend std::ostream& operator<<(std::ostream& s, const flags& fs){
 		s << "(";
 
-		for(index_t i = 0; i != fs.size(); ++i){
+		for(index_type i = 0; i != fs.size(); ++i){
 			s << (fs.get(i) ? "1" : "0");
 		}
 
@@ -296,4 +290,4 @@ public:
 };
 
 
-}//~namespace
+}
