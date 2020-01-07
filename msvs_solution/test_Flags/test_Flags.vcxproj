@@ -544,8 +544,8 @@
     <ClInclude Include="..\..\tests\Flags\tests.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\tests\Flags\main.cpp" />
-    <ClCompile Include="..\..\tests\Flags\tests.cpp" />
+    <ClCompile Include="..\..\tests\flags\main.cpp" />
+    <ClCompile Include="..\..\tests\flags\tests.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
