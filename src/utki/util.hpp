@@ -4,6 +4,7 @@
 #include <functional>
 #include <map>
 #include <algorithm>
+#include <memory>
 
 #include "debug.hpp"
 
@@ -484,6 +485,15 @@ inline std::uint64_t deserialize64BE(const std::uint8_t* buf)noexcept{
 	return ret;
 }
 
+/**
+ * @brief Construct an object and store it in unique pointer.
+ * This is a replacement of std::make_unique() when C++14 is not available.
+ * @param args - object constructor arguments.
+ * @return std::unique_ptr to a newly created object.
+ */
+template< class T, class... Args > std::unique_ptr<T> make_unique(Args&&... args){
+	return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
+}
 
 
 }

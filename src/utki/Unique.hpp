@@ -6,7 +6,7 @@
 
 namespace utki{
 
-//TODO: rewise if this class is needed.
+//TODO: deprecated, remove whole file.
 
 template< class T, class... Args > std::unique_ptr<T> makeUnique(Args&&... args);
 
