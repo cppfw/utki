@@ -1,3 +1,9 @@
+libutki (1.1.57) unstable; urgency=medium
+
+  * added word_wrap() function
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 14 Jan 2020 18:22:06 +0200
+
 libutki (1.1.56) unstable; urgency=medium
 
   * Buf is aliased to span
