@@ -77,3 +77,87 @@ std::vector<std::string> utki::split(const std::string& str, char delimiter){
 
 	return ret;
 }
+
+std::vector<std::string> utki::word_wrap(const std::string& str, unsigned width){
+	std::vector<std::string> ret;
+
+	if(width == 0){
+		ret.push_back(str);
+		return ret;
+	}
+
+	auto line_begin = str.begin();
+	auto span_begin = str.begin(); // span is either series of spaces or series of non-spaces
+	unsigned word_ended = false; // indicates that at least one word in the current line has ended
+	for(auto i = str.begin(); i != str.end(); ++i){
+		if(*i != '\n' && std::distance(line_begin, i) == width){
+			if(*span_begin == ' '){ // span of spaces
+				if(word_ended){
+					ret.push_back(str.substr(
+							std::distance(str.begin(), line_begin), 
+							std::distance(line_begin, span_begin)
+						));
+					line_begin = std::next(span_begin);
+				}else{
+					line_begin = i;
+					span_begin = line_begin;
+				}
+			}else if(word_ended){ // short word span
+				ASSERT(std::distance(line_begin, span_begin) >= 1)
+				ret.push_back(str.substr(
+						std::distance(str.begin(), line_begin), 
+						std::distance(line_begin, std::prev(span_begin, 1))
+					));
+				line_begin = span_begin;
+			}else{ // long word span (word longer than width)
+				ret.push_back(str.substr(
+						std::distance(str.begin(), line_begin),
+						std::distance(line_begin, i)
+					));
+				line_begin = i;
+				span_begin = line_begin;
+			}
+			word_ended = false;
+		}
+		switch(*i){
+			case ' ':
+				if(*span_begin != ' '){
+					span_begin = i;
+					word_ended = true;
+				}
+				break;
+			case '\n':
+				//TODO: same as reaching width
+				ret.push_back(str.substr(
+						std::distance(str.begin(), line_begin),
+						std::distance(line_begin, i)
+					));
+				line_begin = std::next(i);
+				span_begin = line_begin;
+				word_ended = false;
+				break;
+			default:
+				if(*span_begin == ' '){
+					span_begin = i;
+				}
+				break;
+		}
+	}
+
+	// add last string
+	if(*span_begin == ' '){
+		if(word_ended){
+			ret.push_back(str.substr(
+					std::distance(str.begin(), line_begin),
+					std::distance(line_begin, span_begin)
+				));
+		}
+	}else{
+		ret.push_back(str.substr(
+				std::distance(str.begin(), line_begin),
+				std::distance(line_begin, str.end())
+			));
+	}
+
+	return ret;
+}

@@ -1,12 +1,19 @@
 {
-    // See https://go.microsoft.com/fwlink/?LinkId=733558
-    // for the documentation about the tasks.json format
     "version": "2.0.0",
     "tasks": [
 		{
 			"label": "test",
 			"type": "shell",
-			"command": "make test"
+			"command": "make test",
+			"dependsOn": "build",
+			"problemMatcher": []
+		},
+		{
+			"label": "test_debug",
+			"type": "shell",
+			"command": "make test debug=true",
+			"dependsOn": "build_debug",
+			"problemMatcher": []
 		},
 		{
 			"label": "test_tree",
@@ -14,13 +21,32 @@
 			"command": "make -C tests/tree test",
 			"problemMatcher": [
 				"$gcc"
-			]
+			],
+			"dependsOn": "build"
 		},
 		{
 			"label": "clean",
 			"type": "shell",
 			"command": "make clean",
 			"problemMatcher": []
+		},
+		{
+			"label": "build",
+			"type": "shell",
+			"command": "make autojobs=true",
+			"args": [],
+			"problemMatcher": [
+				"$gcc"
+			]
+		},
+		{
+			"label": "build_debug",
+			"type": "shell",
+			"command": "make autojobs=true debug=true",
+			"args": [],
+			"problemMatcher": [
+				"$gcc"
+			]
 		}
 	]
 }

@@ -35,4 +35,12 @@ std::string make_string_va_list(const char* format, va_list args);
  */
 std::vector<std::string> split(const std::string& str, char delimiter);
 
+/**
+ * @brief Word wrap string.
+ * @param str - string to word wrap.
+ * @param width - maximum number of characters per line.
+ * @return list of word wrapped lines.
+ */
+std::vector<std::string> word_wrap(const std::string& str, unsigned width);
+
 }

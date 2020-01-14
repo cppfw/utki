@@ -58,7 +58,7 @@ public:
 	/**
 	 * @brief Constructor.
 	 * All flags are initialized to the same given value.
-	 * @param iinitial_value - value which initializes all flags.
+	 * @param initial_value - value which initializes all flags.
 	 */
 	flags(bool initial_value = false){
 		this->set_all(initial_value);
