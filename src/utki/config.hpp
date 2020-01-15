@@ -31,7 +31,6 @@
 //====================================================|
 //            CPU architecture definitions            |
 //                                                    |
-
 #define M_CPU_UNKNOWN                                 0
 #define M_CPU_X86                                     1
 #define M_CPU_X86_64                                  2
@@ -111,12 +110,28 @@
 #endif
 
 
+//======================================|
+//            CPU bit depth             |
+#define M_CPU_BIT_DEPTH_UNKNOWN 0
+#define M_CPU_BIT_DEPTH_8 1
+#define M_CPU_BIT_DEPTH_16 2
+#define M_CPU_BIT_DEPTH_32 3
+#define M_CPU_BIT_DEPTH_64 4
+#define M_CPU_BIT_DEPTH_128 5
+
+#if M_CPU == M_CPU_X86 || M_CPU == M_CPU_ARM
+#	define M_CPU_BIT_DEPTH M_CPU_BIT_DEPTH_32
+#elif M_CPU == M_CPU_X86_64
+#	define M_CPU_BIT_DEPTH M_CPU_BIT_DEPTH_64
+#else
+#	define M_CPU_BIT_DEPTH M_CPU_BIT_DEPTH_UNKNOWN
+#endif
 
 //======================================|
 //            OS definitions            |
 //                                      |
 
-//OS family
+// OS family
 #define M_OS_UNKNOWN                    0
 #define M_OS_LINUX                      1
 #define M_OS_WINDOWS                    2
@@ -124,7 +139,7 @@
 #define M_OS_UNIX                       4
 #define M_OS_SYMBIAN                    5
 
-//Concrete OS name
+// Concrete OS name
 #define M_OS_NAME_UNKNOWN               0
 #define M_OS_NAME_MACOSX                1
 #define M_OS_NAME_IOS                   2
@@ -140,8 +155,7 @@
 #	endif
 
 // _WIN32 macro is defined for both win32 and win64. _WIN32 is the correct one, WIN32 not always defined.
-// On Cygwin none of WIN32 or _WIN32 are defined, so need to check for __CYGWIN__
-#elif defined(_WIN32) || defined(WIN32) || defined(__CYGWIN__)
+#elif defined(_WIN32) || defined(WIN32)
 #	define M_OS M_OS_WINDOWS
 #	define M_OS_NAME M_OS_NAME_UNKNOWN
 #elif defined(__APPLE__)
