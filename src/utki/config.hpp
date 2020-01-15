@@ -1,8 +1,3 @@
-/**
- * @author Ivan Gagis <igagis@gmail.com>
- * @brief Environment configuration definitions.
- */
-
 #pragma once
 
 
@@ -38,7 +33,7 @@
 
 
 #if M_COMPILER == M_COMPILER_GCC
-#	if defined(__i386__) //__i386__ is defined for any x86 processor
+#	if defined(__i386__) // __i386__ is defined for any x86 processor
 #		define M_CPU M_CPU_X86
 		
 #		if defined(__i686__)
@@ -59,9 +54,9 @@
 #	elif defined(__arm__)
 #		define M_CPU M_CPU_ARM
 		
-#		if defined(__thumb2__) //this macro is defined when targeting only thumb-2
+#		if defined(__thumb2__) // this macro is defined when targeting only thumb-2
 #			define M_CPU_ARM_THUMB 2
-#		elif defined(__thumb__) //this macro is defined when targeting any, thumb-1 or thumb-2
+#		elif defined(__thumb__) // this macro is defined when targeting any, thumb-1 or thumb-2
 #			define M_CPU_ARM_THUMB 1
 #		endif
 		
@@ -161,13 +156,13 @@
 #elif defined(__APPLE__)
 #	define M_OS M_OS_MACOSX
 #	include <TargetConditionals.h>
-#	if TARGET_OS_IPHONE == 1 || TARGET_IPHONE_SIMULATOR == 1 //iOS
+#	if TARGET_OS_IPHONE == 1 || TARGET_IPHONE_SIMULATOR == 1 // iOS
 #		define M_OS_NAME M_OS_NAME_IOS
 #	else
 #		define M_OS_NAME M_OS_NAME_MACOSX
 #	endif
 
-#elif defined(__unix) || defined(__unix__) //check for UNIX should go after check for Linux, because on Linux the __unix macro is also defined
+#elif defined(__unix) || defined(__unix__) // check for UNIX should go after check for Linux, because on Linux the __unix macro is also defined
 #	define M_OS M_OS_UNIX
 #	if defined(sun) || defined(__sun)
 #		define M_OS_NAME M_OS_NAME_SOLARIS
@@ -192,9 +187,9 @@
 #		else
 #			define DLLEXPORT __declspec(dllimport)
 #		endif
-#		pragma warning(disable : 4251) //member variable needs to have dll-interface to be used by clients of class
-#		pragma warning(disable : 4275) //non dll-interface class used as base for dll-interface class
-#		pragma warning(disable : 4250) //method inherited via dominance
+#		pragma warning(disable : 4251) // member variable needs to have dll-interface to be used by clients of class
+#		pragma warning(disable : 4275) // non dll-interface class used as base for dll-interface class
+#		pragma warning(disable : 4250) // method inherited via dominance
 #	else
 #		define DLLEXPORT
 #	endif
