@@ -1,3 +1,9 @@
+libutki (1.1.58) unstable; urgency=medium
+
+  * added config definitions for cpu bit depth
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 15 Jan 2020 13:39:43 +0200
+
 libutki (1.1.57) unstable; urgency=medium
 
   * added word_wrap() function
