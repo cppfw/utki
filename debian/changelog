@@ -1,3 +1,9 @@
+libutki (1.1.60) unstable; urgency=medium
+
+  * fix debug package buildinf for debian/ubuntu
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 17 Jan 2020 17:53:48 +0200
+
 libutki (1.1.59) unstable; urgency=medium
 
   * debian 32 bit packages added
