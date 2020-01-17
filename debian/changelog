@@ -1,3 +1,9 @@
+libutki (1.1.59) unstable; urgency=medium
+
+  * debian 32 bit packages added
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 17 Jan 2020 17:28:22 +0200
+
 libutki (1.1.58) unstable; urgency=medium
 
   * added config definitions for cpu bit depth
