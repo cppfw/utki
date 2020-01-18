@@ -100,7 +100,9 @@ before_install:
     $msys2 "pacman --noconfirm --ask 20 --sync --refresh --refresh --sysupgrade --sysupgrade" &&
     $msys2 "pacman -Sy --noconfirm myci mingw-w64-x86_64-toolchain mingw-w64-i686-toolchain";
   fi
-- export PACKAGE_VERSION=$(myci-deb-version.sh debian/changelog);
+- if [ "$TRAVIS_OS_NAME" == "linux" ] || [ "$TRAVIS_OS_NAME" == "osx" ]; then
+    export PACKAGE_VERSION=$(myci-deb-version.sh debian/changelog);
+  fi
 
 
 install:
@@ -120,7 +122,7 @@ before_script:
     (cd xcode/$PACKAGE_NAME && ../../XcodeProjAdder -XCP $PACKAGE_NAME.xcodeproj -SCSV `echo $(find ../../src -type f -name *.cpp) | sed -E -e 's/ /,/g'`)
   fi
 - if [ "$TRAVIS_JOB_NAME" == "msys2" ]; then
-    $msys2 "myci-apply-version.sh -v $PACKAGE_VERSION msys2/PKGBUILD.in";
+    $msys2 "myci-apply-version.sh -v \$^(myci-deb-version.sh debian/changelog^) msys2/PKGBUILD.in";
   fi
 
 script:
