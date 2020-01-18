@@ -90,7 +90,8 @@ std::vector<std::string> utki::word_wrap(const std::string& str, unsigned width)
 	auto span_begin = str.begin(); // span is either series of spaces or series of non-spaces
 	unsigned word_ended = false; // indicates that at least one word in the current line has ended
 	for(auto i = str.begin(); i != str.end(); ++i){
-		if(*i != '\n' && std::distance(line_begin, i) == width){
+		ASSERT(std::distance(line_begin, i) >= 0)
+		if(*i != '\n' && unsigned(std::distance(line_begin, i)) == width){
 			if(*span_begin == ' '){ // span of spaces
 				if(word_ended){
 					ret.push_back(str.substr(
