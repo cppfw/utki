@@ -92,7 +92,6 @@ before_install:
   fi
 - if [ "$TRAVIS_JOB_NAME" == "msys2" ]; then
     choco upgrade --no-progress -y msys2 &&
-    export WD=/c/tools/msys64/usr/bin &&
     export MSYSTEM=MSYS &&
     export CHERE_INVOKING=enabled_from_arguments &&
     export msys2="/c/tools/msys64/usr/bin/bash --login -c" &&
