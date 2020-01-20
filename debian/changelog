@@ -1,3 +1,9 @@
+libutki (1.1.62) unstable; urgency=medium
+
+  * msys2 build fix
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 20 Jan 2020 19:46:34 +0200
+
 libutki (1.1.61) unstable; urgency=medium
 
   * msys2 build fix
