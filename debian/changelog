@@ -1,3 +1,9 @@
+libutki (1.1.61) unstable; urgency=medium
+
+  * msys2 build fix
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 20 Jan 2020 19:21:28 +0200
+
 libutki (1.1.60) unstable; urgency=medium
 
   * fix debug package buildinf for debian/ubuntu
