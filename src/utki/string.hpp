@@ -10,7 +10,6 @@ namespace utki{
 /**
  * @brief Format string.
  * @param format - printf-like string format.
- * @param ... - printf-like string arguments.
  * @return formatted string.
  */
 #if M_COMPILER != M_COMPILER_MSVC
