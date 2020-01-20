@@ -91,7 +91,8 @@ before_install:
     pod install --project-directory=xcode;
   fi
 - if [ "$TRAVIS_JOB_NAME" == "msys2" ]; then
-    choco upgrade --no-progress -y msys2;
+    choco upgrade --no-progress -y msys2 &&
+    export msys2="/c/tools/msys64/msys2_shell.cmd -defterm -no-start -msys -here -c";
   fi
 
 # - if [ "$TRAVIS_JOB_NAME" == "msys2" ]; then
