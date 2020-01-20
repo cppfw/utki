@@ -21,7 +21,8 @@ std::string make_string(const char* format, ...);
 /**
  * @brief Format string.
  * va_list version of make_string().
- * @param format - printf-like string format.
+ * @param format - printf like string format.
+ * @param args - va_list of string arguments.
  * @return formatted string.
  */
 std::string make_string_va_list(const char* format, va_list args);
