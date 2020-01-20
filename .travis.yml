@@ -144,10 +144,15 @@ script:
     $msys2 "^(cd msys2 ^&^& makepkg-mingw --syncdeps --noconfirm --skipinteg^)" &&
     if [ ! -z "$TRAVIS_TAG" ]; then
       echo "Deploying to Bintray..." &&
+      ls msys2 &&
+      echo 64bit file = $(find msys2 -name "mingw-w64-x86_64-*-any.pkg.tar.xz") &&
+      echo 32bit file = $(find msys2 -name "mingw-w64-i686-*-any.pkg.tar.xz") &&
       for f in $(find msys2 -name "mingw-w64-x86_64-*-any.pkg.tar.xz"); do
+        echo $msys2 "myci-deploy-pacman-bintray.sh -u igagis -r msys2 -p mingw64 -d igagis_mingw64 $f";
         $msys2 "myci-deploy-pacman-bintray.sh -u igagis -r msys2 -p mingw64 -d igagis_mingw64 $f";
       done &&
       for f in $(find msys2 -name "mingw-w64-i686-*-any.pkg.tar.xz"); do
+        echo $msys2 "myci-deploy-pacman-bintray.sh -u igagis -r msys2 -p mingw32 -d igagis_mingw32 $f";
         $msys2 "myci-deploy-pacman-bintray.sh -u igagis -r msys2 -p mingw32 -d igagis_mingw32 $f";
       done &&
       echo "Done deploying";
