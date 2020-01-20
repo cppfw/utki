@@ -90,6 +90,10 @@ before_install:
     pod repo add --silent igagis https://$MYCI_GIT_USERNAME:$MYCI_GIT_ACCESS_TOKEN@github.com/igagis/cocoapods-repo.git &&
     pod install --project-directory=xcode;
   fi
+  - if [ "$TRAVIS_JOB_NAME" == "msys2" ]; then
+    choco upgrade --no-progress -y msys2;
+  fi
+
 # - if [ "$TRAVIS_JOB_NAME" == "msys2" ]; then
 #     choco upgrade --no-progress -y msys2 &&
 #     export msys2="/c/tools/msys64/msys2_shell.cmd -defterm -no-start -msys -here -c" &&
