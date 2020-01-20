@@ -92,7 +92,7 @@ before_install:
   fi
 - if [ "$TRAVIS_JOB_NAME" == "msys2" ]; then
     choco upgrade --no-progress -y msys2 &&
-    export msys2="/c/tools/msys64/usr/bin/bash --login -c" &&
+    export msys2="WD=/c/tools/msys64/usr/bin MSYSTEM=MSYS CHERE_INVOKING=enabled_from_arguments /c/tools/msys64/usr/bin/bash --login -c" &&
     $msys2 "echo -e '[igagis_msys]\\nSigLevel = Optional TrustAll\\nServer = https://dl.bintray.com/igagis/msys2/msys' >> /etc/pacman.conf" &&
     $msys2 "echo -e '[igagis_mingw64]\\nSigLevel = Optional TrustAll\\nServer = https://dl.bintray.com/igagis/msys2/mingw64' >> /etc/pacman.conf" &&
     $msys2 "echo -e '[igagis_mingw32]\\nSigLevel = Optional TrustAll\\nServer = https://dl.bintray.com/igagis/msys2/mingw32' >> /etc/pacman.conf" &&
@@ -122,7 +122,7 @@ before_script:
     (cd xcode/$PACKAGE_NAME && ../../XcodeProjAdder -XCP $PACKAGE_NAME.xcodeproj -SCSV `echo $(find ../../src -type f -name *.cpp) | sed -E -e 's/ /,/g'`)
   fi
 - if [ "$TRAVIS_JOB_NAME" == "msys2" ]; then
-    $msys2 "myci-apply-version.sh -v \$^(myci-deb-version.sh debian/changelog^) msys2/PKGBUILD.in";
+    $msys2 "myci-apply-version.sh -v \$(myci-deb-version.sh debian/changelog) msys2/PKGBUILD.in";
   fi
 
 script:
