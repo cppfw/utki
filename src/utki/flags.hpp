@@ -65,6 +65,17 @@ public:
 	}
 
 	/**
+	 * @brief Constructor.
+	 * @param initially_set_flags - list of flags which will be set initially.
+	 */
+	flags(std::initializer_list<T_Enum> initially_set_flags){
+		std::fill(this->f.begin(), this->f.end(), 0);
+		for(auto v : initially_set_flags){
+			this->set(v);
+		}
+	}
+
+	/**
 	 * @brief Size of the flag set.
 	 * @return Number of flags in this flag set.
 	 */
@@ -297,5 +308,13 @@ public:
 	}
 };
 
+/**
+ * @brief Construct flags object.
+ * @param initially_set_flags - list of flags which will be set initially.
+ * @return newly created flags object.
+ */
+template <class T> flags<T> make_flags(std::initializer_list<T> initially_set_flags){
+	return flags<T>(initially_set_flags);
+}
 
 }
