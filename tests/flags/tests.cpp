@@ -70,34 +70,34 @@ void Run(){
 	
 	{
 		utki::flags<TestEnum> fs;
-		ASSERT_ALWAYS(fs.is_all_clear())
-		ASSERT_ALWAYS(!fs.is_all_set())
+		ASSERT_ALWAYS(fs.is_clear())
+		ASSERT_ALWAYS(!fs.is_set())
 		
 		fs.set(fs.size() - 1, true);
-		ASSERT_ALWAYS(!fs.is_all_clear())
-		ASSERT_ALWAYS(!fs.is_all_set())
+		ASSERT_ALWAYS(!fs.is_clear())
+		ASSERT_ALWAYS(!fs.is_set())
 		
-		fs.set_all(false);
+		fs.clear();
 		
 		fs.set(TestEnum::EIGHTH, true);
-		ASSERT_ALWAYS(!fs.is_all_clear())
-		ASSERT_ALWAYS(!fs.is_all_set())
+		ASSERT_ALWAYS(!fs.is_clear())
+		ASSERT_ALWAYS(!fs.is_set())
 	}
 	{
 		utki::flags<TestEnum> fs(true);
-		ASSERT_ALWAYS(!fs.is_all_clear())
-		ASSERT_ALWAYS(fs.is_all_set())
+		ASSERT_ALWAYS(!fs.is_clear())
+		ASSERT_ALWAYS(fs.is_set())
 		
 		fs.set(fs.size() - 1, false);
-		ASSERT_ALWAYS(!fs.is_all_clear())
-		ASSERT_ALWAYS(!fs.is_all_set())
+		ASSERT_ALWAYS(!fs.is_clear())
+		ASSERT_ALWAYS(!fs.is_set())
 				
-		fs.set_all(true);
+		fs.set();
 		
 		fs.set(TestEnum::EIGHTH, false);
-		ASSERT_ALWAYS(!fs.is_all_clear())
-		ASSERT_ALWAYS(!fs.is_all_set())
+		ASSERT_ALWAYS(!fs.is_clear())
+		ASSERT_ALWAYS(!fs.is_set())
 	}
 }
 
-}//~namespace
+}

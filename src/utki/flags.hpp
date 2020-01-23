@@ -61,7 +61,7 @@ public:
 	 * @param initial_value - value which initializes all flags.
 	 */
 	flags(bool initial_value = false){
-		this->set_all(initial_value);
+		this->set(initial_value);
 	}
 
 	/**
@@ -149,9 +149,17 @@ public:
 	 * @param value - value to set all flags to.
 	 * @return Reference to this Flags.
 	 */
-	flags& set_all(bool value = true)noexcept{
+	flags& set(bool value = true)noexcept{
 		std::fill(this->f.begin(), this->f.end(), value ? std::uint8_t(-1) : 0);
 		return *this;
+	}
+
+	/**
+	 * @brief Clear all flags.
+	 * @return Reference to this Flags.
+	 */
+	flags& clear()noexcept{
+		return this->set(false);
 	}
 
 	/**
@@ -159,7 +167,7 @@ public:
 	 * @return true if all flags are cleared.
 	 * @return false otherwise.
 	 */
-	bool is_all_clear()const noexcept{
+	bool is_clear()const noexcept{
 		ASSERT_INFO(this->f.size() != 0, "given flags enumeration is empty")
 		for(size_t i = 0; i != this->f.size() - 1; ++i){
 			if(this->f[i] != 0){
@@ -179,7 +187,7 @@ public:
 	 * @return true if all flags are set.
 	 * @return false otherwise.
 	 */
-	bool is_all_set()const noexcept{
+	bool is_set()const noexcept{
 		ASSERT_INFO(this->f.size() != 0, "given flags enumeration is empty")
 		for(size_t i = 0; i != this->f.size() - 1; ++i){
 			if(this->f[i] != std::uint8_t(-1)){
