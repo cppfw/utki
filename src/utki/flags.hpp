@@ -47,6 +47,8 @@ namespace utki{
  * @endcode
  */
 template <class T_Enum> class flags{
+	static_assert(int(T_Enum::ENUM_SIZE) >= 0, "enumeration must define ENUM_SIZE item");
+	static_assert(unsigned(T_Enum::ENUM_SIZE) > 0, "enumeration must define at least one item");
 public:
 	typedef typename utki::uint_size<sizeof(T_Enum)>::type index_type;
 	
