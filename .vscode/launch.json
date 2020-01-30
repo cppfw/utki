@@ -24,6 +24,27 @@
 			],
 			"preLaunchTask": "build",
 			"miDebuggerPath": "/usr/bin/gdb"
+		},
+		{
+			"name": "g++ test tree",
+			"type": "cppdbg",
+			"request": "launch",
+			"program": "${workspaceFolder}/tests/tree/tests",
+			"args": [],
+			"stopAtEntry": false,
+			"cwd": "${workspaceFolder}/tests/tree/",
+			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/build/"}],
+			"externalConsole": false,
+			"MIMode": "gdb",
+			"setupCommands": [
+				{
+					"description": "Enable pretty-printing for gdb",
+					"text": "-enable-pretty-printing",
+					"ignoreFailures": true
+				}
+			],
+			"preLaunchTask": "build",
+			"miDebuggerPath": "/usr/bin/gdb"
 		}
 	]
 }
