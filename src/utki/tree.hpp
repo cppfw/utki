@@ -72,6 +72,11 @@ public:
 };
 
 template <class T> class traverser{
+	static_assert(
+			std::is_same<decltype(T::value_type::children), typename std::remove_const<T>::type>::value,
+			"T::value_type must have 'children' member of type T"
+		);
+
 	T& roots;
 public:
 	traverser(T& roots) :
