@@ -150,9 +150,8 @@ public:
 			}
 
 			for(;;){
-				auto& list = *this->c.back();
 				auto& iter = this->i.back();
-				ASSERT(iter != list.begin())
+				ASSERT(iter != this->c.back()->begin())
 				--iter;
 
 				if(!iter->children.empty()){
