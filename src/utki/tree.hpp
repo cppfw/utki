@@ -88,20 +88,20 @@ public:
 	typedef const value_type* const_pointer;
 	typedef value_type& reference;
 	typedef const value_type& const_reference;
-	typedef size_t size_type;
+	typedef typename T::size_type size_type;
 	typedef size_t difference_type;
 
 	template <bool Is_const> class iterator_internal{
 		typedef typename std::conditional<Is_const, const T, T>::type list_type;
-		std::vector<list_type*> c;
+		std::vector<list_type*> list_stack;
 		typedef typename std::conditional<Is_const, typename T::const_iterator, typename T::iterator>::type iterator_type;
-		std::vector<iterator_type> i;
+		std::vector<iterator_type> iter_stack;
 
 		template<class> friend class traverser;
 
 		iterator_internal(T& roots, iterator_type i){
-			this->c.push_back(&roots);
-			this->i.push_back(i);
+			this->list_stack.push_back(&roots);
+			this->iter_stack.push_back(i);
 		}
 
 	public:
@@ -111,31 +111,31 @@ public:
 		typedef value_type& reference;
 		typedef const value_type& const_reference;
 		typedef std::bidirectional_iterator_tag iterator_category;
-		typedef size_t difference_type;
+		typedef size_type difference_type;
 
 		iterator_internal& operator++()noexcept{
-			ASSERT(!this->i.empty())
-			ASSERT(this->i.size() == this->c.size())
+			ASSERT(!this->iter_stack.empty())
+			ASSERT(this->iter_stack.size() == this->list_stack.size())
 
 			{
-				ASSERT(this->c.back())
-				auto& iter = this->i.back();
+				ASSERT(this->list_stack.back())
+				auto& iter = this->iter_stack.back();
 
-				ASSERT(iter != this->c.back()->end())
+				ASSERT(iter != this->list_stack.back()->end())
 				if(!iter->children.empty()){
-					this->c.push_back(&iter->children);
-					this->i.push_back(this->c.back()->begin());
+					this->list_stack.push_back(&iter->children);
+					this->iter_stack.push_back(this->list_stack.back()->begin());
 					return *this;
 				}
 				++iter;
 			}
 
-			ASSERT(this->i.size() >= 1)
-			for(; this->i.size() != 1;){
-				if(this->i.back() == this->c.back()->end()){
-					this->c.pop_back();
-					this->i.pop_back();
-					++this->i.back();
+			ASSERT(this->iter_stack.size() >= 1)
+			for(; this->iter_stack.size() != 1;){
+				if(this->iter_stack.back() == this->list_stack.back()->end()){
+					this->list_stack.pop_back();
+					this->iter_stack.pop_back();
+					++this->iter_stack.back();
 				}else{
 					break;
 				}
@@ -145,23 +145,23 @@ public:
 		}
 
 		iterator_internal& operator--()noexcept{
-			ASSERT(!this->i.empty())
-			ASSERT(!this->c.empty())
+			ASSERT(!this->iter_stack.empty())
+			ASSERT(!this->list_stack.empty())
 
-			if(this->i.back() == this->c.back()->begin()){
-				this->i.pop_back();
-				this->c.pop_back();
+			if(this->iter_stack.back() == this->list_stack.back()->begin()){
+				this->iter_stack.pop_back();
+				this->list_stack.pop_back();
 				return *this;
 			}
 
 			for(;;){
-				auto& iter = this->i.back();
-				ASSERT(iter != this->c.back()->begin())
+				auto& iter = this->iter_stack.back();
+				ASSERT(iter != this->list_stack.back()->begin())
 				--iter;
 
 				if(!iter->children.empty()){
-					this->c.push_back(&iter->children);
-					this->i.push_back(this->c.back()->end());
+					this->list_stack.push_back(&iter->children);
+					this->iter_stack.push_back(this->list_stack.back()->end());
 				}else{
 					break;
 				}
@@ -171,7 +171,7 @@ public:
 		}
 
 		bool operator==(const iterator_internal& iter)const noexcept{
-			return this->i == iter.i;
+			return this->iter_stack == iter.iter_stack;
 		}
 
 		bool operator!=(const iterator_internal& iter)const noexcept{
@@ -179,11 +179,20 @@ public:
 		}
 
 		typename std::conditional<Is_const, const typename T::value_type, typename T::value_type>::type& operator*()noexcept{
-			return *this->i.back();
+			return *this->iter_stack.back();
 		}
 
 		typename std::conditional<Is_const, const typename T::value_type, typename T::value_type>::type* operator->()noexcept{
-			return this->i.back().operator->();
+			return this->iter_stack.back().operator->();
+		}
+
+		std::vector<size_type> index()const noexcept{
+			ASSERT(this->iter_stack.size() == this->list_stack.size())
+			std::vector<size_type> ret;
+			for(auto i = 0; i != this->iter_stack.size(); ++i){
+				ret.push_back(std::distance(this->list_stack[i]->begin(), this->iter_stack[i]));
+			}
+			return ret;
 		}
 	};
 
