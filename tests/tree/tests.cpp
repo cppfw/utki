@@ -493,6 +493,126 @@ void test_traverser(){
 			ASSERT_INFO_ALWAYS(false, "traversed tree is not as expected")
 		}
 	}
+
+	// non-const container, index
+	{
+		typedef utki::tree<int> tree;
+		tree::container_type roots{
+			tree(1,{34, 45}),
+
+			tree(2,{
+				tree(3, {78, 89, 96}),
+				tree(4,{32, 64, 128}),
+				tree(42, {98, 99, 100})
+			})
+		};
+
+		std::vector<int> encountered;
+
+		auto traverser = utki::make_traverser(roots);
+
+		ASSERT_INFO_ALWAYS(roots.begin()->value == 1, "roots.begin()->value = " << roots.begin()->value)
+		ASSERT_INFO_ALWAYS(traverser.begin()->value == 1, "traverser.begin()->value = " << traverser.begin()->value)
+
+		auto i = traverser.begin();
+
+		++i;
+		++i;
+		++i;
+		++i;
+		++i;
+		++i;
+
+		auto index = i.index();
+
+		std::vector<size_t> expected = {
+			1, 0, 1
+		};
+
+		if(index != expected){
+			TRACE_ALWAYS(<< "index = ")
+			for(auto& i : index){
+				TRACE_ALWAYS(<< i << ", ")
+			}
+			TRACE_ALWAYS(<< std::endl)
+			ASSERT_INFO_ALWAYS(false, "index is not as expected")
+		}
+
+		auto iter = traverser.make_iterator(index);
+
+		ASSERT_ALWAYS(i == iter)
+
+		auto index_2 = iter.index();
+
+		if(index_2 != expected){
+			TRACE_ALWAYS(<< "index_2 = ")
+			for(auto& i : index_2){
+				TRACE_ALWAYS(<< i << ", ")
+			}
+			TRACE_ALWAYS(<< std::endl)
+			ASSERT_INFO_ALWAYS(false, "index_2 is not as expected")
+		}
+	}
+
+	// const container, index
+	{
+		typedef utki::tree<int> tree;
+		const tree::container_type roots{
+			tree(1,{34, 45}),
+
+			tree(2,{
+				tree(3, {78, 89, 96}),
+				tree(4,{32, 64, 128}),
+				tree(42, {98, 99, 100})
+			})
+		};
+
+		std::vector<int> encountered;
+
+		const auto traverser = utki::make_traverser(roots);
+
+		ASSERT_INFO_ALWAYS(roots.begin()->value == 1, "roots.begin()->value = " << roots.begin()->value)
+		ASSERT_INFO_ALWAYS(traverser.cbegin()->value == 1, "traverser.begin()->value = " << traverser.cbegin()->value)
+
+		auto i = traverser.cbegin();
+
+		++i;
+		++i;
+		++i;
+		++i;
+		++i;
+		++i;
+
+		auto index = i.index();
+
+		std::vector<size_t> expected = {
+			1, 0, 1
+		};
+
+		if(index != expected){
+			TRACE_ALWAYS(<< "index = ")
+			for(auto& i : index){
+				TRACE_ALWAYS(<< i << ", ")
+			}
+			TRACE_ALWAYS(<< std::endl)
+			ASSERT_INFO_ALWAYS(false, "index is not as expected")
+		}
+
+		auto iter = traverser.make_const_iterator(index);
+
+		ASSERT_ALWAYS(i == iter)
+
+		auto index_2 = iter.index();
+
+		if(index_2 != expected){
+			TRACE_ALWAYS(<< "index_2 = ")
+			for(auto& i : index_2){
+				TRACE_ALWAYS(<< i << ", ")
+			}
+			TRACE_ALWAYS(<< std::endl)
+			ASSERT_INFO_ALWAYS(false, "index_2 is not as expected")
+		}
+	}
 }
 }
 

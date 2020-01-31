@@ -99,6 +99,8 @@ public:
 
 		template<class> friend class traverser;
 
+		iterator_internal() = default;
+
 		iterator_internal(T& roots, iterator_type i){
 			this->list_stack.push_back(&roots);
 			this->iter_stack.push_back(i);
@@ -189,7 +191,7 @@ public:
 		std::vector<size_type> index()const noexcept{
 			ASSERT(this->iter_stack.size() == this->list_stack.size())
 			std::vector<size_type> ret;
-			for(auto i = 0; i != this->iter_stack.size(); ++i){
+			for(typename decltype(this->iter_stack)::size_type i = 0; i != this->iter_stack.size(); ++i){
 				ret.push_back(std::distance(this->list_stack[i]->begin(), this->iter_stack[i]));
 			}
 			return ret;
@@ -200,6 +202,32 @@ public:
 	typedef iterator_internal<true> const_iterator;
 	typedef std::reverse_iterator<iterator> reverse_iterator;
 	typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
+
+private:
+	template <bool Is_const> iterator_internal<Is_const> make_iterator_internal(const std::vector<size_type>& index)const{
+		iterator_internal<Is_const> ret;
+
+		auto* list = &this->roots;
+		auto iter = this->roots.begin();
+
+		for(auto i : index){
+			ret.list_stack.push_back(list);
+			ASSERT(i < list->size())
+			ret.iter_stack.push_back(std::next(iter, i));
+			list = &ret.iter_stack.back()->children;
+			iter = list->begin();
+		}
+
+		return ret;
+	}
+public:
+	iterator make_iterator(const std::vector<size_type> & index){
+		return this->make_iterator_internal<std::is_const<T>::value>(index);
+	}
+
+	const_iterator make_const_iterator(const std::vector<size_type>& index)const{
+		return this->make_iterator_internal<true>(index);
+	}
 
 	iterator begin(){
 		return iterator(this->roots, this->roots.begin());
