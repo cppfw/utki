@@ -613,6 +613,37 @@ void test_traverser(){
 			ASSERT_INFO_ALWAYS(false, "index_2 is not as expected")
 		}
 	}
+
+	// check if index is valid
+	{
+		typedef utki::tree<int> tree;
+		const tree::container_type roots{
+			tree(1,{34, 45}),
+
+			tree(2,{
+				tree(3, {78, 89, 96}),
+				tree(4,{32, 64, 128}),
+				tree(42, {98, 99, 100})
+			})
+		};
+
+		std::vector<int> encountered;
+
+		const auto traverser = utki::make_traverser(roots);
+
+		ASSERT_ALWAYS(!traverser.is_valid({}))
+		ASSERT_ALWAYS(traverser.is_valid({0}))
+		ASSERT_ALWAYS(traverser.is_valid({0, 0}))
+		ASSERT_ALWAYS(traverser.is_valid({0, 1}))
+		ASSERT_ALWAYS(!traverser.is_valid({0, 1, 0}))
+		ASSERT_ALWAYS(!traverser.is_valid({0, 2}))
+		ASSERT_ALWAYS(traverser.is_valid({1}))
+		ASSERT_ALWAYS(traverser.is_valid({1, 0}))
+		ASSERT_ALWAYS(traverser.is_valid({1, 0, 0}))
+		ASSERT_ALWAYS(traverser.is_valid({1, 1, 0}))
+		ASSERT_ALWAYS(!traverser.is_valid({1, 1, 0, 2}))
+		ASSERT_ALWAYS(!traverser.is_valid({3, 1}))
+	}
 }
 }
 

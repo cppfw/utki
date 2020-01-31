@@ -229,6 +229,21 @@ public:
 		return this->make_iterator_internal<true>(index);
 	}
 
+	bool is_valid(const std::vector<size_type>& index)const{
+		if(index.empty()){
+			return false;
+		}
+		
+		auto li = &this->roots;
+		for(auto i : index){
+			if(i >= li->size()){
+				return false;
+			}
+			li = &(*li)[i].children;
+		}
+		return true;
+	}
+
 	iterator begin(){
 		return iterator(this->roots, this->roots.begin());
 	}
