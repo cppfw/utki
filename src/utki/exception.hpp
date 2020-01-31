@@ -11,6 +11,7 @@ namespace utki{
 /**
  * @brief Basic exception class
  */
+// TODO: deprecated, use std::runtime_error or std::logic_error instead. remove.
 class exception : public std::exception{
 	std::string message;
 public:
