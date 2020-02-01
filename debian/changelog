@@ -1,3 +1,9 @@
+libutki (1.1.71) unstable; urgency=medium
+
+  * tree traverser
+
+ -- Ivan Gagis <igagis@gmail.com>  Sun, 02 Feb 2020 01:27:04 +0200
+
 libutki (1.1.70) unstable; urgency=medium
 
   * added make_flags() template function
