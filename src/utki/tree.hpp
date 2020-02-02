@@ -91,6 +91,7 @@ public:
 	typedef typename T::size_type size_type;
 	typedef size_t difference_type;
 
+private:
 	template <bool Is_const> class iterator_internal{
 		typedef typename std::conditional<Is_const, const T, T>::type list_type;
 		std::vector<list_type*> list_stack;
@@ -198,6 +199,7 @@ public:
 		}
 	};
 
+public:
 	typedef iterator_internal<std::is_const<T>::value> iterator;
 	typedef iterator_internal<true> const_iterator;
 	typedef std::reverse_iterator<iterator> reverse_iterator;
