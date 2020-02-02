@@ -231,7 +231,7 @@ private:
 		 * @brief Tree node type.
 		 */
 
-		typedef typename std::conditional<Is_const, const traversal::value_type, traversal::value_type>::type value_type;
+		typedef typename std::conditional<Is_const, const typename traversal::value_type, typename traversal::value_type>::type value_type;
 		typedef value_type* pointer;
 		typedef const value_type* const_pointer;
 		typedef value_type& reference;
