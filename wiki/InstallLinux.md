@@ -23,7 +23,7 @@
   sudo apt update
   ```
 
-- Install **prorab** package
+- Install the package
 
   ```
   sudo apt install libutki-dev
