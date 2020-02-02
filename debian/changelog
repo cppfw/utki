@@ -1,3 +1,9 @@
+libutki (1.1.74) unstable; urgency=medium
+
+  * msvs v140 tools build fix
+
+ -- Ivan Gagis <igagis@gmail.com>  Sun, 02 Feb 2020 22:03:03 +0200
+
 libutki (1.1.73) unstable; urgency=medium
 
   * include fix
