@@ -1,3 +1,9 @@
+libutki (1.1.72) unstable; urgency=medium
+
+  * traverser -> traversal
+
+ -- Ivan Gagis <igagis@gmail.com>  Sun, 02 Feb 2020 14:05:14 +0200
+
 libutki (1.1.71) unstable; urgency=medium
 
   * tree traverser
