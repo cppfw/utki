@@ -187,7 +187,7 @@ void test_constructors_from_container(){
 	}
 }
 
-void test_traverser(){
+void test_traversal(){
 	// non-const container
 	{
 		typedef utki::tree<int> tree;
@@ -203,13 +203,13 @@ void test_traverser(){
 
 		std::vector<int> encountered;
 
-		auto traverser = utki::make_traverser(roots);
+		auto traversal = utki::make_traversal(roots);
 
 		ASSERT_INFO_ALWAYS(roots.begin()->value == 1, "roots.begin()->value = " << roots.begin()->value)
 
-		ASSERT_INFO_ALWAYS(traverser.begin()->value == 1, "traverser.begin()->value = " << traverser.begin()->value)
+		ASSERT_INFO_ALWAYS(traversal.begin()->value == 1, "traversal.begin()->value = " << traversal.begin()->value)
 
-		for(auto i = traverser.begin(); i != traverser.end(); ++i){
+		for(auto i = traversal.begin(); i != traversal.end(); ++i){
 			encountered.push_back(i->value);
 		}
 
@@ -242,7 +242,7 @@ void test_traverser(){
 
 		std::vector<int> encountered;
 
-		for(auto& i : utki::make_traverser(roots)){
+		for(auto& i : utki::make_traversal(roots)){
 			encountered.push_back(i.value);
 		}
 
@@ -275,13 +275,13 @@ void test_traverser(){
 
 		std::vector<int> encountered;
 
-		auto traverser = utki::make_traverser(roots);
+		auto traversal = utki::make_traversal(roots);
 
 		ASSERT_INFO_ALWAYS(roots.begin()->value == 1, "roots.begin()->value = " << roots.begin()->value)
 
-		ASSERT_INFO_ALWAYS(traverser.begin()->value == 1, "traverser.begin()->value = " << traverser.begin()->value)
+		ASSERT_INFO_ALWAYS(traversal.begin()->value == 1, "traversal.begin()->value = " << traversal.begin()->value)
 
-		for(auto i = traverser.cbegin(); i != traverser.cend(); ++i){
+		for(auto i = traversal.cbegin(); i != traversal.cend(); ++i){
 			encountered.push_back(i->value);
 		}
 
@@ -314,13 +314,13 @@ void test_traverser(){
 
 		std::vector<int> encountered;
 
-		auto traverser = utki::make_traverser(roots);
+		auto traversal = utki::make_traversal(roots);
 
 		ASSERT_INFO_ALWAYS(roots.begin()->value == 1, "roots.begin()->value = " << roots.begin()->value)
 
-		ASSERT_INFO_ALWAYS(traverser.begin()->value == 1, "traverser.begin()->value = " << traverser.begin()->value)
+		ASSERT_INFO_ALWAYS(traversal.begin()->value == 1, "traversal.begin()->value = " << traversal.begin()->value)
 
-		for(auto i = traverser.cbegin(); i != traverser.cend(); ++i){
+		for(auto i = traversal.cbegin(); i != traversal.cend(); ++i){
 			encountered.push_back(i->value);
 		}
 
@@ -353,13 +353,13 @@ void test_traverser(){
 
 		std::vector<int> encountered;
 
-		auto traverser = utki::make_traverser(roots);
+		auto traversal = utki::make_traversal(roots);
 
 		ASSERT_INFO_ALWAYS(roots.begin()->value == 1, "roots.begin()->value = " << roots.begin()->value)
 
-		ASSERT_INFO_ALWAYS(traverser.begin()->value == 1, "traverser.begin()->value = " << traverser.begin()->value)
+		ASSERT_INFO_ALWAYS(traversal.begin()->value == 1, "traversal.begin()->value = " << traversal.begin()->value)
 
-		for(auto i = traverser.rbegin(); i != traverser.rend(); ++i){
+		for(auto i = traversal.rbegin(); i != traversal.rend(); ++i){
 			encountered.push_back(i->value);
 		}
 
@@ -392,13 +392,13 @@ void test_traverser(){
 
 		std::vector<int> encountered;
 
-		auto traverser = utki::make_traverser(roots);
+		auto traversal = utki::make_traversal(roots);
 
 		ASSERT_INFO_ALWAYS(roots.begin()->value == 1, "roots.begin()->value = " << roots.begin()->value)
 
-		ASSERT_INFO_ALWAYS(traverser.begin()->value == 1, "traverser.begin()->value = " << traverser.begin()->value)
+		ASSERT_INFO_ALWAYS(traversal.begin()->value == 1, "traversal.begin()->value = " << traversal.begin()->value)
 
-		for(auto i = traverser.rbegin(); i != traverser.rend(); ++i){
+		for(auto i = traversal.rbegin(); i != traversal.rend(); ++i){
 			encountered.push_back(i->value);
 		}
 
@@ -431,13 +431,13 @@ void test_traverser(){
 
 		std::vector<int> encountered;
 
-		auto traverser = utki::make_traverser(roots);
+		auto traversal = utki::make_traversal(roots);
 
 		ASSERT_INFO_ALWAYS(roots.begin()->value == 1, "roots.begin()->value = " << roots.begin()->value)
 
-		ASSERT_INFO_ALWAYS(traverser.begin()->value == 1, "traverser.begin()->value = " << traverser.begin()->value)
+		ASSERT_INFO_ALWAYS(traversal.begin()->value == 1, "traversal.begin()->value = " << traversal.begin()->value)
 
-		for(auto i = traverser.crbegin(); i != traverser.crend(); ++i){
+		for(auto i = traversal.crbegin(); i != traversal.crend(); ++i){
 			encountered.push_back(i->value);
 		}
 
@@ -470,13 +470,13 @@ void test_traverser(){
 
 		std::vector<int> encountered;
 
-		auto traverser = utki::make_traverser(roots);
+		auto traversal = utki::make_traversal(roots);
 
 		ASSERT_INFO_ALWAYS(roots.begin()->value == 1, "roots.begin()->value = " << roots.begin()->value)
 
-		ASSERT_INFO_ALWAYS(traverser.begin()->value == 1, "traverser.begin()->value = " << traverser.begin()->value)
+		ASSERT_INFO_ALWAYS(traversal.begin()->value == 1, "traversal.begin()->value = " << traversal.begin()->value)
 
-		for(auto i = traverser.crbegin(); i != traverser.crend(); ++i){
+		for(auto i = traversal.crbegin(); i != traversal.crend(); ++i){
 			encountered.push_back(i->value);
 		}
 
@@ -509,12 +509,12 @@ void test_traverser(){
 
 		std::vector<int> encountered;
 
-		auto traverser = utki::make_traverser(roots);
+		auto traversal = utki::make_traversal(roots);
 
 		ASSERT_INFO_ALWAYS(roots.begin()->value == 1, "roots.begin()->value = " << roots.begin()->value)
-		ASSERT_INFO_ALWAYS(traverser.begin()->value == 1, "traverser.begin()->value = " << traverser.begin()->value)
+		ASSERT_INFO_ALWAYS(traversal.begin()->value == 1, "traversal.begin()->value = " << traversal.begin()->value)
 
-		auto i = traverser.begin();
+		auto i = traversal.begin();
 
 		++i;
 		++i;
@@ -538,7 +538,7 @@ void test_traverser(){
 			ASSERT_INFO_ALWAYS(false, "index is not as expected")
 		}
 
-		auto iter = traverser.make_iterator(index);
+		auto iter = traversal.make_iterator(index);
 
 		ASSERT_ALWAYS(i == iter)
 
@@ -569,12 +569,12 @@ void test_traverser(){
 
 		std::vector<int> encountered;
 
-		const auto traverser = utki::make_traverser(roots);
+		const auto traversal = utki::make_traversal(roots);
 
 		ASSERT_INFO_ALWAYS(roots.begin()->value == 1, "roots.begin()->value = " << roots.begin()->value)
-		ASSERT_INFO_ALWAYS(traverser.cbegin()->value == 1, "traverser.begin()->value = " << traverser.cbegin()->value)
+		ASSERT_INFO_ALWAYS(traversal.cbegin()->value == 1, "traversal.begin()->value = " << traversal.cbegin()->value)
 
-		auto i = traverser.cbegin();
+		auto i = traversal.cbegin();
 
 		++i;
 		++i;
@@ -598,7 +598,7 @@ void test_traverser(){
 			ASSERT_INFO_ALWAYS(false, "index is not as expected")
 		}
 
-		auto iter = traverser.make_const_iterator(index);
+		auto iter = traversal.make_const_iterator(index);
 
 		ASSERT_ALWAYS(i == iter)
 
@@ -629,20 +629,20 @@ void test_traverser(){
 
 		std::vector<int> encountered;
 
-		const auto traverser = utki::make_traverser(roots);
+		const auto traversal = utki::make_traversal(roots);
 
-		ASSERT_ALWAYS(!traverser.is_valid({}))
-		ASSERT_ALWAYS(traverser.is_valid({0}))
-		ASSERT_ALWAYS(traverser.is_valid({0, 0}))
-		ASSERT_ALWAYS(traverser.is_valid({0, 1}))
-		ASSERT_ALWAYS(!traverser.is_valid({0, 1, 0}))
-		ASSERT_ALWAYS(!traverser.is_valid({0, 2}))
-		ASSERT_ALWAYS(traverser.is_valid({1}))
-		ASSERT_ALWAYS(traverser.is_valid({1, 0}))
-		ASSERT_ALWAYS(traverser.is_valid({1, 0, 0}))
-		ASSERT_ALWAYS(traverser.is_valid({1, 1, 0}))
-		ASSERT_ALWAYS(!traverser.is_valid({1, 1, 0, 2}))
-		ASSERT_ALWAYS(!traverser.is_valid({3, 1}))
+		ASSERT_ALWAYS(!traversal.is_valid({}))
+		ASSERT_ALWAYS(traversal.is_valid({0}))
+		ASSERT_ALWAYS(traversal.is_valid({0, 0}))
+		ASSERT_ALWAYS(traversal.is_valid({0, 1}))
+		ASSERT_ALWAYS(!traversal.is_valid({0, 1, 0}))
+		ASSERT_ALWAYS(!traversal.is_valid({0, 2}))
+		ASSERT_ALWAYS(traversal.is_valid({1}))
+		ASSERT_ALWAYS(traversal.is_valid({1, 0}))
+		ASSERT_ALWAYS(traversal.is_valid({1, 0, 0}))
+		ASSERT_ALWAYS(traversal.is_valid({1, 1, 0}))
+		ASSERT_ALWAYS(!traversal.is_valid({1, 1, 0, 2}))
+		ASSERT_ALWAYS(!traversal.is_valid({3, 1}))
 	}
 }
 }
@@ -654,5 +654,5 @@ void test_utki_tree(){
 	test_move_assignment();
 	test_comparison();
 	test_constructors_from_container();
-	test_traverser();
+	test_traversal();
 }

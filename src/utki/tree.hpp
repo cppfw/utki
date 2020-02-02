@@ -71,7 +71,7 @@ public:
     }
 };
 
-template <class T> class traverser{
+template <class T> class traversal{
 	static_assert(
 			std::is_same<decltype(T::value_type::children), typename std::remove_const<T>::type>::value,
 			"T::value_type must have 'children' member of type T"
@@ -79,7 +79,7 @@ template <class T> class traverser{
 
 	T& roots;
 public:
-	traverser(T& roots) :
+	traversal(T& roots) :
 			roots(roots)
 	{}
 
@@ -98,7 +98,7 @@ private:
 		typedef typename std::conditional<Is_const, typename T::const_iterator, typename T::iterator>::type iterator_type;
 		std::vector<iterator_type> iter_stack;
 
-		template<class> friend class traverser;
+		template<class> friend class traversal;
 
 		iterator_internal() = default;
 
@@ -108,7 +108,7 @@ private:
 		}
 
 	public:
-		typedef typename std::conditional<Is_const, const traverser::value_type, traverser::value_type>::type value_type;
+		typedef typename std::conditional<Is_const, const traversal::value_type, traversal::value_type>::type value_type;
 		typedef value_type* pointer;
 		typedef const value_type* const_pointer;
 		typedef value_type& reference;
@@ -279,8 +279,8 @@ public:
 	}
 };
 
-template<class T> traverser<T> make_traverser(T& roots){
-	return traverser<T>(roots);
+template<class T> traversal<T> make_traversal(T& roots){
+	return traversal<T>(roots);
 }
 
 }
