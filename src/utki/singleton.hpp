@@ -39,10 +39,10 @@ namespace utki{
  */
 template <class T, class T_InstanceOwner = T> class intrusive_singleton{
 
-protected://use only as a base class
+protected: // use only as a base class
 	intrusive_singleton(){
 		if(T_InstanceOwner::instance){
-			throw utki::invalid_state("Singleton::Singleton(): instance is already created");
+			throw utki::invalid_state("singleton::singleton(): instance is already created");
 		}
 
 		T_InstanceOwner::instance.reset(static_cast<T*>(this));
@@ -50,7 +50,7 @@ protected://use only as a base class
 
 	typedef intrusive_singleton<T> T_Singleton;
 	
-	//Use unique_ptr because it is automatically initialized to nullptr. Automatic object destruction is not used.
+	// use unique_ptr because it is automatically initialized to nullptr. Automatic object destruction is not used.
 	typedef std::unique_ptr<T> T_Instance;
 	
 public:
@@ -70,7 +70,7 @@ public:
 		return T_InstanceOwner::instance.operator bool();
 	}
 
-	//TODO: deprecated, remove.
+	// TODO: deprecated, remove.
 	static bool isCreated(){
 		return is_created();
 	}
