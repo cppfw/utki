@@ -8,7 +8,7 @@ It is often required to create singleton objects in the program, i.e. use the si
 
 <br>
 <h1>Header file</h1>
-In order to use <i>utki::singleton</i> one needs to include the following header file:<br>
+In order to use `utki::singleton` one needs to include the following header file:<br>
 <pre><code>#include &lt;utki/singleton.hpp&gt;<br>
 </code></pre>
 
