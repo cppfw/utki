@@ -1,27 +1,30 @@
-#Installation in Linux
+# Installation in Linux
 
-##For Debian based distributions.
-
-- Add the repo to your sources (needs to be done once):
-
-  **Debian**
+## Using Debian packet manager
+- Add the repo to your `sources.list` (needs to be done once):
   ```
-  echo "deb https://dl.bintray.com/igagis/deb unstable main" | sudo tee /etc/apt/sources.list.d/igagis.list > /dev/null
+  deb http://dl.bintray.com/igagis/<distro> <release> main
   ```
+  where
+  - `<distro>` is `debian` or `ubuntu`
+  - `<release>` is `stretch`, `buster`, `xenial`, `bionic` etc.
   
-  **Ubuntu**
+
+- Import APT key
+
   ```
-  echo "deb https://dl.bintray.com/igagis/ubu unstable main" | sudo tee /etc/apt/sources.list.d/igagis.list > /dev/null
+  sudo apt install dirmngr
+  sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 379CE192D401AB61
   ```
 
 - Update apt packages
 
   ```
-  sudo apt-get update
+  sudo apt update
   ```
 
-- Install packages
+- Install **prorab** package
 
   ```
-  sudo apt-get install libutki-dev libutki-doc
+  sudo apt install libutki-dev
   ```
