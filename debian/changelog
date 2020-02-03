@@ -1,3 +1,9 @@
+libutki (1.1.75) unstable; urgency=medium
+
+  * traversal iterator: make default constructor public
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 03 Feb 2020 17:48:40 +0200
+
 libutki (1.1.74) unstable; urgency=medium
 
   * msvs v140 tools build fix
