@@ -644,6 +644,28 @@ void test_traversal(){
 		ASSERT_ALWAYS(!traversal.is_valid({1, 1, 0, 2}))
 		ASSERT_ALWAYS(!traversal.is_valid({3, 1}))
 	}
+
+	// iterator comparison
+	{
+		typedef utki::tree<int> tree;
+		const tree::container_type roots{
+			tree(1,{34, 45}),
+
+			tree(2,{
+				tree(3, {78, 89, 96}),
+				tree(4,{32, 64, 128}),
+				tree(42, {98, 99, 100})
+			})
+		};
+
+		const auto traversal = utki::make_traversal(roots);
+
+		auto iter1 = traversal.make_const_iterator({0, 1});
+		auto iter2 = traversal.make_const_iterator({1, 1, 2});
+
+		ASSERT_ALWAYS(iter1 < iter2)
+		ASSERT_ALWAYS(iter2 > iter1)
+	}
 }
 }
 

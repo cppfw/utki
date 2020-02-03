@@ -327,6 +327,26 @@ private:
 		}
 
 		/**
+		 * @brief Check if this iterator precedes given iterator in traversal order.
+		 * @param iter - iterator to compare this iterator with.
+		 * @return true if this iterator precedes the given iterator in traversal order.
+		 * @return false otherwise.
+		 */
+		bool operator<(const iterator_internal& iter)const noexcept{
+			return this->iter_stack < iter.iter_stack;
+		}
+
+		/**
+		 * @brief Check if this iterator follows given iterator in traversal order.
+		 * @param iter - iterator to compare this iterator with.
+		 * @return true if this iterator follows the given iterator in traversal order.
+		 * @return false otherwise.
+		 */
+		bool operator>(const iterator_internal& iter)const noexcept{
+			return this->iter_stack > iter.iter_stack;
+		}
+
+		/**
 		 * @brief Dereference the tree node.
 		 * @return Reference to the tree node this iterator points to.
 		 */
