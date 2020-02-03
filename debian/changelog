@@ -1,3 +1,9 @@
+libutki (1.1.76) unstable; urgency=medium
+
+  * add constant versions of operators to traversal iterator
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 03 Feb 2020 18:26:04 +0200
+
 libutki (1.1.75) unstable; urgency=medium
 
   * traversal iterator: make default constructor public
