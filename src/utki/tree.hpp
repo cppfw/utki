@@ -219,19 +219,19 @@ private:
 
 		template<class> friend class traversal;
 
-		iterator_internal() = default;
-
 		iterator_internal(C& roots, iterator_type i){
 			this->list_stack.push_back(&roots);
 			this->iter_stack.push_back(i);
 		}
 
 	public:
+		iterator_internal() = default;
+
 		/**
 		 * @brief Tree node type.
 		 */
-
 		typedef typename std::conditional<Is_const, const typename traversal::value_type, typename traversal::value_type>::type value_type;
+		
 		typedef value_type* pointer;
 		typedef const value_type* const_pointer;
 		typedef value_type& reference;
