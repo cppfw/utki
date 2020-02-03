@@ -335,10 +335,28 @@ private:
 		}
 
 		/**
-		 * @brief Dereference the tree ndoe.
+		 * @brief Dereference the tree node.
+		 * Constant version of operator*().
+		 * @return Reference to the tree node this iterator points to.
+		 */
+		const typename C::value_type& operator*()const noexcept{
+			return *this->iter_stack.back();
+		}
+
+		/**
+		 * @brief Dereference the tree node.
 		 * @return Pointer to the tree node this iterator points to.
 		 */
 		typename std::conditional<Is_const, const typename C::value_type, typename C::value_type>::type* operator->()noexcept{
+			return this->iter_stack.back().operator->();
+		}
+
+		/**
+		 * @brief Dereference the tree node.
+		 * Constant version of operator->().
+		 * @return Pointer to the tree node this iterator points to.
+		 */
+		const typename C::value_type* operator->()const noexcept{
 			return this->iter_stack.back().operator->();
 		}
 
