@@ -662,9 +662,16 @@ void test_traversal(){
 
 		auto iter1 = traversal.make_const_iterator({0, 1});
 		auto iter2 = traversal.make_const_iterator({1, 1, 2});
+		auto iter3 = traversal.make_const_iterator({1, 1, 2});
 
 		ASSERT_ALWAYS(iter1 < iter2)
 		ASSERT_ALWAYS(iter2 > iter1)
+		ASSERT_ALWAYS(iter1 <= iter2)
+		ASSERT_ALWAYS(iter2 >= iter1)
+		ASSERT_ALWAYS(iter1 != iter3)
+		ASSERT_ALWAYS(iter2 == iter3)
+		ASSERT_ALWAYS(iter2 >= iter3)
+		ASSERT_ALWAYS(iter2 <= iter3)
 	}
 }
 }
