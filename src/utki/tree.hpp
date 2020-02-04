@@ -4,6 +4,7 @@
 #include <cstddef>
 
 #include "debug.hpp"
+#include "span.hpp"
 
 namespace utki{
 
@@ -455,7 +456,7 @@ public:
 	typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
 
 private:
-	template <bool Is_const> iterator_internal<Is_const> make_iterator_internal(const std::vector<size_type>& index)const{
+	template <bool Is_const> iterator_internal<Is_const> make_iterator_internal(const utki::span<size_type> index)const{
 		iterator_internal<Is_const> ret;
 
 		auto* list = &this->roots;
@@ -477,8 +478,26 @@ public:
 	 * @param index - the index of the tree node.
 	 * @return Iterator which points to the tree node given by index.
 	 */
-	iterator make_iterator(const std::vector<size_type> & index){
+	iterator make_iterator(const utki::span<size_type> index){
 		return this->make_iterator_internal<std::is_const<C>::value>(index);
+	}
+
+	/**
+	 * @brief Create iterator which points to the tree node given by index.
+	 * @param index - the index of the tree node.
+	 * @return Iterator which points to the tree node given by index.
+	 */
+	iterator make_iterator(const std::vector<size_type>& index){
+		return this->make_iterator(utki::make_span(index));
+	}
+
+	/**
+	 * @brief Create constant iterator which points to the tree node given by index.
+	 * @param index - the index of the tree node.
+	 * @return Constant iterator which points to the tree node given by index.
+	 */
+	const_iterator make_const_iterator(const utki::span<size_type> index)const{
+		return this->make_iterator_internal<true>(index);
 	}
 
 	/**
@@ -487,7 +506,16 @@ public:
 	 * @return Constant iterator which points to the tree node given by index.
 	 */
 	const_iterator make_const_iterator(const std::vector<size_type>& index)const{
-		return this->make_iterator_internal<true>(index);
+		return this->make_const_iterator(utki::make_span(index));
+	}
+
+	/**
+	 * @brief Create constant iterator which points to the tree node given by index.
+	 * @param index - the index of the tree node.
+	 * @return Constant iterator which points to the tree node given by index.
+	 */
+	const_iterator make_const_iterator(std::initializer_list<size_t> index)const{
+		return this->make_const_iterator(std::vector<size_t>(index));
 	}
 
 	/**
@@ -498,7 +526,7 @@ public:
 	 * @return true in case the given index is valid.
 	 * @return fals in case the given index is invalid.
 	 */
-	bool is_valid(const std::vector<size_type>& index)const{
+	bool is_valid(const utki::span<size_type> index)const{
 		if(index.empty()){
 			return false;
 		}
@@ -511,6 +539,30 @@ public:
 			li = &(*li)[i].children;
 		}
 		return true;
+	}
+
+	/**
+	 * @brief Check if the given index is valid.
+	 * Checks that the given index points to the existing tree node within the
+	 * tree hierarchy, i.e. the index does not point out of the tree bounds.
+	 * @param index - index to check for validity.
+	 * @return true in case the given index is valid.
+	 * @return fals in case the given index is invalid.
+	 */
+	bool is_valid(const std::vector<size_type>& index)const{
+		return this->is_valid(utki::make_span(index));
+	}
+
+	/**
+	 * @brief Check if the given index is valid.
+	 * Checks that the given index points to the existing tree node within the
+	 * tree hierarchy, i.e. the index does not point out of the tree bounds.
+	 * @param index - index to check for validity.
+	 * @return true in case the given index is valid.
+	 * @return fals in case the given index is invalid.
+	 */
+	bool is_valid(std::initializer_list<size_t> index)const{
+		return this->is_valid(std::vector<size_t>(index));
 	}
 
 	/**

@@ -631,7 +631,7 @@ void test_traversal(){
 
 		const auto traversal = utki::make_traversal(roots);
 
-		ASSERT_ALWAYS(!traversal.is_valid({}))
+		ASSERT_ALWAYS(!traversal.is_valid(utki::make_span<size_t>(nullptr)))
 		ASSERT_ALWAYS(traversal.is_valid({0}))
 		ASSERT_ALWAYS(traversal.is_valid({0, 0}))
 		ASSERT_ALWAYS(traversal.is_valid({0, 1}))

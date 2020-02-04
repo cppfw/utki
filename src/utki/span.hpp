@@ -65,8 +65,9 @@ public:
 	 * @brief Constructor for automatic conversion from nullptr.
      * @param bufPtr - pointer to the memory buffer. Makes not much sense, because size is 0 anyway.
      */
-	span(pointer bufPtr)noexcept :
-			buf(bufPtr)
+	span(nullptr_t)noexcept :
+			buf(nullptr),
+			bufSize(0)
 	{}
 	
 	/**
@@ -75,6 +76,10 @@ public:
 	 */
 	size_type size()const noexcept{
 		return this->bufSize;
+	}
+
+	bool empty()const noexcept{
+		return this->size() == 0;
 	}
 
 	/**
@@ -218,6 +223,9 @@ public:
 };
 
 
+template <class T> inline utki::span<T> make_span(nullptr_t){
+	return utki::span<T>(nullptr);
+}
 
 template <class T> inline utki::span<T> make_span(T* buf, size_t size){
 	return utki::span<T>(buf, size);
@@ -244,7 +252,7 @@ template <class T> inline const utki::span<T> make_span(const std::vector<T>& v)
 }
 
 inline std::string to_string(const utki::span<char>& buf){
-	return std::string(&*buf.begin(), buf.size());
+	return std::string(buf.data(), buf.size());
 }
 
 }
