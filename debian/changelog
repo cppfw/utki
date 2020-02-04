@@ -1,3 +1,9 @@
+libutki (1.1.79) unstable; urgency=medium
+
+  * addeed more method overloads
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 04 Feb 2020 18:50:40 +0200
+
 libutki (1.1.78) unstable; urgency=medium
 
   * traversal insert and erase methods added
