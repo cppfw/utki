@@ -65,7 +65,7 @@ public:
 	 * @brief Constructor for automatic conversion from nullptr.
      * @param bufPtr - pointer to the memory buffer. Makes not much sense, because size is 0 anyway.
      */
-	span(nullptr_t)noexcept :
+	span(std::nullptr_t)noexcept :
 			buf(nullptr),
 			bufSize(0)
 	{}
