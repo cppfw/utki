@@ -414,6 +414,19 @@ private:
 			}
 			return ret;
 		}
+
+		/**
+		 * @brief Check if this iterator points to the last tree node on the current tree level.
+		 * @return true if the iterator points to the last tree node on the current tree level.
+		 * @return false otherwise.
+		 */
+		bool is_last_child()const noexcept{
+			if(this->iter_stack.back() == this->list_stack.back()->end()){
+				return false;
+			}
+
+			return std::next(this->iter_stack.back()) == this->list_stack.back()->end();
+		}
 	};
 
 public:
@@ -562,6 +575,75 @@ public:
 	 */
 	reverse_iterator rend()noexcept{
 		return reverse_iterator(this->begin());
+	}
+
+	/**
+	 * @brief Insert new tree node before given iterator.
+	 * Insertion happens on the current tree level.
+	 * This operation invalidates all obtained iterators.
+	 * @param i - iterator pointing to the tree node to insert the new node before.
+	 * @param t - tree node to insert.
+	 * @return iterator pointing to the newly inserted tree node.
+	 */
+	iterator insert(iterator i, value_type&& t){
+		i.iter_stack.back() = i.list_stack.back()->insert(i.iter_stack.back(), std::move(t));
+		return i;
+	}
+
+	/**
+	 * @brief Insert new tree node before given iterator.
+	 * Insertion happens on the current tree level.
+	 * This operation invalidates all obtained iterators.
+	 * @param i - iterator pointing to the tree node to insert the new node before.
+	 * @param t - tree node to insert.
+	 * @return iterator pointing to the newly inserted tree node.
+	 */
+	iterator insert(iterator i, const value_type& t){
+		return this->insert(i, value_type(t));
+	}
+
+	/**
+	 * @brief Insert new tree node after given iterator.
+	 * Insertion happens on the current tree level.
+	 * This operation invalidates all obtained iterators.
+	 * The result of this operation is undefined if performed on an end iterator.
+	 * @param i - iterator pointing to the tree node to insert the new node after.
+	 * @param t - tree node to insert.
+	 * @return iterator pointing to the newly inserted tree node.
+	 */
+	iterator insert_after(iterator i, value_type&& t){
+		i.iter_stack.back() = i.list_stack.back()->insert(std::next(i.iter_stack.back()), std::move(t));
+		return i;
+	}
+
+	/**
+	 * @brief Insert new tree node after given iterator.
+	 * Insertion happens on the current tree level.
+	 * This operation invalidates all obtained iterators.
+	 * The result of this operation is undefined if performed on an end iterator.
+	 * @param i - iterator pointing to the tree node to insert the new node after.
+	 * @param t - tree node to insert.
+	 * @return iterator pointing to the newly inserted tree node.
+	 */
+	iterator insert_after(iterator i, const value_type& t){
+		return this->insert_after(i, value_type(t));
+	}
+
+	/**
+	 * @brief Erase tree node pointed by given iterator.
+	 * This operation invalidates all obtained iterators.
+	 * @param i - iterator pointing to the tree node to remove.
+	 * @return iterator pointing to the next tree node in traversal order after the removed one.
+	 */
+	iterator erase(iterator i){
+		i.iter_stack.back() = i.list_stack.back()->erase(i.iter_stack.back());
+		while(i.iter_stack.size() > 1 && i.iter_stack.back() == i.list_stack.back()->end()){
+			i.list_stack.pop_back();
+			i.iter_stack.pop_back();
+			ASSERT(i.iter_stack.size() == i.list_stack.size())
+			++i.iter_stack.back();
+		}
+		return i;
 	}
 };
 

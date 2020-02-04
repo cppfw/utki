@@ -673,6 +673,136 @@ void test_traversal(){
 		ASSERT_ALWAYS(iter2 >= iter3)
 		ASSERT_ALWAYS(iter2 <= iter3)
 	}
+
+	// insertion
+	{
+		typedef utki::tree<int> tree;
+		tree::container_type roots{
+			tree(1,{34, 45}),
+
+			tree(2,{
+				tree(3, {78, 89, 96}),
+				tree(4,{32, 64, 128}),
+				tree(42, {98, 99, 100})
+			})
+		};
+
+		auto traversal = utki::make_traversal(roots);
+
+		auto iter = traversal.make_iterator({1, 1});
+
+		ASSERT_ALWAYS(!iter.is_last_child())
+
+		auto new_iter = traversal.insert(iter, tree(45));
+
+		ASSERT_ALWAYS(new_iter->value == 45)
+		ASSERT_ALWAYS(new_iter->children.empty())
+		ASSERT_ALWAYS(traversal.make_iterator({1, 1})->value == 45)
+		ASSERT_ALWAYS(std::next(traversal.make_iterator({1, 1}))->value == 4)
+	}
+
+	// insert after
+	{
+		typedef utki::tree<int> tree;
+		tree::container_type roots{
+			tree(1,{34, 45}),
+
+			tree(2,{
+				tree(3, {78, 89, 96}),
+				tree(4,{32, 64, 128}),
+				tree(42, {98, 99, 100})
+			})
+		};
+
+		auto traversal = utki::make_traversal(roots);
+
+		auto iter = traversal.make_iterator({1, 2});
+
+		ASSERT_ALWAYS(iter.is_last_child())
+
+		tree t(45, {46, 47});
+
+		auto new_iter = traversal.insert_after(iter, t);
+
+		ASSERT_ALWAYS(new_iter.is_last_child())
+		ASSERT_ALWAYS(new_iter->value == 45)
+
+		++new_iter;
+
+		ASSERT_ALWAYS(new_iter->value == 46)
+	}
+
+	// erase non-last
+	{
+		typedef utki::tree<int> tree;
+		tree::container_type roots{
+			tree(1,{34, 45}),
+
+			tree(2,{
+				tree(3, {78, 89, 96}),
+				tree(4,{32, 64, 128}),
+				tree(42, {98, 99, 100})
+			})
+		};
+
+		auto traversal = utki::make_traversal(roots);
+
+		auto iter = traversal.make_iterator({1, 1});
+		ASSERT_ALWAYS(!iter.is_last_child())
+
+		iter = traversal.erase(iter);
+
+		ASSERT_ALWAYS(iter->value == 42)
+		ASSERT_ALWAYS(iter.is_last_child())
+	}
+
+	// erase last child
+	{
+		typedef utki::tree<int> tree;
+		tree::container_type roots{
+			tree(1,{34, 45}),
+
+			tree(2,{
+				tree(3, {78, 89, 96}),
+				tree(4,{32, 64, 128}),
+				tree(42, {98, 99, 100})
+			})
+		};
+
+		auto traversal = utki::make_traversal(roots);
+
+		auto iter = traversal.make_iterator({1, 0, 2});
+		ASSERT_ALWAYS(iter.is_last_child())
+
+		iter = traversal.erase(iter);
+
+		ASSERT_ALWAYS(!iter.is_last_child())
+		ASSERT_ALWAYS(iter->value == 4)
+	}
+
+	// erase very last
+	{
+		typedef utki::tree<int> tree;
+		tree::container_type roots{
+			tree(1,{34, 45}),
+
+			tree(2,{
+				tree(3, {78, 89, 96}),
+				tree(4,{32, 64, 128}),
+				tree(42, {98, 99, 100})
+			})
+		};
+
+		auto traversal = utki::make_traversal(roots);
+
+		auto iter = traversal.make_iterator({1, 2, 2});
+		ASSERT_ALWAYS(iter.is_last_child())
+
+		iter = traversal.erase(iter);
+
+		ASSERT_ALWAYS(!iter.is_last_child())
+		ASSERT_ALWAYS(iter == traversal.end())
+	}
 }
 }
 
