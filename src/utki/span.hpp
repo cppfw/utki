@@ -223,7 +223,7 @@ public:
 };
 
 
-template <class T> inline utki::span<T> make_span(nullptr_t){
+template <class T> inline utki::span<T> make_span(std::nullptr_t){
 	return utki::span<T>(nullptr);
 }
 
