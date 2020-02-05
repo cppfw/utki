@@ -209,7 +209,7 @@ public:
 	/**
 	 * @brief List index difference type.
 	 */
-	typedef size_t difference_type;
+	typedef typename C::difference_type difference_type;
 
 private:
 	template <bool Is_const> class iterator_internal{
@@ -238,7 +238,7 @@ private:
 		typedef value_type& reference;
 		typedef const value_type& const_reference;
 		typedef std::bidirectional_iterator_tag iterator_category;
-		typedef size_type difference_type;
+		typedef typename C::difference_type difference_type;
 
 		/**
 		 * @brief Move iterator to the next tree node.
