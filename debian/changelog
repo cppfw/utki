@@ -1,3 +1,9 @@
+libutki (1.1.80) unstable; urgency=medium
+
+  * tree traversal iterator difference type made signed
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 05 Feb 2020 15:29:46 +0200
+
 libutki (1.1.79) unstable; urgency=medium
 
   * addeed more method overloads
