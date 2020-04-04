@@ -50,12 +50,12 @@ public:
 	 * Creates a span object which wraps given memory buffer of specified size.
 	 * Note, the memory will not be freed upon this Buffer object destruction,
 	 * Buffer does not own the memory.
-	 * @param bufPtr - pointer to the memory buffer.
-	 * @param bufSize - size of the memory buffer.
+	 * @param p - pointer to the memory buffer.
+	 * @param s - size of the memory buffer.
 	 */
-	span(pointer bufPtr, size_type bufSize)noexcept :
-			buf(bufPtr),
-			bufSize(bufSize)
+	span(pointer p, size_type s)noexcept :
+			buf(p),
+			bufSize(s)
 	{}
 
 	
@@ -63,7 +63,6 @@ public:
 	
 	/**
 	 * @brief Constructor for automatic conversion from nullptr.
-     * @param bufPtr - pointer to the memory buffer. Makes not much sense, because size is 0 anyway.
      */
 	span(std::nullptr_t)noexcept :
 			buf(nullptr),

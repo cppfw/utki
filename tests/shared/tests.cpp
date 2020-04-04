@@ -24,15 +24,28 @@ public:
 
 
 
-void Run(){
-	std::shared_ptr<TestClass> p1 = std::make_shared<TestClass>();
-	
-	std::shared_ptr<TestClass> p2 = std::make_shared<TestClass>(21);
-	
-	ASSERT_ALWAYS(p1->a == 4)
-	ASSERT_ALWAYS(p2->a == 21)
-	
-	ASSERT_ALWAYS(p2->getPtr().operator->() == p2.operator->())
+void run(){
+	// basic test
+	{
+		std::shared_ptr<TestClass> p1 = std::make_shared<TestClass>();
+		
+		std::shared_ptr<TestClass> p2 = std::make_shared<TestClass>(21);
+		
+		ASSERT_ALWAYS(p1->a == 4)
+		ASSERT_ALWAYS(p2->a == 21)
+		
+		ASSERT_ALWAYS(p2->getPtr().operator->() == p2.operator->())
+	}
+
+	// test make_shared_from_this
+	{
+		auto o = std::make_shared<TestClass>();
+		ASSERT_ALWAYS(o)
+
+		auto sft = utki::make_shared_from_this(*o);
+		ASSERT_ALWAYS(sft)
+		ASSERT_ALWAYS(sft->a == 4)
+	}
 }
 
 

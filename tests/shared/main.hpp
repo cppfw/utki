@@ -4,5 +4,5 @@
 
 
 inline void TestShared(){
-	TestBasicTingShared::Run();
+	TestBasicTingShared::run();
 }

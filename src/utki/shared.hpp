@@ -82,6 +82,15 @@ template <class T> std::weak_ptr<T> makeWeak(const std::shared_ptr<T>& ptr){
 	return make_weak(ptr);
 }
 
-
+/**
+ * @brief Helper function to make shared pointer from shared object.
+ * This function only works for objects which are derived from std::enable_shared_from_this.
+ * This helper function essentially just calls shared_from_this() and then does a dynamic cast
+ * to the template type. Thus, one does not have to do the dynamic cast manually.
+ * @return shared pointer to the given shared object.
+ */
+template <class T> std::shared_ptr<T> make_shared_from_this(T& o){
+	return std::dynamic_pointer_cast<T>(o.shared_from_this());
+}
 
 }
