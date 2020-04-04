@@ -1,3 +1,9 @@
+libutki (1.1.81) unstable; urgency=medium
+
+  * added make_shared_from_this() template function
+
+ -- Ivan Gagis <igagis@gmail.com>  Sat, 04 Apr 2020 20:50:30 +0300
+
 libutki (1.1.80) unstable; urgency=medium
 
   * tree traversal iterator difference type made signed
