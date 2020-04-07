@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <functional>
 #include <map>
 #include <algorithm>
@@ -8,10 +7,7 @@
 
 #include "debug.hpp"
 
-
-
 namespace utki{
-
 
 template<typename T_A, typename T_B> std::pair<T_B, T_A> flip_pair(const std::pair<T_A, T_B> &p){
     return std::pair<T_B, T_A>(p.second, p.first);
@@ -92,8 +88,6 @@ template <class T> inline T clampedTop(T v, const T top)noexcept{
 	return v;
 }
 
-
-
 /**
  * @brief Clamp value top.
  * This inline template function can be used to clamp the top of the value.
@@ -124,8 +118,6 @@ template <class T> inline void clampTop(T& v, const T top)noexcept{
 	v = clampedTop(v, top);
 }
 
-
-
 /**
  * @brief Get bottom-clamped value.
  * @param v - value to get clamped for.
@@ -140,9 +132,6 @@ template <class T> inline T clampedBottom(T v, const T bottom)noexcept{
 	return v;
 }
 
-
-
-
 /**
  * @brief Clamp value bottom.
  * Usage is analogous to utki::clampTop.
@@ -153,8 +142,6 @@ template <class T> inline T clampedBottom(T v, const T bottom)noexcept{
 template <class T> inline void clampBottom(T& v, const T bottom)noexcept{
 	v = clampedBottom(v, bottom);
 }
-
-
 
 /**
  * @brief Get range-clamped value.
@@ -174,8 +161,6 @@ template <class T> inline T clampedRange(T v, const T bottom, const T top)noexce
 	return v;
 }
 
-
-
 /**
  * @brief Clamp value to range.
  * Clamps given value to given range.
@@ -187,8 +172,6 @@ template <class T> inline T clampedRange(T v, const T bottom, const T top)noexce
 template <class T> inline void clampRange(T& v, const T bottom, const T top)noexcept{
 	v = clampedRange(v, bottom, top);
 }
-
-
 
 /**
  * @brief serialize 16 bit value, little-endian.
@@ -204,8 +187,6 @@ inline std::uint8_t* serialize16le(std::uint16_t value, std::uint8_t* out_buf)no
 	++out_buf;
 	return out_buf;
 }
-
-
 
 /**
  * @brief serialize 32 bit value, little-endian.
@@ -228,8 +209,6 @@ inline std::uint8_t* serialize32le(std::uint32_t value, std::uint8_t* out_buf)no
 	++out_buf;
 	return out_buf;
 }
-
-
 
 /**
  * @brief serialize 64 bit value, little-endian.
@@ -265,8 +244,6 @@ inline std::uint8_t* serialize64le(std::uint64_t value, std::uint8_t* out_buf)no
 	return out_buf;
 }
 
-
-
 /**
  * @brief de-serialize 16 bit value, little-endian.
  * De-serialize 16 bit value from the sequence of bytes. Assume that less significant
@@ -277,15 +254,13 @@ inline std::uint8_t* serialize64le(std::uint64_t value, std::uint8_t* out_buf)no
 inline std::uint16_t deserialize16le(const std::uint8_t* buf)noexcept{
 	std::uint16_t ret;
 
-	//assume little-endian
+	// assume little-endian
 	ret = std::uint16_t(*buf);
 	++buf;
 	ret |= ((std::uint16_t(*buf)) << 8);
 
 	return ret;
 }
-
-
 
 /**
  * @brief de-serialize 32 bit value, little-endian.
@@ -308,8 +283,6 @@ inline std::uint32_t deserialize32le(const std::uint8_t* buf)noexcept{
 
 	return ret;
 }
-
-
 
 /**
  * @brief de-serialize 64 bit value, little-endian.
@@ -341,9 +314,6 @@ inline std::uint64_t deserialize64le(const std::uint8_t* buf)noexcept{
 	return ret;
 }
 
-
-
-
 /**
  * @brief serialize 16 bit value, big-endian.
  * Serialize 16 bit value, most significant byte first.
@@ -358,8 +328,6 @@ inline std::uint8_t* serialize16be(std::uint16_t value, std::uint8_t* out_buf)no
 	++out_buf;
 	return out_buf;
 }
-
-
 
 /**
  * @brief serialize 32 bit value, big-endian.
@@ -379,8 +347,6 @@ inline std::uint8_t* serialize32be(std::uint32_t value, std::uint8_t* out_buf)no
 	++out_buf;
 	return out_buf;
 }
-
-
 
 /**
  * @brief serialize 64 bit value, big-endian.
@@ -409,8 +375,6 @@ inline std::uint8_t* serialize64be(std::uint64_t value, std::uint8_t* out_buf)no
 	return out_buf;
 }
 
-
-
 /**
  * @brief de-serialize 16 bit value, big-endian.
  * De-serialize 16 bit value from the sequence of bytes. Assume that most significant
@@ -428,8 +392,6 @@ inline std::uint16_t deserialize16be(const std::uint8_t* buf)noexcept{
 
 	return ret;
 }
-
-
 
 /**
  * @brief de-serialize 32 bit value, big-endian.
@@ -452,8 +414,6 @@ inline std::uint32_t deserialize32be(const std::uint8_t* buf)noexcept{
 
 	return ret;
 }
-
-
 
 /**
  * @brief de-serialize 64 bit value, big-endian.
@@ -494,6 +454,5 @@ inline std::uint64_t deserialize64be(const std::uint8_t* buf)noexcept{
 template< class T, class... Args > std::unique_ptr<T> make_unique(Args&&... args){
 	return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
 }
-
 
 }
