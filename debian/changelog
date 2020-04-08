@@ -1,3 +1,9 @@
+libutki (1.1.83) unstable; urgency=medium
+
+  * android: build static library
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 08 Apr 2020 16:04:19 +0300
+
 libutki (1.1.82) unstable; urgency=medium
 
   * added get_ticks_ms() convenience function
