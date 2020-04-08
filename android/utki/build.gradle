@@ -67,4 +67,3 @@ task copyNdkLibsToAAR(type: Zip) {
 afterEvaluate {
     bundleReleaseAar.finalizedBy copyNdkLibsToAAR
 }
-
