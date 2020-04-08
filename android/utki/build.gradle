@@ -4,14 +4,23 @@ android {
     compileSdkVersion 28
 
     defaultConfig {
-        minSdkVersion 15
+        minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
+        externalNativeBuild {
+            cmake {
+                targets "utki"
+            }
+        }
     }
+
+    // This is needed to make the default dependency configuration to be 'debug' for the test app which references
+    // this module as in-project dependency. Because app searches for library to link against in debug directory.
+    defaultPublishConfig "debug"
 
     buildTypes {
         release {
@@ -52,13 +61,11 @@ task copyNdkLibsToAAR(type: Zip) {
     from zipTree("build/outputs/aar/" + aarName + "-release.aar")
     exclude('**/*.so') //do not include shared libraries into final AAR
     from("../../src") {
-        exclude('makefile')
-        exclude('soname.txt')
-        exclude('**/*.cpp')
-        exclude('**/*.c')
+        include('**/*.hpp')
+        include('**/*.h')
         into('ndkLibs/include')
     }
-    from("build/intermediates/binaries/debug/lib"){
+    from("build/intermediates/cmake/debug/obj"){
         include('**/*.a')
         into('ndkLibs')
     }
