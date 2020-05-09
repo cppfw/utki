@@ -3,6 +3,7 @@
 #include <array>
 #include <vector>
 #include <ostream>
+#include <cstring>
 
 #ifdef DEBUG
 #	include <iostream>
@@ -257,6 +258,15 @@ template <class T> inline const utki::span<T> make_span(const std::vector<T>& v)
  */
 template <class T> inline const utki::span<T> make_span(const std::basic_string<T>& s){
 	return make_span(s.size() == 0 ? nullptr : s.data(), s.size());
+}
+
+/**
+ * @brief Make span from zero-terminated string.
+ * @param str - zero-terminated string to make span from.
+ * @return span representing contents of the string.
+ */
+inline const utki::span<char> make_span(const char* str){
+	return make_span(str, strlen(str));
 }
 
 inline std::string to_string(const utki::span<char>& buf){

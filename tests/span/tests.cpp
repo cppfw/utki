@@ -155,5 +155,14 @@ void run(){
 		ASSERT_ALWAYS(s.size() == str.size())
 		ASSERT_ALWAYS(s.data() == str.data())
 	}
+
+	// test make_span(const char*)
+	{
+		const char* str = "Hello world!";
+		auto s = utki::make_span(str);
+
+		ASSERT_ALWAYS(s.size() == strlen(str))
+		ASSERT_ALWAYS(s.data() == str)
+	}
 }
 }
