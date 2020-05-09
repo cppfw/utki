@@ -109,7 +109,7 @@ install:
   fi
 # Accept android SDK licenses and install android tools
 - if [ "$TRAVIS_JOB_NAME" == "android" ]; then
-    echo y | sdkmanager "ndk-bundle;20.0.5594570" &&
+    echo y | sdkmanager "ndk-bundle" &&
     echo y | sdkmanager "cmake;3.6.4111459";
   fi
 
