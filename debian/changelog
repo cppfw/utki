@@ -1,3 +1,9 @@
+libutki (1.1.85) unstable; urgency=medium
+
+  * added make_span(basic_string) function
+
+ -- Ivan Gagis <igagis@gmail.com>  Sat, 09 May 2020 04:54:21 +0300
+
 libutki (1.1.84) unstable; urgency=medium
 
   * android: pack binary to aar
