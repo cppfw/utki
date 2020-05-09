@@ -1,3 +1,9 @@
+libutki (1.1.87) unstable; urgency=medium
+
+  * added make_span(const char*) utility function
+
+ -- Ivan Gagis <igagis@gmail.com>  Sat, 09 May 2020 19:37:40 +0300
+
 libutki (1.1.86) unstable; urgency=medium
 
   * nuget deployment fix
