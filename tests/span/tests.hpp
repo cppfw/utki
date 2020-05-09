@@ -16,3 +16,7 @@ void Run();
 namespace testOutputToStream{
 void run();
 }
+
+namespace test_make_span{
+void run();
+}

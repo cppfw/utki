@@ -5,6 +5,6 @@ int main(int argc, char *argv[]){
 	TestStaticBufferOperatorEquals::Run();
 	TestBufferConstCast::Run();
 	testOutputToStream::run();
-	
+	test_make_span::run();
 	return 0;
 }

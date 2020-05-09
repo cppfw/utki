@@ -143,3 +143,17 @@ void run(){
 	}
 }
 }
+
+namespace test_make_span{
+void run(){
+	// test make_span(const basic_string)
+	{
+		std::string str = "Hello world!";
+
+		auto s = utki::make_span(str);
+
+		ASSERT_ALWAYS(s.size() == str.size())
+		ASSERT_ALWAYS(s.data() == str.data())
+	}
+}
+}

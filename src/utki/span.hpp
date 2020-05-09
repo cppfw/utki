@@ -235,28 +235,28 @@ template <class T> inline const utki::span<T> make_span(const T* buf, size_t siz
 }
 
 template <class T, std::size_t array_size> inline utki::span<T> make_span(std::array<T, array_size>& a){
-	return make_span(a.size() == 0 ? nullptr : &*a.begin(), a.size());
+	return make_span(a.size() == 0 ? nullptr : a.data(), a.size());
 }
 
 template <class T, std::size_t array_size> inline const utki::span<T> make_span(const std::array<T, array_size>& a){
-	return make_span(a.size() == 0 ? nullptr : &*a.begin(), a.size());
+	return make_span(a.size() == 0 ? nullptr : a.data(), a.size());
 }
 
 template <class T> inline utki::span<T> make_span(std::vector<T>& v){
-	return make_span(v.size() == 0 ? nullptr : &*v.begin(), v.size());
+	return make_span(v.size() == 0 ? nullptr : v.data(), v.size());
 }
 
 template <class T> inline const utki::span<T> make_span(const std::vector<T>& v){
-	return make_span(v.size() == 0 ? nullptr : &*v.begin(), v.size());
+	return make_span(v.size() == 0 ? nullptr : v.data(), v.size());
 }
 
 /**
- * @brief Make span representing contents of a string.
+ * @brief Make span representing contents of a basic_string.
  * @param s - string to make the span from.
  * @return span of the string contents.
  */
-inline const utki::span<char> make_span(const std::string& s){
-	return make_span(s.data(), s.size());
+template <class T> inline const utki::span<T> make_span(const std::basic_string<T>& s){
+	return make_span(s.size() == 0 ? nullptr : s.data(), s.size());
 }
 
 inline std::string to_string(const utki::span<char>& buf){
