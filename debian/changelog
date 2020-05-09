@@ -1,3 +1,9 @@
+libutki (1.1.86) unstable; urgency=medium
+
+  * nuget deployment fix
+
+ -- Ivan Gagis <igagis@gmail.com>  Sat, 09 May 2020 14:36:19 +0300
+
 libutki (1.1.85) unstable; urgency=medium
 
   * added make_span(basic_string) function
