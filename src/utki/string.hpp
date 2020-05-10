@@ -32,7 +32,7 @@ std::string make_string_va_list(const char* format, va_list args);
  * @param buf - char buffer to make the string from.
  * @return string representing the contents of the char buffer.
  */
-std::string make_string(const utki::span<char> buf){
+inline std::string make_string(const utki::span<char> buf){
 	return std::string(buf.data(), buf.size());
 }
 
