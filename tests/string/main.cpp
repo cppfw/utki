@@ -158,4 +158,16 @@ int main(int argc, char** argv){
 		ASSERT_INFO_ALWAYS(res[10] == "q", "res[10] = '" << res[10] << "'")
 		ASSERT_INFO_ALWAYS(res[11] == "", "res[11] = '" << res[11] << "'")
 	}
+
+	// test make_string(span<char>)
+	{
+		std::array<char, 12> arr = {{'H', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', '!'}};
+		std::vector<char> vec = {{'H', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', '!'}};
+
+		auto str_arr = utki::make_string(utki::make_span(arr));
+		ASSERT_ALWAYS(str_arr == "Hello world!")
+
+		auto str_vec = utki::make_string(utki::make_span(vec));
+		ASSERT_ALWAYS(str_vec == "Hello world!")
+	}
 }

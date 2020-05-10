@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "config.hpp"
+#include "span.hpp"
 
 namespace utki{
 
@@ -25,6 +26,15 @@ std::string make_string(const char* format, ...);
  * @return formatted string.
  */
 std::string make_string_va_list(const char* format, va_list args);
+
+/**
+ * @brief Make string out of char buffer.
+ * @param buf - char buffer to make the string from.
+ * @return string representing the contents of the char buffer.
+ */
+std::string make_string(const utki::span<char> buf){
+	return std::string(buf.data(), buf.size());
+}
 
 /**
  * @brief Split string using give delimiter.
