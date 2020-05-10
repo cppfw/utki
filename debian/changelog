@@ -1,3 +1,9 @@
+libutki (1.1.88) unstable; urgency=medium
+
+  * added make_spring(span<char>) function
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 11 May 2020 00:04:03 +0300
+
 libutki (1.1.87) unstable; urgency=medium
 
   * added make_span(const char*) utility function
