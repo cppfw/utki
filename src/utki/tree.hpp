@@ -456,7 +456,7 @@ public:
 	typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
 
 private:
-	template <bool Is_const> iterator_internal<Is_const> make_iterator_internal(const utki::span<size_type> index)const{
+	template <bool Is_const> iterator_internal<Is_const> make_iterator_internal(utki::span<const size_type> index)const{
 		iterator_internal<Is_const> ret;
 
 		auto* list = &this->roots;
@@ -478,7 +478,7 @@ public:
 	 * @param index - the index of the tree node.
 	 * @return Iterator which points to the tree node given by index.
 	 */
-	iterator make_iterator(const utki::span<size_type> index){
+	iterator make_iterator(utki::span<const size_type> index){
 		return this->make_iterator_internal<std::is_const<C>::value>(index);
 	}
 
@@ -496,7 +496,7 @@ public:
 	 * @param index - the index of the tree node.
 	 * @return Constant iterator which points to the tree node given by index.
 	 */
-	const_iterator make_const_iterator(const utki::span<size_type> index)const{
+	const_iterator make_const_iterator(utki::span<const size_type> index)const{
 		return this->make_iterator_internal<true>(index);
 	}
 
@@ -526,7 +526,7 @@ public:
 	 * @return true in case the given index is valid.
 	 * @return fals in case the given index is invalid.
 	 */
-	bool is_valid(const utki::span<size_type> index)const{
+	bool is_valid(utki::span<const size_type> index)const{
 		if(index.empty()){
 			return false;
 		}

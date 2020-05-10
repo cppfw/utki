@@ -41,10 +41,8 @@ private:
 	size_type bufSize = 0;
 	
 public:
-
 	span(const span&) = default;
 	span& operator=(const span&) = default;
-	
 	
 	/**
 	 * @brief Create a span object.
@@ -58,7 +56,6 @@ public:
 			buf(p),
 			bufSize(s)
 	{}
-
 	
 	span()noexcept{}
 	
@@ -70,6 +67,26 @@ public:
 			bufSize(0)
 	{}
 	
+	class dummy_span{
+	public:
+		T* data(){return nullptr;}
+		size_t size(){return 0;}
+	};
+
+	/**
+	 * @brief Constructor for auto-conversion to span<const T>.
+	 */
+	span(const span<
+			typename std::conditional<
+					std::is_const<T>::value,
+					typename std::remove_const<T>::type,
+					dummy_span
+				>::type
+		>& sp) :
+			buf(sp.data()),
+			bufSize(sp.size())
+	{}
+
 	/**
 	 * @brief get buffer size.
 	 * @return number of elements in buffer.
@@ -95,8 +112,6 @@ public:
 		return this->size_bytes();
 	}
 
-
-
 	/**
 	 * @brief access specified element of the buffer.
 	 * Const version of Buffer::operator[].
@@ -108,8 +123,6 @@ public:
 		return this->buf[i];
 	}
 
-
-
 	/**
 	 * @brief access specified element of the buffer.
 	 * @param i - element index.
@@ -120,8 +133,6 @@ public:
 		return this->buf[i];
 	}
 
-
-
 	/**
 	 * @brief get pointer to first element of the buffer.
 	 * @return pointer to first element of the buffer.
@@ -129,8 +140,6 @@ public:
 	iterator begin()noexcept{
 		return this->buf;
 	}
-
-
 
 	/**
 	 * @brief get pointer to first element of the buffer.
@@ -144,7 +153,6 @@ public:
 		return this->buf;
 	}
 
-
 	/**
 	 * @brief get pointer to "after last" element of the buffer.
 	 * @return pointer to "after last" element of the buffer.
@@ -152,8 +160,6 @@ public:
 	iterator end()noexcept{
 		return this->buf + this->bufSize;
 	}
-
-
 
 	/**
 	 * @brief get const pointer to "after last" element of the buffer.
@@ -199,8 +205,6 @@ public:
 	const_pointer data()const noexcept{
 		return this->buf;
 	}
-	
-
 
 	/**
 	 * @brief Checks if pointer points somewhere within the buffer.
@@ -211,8 +215,6 @@ public:
 	bool overlaps(const_pointer p)const noexcept{
 		return this->begin() <= p && p <= (this->end() - 1);
 	}
-
-
 
 	friend std::ostream& operator<<(std::ostream& s, const span<T>& buf){
 		for(auto& e : buf){
@@ -231,15 +233,11 @@ template <class T> inline utki::span<T> make_span(T* buf, size_t size){
 	return utki::span<T>(buf, size);
 }
 
-template <class T> inline const utki::span<T> make_span(const T* buf, size_t size){
-	return utki::span<T>(const_cast<T*>(buf), size);
-}
-
 template <class T, std::size_t array_size> inline utki::span<T> make_span(std::array<T, array_size>& a){
 	return make_span(a.size() == 0 ? nullptr : a.data(), a.size());
 }
 
-template <class T, std::size_t array_size> inline const utki::span<T> make_span(const std::array<T, array_size>& a){
+template <class T, std::size_t array_size> inline utki::span<const T> make_span(const std::array<T, array_size>& a){
 	return make_span(a.size() == 0 ? nullptr : a.data(), a.size());
 }
 
@@ -247,7 +245,7 @@ template <class T> inline utki::span<T> make_span(std::vector<T>& v){
 	return make_span(v.size() == 0 ? nullptr : v.data(), v.size());
 }
 
-template <class T> inline const utki::span<T> make_span(const std::vector<T>& v){
+template <class T> inline utki::span<const T> make_span(const std::vector<T>& v){
 	return make_span(v.size() == 0 ? nullptr : v.data(), v.size());
 }
 
@@ -256,7 +254,7 @@ template <class T> inline const utki::span<T> make_span(const std::vector<T>& v)
  * @param s - string to make the span from.
  * @return span of the string contents.
  */
-template <class T> inline const utki::span<T> make_span(const std::basic_string<T>& s){
+template <class T> inline utki::span<const T> make_span(const std::basic_string<T>& s){
 	return make_span(s.size() == 0 ? nullptr : s.data(), s.size());
 }
 
@@ -265,12 +263,8 @@ template <class T> inline const utki::span<T> make_span(const std::basic_string<
  * @param str - zero-terminated string to make span from.
  * @return span representing contents of the string.
  */
-inline const utki::span<char> make_span(const char* str){
+inline utki::span<const char> make_span(const char* str){
 	return make_span(str, strlen(str));
-}
-
-inline std::string to_string(const utki::span<char>& buf){
-	return std::string(buf.data(), buf.size());
 }
 
 }

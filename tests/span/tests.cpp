@@ -97,7 +97,7 @@ public:
 };
 
 
-int Func2(const utki::span<TestClass> buf){
+int Func2(utki::span<const TestClass> buf){
 	if(buf.size() == 0){
 		return 0;
 	}
@@ -136,10 +136,6 @@ void run(){
 		ss << utki::make_span(buf);
 
 		ASSERT_ALWAYS(ss.str() == "Hello world!")
-	}
-	{
-		std::array<char, 12> buf = {{'H', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', '!'}};
-		ASSERT_ALWAYS(to_string(utki::make_span(buf)) == "Hello world!")
 	}
 }
 }
