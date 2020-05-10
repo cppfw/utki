@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+#include <array>
 
 #include "config.hpp"
 #include "span.hpp"
@@ -34,6 +35,15 @@ std::string make_string_va_list(const char* format, va_list args);
  */
 inline std::string make_string(const utki::span<char> buf){
 	return std::string(buf.data(), buf.size());
+}
+
+/**
+ * @brief Make string out of char buffer.
+ * @param buf - char buffer to make the string from.
+ * @return string representing the contents of the char buffer.
+ */
+inline std::string make_string(const std::vector<char>& buf){
+	return utki::make_string(utki::make_span(buf));
 }
 
 /**

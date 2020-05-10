@@ -170,4 +170,12 @@ int main(int argc, char** argv){
 		auto str_vec = utki::make_string(utki::make_span(vec));
 		ASSERT_ALWAYS(str_vec == "Hello world!")
 	}
+
+	// test make_string(std::vector<char>)
+	{
+		std::vector<char> vec = {{'H', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', '!'}};
+
+		auto str_vec = utki::make_string(vec);
+		ASSERT_ALWAYS(str_vec == "Hello world!")
+	}
 }
