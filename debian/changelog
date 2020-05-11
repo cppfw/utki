@@ -1,3 +1,9 @@
+libutki (1.1.89) unstable; urgency=medium
+
+  * automatic conversion of span<T> to span<const T>
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 11 May 2020 03:13:16 +0300
+
 libutki (1.1.88) unstable; urgency=medium
 
   * added make_spring(span<char>) function

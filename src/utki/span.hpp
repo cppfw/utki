@@ -14,11 +14,9 @@
 
 namespace utki{
 
-// TODO: remove when C++'20 becomes very common.
-
 /**
  * @brief span template class.
- * This class is a wrapper of continuous memory buffer, it encapsulates pointer to memory block and size of that memory block.
+ * This class is a wrapper of continuous memory span, it encapsulates pointer to memory block and size of that memory block.
  * It does not own the memory.
  * This is a replacement of std::span when C++'20 is not available.
  */
@@ -38,7 +36,7 @@ public:
 	
 private:
 	pointer buf = nullptr;
-	size_type bufSize = 0;
+	size_type buf_size = 0;
 	
 public:
 	span(const span&) = default;
@@ -54,7 +52,7 @@ public:
 	 */
 	span(pointer p, size_type s)noexcept :
 			buf(p),
-			bufSize(s)
+			buf_size(s)
 	{}
 	
 	span()noexcept{}
@@ -64,59 +62,64 @@ public:
      */
 	span(std::nullptr_t)noexcept :
 			buf(nullptr),
-			bufSize(0)
+			buf_size(0)
 	{}
 	
-	class dummy_span{
+	/**
+	 * @brief for internal use only.
+	 * This class is not supposed to be used by users.
+	 */
+	class dummy_span_class{
 	public:
 		T* data(){return nullptr;}
 		size_t size(){return 0;}
 	};
 
 	/**
-	 * @brief Constructor for auto-conversion to span<const T>.
+	 * @brief Constructor for automatic conversion to span<const T>.
+	 * @param sp - span to convert.
 	 */
 	span(const span<
 			typename std::conditional<
 					std::is_const<T>::value,
 					typename std::remove_const<T>::type,
-					dummy_span
+					dummy_span_class
 				>::type
 		>& sp) :
 			buf(sp.data()),
-			bufSize(sp.size())
+			buf_size(sp.size())
 	{}
 
 	/**
-	 * @brief get buffer size.
-	 * @return number of elements in buffer.
+	 * @brief get span size.
+	 * @return number of elements in the span.
 	 */
 	size_type size()const noexcept{
-		return this->bufSize;
+		return this->buf_size;
 	}
 
+	/**
+	 * @brief Check if span is empty.
+	 * @return true if the span is empty.
+	 * @return false if the span is not empty.
+	 */
 	bool empty()const noexcept{
 		return this->size() == 0;
 	}
 
 	/**
-	 * @brief get size of buffer in bytes.
+	 * @brief get size of span in bytes.
 	 * @return size of array in bytes.
 	 */
 	size_type size_bytes()const noexcept{
 		return this->size() * sizeof(value_type);
 	}
 
-	//TODO: deprecated, remove.
-	size_type sizeInBytes()const noexcept{
-		return this->size_bytes();
-	}
-
 	/**
-	 * @brief access specified element of the buffer.
-	 * Const version of Buffer::operator[].
+	 * @brief access specified element of the span.
+	 * Const version of operator[].
 	 * @param i - element index.
-	 * @return reference to i'th element of the buffer.
+	 * @return reference to i'th element of the span.
 	 */
 	const_reference operator[](size_type i)const noexcept{
 		ASSERT(i < this->size())
@@ -124,9 +127,9 @@ public:
 	}
 
 	/**
-	 * @brief access specified element of the buffer.
+	 * @brief access specified element of the span.
 	 * @param i - element index.
-	 * @return reference to i'th element of the buffer.
+	 * @return reference to i'th element of the span.
 	 */
 	reference operator[](size_type i)noexcept{
 		ASSERT_INFO(i < this->size(), "operator[]: index out of bounds")
@@ -134,43 +137,51 @@ public:
 	}
 
 	/**
-	 * @brief get pointer to first element of the buffer.
-	 * @return pointer to first element of the buffer.
+	 * @brief get iterator to first element of the span.
+	 * @return iterator to first element of the span.
 	 */
 	iterator begin()noexcept{
 		return this->buf;
 	}
 
 	/**
-	 * @brief get pointer to first element of the buffer.
-	 * @return pointer to first element of the buffer.
+	 * @brief get iterator of the first element of the span.
+	 * @return iterator of the first element of the span.
 	 */
 	const_iterator begin()const noexcept{
 		return this->cbegin();
 	}
 
+	/**
+	 * @brief get const iterator of the first element of the span.
+	 * @return const iterator of the first element of the span.
+	 */
 	const_iterator cbegin()const noexcept{
 		return this->buf;
 	}
 
 	/**
-	 * @brief get pointer to "after last" element of the buffer.
-	 * @return pointer to "after last" element of the buffer.
+	 * @brief get iterator to "after last" element of the span.
+	 * @return iterator to "after last" element of the span.
 	 */
 	iterator end()noexcept{
-		return this->buf + this->bufSize;
+		return this->buf + this->buf_size;
 	}
 
 	/**
-	 * @brief get const pointer to "after last" element of the buffer.
-	 * @return const pointer to "after last" element of the buffer.
+	 * @brief get const iterator to "after last" element of the span.
+	 * @return const iterator to "after last" element of the span.
 	 */
 	const_iterator end()const noexcept{
 		return this->cend();
 	}
 	
+	/**
+	 * @brief get const iterator to "after last" element of the span.
+	 * @return const iterator to "after last" element of the span.
+	 */
 	const_iterator cend()const noexcept{
-		return this->buf + this->bufSize;
+		return this->buf + this->buf_size;
 	}
 
 	
@@ -207,9 +218,9 @@ public:
 	}
 
 	/**
-	 * @brief Checks if pointer points somewhere within the buffer.
+	 * @brief Checks if pointer points somewhere within the span.
 	 * @param p - pointer to check.
-	 * @return true - if pointer passed as argument points somewhere within the buffer.
+	 * @return true - if pointer passed as argument points somewhere within the span.
 	 * @return false otherwise.
 	 */
 	bool overlaps(const_pointer p)const noexcept{
@@ -223,7 +234,6 @@ public:
 		return s;
 	}
 };
-
 
 template <class T> inline utki::span<T> make_span(std::nullptr_t){
 	return utki::span<T>(nullptr);
