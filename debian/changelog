@@ -1,3 +1,9 @@
+libutki (1.1.90) unstable; urgency=medium
+
+  * added make_string(span<uint8_t>) functions
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 29 May 2020 14:23:46 +0300
+
 libutki (1.1.89) unstable; urgency=medium
 
   * automatic conversion of span<T> to span<const T>
