@@ -94,6 +94,19 @@ int main(int argc, char** argv){
 		ASSERT_INFO_ALWAYS(r.size() == 1, "r.size() = " << r.size())
 	}
 
+	// test string split into words
+	{
+		auto str = " hello world    bla\tblah\n!";
+
+		auto r = utki::split(str);
+		ASSERT_ALWAYS(r.size() == 5)
+		ASSERT_ALWAYS(r[0] == "hello")
+		ASSERT_ALWAYS(r[1] == "world")
+		ASSERT_ALWAYS(r[2] == "bla")
+		ASSERT_ALWAYS(r[3] == "blah")
+		ASSERT_ALWAYS(r[4] == "!")
+	}
+
 	// test basic word wrap
 	{
 		auto res = utki::word_wrap("abcd efgh i jkl mnop", 7);
@@ -202,4 +215,6 @@ int main(int argc, char** argv){
 		auto str_vec = utki::make_string(vec);
 		ASSERT_ALWAYS(str_vec == "Hello world!")
 	}
+
+
 }

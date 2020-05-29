@@ -83,12 +83,21 @@ inline std::string make_string(const std::vector<uint8_t>& buf){
 }
 
 /**
- * @brief Split string using give delimiter.
+ * @brief Split string using given delimiter.
  * @param str - string to split.
  * @param delimiter - delimiter character to use as a splitter.
  * @return vector of splitted strings.
  */
 std::vector<std::string> split(const std::string& str, char delimiter);
+
+/**
+ * @brief Split string to separate words.
+ * Delimiter for splitting is any sequence of whitespaces.
+ * Whitespace includes space, tab, newline characters.
+ * @param str - string to split to words.
+ * @return vector of words.
+ */
+std::vector<std::string> split(const std::string& str);
 
 /**
  * @brief Word wrap string.
