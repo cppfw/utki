@@ -38,11 +38,29 @@ inline std::string make_string(utki::span<const char> buf){
 }
 
 /**
+ * @brief Make string out of uint8_t buffer.
+ * @param buf - uint8_t buffer to make the string from.
+ * @return string representing the contents of the uint8_t buffer.
+ */
+inline std::string make_string(utki::span<const uint8_t> buf){
+	return utki::make_string(utki::make_span(reinterpret_cast<const char*>(buf.data()), buf.size()));
+}
+
+/**
  * @brief Make string out of char buffer.
  * @param buf - char buffer to make the string from.
  * @return string representing the contents of the char buffer.
  */
 template <size_t S> inline std::string make_string(const std::array<char, S>& buf){
+	return utki::make_string(utki::make_span(buf));
+}
+
+/**
+ * @brief Make string out of uint8_t buffer.
+ * @param buf - uint8_t buffer to make the string from.
+ * @return string representing the contents of the uint8_t buffer.
+ */
+template <size_t S> inline std::string make_string(const std::array<uint8_t, S>& buf){
 	return utki::make_string(utki::make_span(buf));
 }
 
@@ -55,6 +73,14 @@ inline std::string make_string(const std::vector<char>& buf){
 	return utki::make_string(utki::make_span(buf));
 }
 
+/**
+ * @brief Make string out of uint8_t buffer.
+ * @param buf - uint8_t buffer to make the string from.
+ * @return string representing the contents of the uint8_t buffer.
+ */
+inline std::string make_string(const std::vector<uint8_t>& buf){
+	return utki::make_string(utki::make_span(buf));
+}
 
 /**
  * @brief Split string using give delimiter.

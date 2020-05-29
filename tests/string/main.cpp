@@ -179,9 +179,25 @@ int main(int argc, char** argv){
 		ASSERT_ALWAYS(str_arr == "Hello world!")
 	}
 
+	// test make_string(std::array<uint8_t>)
+	{
+		std::array<uint8_t, 12> arr = {{'H', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', '!'}};
+
+		auto str_arr = utki::make_string(arr);
+		ASSERT_ALWAYS(str_arr == "Hello world!")
+	}
+
 	// test make_string(std::vector<char>)
 	{
 		std::vector<char> vec = {{'H', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', '!'}};
+
+		auto str_vec = utki::make_string(vec);
+		ASSERT_ALWAYS(str_vec == "Hello world!")
+	}
+
+	// test make_string(std::vector<uint8_t>)
+	{
+		std::vector<uint8_t> vec = {{'H', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', '!'}};
 
 		auto str_vec = utki::make_string(vec);
 		ASSERT_ALWAYS(str_vec == "Hello world!")
