@@ -1,6 +1,6 @@
 #include "utf8.hpp"
 
-#include <utki/debug.hpp>
+#include "debug.hpp"
 
 using namespace utki;
 
