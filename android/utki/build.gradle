@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.ydq.android.gradle.native-aar.export' // must go after android gradle plugin
 
 android {
     compileSdkVersion 28
@@ -22,6 +23,11 @@ android {
     // this module as in-project dependency. Because app searches for library to link against in debug directory.
     defaultPublishConfig "debug"
 
+    nativeBundleExport {
+        headerDir = "${project.projectDir}/../../src/"
+        bundleStatic = true
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -31,7 +37,6 @@ android {
 
     // Encapsulates your external native build configurations.
     externalNativeBuild {
-
         // Encapsulates your CMake build configurations.
         cmake {
             // Provides a relative path to your CMake build script.
