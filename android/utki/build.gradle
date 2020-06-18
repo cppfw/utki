@@ -48,13 +48,14 @@ dependencies {
 
 // copy and rename release AAR to unified name
 task copy_aar(type: Copy) {
-    from file("build/outputs/aar/utki-static-release.aar")
+    from file("build/outputs/aar/")
     into file("../")
+    include("*-static-release.aar")
     rename { String fileName ->
         fileName.replace("static-release.aar", "\$(version).aar.in")
     }
 }
 
 afterEvaluate {
-    assembleRelease.finalizedBy copy_aar
+    copy_aar.dependsOn(assembleRelease)
 }

@@ -136,7 +136,7 @@ script:
     myci-create-zip-package.sh -h src -f xcode/build/lib$PACKAGE_NAME.a///lib/ios -f LICENSE $PACKAGE_NAME-$PACKAGE_VERSION.zip;
   fi
 - if [ "$TRAVIS_JOB_NAME" == "android" ]; then
-    (cd android && ./gradlew build --warning-mode all) &&
+    (cd android && ./gradlew copy_aar --warning-mode all) &&
     myci-apply-version.sh -v $PACKAGE_VERSION android/*.pom.in &&
     myci-apply-version.sh -v $PACKAGE_VERSION android/*.aar.in --filename-only;
   fi
