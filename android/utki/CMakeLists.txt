@@ -12,8 +12,6 @@ cmake_minimum_required(VERSION 3.4.1)
 
 file(GLOB_RECURSE srcs "../../src/utki/*.cpp")
 
-link_directories( build/ndkLibs/${ANDROID_ABI}/ )
-
 add_library( # Specifies the name of the library.
              utki
 
