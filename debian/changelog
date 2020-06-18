@@ -1,3 +1,9 @@
+libutki (1.1.93) unstable; urgency=medium
+
+  * add utf-8 functions, start using android native bundle plugin
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 18 Jun 2020 13:00:32 +0300
+
 libutki (1.1.92) unstable; urgency=medium
 
   * deploy to ubuntu eoan
