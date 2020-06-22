@@ -1,3 +1,9 @@
+libutki (1.1.94) unstable; urgency=medium
+
+  * add deg_to_rad() and rad_to_deg() functions
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 22 Jun 2020 14:37:06 +0300
+
 libutki (1.1.93) unstable; urgency=medium
 
   * add utf-8 functions, start using android native bundle plugin
