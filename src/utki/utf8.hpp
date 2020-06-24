@@ -89,4 +89,11 @@ const unsigned max_size_of_utf8_encoded_character = 6;
  */
 std::array<char, max_size_of_utf8_encoded_character + 1> to_utf8(char32_t c);
 
+/**
+ * @brief Convert UTF-32 string to UTF-8 string.
+ * @param str - UTF-32 string to convert.
+ * @return UTF-8 string.
+ */
+std::string to_utf8(const std::u32string& str);
+
 }

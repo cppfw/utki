@@ -88,5 +88,14 @@ void run(){
 		ASSERT_ALWAYS(ret[5] == char(0xbf));
 		ASSERT_ALWAYS(ret[6] == 0);
 	}
+
+	// test UTF-32 string to UTF-8 string conversion
+	{
+		auto utf32 = U"Hello world!";
+
+		auto utf8 = utki::to_utf8(utf32);
+
+		ASSERT_ALWAYS(utf8 == "Hello world!")
+	}
 }
 }

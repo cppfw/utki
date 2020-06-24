@@ -123,3 +123,14 @@ std::array<char, max_size_of_utf8_encoded_character + 1> utki::to_utf8(char32_t 
 	
 	return ret;
 }
+
+std::string utki::to_utf8(const std::u32string& str){
+	std::stringstream ss;
+
+	for(auto c : str){
+		auto buf = to_utf8(c);
+		ss << buf.data();
+	}
+
+	return ss.str();
+}
