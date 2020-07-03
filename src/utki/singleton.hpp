@@ -1,14 +1,10 @@
 #pragma once
 
-#include "exception.hpp"
 #include "debug.hpp"
 
 #include <memory>
 
-
 namespace utki{
-
-
 
 /**
  * @brief Intrusive singleton base class.
@@ -42,7 +38,7 @@ template <class T, class T_InstanceOwner = T> class intrusive_singleton{
 protected: // use only as a base class
 	intrusive_singleton(){
 		if(T_InstanceOwner::instance){
-			throw utki::invalid_state("singleton::singleton(): instance is already created");
+			throw std::logic_error("singleton::singleton(): instance is already created");
 		}
 
 		T_InstanceOwner::instance.reset(static_cast<T*>(this));
@@ -59,7 +55,6 @@ public:
 	intrusive_singleton& operator=(const intrusive_singleton&) = delete;
 	
 public:
-	
 	/**
 	 * @brief tells if singleton object is created or not.
 	 * Note, this function is not thread safe.
@@ -68,11 +63,6 @@ public:
 	 */
 	static bool is_created(){
 		return T_InstanceOwner::instance.operator bool();
-	}
-
-	// TODO: deprecated, remove.
-	static bool isCreated(){
-		return is_created();
 	}
 
 	/**
@@ -89,8 +79,6 @@ public:
 		T_InstanceOwner::instance.release();
 	}
 };
-
-
 
 /**
  * @brief Singleton base class.
