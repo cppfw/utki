@@ -1,3 +1,9 @@
+libutki (1.1.98) unstable; urgency=medium
+
+  * remove deprecated stuff
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 03 Jul 2020 20:27:58 +0300
+
 libutki (1.1.97) unstable; urgency=medium
 
   * remove deprecated stuff
