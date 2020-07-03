@@ -1,3 +1,9 @@
+libutki (1.1.97) unstable; urgency=medium
+
+  * remove deprecated stuff
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 03 Jul 2020 18:26:41 +0300
+
 libutki (1.1.96) unstable; urgency=medium
 
   * build for raspbian buster
