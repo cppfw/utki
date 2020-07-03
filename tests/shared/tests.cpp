@@ -18,7 +18,7 @@ public:
 	TestClass(int i) : a(i) {}
 	
 	std::shared_ptr<TestClass> getPtr(){
-		return this->shared_from_this(this);
+		return utki::make_shared_from_this(*this);
 	}
 };
 

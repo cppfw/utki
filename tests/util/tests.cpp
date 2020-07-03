@@ -69,7 +69,7 @@ void Run(){
 	{
 		bool flag = false;
 		{
-			utki::ScopeExit se([&flag](){
+			utki::scope_exit se([&flag](){
 				flag = true;
 			});
 		}
@@ -79,7 +79,7 @@ void Run(){
 	{
 		bool flag = false;
 		{
-			utki::ScopeExit se([&flag](){
+			utki::scope_exit se([&flag](){
 				flag = true;
 			});
 			
@@ -98,7 +98,7 @@ void run(){
 		{42, "42"}
 	};
 	
-	auto fm = utki::flipMap(m);
+	auto fm = utki::flip_map(m);
 	
 	ASSERT_ALWAYS(fm.size() == 3)
 	ASSERT_ALWAYS(fm["10"] == 10)

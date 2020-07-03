@@ -137,7 +137,6 @@ std::vector<std::string> utki::word_wrap(const std::string& str, unsigned width)
 				}
 				break;
 			case '\n':
-				//TODO: same as reaching width
 				ret.push_back(str.substr(
 						std::distance(str.begin(), line_begin),
 						std::distance(line_begin, i)

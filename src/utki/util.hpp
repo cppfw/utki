@@ -13,15 +13,10 @@ template<typename T_A, typename T_B> std::pair<T_B, T_A> flip_pair(const std::pa
     return std::pair<T_B, T_A>(p.second, p.first);
 }
 
-template<typename T_A, typename T_B> std::map<T_B, T_A> flip_map(const std::map<T_A, T_B> &m){
-    std::map<T_B, T_A> ret;
-    std::transform(m.begin(), m.end(), std::inserter(ret, ret.begin()), flip_pair<T_A, T_B>);
+template<typename A, typename B> std::map<B, A> flip_map(const std::map<A, B> &m){
+    std::map<B, A> ret;
+    std::transform(m.begin(), m.end(), std::inserter(ret, ret.begin()), flip_pair<A, B>);
     return ret;
-}
-
-//TODO: deprecated, remove.
-template<typename T_A, typename T_B> std::map<T_B, T_A> flipMap(const std::map<T_A, T_B> &m){
-	return flip_map(m);
 }
 
 /**
@@ -70,9 +65,6 @@ public:
 		return ret;
 	}
 };
-
-//TODO: deprecated, remove.
-typedef scope_exit ScopeExit;
 
 /**
  * @brief Get top-clamped value.
