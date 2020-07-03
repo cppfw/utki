@@ -1,7 +1,5 @@
 #pragma once
 
-
-
 //====================================================|
 //            Compiler definitions                    |
 //                                                    |
@@ -55,9 +53,9 @@
 #		define M_CPU M_CPU_ARM
 		
 #		if defined(__thumb2__) // this macro is defined when targeting only thumb-2
-#			define M_CPU_ARM_THUMB 2
+#			define M_CPU_ARM_THUMB_VERSION 2
 #		elif defined(__thumb__) // this macro is defined when targeting any, thumb-1 or thumb-2
-#			define M_CPU_ARM_THUMB 1
+#			define M_CPU_ARM_THUMB_VERSION 1
 #		endif
 		
 #		if defined(__ARM_ARCH_7__) || defined(__ARM_ARCH_7A__) || defined(__ARM_ARCH_7R__) || defined(__ARM_ARCH_7M__)
@@ -104,24 +102,6 @@
 #	define M_CPU_VERSION 0
 #endif
 
-
-//======================================|
-//            CPU bit depth             |
-#define M_CPU_BIT_DEPTH_UNKNOWN 0
-#define M_CPU_BIT_DEPTH_8 1
-#define M_CPU_BIT_DEPTH_16 2
-#define M_CPU_BIT_DEPTH_32 3
-#define M_CPU_BIT_DEPTH_64 4
-#define M_CPU_BIT_DEPTH_128 5
-
-#if M_CPU == M_CPU_X86 || M_CPU == M_CPU_ARM
-#	define M_CPU_BIT_DEPTH M_CPU_BIT_DEPTH_32
-#elif M_CPU == M_CPU_X86_64
-#	define M_CPU_BIT_DEPTH M_CPU_BIT_DEPTH_64
-#else
-#	define M_CPU_BIT_DEPTH M_CPU_BIT_DEPTH_UNKNOWN
-#endif
-
 //======================================|
 //            OS definitions            |
 //                                      |
@@ -132,9 +112,8 @@
 #define M_OS_WINDOWS                    2
 #define M_OS_MACOSX                     3
 #define M_OS_UNIX                       4
-#define M_OS_SYMBIAN                    5
 
-// Concrete OS name
+// OS name
 #define M_OS_NAME_UNKNOWN               0
 #define M_OS_NAME_MACOSX                1
 #define M_OS_NAME_IOS                   2
@@ -169,16 +148,10 @@
 #	else
 #		define M_OS_NAME M_OS_NAME_UNKNOWN
 #	endif
-#elif defined(__SYMBIAN32__)
-#	define M_OS M_OS_SYMBIAN
-#	define M_OS_NAME M_OS_NAME_UNKNOWN
 #else
 #	define M_OS M_OS_UNKNOWN
 #	define M_OS_NAME M_OS_NAME_UNKNOWN
 #endif
-
-
-
 
 #if M_OS == M_OS_WINDOWS
 #	if M_COMPILER == M_COMPILER_MSVC
