@@ -1,3 +1,9 @@
+libutki (1.1.96) unstable; urgency=medium
+
+  * build for raspbian buster
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 03 Jul 2020 17:07:14 +0300
+
 libutki (1.1.95) unstable; urgency=medium
 
   * add to_utf8(std::u32string) function
