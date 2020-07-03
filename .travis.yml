@@ -1,10 +1,8 @@
-sudo: required
-
 services:
 - docker
 
 language: cpp
-dist: xenial
+dist: bionic
 os: linux
 
 git:
@@ -32,11 +30,11 @@ matrix:
     - name: macosx
       os: osx
       compiler: clang
-      osx_image: xcode11
+      osx_image: xcode11.3
     - name: ios
       os: osx
       compiler: clang
-      osx_image: xcode11
+      osx_image: xcode11.3
     - name: android
       language: android
       android:
@@ -69,6 +67,7 @@ env:
   - OS_REL=buster OS=debian DOCKER_IMAGE=$OS:$OS_REL PACKAGE_TYPE=deb
   - OS_REL=buster OS=debian DOCKER_IMAGE=i386/$OS:$OS_REL PACKAGE_TYPE=deb
   - OS_REL=stretch OS=raspbian DOCKER_IMAGE=igagis/$OS:$OS_REL PACKAGE_TYPE=deb
+  - OS_REL=buster OS=raspbian DOCKER_IMAGE=igagis/$OS:$OS_REL PACKAGE_TYPE=deb
 
 before_install:
 - if [ "$TRAVIS_OS_NAME" == "linux" ] && [ -z "$TRAVIS_JOB_NAME" ]; then
