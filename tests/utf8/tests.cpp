@@ -3,7 +3,7 @@
 #include "tests.hpp"
 
 #include "../../src/utki/debug.hpp"
-#include "../../src/utki/utf8.hpp"
+#include "../../src/utki/unicode.hpp"
 
 namespace TestSimple{
 
