@@ -18,7 +18,7 @@ public:
 	TestClass(int i) : a(i) {}
 	
 	std::shared_ptr<TestClass> getPtr(){
-		return utki::make_shared_from_this(*this);
+		return utki::make_shared_from(*this);
 	}
 };
 
@@ -42,7 +42,7 @@ void run(){
 		auto o = std::make_shared<TestClass>();
 		ASSERT_ALWAYS(o)
 
-		auto sft = utki::make_shared_from_this(*o);
+		auto sft = utki::make_shared_from(*o);
 		ASSERT_ALWAYS(sft)
 		ASSERT_ALWAYS(sft->a == 4)
 	}
@@ -52,7 +52,7 @@ void run(){
 		auto o = std::make_shared<TestClass>();
 		ASSERT_ALWAYS(o)
 
-		auto sft = utki::make_weak_from_this(*o);
+		auto sft = utki::make_weak_from(*o);
 		ASSERT_ALWAYS(sft.lock())
 		ASSERT_ALWAYS(sft.lock()->a == 4)
 	}
