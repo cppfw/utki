@@ -46,6 +46,16 @@ void run(){
 		ASSERT_ALWAYS(sft)
 		ASSERT_ALWAYS(sft->a == 4)
 	}
+
+	// test make_weak_from_this
+	{
+		auto o = std::make_shared<TestClass>();
+		ASSERT_ALWAYS(o)
+
+		auto sft = utki::make_weak_from_this(*o);
+		ASSERT_ALWAYS(sft.lock())
+		ASSERT_ALWAYS(sft.lock()->a == 4)
+	}
 }
 
 
