@@ -1,3 +1,9 @@
+libutki (1.1.100) unstable; urgency=medium
+
+  * add make_weak_from_this() function
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 09 Jul 2020 14:45:10 +0300
+
 libutki (1.1.99) unstable; urgency=medium
 
   * rename utf8.hpp -> unicode.hpp
