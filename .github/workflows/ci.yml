@@ -7,11 +7,14 @@ jobs:
     steps:
       - name: git clone
         uses: actions/checkout@main
-      - uses: myci-actions/add-deb-repo@master
+      - name: add igagis deb repo
+        uses: myci-actions/add-deb-repo@master
         with:
           repo: deb http://dl.bintray.com/igagis/debian buster main
           repo-name: igagis
           keys: 379CE192D401AB61
+      - name: list sources
+        run: ls /etc/apt/sources.list.d
       - name: install deps
         run: apt update && apt install --assume-yes prorab
       - name: make
