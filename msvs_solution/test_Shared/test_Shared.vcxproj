@@ -70,7 +70,7 @@
     <ProjectGuid>{5DBB2806-D987-4982-AF6F-EF5D4E4C1E9B}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>test_Shared</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='v140_Debug|Win32'" Label="Configuration">
