@@ -1,3 +1,9 @@
+libutki (1.1.102) unstable; urgency=medium
+
+  * msvs: update SDK version
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 17 Nov 2020 04:06:09 +0200
+
 libutki (1.1.101) unstable; urgency=medium
 
   * make_shared_from_this -> make_shared_from and same for
