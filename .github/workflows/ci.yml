@@ -7,7 +7,7 @@ jobs:
     steps:
       - name: git clone
         uses: actions/checkout@main
-      - uses: myci-actions/add-deb-repo
+      - uses: myci-actions/add-deb-repo@master
         with:
           repo: deb http://dl.bintray.com/igagis/debian buster main
           repo-name: igagis
