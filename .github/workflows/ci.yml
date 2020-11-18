@@ -13,8 +13,8 @@ jobs:
           repo: deb http://dl.bintray.com/igagis/debian buster main
           repo-name: igagis
           keys: 379CE192D401AB61
-      - name: install myci
-        run: apt install myci
+      - name: install ci tools
+        run: apt install --assume-yes devscripts equivs myci
       - name: prepare debian package
         run: myci-deb-prepare.sh
       - name: install deps
