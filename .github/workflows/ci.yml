@@ -8,11 +8,13 @@ jobs:
       - name: git clone
         uses: actions/checkout@main
       - name: add igagis deb repo
-        uses: myci-actions/add-deb-repo@master
+        uses: myci-actions/add-deb-repo@2
         with:
           repo: deb http://dl.bintray.com/igagis/debian buster main
           repo-name: igagis
           keys: 379CE192D401AB61
+      - name: install myci
+        run: apt install myci
       - name: list sources
         run: ls /etc/apt/sources.list.d
       - name: install deps
