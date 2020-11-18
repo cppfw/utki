@@ -15,10 +15,9 @@ jobs:
           keys: 379CE192D401AB61
       - name: install myci
         run: apt install myci
-      - name: list sources
-        run: ls /etc/apt/sources.list.d
+      - name: prepare debian package
+        run: myci-deb-prepare.sh
       - name: install deps
-        run: apt update && apt install --assume-yes prorab
-      - name: make
-        run: make autojobs=true
-  
+        run: myci-deb-install-build-deps.sh
+      - name: build package
+        run: autojobs=true dpkg-buildpackage -us -uc
