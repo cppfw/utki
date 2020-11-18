@@ -4,6 +4,7 @@ jobs:
   linux:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         include:
           - {os: debian, os_rel: buster, image_owner: , package_type: deb}
