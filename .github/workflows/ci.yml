@@ -1,9 +1,17 @@
 name: ci
 on: [push]
 jobs:
-  build:
+  linux:
     runs-on: ubuntu-latest
-    container: debian:buster
+    strategy:
+      matrix:
+        include:
+          - {os: debian, os_rel: buster, docker_image: ${{ matrix.os }}:${{ matrix.os_rel }}, package_type: deb}
+          - {os: debian, os_rel: buster, docker_image: i386/${{ matrix.os }}:${{ matrix.os_rel }}, package_type: deb}
+          - {os: ubuntu, os_rel: bionic, docker_image: ${{ matrix.os }}:${{ matrix.os_rel }}, package_type: deb}
+          - {os: ubuntu, os_rel: eoan, docker_image: ${{ matrix.os }}:${{ matrix.os_rel }}, package_type: deb}
+          - {os: raspbian, os_rel: buster, docker_image: igagis/${{ matrix.os }}:${{ matrix.os_rel }}, package_type: deb}
+    container: ${{ matrix.docker_image }}
     steps:
       - name: git clone
         uses: actions/checkout@main
