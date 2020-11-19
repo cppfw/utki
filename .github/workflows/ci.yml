@@ -28,5 +28,20 @@ jobs:
         run: myci-deb-prepare.sh
       - name: install deps
         run: myci-deb-install-build-deps.sh
-      - name: build package
+      - name: build
         run: autojobs=true dpkg-buildpackage -us -uc
+  macosx:
+    runs-on: macos-latest
+    steps:
+    - name: git clone
+      uses: actions/checkout@main
+    - name: add igagis tap
+      run: brew tap igagis/tap && brew update
+    - name: install ci tools
+      run: brew install myci
+    - name: install deps
+      run: myci-brew-install.sh `myci-list-deps-homebrew.sh`
+    - name: build
+      run: make autojobs=true
+    - name: test
+      run: make test autojobs=true
