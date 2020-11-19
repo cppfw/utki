@@ -65,7 +65,7 @@ jobs:
     - name: prepare pacman package
       run: $msys2 "myci-apply-version.sh -v \$(myci-deb-version.sh debian/changelog) msys2/PKGBUILD.in";
     - name: build
-      run: $msys2 "(cd msys2 && PKGEXT='.pkg.tar.xz' makepkg-mingw --syncdeps --noconfirm --skipinteg)"
+      run: $msys2 "(cd msys2 && PKGEXT='.pkg.tar.xz' autojobs=true makepkg-mingw --syncdeps --noconfirm --skipinteg)"
   win-msvs:
     runs-on: windows-latest
     steps:
