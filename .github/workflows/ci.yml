@@ -71,3 +71,15 @@ jobs:
     steps:
     - name: git clone
       uses: actions/checkout@main
+    - name: install CoAPP tools
+      run: |
+        (new-object net.webclient).DownloadFile('http://coapp.org/files/CoApp.Tools.Powershell.msi', 'C:\CoApp.Tools.Powershell.msi')
+        Start-Process -FilePath msiexec -ArgumentList /i, 'C:\CoApp.Tools.Powershell.msi', /quiet -Wait
+        $env:PSModulePath = $env:PSModulePath + ';C:\Program Files (x86)\Outercurve Foundation\Modules'
+        Import-Module CoApp
+    - name: nuget update
+      run: |
+        nuget restore msvs_solution/msvs_solution.sln
+        nuget update msvs_solution/msvs_solution.sln
+    - name: build
+      run: .\nuget\build_nuget.ps1
