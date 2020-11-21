@@ -75,15 +75,9 @@ jobs:
       run: (new-object net.webclient).DownloadFile('http://coapp.org/files/CoApp.Tools.Powershell.msi', 'C:\CoApp.Tools.Powershell.msi')
     - name: install CoAPP tools
       run: Start-Process -FilePath msiexec -ArgumentList /i, 'C:\CoApp.Tools.Powershell.msi', /quiet -Wait
-    - name: stuff
-      shell: cmd
-      run: |
-        dir %windir%\Microsoft.NET\Framework64\
-        %windir%\Microsoft.NET\Framework64\v4.0.30319\aspnet_regiis.exe /iru
     - name: import CoAPP module
       run: |
         $env:PSModulePath = $env:PSModulePath + ';C:\Program Files (x86)\Outercurve Foundation\Modules'
-        Write-Output $env:PSModulePath
         Import-Module CoApp
     - name: nuget update
       run: |
