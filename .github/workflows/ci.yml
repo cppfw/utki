@@ -78,7 +78,9 @@ jobs:
     - name: add CoAPP tools path to module search paths
       run: $env:PSModulePath = $env:PSModulePath + ';C:\Program Files (x86)\Outercurve Foundation\Modules'
     - name: import CoAPP module
-      run: Import-Module CoApp
+      run: |
+        Write-Output $env:PSModulePath &&
+        Import-Module CoApp
     - name: nuget update
       run: |
         nuget restore msvs_solution/msvs_solution.sln
