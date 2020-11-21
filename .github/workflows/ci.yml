@@ -79,7 +79,7 @@ jobs:
       run: |
         $env:PSModulePath = $env:PSModulePath + ';C:\Program Files (x86)\Outercurve Foundation\Modules'
         Write-Output $env:PSModulePath
-        aspnet_regiis.exe /iru
+        %windir%\Microsoft.NET\Framework64\v4.0.30319\aspnet_regiis.exe /iru
         Import-Module CoApp
     - name: nuget update
       run: |
