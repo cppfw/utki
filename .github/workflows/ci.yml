@@ -45,7 +45,7 @@ jobs:
       run: make autojobs=true
     - name: test
       run: make test autojobs=true
-  win-msys2:
+  windows-msys2:
     runs-on: windows-latest
     defaults:
       run:
@@ -66,7 +66,7 @@ jobs:
       run: $msys2 "myci-apply-version.sh -v \$(myci-deb-version.sh debian/changelog) msys2/PKGBUILD.in";
     - name: build
       run: $msys2 "(cd msys2 && PKGEXT='.pkg.tar.xz' autojobs=true makepkg-mingw --syncdeps --noconfirm --skipinteg)"
-  win-msvs:
+  windows-msvs:
     runs-on: windows-latest
     steps:
     - name: git clone
@@ -75,7 +75,7 @@ jobs:
       run: |
         (new-object net.webclient).DownloadFile('http://coapp.org/files/CoApp.Tools.Powershell.msi', 'C:\CoApp.Tools.Powershell.msi') &&
         Start-Process -FilePath msiexec -ArgumentList /i, 'C:\CoApp.Tools.Powershell.msi', /quiet -Wait &&
-        $env:PSModulePath = $env:PSModulePath + ';C:\Program Files (x86)\Outercurve Foundation\Modules' &&
+        ($env:PSModulePath = $env:PSModulePath + ';C:\Program Files (x86)\Outercurve Foundation\Modules') &&
         Import-Module CoApp
     - name: nuget update
       run: |
