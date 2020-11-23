@@ -79,7 +79,7 @@ jobs:
     - name: install CoAPP tools
       run: Start-Process -FilePath msiexec -ArgumentList /i, 'C:\CoApp.Tools.Powershell.msi', /quiet -Wait
     - name: add CoAPP path to module lookup paths
-      uses: myci-actions/append-to-path@master
+      uses: myci-actions/append-to-path-powershell@master
       with:
         path: C:\Program Files (x86)\Outercurve Foundation\Modules
         env-var: PSModulePath
