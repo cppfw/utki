@@ -4,7 +4,7 @@ env:
   PACKAGE_NAME: utki
   MYCI_BINTRAY_API_KEY: ${{ secrets.MYCI_BINTRAY_API_KEY }}
   MYCI_GIT_USERNAME: igagis
-  MYCI_GIT_ACCESS_TOKEN: d${{ secrets.MYCI_GIT_ACCESS_TOKEN }}f
+  MYCI_GIT_ACCESS_TOKEN: ${{ secrets.MYCI_GIT_ACCESS_TOKEN }}
 jobs:
 ##### linux #####
   linux:
