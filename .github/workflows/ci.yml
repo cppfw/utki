@@ -88,4 +88,4 @@ jobs:
       uses: myci-actions/publish-nuget@master
       with:
         filename: \*.nupkg
-        api-key: bla bla
+        api-key: ${{ secrets.NUGET_DOT_ORG_API_KEY }}
