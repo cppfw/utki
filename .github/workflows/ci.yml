@@ -87,5 +87,5 @@ jobs:
     - name: deploy
       uses: myci-actions/publish-nuget@master
       with:
-        filename: *.nupkg
+        filename: \*.nupkg
         api-key: bla bla
