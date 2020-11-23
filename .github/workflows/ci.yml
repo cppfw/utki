@@ -68,6 +68,9 @@ jobs:
       run: $msys2 "(cd msys2 && PKGEXT='.pkg.tar.xz' autojobs=true makepkg-mingw --syncdeps --noconfirm --skipinteg)"
   windows-msvs:
     runs-on: windows-latest
+    defaults:
+      run:
+        shell: powershell
     steps:
     - name: git clone
       uses: actions/checkout@main
