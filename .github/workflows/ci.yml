@@ -74,17 +74,8 @@ jobs:
     steps:
     - name: git clone
       uses: actions/checkout@main
-    - name: download CoAPP tools installer
-      run: (new-object net.webclient).DownloadFile('http://coapp.org/files/CoApp.Tools.Powershell.msi', 'C:\CoApp.Tools.Powershell.msi')
     - name: install CoAPP tools
-      run: Start-Process -FilePath msiexec -ArgumentList /i, 'C:\CoApp.Tools.Powershell.msi', /quiet -Wait
-    - name: add CoAPP path to module lookup paths
-      uses: myci-actions/append-to-path-windows@master
-      with:
-        path: C:\Program Files (x86)\Outercurve Foundation\Modules
-        env-var: PSModulePath
-    - name: import CoAPP module
-      run: Import-Module CoApp
+      uses: myci-actions/install-coapp-tools@master
     - name: nuget update
       run: |
         nuget restore msvs_solution/msvs_solution.sln
