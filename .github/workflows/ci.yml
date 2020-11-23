@@ -78,10 +78,10 @@ jobs:
       run: (new-object net.webclient).DownloadFile('http://coapp.org/files/CoApp.Tools.Powershell.msi', 'C:\CoApp.Tools.Powershell.msi')
     - name: install CoAPP tools
       run: Start-Process -FilePath msiexec -ArgumentList /i, 'C:\CoApp.Tools.Powershell.msi', /quiet -Wait
+    - name: add CoAPP path to module lookup paths
+      run: echo "PSModulePath=$(env:PSModulePath);C:\Program Files (x86)\Outercurve Foundation\Modules" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
     - name: import CoAPP module
-      run: |
-        $env:PSModulePath = $env:PSModulePath + ';C:\Program Files (x86)\Outercurve Foundation\Modules'
-        Import-Module CoApp
+      run: Import-Module CoApp
     - name: nuget update
       run: |
         nuget restore msvs_solution/msvs_solution.sln
@@ -89,6 +89,4 @@ jobs:
     - name: add msbuild to PATH
       uses: microsoft/setup-msbuild@v1.0.2
     - name: build
-      run: |
-        $env:PSModulePath = $env:PSModulePath + ';C:\Program Files (x86)\Outercurve Foundation\Modules'
-        .\nuget\build_nuget.ps1
+      run: .\nuget\build_nuget.ps1
