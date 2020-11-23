@@ -26,7 +26,7 @@ nuget{
 
 		description: @"C++ utility library. Stuff missing from std:: namespace";
 		releaseNotes: "initial release";
-		copyright: Copyright 2015 Ivan Gagis;
+		copyright: Copyright 2020 Ivan Gagis;
 		tags: {native};
 	}
 	dependencies {
@@ -69,8 +69,6 @@ nuget{
 		[x64,v141,debug] {
 			lib: ..\msvs_solution\x64\v141_Debug\libutki.lib;
 		}
-
-		//==== v142 tools ====
 
 		//==== v142 tools ====
 
