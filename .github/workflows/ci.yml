@@ -2,6 +2,8 @@ name: ci
 on: [push, pull_request]
 env:
   MYCI_BINTRAY_API_KEY: ${{ secrets.MYCI_BINTRAY_API_KEY }}
+  MYCI_GIT_USERNAME: igagis
+  MYCI_GIT_ACCESS_TOKEN: ${{ secrets.MYCI_GIT_ACCESS_TOKEN }}
 jobs:
 ##### linux #####
   linux:
@@ -54,6 +56,8 @@ jobs:
       run: make autojobs=true
     - name: test
       run: make test autojobs=true
+    - name: deploy
+      run: myci-deploy-homebrew.sh -t $MYCI_GIT_USERNAME/tap
 ##### msys2 #####
   windows-msys2:
     runs-on: windows-latest
