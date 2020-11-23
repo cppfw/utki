@@ -79,7 +79,7 @@ jobs:
     - name: install CoAPP tools
       run: Start-Process -FilePath msiexec -ArgumentList /i, 'C:\CoApp.Tools.Powershell.msi', /quiet -Wait
     - name: add CoAPP path to module lookup paths
-      run: echo "PSModulePath=$(env:PSModulePath);C:\Program Files (x86)\Outercurve Foundation\Modules" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+      run: echo "PSModulePath=$env:PSModulePath;C:\Program Files (x86)\Outercurve Foundation\Modules" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
     - name: import CoAPP module
       run: Import-Module CoApp
     - name: nuget update
