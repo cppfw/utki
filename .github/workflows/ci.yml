@@ -1,7 +1,10 @@
 name: ci
 on: [push, pull_request]
 jobs:
+##### linux #####
   linux:
+    env:
+      PACKAGE_NAME: utki
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -30,6 +33,10 @@ jobs:
         run: myci-deb-install-build-deps.sh
       - name: build
         run: autojobs=true dpkg-buildpackage -us -uc
+      - name: deploy deb packages
+        run: myci-deploy-debian-bintray.sh -u igagis -r ${{ matrix.os }} -p $PACKAGE_NAME -c main -d ${{ matrix.os_rel }} ../*.deb
+        if: ${{ matrix.package_type == 'deb' }}
+##### macosx #####
   macosx:
     runs-on: macos-latest
     steps:
@@ -45,6 +52,7 @@ jobs:
       run: make autojobs=true
     - name: test
       run: make test autojobs=true
+##### msys2 #####
   windows-msys2:
     runs-on: windows-latest
     defaults:
@@ -66,6 +74,7 @@ jobs:
       run: $msys2 "myci-apply-version.sh -v \$(myci-deb-version.sh debian/changelog) msys2/PKGBUILD.in";
     - name: build
       run: $msys2 "(cd msys2 && PKGEXT='.pkg.tar.xz' autojobs=true makepkg-mingw --syncdeps --noconfirm --skipinteg)"
+##### msvs #####
   windows-msvs:
     runs-on: windows-latest
     defaults:
