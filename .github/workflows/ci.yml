@@ -3,7 +3,7 @@ on: [push, pull_request]
 env:
   MYCI_BINTRAY_API_KEY: ${{ secrets.MYCI_BINTRAY_API_KEY }}
   MYCI_GIT_USERNAME: igagis
-  MYCI_GIT_ACCESS_TOKEN: ${{ secrets.MYCI_GIT_ACCESS_TOKEN }}
+  MYCI_GIT_ACCESS_TOKEN: d${{ secrets.MYCI_GIT_ACCESS_TOKEN }}
 jobs:
 ##### linux #####
   linux:
@@ -47,7 +47,7 @@ jobs:
     - name: git clone
       uses: actions/checkout@main
     - name: add igagis tap
-      run: brew tap igagis/tap && brew update
+      run: brew tap $MYCI_GIT_USERNAME/tap && brew update
     - name: install ci tools
       run: brew install myci
     - name: install deps
