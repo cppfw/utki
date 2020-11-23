@@ -37,7 +37,7 @@ jobs:
         run: autojobs=true dpkg-buildpackage -us -uc
       - name: deploy deb packages
         run: myci-deploy-debian-bintray.sh -u igagis -r ${{ matrix.os }} -p $PACKAGE_NAME -c main -d ${{ matrix.os_rel }} ../*.deb
-        if: ${{ matrix.package_type == 'deb' }}
+        if: matrix.package_type == 'deb' && startsWith(github.ref, 'refs/tags/')
 ##### macosx #####
   macosx:
     runs-on: macos-latest
