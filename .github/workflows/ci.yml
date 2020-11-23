@@ -86,5 +86,7 @@ jobs:
       run: |
         nuget restore msvs_solution/msvs_solution.sln
         nuget update msvs_solution/msvs_solution.sln
+    - name: add msbuild to PATH
+      uses: microsoft/setup-msbuild@v1.0.2
     - name: build
       run: .\nuget\build_nuget.ps1
