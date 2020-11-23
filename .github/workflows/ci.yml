@@ -89,4 +89,6 @@ jobs:
     - name: add msbuild to PATH
       uses: microsoft/setup-msbuild@v1.0.2
     - name: build
-      run: .\nuget\build_nuget.ps1
+      run: |
+        $env:PSModulePath = $env:PSModulePath + ';C:\Program Files (x86)\Outercurve Foundation\Modules'
+        .\nuget\build_nuget.ps1
