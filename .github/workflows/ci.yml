@@ -1,5 +1,7 @@
 name: ci
 on: [push, pull_request]
+env:
+  MYCI_BINTRAY_API_KEY: ${{ secrets.MYCI_BINTRAY_API_KEY }}
 jobs:
 ##### linux #####
   linux:
