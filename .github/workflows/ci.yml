@@ -46,7 +46,7 @@ jobs:
     - name: git clone
       uses: actions/checkout@main
     - name: add igagis tap
-      run: brew tap $MYCI_GIT_USERNAME/tap && brew update
+      run: brew tap igagis/tap && brew update
     - name: install ci tools
       run: brew install myci
     - name: install deps
@@ -56,7 +56,36 @@ jobs:
     - name: test
       run: make test autojobs=true
     - name: deploy
-      run: myci-deploy-homebrew.sh -t $MYCI_GIT_USERNAME/tap
+      run: myci-deploy-homebrew.sh -t igagis/tap
+      # if: startsWith(github.ref, 'refs/tags/')
+##### ios #####
+  ios:
+    runs-on: macos-latest
+    steps:
+    - name: add igagis tap
+      run: brew tap igagis/tap && brew update
+    - name: install ci tools
+      run: brew install myci
+    - name: git clone
+      uses: actions/checkout@main
+    - name: set PACKAGE_VERSION
+      run: PACKAGE_VERSION=$(myci-deb-version.sh debian/changelog); # TODO
+    - name: add cocoapods repo
+      run: pod repo add --silent igagis https://$MYCI_GIT_USERNAME:$MYCI_GIT_ACCESS_TOKEN@github.com/igagis/cocoapods-repo.git
+    - name: install deps
+      run: pod install --project-directory=xcode
+    - name: add sources to xcode project
+      run: |
+        curl -L https://github.com/zackslash/Xcode-Proj-Adder/raw/master/bin/XcodeProjAdder -O
+        chmod +x XcodeProjAdder
+        (cd xcode/$PACKAGE_NAME && ../../XcodeProjAdder -XCP $PACKAGE_NAME.xcodeproj -SCSV `echo $(find ../../src -type f -name *.cpp) | sed -E -e 's/ /,/g'`)
+    - name: build
+      run: xcodebuild -workspace xcode/$PACKAGE_NAME.xcworkspace -scheme $PACKAGE_NAME CONFIGURATION_BUILD_DIR=../build -configuration Release
+    - name: create package
+      run: myci-create-zip-package.sh -h src -f xcode/build/lib$PACKAGE_NAME.a///lib/ios -f LICENSE $PACKAGE_NAME-$PACKAGE_VERSION.zip
+    - name: deploy
+      run: myci-deploy-cocoapods.sh -r igagis -v $PACKAGE_VERSION -u igagis -b cocoapods -p $PACKAGE_NAME-$PACKAGE_VERSION.zip cocoapods/$PACKAGE_NAME.podspec.in
+      # if: startsWith(github.ref, 'refs/tags/')
 ##### msys2 #####
   windows-msys2:
     runs-on: windows-latest
@@ -79,6 +108,9 @@ jobs:
       run: $msys2 "myci-apply-version.sh -v \$(myci-deb-version.sh debian/changelog) msys2/PKGBUILD.in";
     - name: build
       run: $msys2 "(cd msys2 && PKGEXT='.pkg.tar.xz' autojobs=true makepkg-mingw --syncdeps --noconfirm --skipinteg)"
+    # - name: deploy
+    #   run: TODO:
+    #   if: startsWith(github.ref, 'refs/tags/')
 ##### msvs #####
   windows-msvs:
     runs-on: windows-latest
