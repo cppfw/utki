@@ -1,7 +1,7 @@
 name: ci
 on: [push, pull_request]
 env:
-  PACKAGE_NAME: utki
+  PACKAGE_NAME: ${{ github.event.repository.name }}
   MYCI_BINTRAY_API_KEY: ${{ secrets.MYCI_BINTRAY_API_KEY }}
   MYCI_GIT_USERNAME: igagis
   MYCI_GIT_ACCESS_TOKEN: ${{ secrets.MYCI_GIT_ACCESS_TOKEN }}
