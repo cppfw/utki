@@ -4,8 +4,6 @@ env:
   PACKAGE_NAME: ${{ github.event.repository.name }}
   MYCI_BINTRAY_API_KEY: ${{ secrets.MYCI_BINTRAY_API_KEY }}
   MYCI_GIT_USERNAME: igagis
-  # MYCI_GIT_ACCESS_TOKEN: ${{ secrets.MYCI_GIT_ACCESS_TOKEN }}
-  GIT_ASKPASS: myci-git-askpass.sh
   MYCI_GIT_PASSWORD: ${{ secrets.MYCI_GIT_ACCESS_TOKEN }}
 jobs:
 ##### linux #####
