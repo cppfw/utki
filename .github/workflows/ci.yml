@@ -89,6 +89,30 @@ jobs:
     - name: deploy
       run: myci-deploy-cocoapods.sh -r igagis -v $PACKAGE_VERSION -u igagis -b cocoapods -p $PACKAGE_NAME-$PACKAGE_VERSION.zip cocoapods/$PACKAGE_NAME.podspec.in
       if: startsWith(github.ref, 'refs/tags/')
+##### android #####
+  android:
+    runs-on: ubuntu-latest
+    steps:
+    - name: git clone
+      uses: actions/checkout@main
+    - name: add igagis deb repo
+      uses: myci-actions/add-deb-repo@2
+      with:
+        repo: deb http://dl.bintray.com/igagis/ubuntu eoan main
+        repo-name: igagis
+        keys: 379CE192D401AB61
+    - name: install ci tools
+      run: apt install --assume-yes myci
+    - name: set PACKAGE_VERSION
+      uses: myci-actions/export-env-var@master
+      with:
+        name: PACKAGE_VERSION
+        value: $(myci-deb-version.sh debian/changelog)
+    - name: build
+      run: |
+        (cd android && ./gradlew copy_aar --warning-mode all)
+        myci-apply-version.sh -v $PACKAGE_VERSION android/*.pom.in
+        myci-apply-version.sh -v $PACKAGE_VERSION android/*.aar.in --filename-only
 ##### msys2 #####
   windows-msys2:
     runs-on: windows-latest
