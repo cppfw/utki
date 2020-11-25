@@ -69,7 +69,10 @@ jobs:
     - name: git clone
       uses: actions/checkout@main
     - name: set PACKAGE_VERSION
-      run: PACKAGE_VERSION=$(myci-deb-version.sh debian/changelog); # TODO
+      uses: myci-actions/export-env-var@master
+      with:
+        name: PACKAGE_VERSION
+        value: $(myci-deb-version.sh debian/changelog)
     - name: add cocoapods repo
       run: pod repo add --silent igagis https://${MYCI_GIT_USERNAME}:${MYCI_GIT_ACCESS_TOKEN}@github.com/igagis/cocoapods-repo.git
     - name: install deps
