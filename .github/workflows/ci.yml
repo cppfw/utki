@@ -70,9 +70,7 @@ jobs:
       uses: actions/checkout@main
     - name: set PACKAGE_VERSION
       uses: myci-actions/export-env-var@master
-      with:
-        name: PACKAGE_VERSION
-        value: $(myci-deb-version.sh debian/changelog)
+      with: {name: PACKAGE_VERSION, value: $(myci-deb-version.sh debian/changelog)}
     - name: add cocoapods repo
       run: pod repo add --silent igagis https://$MYCI_GIT_USERNAME@github.com/igagis/cocoapods-repo.git
     - name: install deps
@@ -106,9 +104,7 @@ jobs:
       run: apt install --assume-yes myci
     - name: set PACKAGE_VERSION
       uses: myci-actions/export-env-var@master
-      with:
-        name: PACKAGE_VERSION
-        value: $(myci-deb-version.sh debian/changelog)
+      with: {name: PACKAGE_VERSION, value: $(myci-deb-version.sh debian/changelog)}
     - name: build
       run: |
         (cd android && ./gradlew copy_aar --warning-mode all)
