@@ -99,7 +99,7 @@ jobs:
     - name: add igagis deb repo
       uses: myci-actions/add-deb-repo@master
       with:
-        repo: deb http://dl.bintray.com/igagis/$(lsb_release --id --short) $(lsb_release --codename --short) main
+        repo: deb http://dl.bintray.com/igagis/$(lsb_release --id --short | tr '[:upper:]' '[:lower:]') $(lsb_release --codename --short) main
         repo-name: igagis
         keys: 379CE192D401AB61
     - name: install ci tools
