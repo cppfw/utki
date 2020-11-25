@@ -57,7 +57,7 @@ jobs:
       run: make test autojobs=true
     - name: deploy
       run: myci-deploy-homebrew.sh -t igagis/tap
-      # if: startsWith(github.ref, 'refs/tags/')
+      if: startsWith(github.ref, 'refs/tags/')
 ##### ios #####
   ios:
     runs-on: macos-latest
@@ -88,7 +88,7 @@ jobs:
       run: myci-create-zip-package.sh -h src -f xcode/build/lib$PACKAGE_NAME.a///lib/ios -f LICENSE $PACKAGE_NAME-$PACKAGE_VERSION.zip
     - name: deploy
       run: myci-deploy-cocoapods.sh -r igagis -v $PACKAGE_VERSION -u igagis -b cocoapods -p $PACKAGE_NAME-$PACKAGE_VERSION.zip cocoapods/$PACKAGE_NAME.podspec.in
-      # if: startsWith(github.ref, 'refs/tags/')
+      if: startsWith(github.ref, 'refs/tags/')
 ##### msys2 #####
   windows-msys2:
     runs-on: windows-latest
