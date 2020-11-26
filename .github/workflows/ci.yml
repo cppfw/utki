@@ -132,13 +132,13 @@ jobs:
     #     echo -e "[igagis_mingw32]\nSigLevel = Optional TrustAll\nServer = https://dl.bintray.com/igagis/msys2/mingw32" >> /etc/pacman.conf
     - name: add igagis pacman msys repo
       uses: myci-actions/add-pacman-repo@master
-      with: {name: igagis_msys, url: https://dl.bintray.com/igagis/msys2/msys}
+      with: {name: igagis_msys, url: 'https://dl.bintray.com/igagis/msys2/msys'}
     - name: add igagis pacman mingw64 repo
       uses: myci-actions/add-pacman-repo@master
-      with: {name: igagis_msys, url: https://dl.bintray.com/igagis/msys2/mingw64}
+      with: {name: igagis_msys, url: 'https://dl.bintray.com/igagis/msys2/mingw64'}
     - name: add igagis pacman mingw32 repo
       uses: myci-actions/add-pacman-repo@master
-      with: {name: igagis_msys, url: https://dl.bintray.com/igagis/msys2/mingw32}
+      with: {name: igagis_msys, url: 'https://dl.bintray.com/igagis/msys2/mingw32'}
     - name: install ci tools
       run: pacman -Sy --noconfirm myci msys2-devel mingw-w64-x86_64-toolchain mingw-w64-i686-toolchain
     - name: prepare pacman package
