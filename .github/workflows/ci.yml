@@ -119,41 +119,37 @@ jobs:
     defaults:
       run:
         shell: bash
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # TODO: remove 'repo'
+          - {arch: i686, repo: mingw32}
+          - {arch: x86_64, repo: mingw64}
     steps:
     - name: switch git-bash shell to msys2 shell by adding msys2 path to PATH front
       run: echo "C:\msys64\usr\bin" >> $GITHUB_PATH
       shell: bash
     - name: git clone
       uses: actions/checkout@main
-    # - name: add igagis pacman repo
-    #   run: |
-    #     echo -e "[igagis_msys]\nSigLevel = Optional TrustAll\nServer = https://dl.bintray.com/igagis/msys2/msys" >> /etc/pacman.conf
-    #     echo -e "[igagis_mingw64]\nSigLevel = Optional TrustAll\nServer = https://dl.bintray.com/igagis/msys2/mingw64" >> /etc/pacman.conf
-    #     echo -e "[igagis_mingw32]\nSigLevel = Optional TrustAll\nServer = https://dl.bintray.com/igagis/msys2/mingw32" >> /etc/pacman.conf
     - name: add igagis pacman msys repo
       uses: myci-actions/add-pacman-repo@master
       with: {name: igagis_msys, url: 'https://dl.bintray.com/igagis/msys2/msys'}
-    - name: add igagis pacman mingw64 repo
+    - name: add igagis pacman ${{ matrix.repo }} repo
       uses: myci-actions/add-pacman-repo@master
-      with: {name: igagis_msys, url: 'https://dl.bintray.com/igagis/msys2/mingw64'}
-    - name: add igagis pacman mingw32 repo
-      uses: myci-actions/add-pacman-repo@master
-      with: {name: igagis_msys, url: 'https://dl.bintray.com/igagis/msys2/mingw32'}
+      with: {name: 'igagis_${{ matrix.repo }}', url: 'https://dl.bintray.com/igagis/msys2/${{ matrix.repo }}'}
     - name: install ci tools
-      run: pacman -Sy --noconfirm myci msys2-devel mingw-w64-x86_64-toolchain mingw-w64-i686-toolchain
+      run: pacman -Sy --noconfirm myci msys2-devel mingw-w64-${{ matrix.arch }}-toolchain
     - name: prepare pacman package
       run: myci-apply-version.sh -v $(myci-deb-version.sh debian/changelog) msys2/PKGBUILD.in
     - name: build
       run: (cd msys2 && PKGEXT='.pkg.tar.xz' autojobs=true makepkg-mingw --syncdeps --noconfirm --skipinteg)
     - name: deploy
       run: |
-        for f in $(find msys2 -name "mingw-w64-x86_64-$PACKAGE_NAME-*-any.pkg.*"); do
-          myci-deploy-pacman-bintray.sh -u igagis -r msys2 -p mingw64 -d igagis_mingw64 $f
+        for f in $(find msys2 -name "mingw-w64-${{ matrix.arch }}-$PACKAGE_NAME-*-any.pkg.*"); do
+          myci-deploy-pacman-bintray.sh -u igagis -r msys2 -p ${{ matrix.repo }} -d igagis_${{ matrix.repo }} $f
         done
-        for f in $(find msys2 -name "mingw-w64-i686-$PACKAGE_NAME-*-any.pkg.*"); do
-          myci-deploy-pacman-bintray.sh -u igagis -r msys2 -p mingw32 -d igagis_mingw32 $f
-        done
-      if: startsWith(github.ref, 'refs/tags/')
+      # if: startsWith(github.ref, 'refs/tags/')
 ##### msvs #####
   msvs:
     runs-on: windows-latest
