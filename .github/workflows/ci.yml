@@ -123,7 +123,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          # TODO: remove 'repo'
           - {arch: i686, repo: mingw32}
           - {arch: x86_64, repo: mingw64}
     steps:
@@ -143,13 +142,15 @@ jobs:
     - name: prepare pacman package
       run: myci-apply-version.sh -v $(myci-deb-version.sh debian/changelog) msys2/PKGBUILD.in
     - name: build
+      # to make makepkg-mingw build only one architecture we need to set the MINGW_INSTALLS
+      env: {MINGW_INSTALLS: '${{ matrix.repo }}'}
       run: (cd msys2 && PKGEXT='.pkg.tar.xz' autojobs=true makepkg-mingw --syncdeps --noconfirm --skipinteg)
     - name: deploy
       run: |
         for f in $(find msys2 -name "mingw-w64-${{ matrix.arch }}-$PACKAGE_NAME-*-any.pkg.*"); do
           myci-deploy-pacman-bintray.sh -u igagis -r msys2 -p ${{ matrix.repo }} -d igagis_${{ matrix.repo }} $f
         done
-      # if: startsWith(github.ref, 'refs/tags/')
+      if: startsWith(github.ref, 'refs/tags/')
 ##### msvs #####
   msvs:
     runs-on: windows-latest
