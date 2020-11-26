@@ -118,7 +118,7 @@ jobs:
     runs-on: windows-latest
     defaults:
       run:
-        shell: c:\msys64\msys2_shell.cmd -defterm -no-start -msys -here -c "{0}"
+        shell: c:\msys64\msys2_shell.cmd -defterm -no-start -msys -here -c {0}
     # env:
     #   msys2: c:\msys64\msys2_shell.cmd -defterm -no-start -msys -here -c
     steps:
