@@ -122,19 +122,19 @@ jobs:
     # env:
     #   msys2: c:\msys64\msys2_shell.cmd -defterm -no-start -msys -here -c
     steps:
-    - name: add msys2 shell path to PATH front to make it default bash shell
-      uses: myci-actions/export-env-var-powershell@master
-      with:
-        name: PATH
-        value: C:\msys64\usr\bin;$env:PATH
+    # - name: add msys2 shell path to PATH front to make it default bash shell
+    #   uses: myci-actions/export-env-var-powershell@master
+    #   with:
+    #     name: PATH
+    #     value: C:\msys64\usr\bin;$env:PATH
     # - shell: cmd
     #   run:   |
     #     echo ::add-path::C:\msys64\usr\bin
     #     dir C:\msys64\usr\bin
+    - run: echo "C:\msys64\usr\bin" >> $GITHUB_PATH
     - name: git clone
       uses: actions/checkout@main
     - name: add igagis pacman repo
-      shell: bash
       run: |
         echo -e '[igagis_msys]\\nSigLevel = Optional TrustAll\\nServer = https://dl.bintray.com/igagis/msys2/msys' >> /etc/pacman.conf
         echo -e '[igagis_mingw64]\\nSigLevel = Optional TrustAll\\nServer = https://dl.bintray.com/igagis/msys2/mingw64' >> /etc/pacman.conf
