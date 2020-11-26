@@ -122,11 +122,15 @@ jobs:
     # env:
     #   msys2: c:\msys64\msys2_shell.cmd -defterm -no-start -msys -here -c
     steps:
-    - name: add apth to msys2 shell to make it default bash shell
-      uses: myci-actions/export-env-var@master
-      with:
-        name: PATH
-        value: C:\msys64\usr\bin;$PATH
+    # - name: add msys2 shell path to PATH front to make it default bash shell
+    #   uses: myci-actions/export-env-var@master
+    #   with:
+    #     name: PATH
+    #     value: C:\msys64\usr\bin;$PATH
+    - shell: cmd
+      run:   |
+        echo ::add-path::C:\msys64\usr\bin
+        dir C:\msys64\usr\bin
     - name: git clone
       uses: actions/checkout@main
     - name: add igagis pacman repo
