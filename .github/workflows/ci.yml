@@ -118,10 +118,15 @@ jobs:
     runs-on: windows-latest
     defaults:
       run:
-        shell: c:\msys64\msys2_shell.cmd -defterm -no-start -msys -here -c {0}
+        shell: bash
     # env:
     #   msys2: c:\msys64\msys2_shell.cmd -defterm -no-start -msys -here -c
     steps:
+    - name: add apth to msys2 shell to make it default bash shell
+      uses: myci-actions/export-env-var@master
+      with:
+        name: PATH
+        value: C:\msys64\usr\bin;$PATH
     - name: git clone
       uses: actions/checkout@main
     - name: add igagis pacman repo
