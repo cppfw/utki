@@ -134,6 +134,7 @@ jobs:
     - name: git clone
       uses: actions/checkout@main
     - name: add igagis pacman repo
+      shell: bash
       run: |
         echo -e '[igagis_msys]\\nSigLevel = Optional TrustAll\\nServer = https://dl.bintray.com/igagis/msys2/msys' >> /etc/pacman.conf
         echo -e '[igagis_mingw64]\\nSigLevel = Optional TrustAll\\nServer = https://dl.bintray.com/igagis/msys2/mingw64' >> /etc/pacman.conf
