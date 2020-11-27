@@ -8,7 +8,7 @@ env:
 jobs:
 ##### linux #####
   linux:
-    runs-on: ubuntu-latest
+    runs-on: [Linux] # ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
