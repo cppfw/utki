@@ -8,7 +8,7 @@ env:
 jobs:
 ##### linux #####
   linux:
-    runs-on: [self-hosted,Linux,X64,docker]
+    runs-on: [self-hosted]
     strategy:
       fail-fast: false
       matrix:
