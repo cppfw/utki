@@ -14,10 +14,10 @@ jobs:
       matrix:
         include:
           - {os: debian, os_rel: buster, image_owner: , package_type: deb}
-          - {os: debian, os_rel: buster, image_owner: i386/, package_type: deb}
+          # - {os: debian, os_rel: buster, image_owner: i386/, package_type: deb}
           - {os: ubuntu, os_rel: bionic, image_owner: , package_type: deb}
           - {os: ubuntu, os_rel: eoan, image_owner: , package_type: deb}
-          - {os: raspbian, os_rel: buster, image_owner: igagis/, package_type: deb}
+          # - {os: raspbian, os_rel: buster, image_owner: igagis/, package_type: deb}
     container: ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.os_rel }}
     steps:
       - name: git clone
