@@ -36,7 +36,7 @@ jobs:
       - name: install deps
         run: myci-deb-install-build-deps.sh
       - name: build
-        run: autojobs=true dpkg-buildpackage -us -uc
+        run: autojobs=true dpkg-buildpackage --unsigned-source --unsigned-changes
       - name: deploy deb packages
         run: myci-deploy-debian-bintray.sh -u igagis -r ${{ matrix.os }} -p $PACKAGE_NAME -c main -d ${{ matrix.codename }} ../*.deb
         if: matrix.package_type == 'deb' && startsWith(github.ref, 'refs/tags/')
