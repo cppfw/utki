@@ -13,19 +13,20 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - {os: debian, os_rel: buster, image_owner: , package_type: deb}
-          # - {os: debian, os_rel: buster, image_owner: i386/, package_type: deb}
-          - {os: ubuntu, os_rel: bionic, image_owner: , package_type: deb}
-          - {os: ubuntu, os_rel: eoan, image_owner: , package_type: deb}
-          # - {os: raspbian, os_rel: buster, image_owner: igagis/, package_type: deb}
-    container: ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.os_rel }}
+          - {os: debian, codename: buster, image_owner: , package_type: deb}
+          # - {os: debian, codename: buster, image_owner: i386/, package_type: deb}
+          - {os: ubuntu, codename: bionic, image_owner: , package_type: deb}
+          - {os: ubuntu, codename: eoan, image_owner: , package_type: deb}
+          # - {os: raspbian, codename: buster, image_owner: igagis/, package_type: deb}
+    container: ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }}
+    name: linux - ${{ matrix.os }}:${{ matrix.codename }}
     steps:
       - name: git clone
         uses: actions/checkout@main
       - name: add igagis deb repo
         uses: myci-actions/add-deb-repo@master
         with:
-          repo: deb http://dl.bintray.com/igagis/${{ matrix.os }} ${{ matrix.os_rel }} main
+          repo: deb http://dl.bintray.com/igagis/${{ matrix.os }} ${{ matrix.codename }} main
           repo-name: igagis
           keys: 379CE192D401AB61
       - name: install ci tools
@@ -37,7 +38,7 @@ jobs:
       - name: build
         run: autojobs=true dpkg-buildpackage -us -uc
       - name: deploy deb packages
-        run: myci-deploy-debian-bintray.sh -u igagis -r ${{ matrix.os }} -p $PACKAGE_NAME -c main -d ${{ matrix.os_rel }} ../*.deb
+        run: myci-deploy-debian-bintray.sh -u igagis -r ${{ matrix.os }} -p $PACKAGE_NAME -c main -d ${{ matrix.codename }} ../*.deb
         if: matrix.package_type == 'deb' && startsWith(github.ref, 'refs/tags/')
 ##### macosx #####
   macosx:
