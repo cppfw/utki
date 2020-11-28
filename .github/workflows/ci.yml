@@ -125,6 +125,7 @@ jobs:
         include:
           - {arch: i686, repo: mingw32}
           - {arch: x86_64, repo: mingw64}
+    name: msys2 - ${{ matrix.repo }}
     steps:
     - name: switch git-bash shell to msys2 shell by adding msys2 path to PATH front
       run: echo "C:\msys64\usr\bin" >> $GITHUB_PATH
