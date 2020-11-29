@@ -2,6 +2,7 @@ name: ci
 on: [push, pull_request]
 env:
   PACKAGE_NAME: ${{ github.event.repository.name }}
+  MYCI_BINTRAY_USERNAME: igagis
   MYCI_BINTRAY_API_KEY: ${{ secrets.MYCI_BINTRAY_API_KEY }}
   MYCI_GIT_USERNAME: igagis
   MYCI_GIT_PASSWORD: ${{ secrets.MYCI_GIT_ACCESS_TOKEN }}
@@ -23,11 +24,11 @@ jobs:
     steps:
       - name: git clone
         uses: actions/checkout@main
-      - name: add igagis deb repo
+      - name: add cppfw deb repo
         uses: myci-actions/add-deb-repo@master
         with:
-          repo: deb http://dl.bintray.com/igagis/${{ matrix.os }} ${{ matrix.codename }} main
-          repo-name: igagis
+          repo: deb http://dl.bintray.com/cppfw/${{ matrix.os }} ${{ matrix.codename }} main
+          repo-name: cppfw
           keys: 379CE192D401AB61
       - name: install ci tools
         run: apt install --assume-yes devscripts equivs myci
@@ -38,7 +39,7 @@ jobs:
       - name: build
         run: autojobs=true dpkg-buildpackage --unsigned-source --unsigned-changes
       - name: deploy deb packages
-        run: myci-deploy-debian-bintray.sh -u igagis -r ${{ matrix.os }} -p $PACKAGE_NAME -c main -d ${{ matrix.codename }} ../*.deb
+        run: myci-deploy-debian-bintray.sh --owner cppfw --repo ${{ matrix.os }} --distro ${{ matrix.codename }} --component main --package $PACKAGE_NAME ../*.deb
         if: matrix.package_type == 'deb' && startsWith(github.ref, 'refs/tags/')
 ##### macosx #####
   macosx:
@@ -46,8 +47,8 @@ jobs:
     steps:
     - name: git clone
       uses: actions/checkout@main
-    - name: add igagis tap
-      run: brew tap igagis/tap && brew update
+    - name: add cppfw tap
+      run: brew tap cppfw/tap && brew update
     - name: install ci tools
       run: brew install myci
     - name: install deps
@@ -57,14 +58,16 @@ jobs:
     - name: test
       run: make test autojobs=true
     - name: deploy
-      run: myci-deploy-homebrew.sh -t igagis/tap
+      run: myci-deploy-homebrew.sh -t cppfw/tap
       if: startsWith(github.ref, 'refs/tags/')
 ##### ios #####
   ios:
     runs-on: macos-latest
     steps:
-    - name: add igagis tap
-      run: brew tap igagis/tap && brew update
+    - name: add cppfw tap
+      run: |
+        brew tap cppfw/tap
+        brew update
     - name: install ci tools
       run: brew install myci
     - name: git clone
@@ -73,7 +76,7 @@ jobs:
       uses: myci-actions/export-env-var@master
       with: {name: PACKAGE_VERSION, value: $(myci-deb-version.sh debian/changelog)}
     - name: add cocoapods repo
-      run: pod repo add --silent igagis https://$MYCI_GIT_USERNAME@github.com/igagis/cocoapods-repo.git
+      run: pod repo add --silent cppfw https://$MYCI_GIT_USERNAME@github.com/cppfw/cocoapods-repo.git
     - name: install deps
       run: pod install --project-directory=xcode
     - name: add sources to xcode project
@@ -85,9 +88,9 @@ jobs:
     - name: build
       run: xcodebuild -workspace xcode/$PACKAGE_NAME.xcworkspace -scheme $PACKAGE_NAME CONFIGURATION_BUILD_DIR=../build -configuration Release
     - name: create package
-      run: myci-create-zip-package.sh -h src -f xcode/build/lib$PACKAGE_NAME.a///lib/ios -f LICENSE $PACKAGE_NAME-$PACKAGE_VERSION.zip
+      run: myci-create-zip-package.sh --headers-dir src --file xcode/build/lib$PACKAGE_NAME.a///lib/ios --file LICENSE $PACKAGE_NAME-$PACKAGE_VERSION.zip
     - name: deploy
-      run: myci-deploy-cocoapods.sh -r igagis -v $PACKAGE_VERSION -u igagis -b cocoapods -p $PACKAGE_NAME-$PACKAGE_VERSION.zip cocoapods/$PACKAGE_NAME.podspec.in
+      run: myci-deploy-cocoapods.sh --repo cppfw --version $PACKAGE_VERSION --bintray-owner cppfw --bintray-repo cocoapods --package-file $PACKAGE_NAME-$PACKAGE_VERSION.zip cocoapods/$PACKAGE_NAME.podspec.in
       if: startsWith(github.ref, 'refs/tags/')
 ##### android #####
   android:
@@ -96,11 +99,11 @@ jobs:
     steps:
     - name: git clone
       uses: actions/checkout@main
-    - name: add igagis deb repo
+    - name: add cppfw deb repo
       uses: myci-actions/add-deb-repo@master
       with:
-        repo: deb http://dl.bintray.com/igagis/$(lsb_release --id --short | tr '[:upper:]' '[:lower:]') $(lsb_release --codename --short) main
-        repo-name: igagis
+        repo: deb http://dl.bintray.com/cppfw/$(lsb_release --id --short | tr '[:upper:]' '[:lower:]') $(lsb_release --codename --short) main
+        repo-name: cppfw
         keys: 379CE192D401AB61
     - name: install ci tools
       run: apt install --assume-yes myci
@@ -114,7 +117,7 @@ jobs:
         myci-apply-version.sh -v $PACKAGE_VERSION *.pom.in
         myci-apply-version.sh -v $PACKAGE_VERSION *.aar.in --filename-only
     - name: deploy
-      run: myci-deploy-maven-bintray.sh -u igagis -r android -d io/github/igagis -p $PACKAGE_NAME -v $PACKAGE_VERSION android/$PACKAGE_NAME-$PACKAGE_VERSION.aar
+      run: myci-deploy-maven-bintray.sh --owner cppfw --repo android --path io/github/cppfw --package $PACKAGE_NAME --version $PACKAGE_VERSION android/$PACKAGE_NAME-$PACKAGE_VERSION.aar
       if: startsWith(github.ref, 'refs/tags/')
 ##### msys2 #####
   msys2:
@@ -135,12 +138,12 @@ jobs:
       shell: bash
     - name: git clone
       uses: actions/checkout@main
-    - name: add igagis pacman msys repo
+    - name: add cppfw pacman msys repo
       uses: myci-actions/add-pacman-repo@master
-      with: {name: igagis_msys, url: 'https://dl.bintray.com/igagis/msys2/msys'}
-    - name: add igagis pacman ${{ matrix.repo }} repo
+      with: {name: cppfw_msys, url: 'https://dl.bintray.com/cppfw/msys2/msys'}
+    - name: add cppfw pacman ${{ matrix.repo }} repo
       uses: myci-actions/add-pacman-repo@master
-      with: {name: 'igagis_${{ matrix.repo }}', url: 'https://dl.bintray.com/igagis/msys2/${{ matrix.repo }}'}
+      with: {name: 'cppfw_${{ matrix.repo }}', url: 'https://dl.bintray.com/cppfw/msys2/${{ matrix.repo }}'}
     - name: install ci tools
       run: pacman -Sy --noconfirm myci msys2-devel mingw-w64-${{ matrix.arch }}-toolchain
     - name: prepare pacman package
@@ -154,7 +157,7 @@ jobs:
     - name: deploy
       run: |
         for f in $(find msys2 -name "mingw-w64-${{ matrix.arch }}-$PACKAGE_NAME-*-any.pkg.*"); do
-          myci-deploy-pacman-bintray.sh -u igagis -r msys2 -p ${{ matrix.repo }} -d igagis_${{ matrix.repo }} $f
+          myci-deploy-pacman-bintray.sh --owner cppfw --repo msys2 --path ${{ matrix.repo }} --database cppfw_${{ matrix.repo }} $f
         done
       if: startsWith(github.ref, 'refs/tags/')
 ##### msvs #####

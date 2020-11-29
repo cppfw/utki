@@ -4,7 +4,7 @@ Installation in MacOSX requires a *[homebrew](http://brew.sh/)* package manager.
 - Add the homebrew tap (needs to be done once):
 
   ```
-  brew tap igagis/tap
+  brew tap cppfw/tap
   ```
 
 - Update formulaes:

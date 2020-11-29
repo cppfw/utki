@@ -1,0 +1,7 @@
+= utki 
+
+image:https://github.com/cppfw/utki/workflows/ci/badge.svg
+
+C++ utility library. Stuff missing from std:: namespace.
+
+[WiKi](wiki/MainPage.md)

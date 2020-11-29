@@ -3,7 +3,7 @@
 ## Using Debian packet manager
 - Add the repo to your `sources.list` (needs to be done once):
   ```
-  deb http://dl.bintray.com/igagis/<distro> <release> main
+  deb http://dl.bintray.com/cppfw/<distro> <release> main
   ```
   where
   - `<distro>` is `debian` or `ubuntu`
