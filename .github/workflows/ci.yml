@@ -48,7 +48,9 @@ jobs:
     - name: git clone
       uses: actions/checkout@main
     - name: add cppfw tap
-      run: brew tap cppfw/tap && brew update
+      run: |
+        brew tap cppfw/tap
+        brew update
     - name: install ci tools
       run: brew install myci
     - name: install deps
