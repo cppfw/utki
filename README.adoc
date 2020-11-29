@@ -8,4 +8,4 @@
 
 C++ utility library. Stuff missing from std:: namespace.
 
-[WiKi](wiki/MainPage.md)
+[WiKi](wiki/MainPage.adoc)
