@@ -60,7 +60,7 @@ jobs:
     - name: test
       run: make test autojobs=true
     - name: deploy
-      run: myci-deploy-homebrew.sh -t cppfw/tap
+      run: myci-deploy-homebrew.sh --tap cppfw/tap
       if: startsWith(github.ref, 'refs/tags/')
 ##### ios #####
   ios:
