@@ -1,4 +1,4 @@
-package io.github.igagis.utki_tests;
+package io.github.cppfw.utki_tests;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

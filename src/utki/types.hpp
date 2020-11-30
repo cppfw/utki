@@ -1,9 +1,3 @@
-/**
- * @file types.hpp
- * @author Ivan Gagis <igagis@gmail.com>
- * @brief General type utility definitions.
- */
-
 #pragma once
 
 #include <cstdint>

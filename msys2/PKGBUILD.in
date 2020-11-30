@@ -23,7 +23,7 @@ pkgrel=1
 epoch=
 pkgdesc="C++ utilities"
 #arch=('any') # defined above
-url="http://github.com/igagis/utki"
+url="http://github.com/cppfw/utki"
 license=('MIT')
 groups=()
 
