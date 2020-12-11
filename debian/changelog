@@ -1,3 +1,9 @@
+libutki (1.1.104) unstable; urgency=medium
+
+  * build for ubuntu focal
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 11 Dec 2020 15:51:37 +0200
+
 libutki (1.1.103) unstable; urgency=medium
 
   * github actions
