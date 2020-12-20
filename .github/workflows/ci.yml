@@ -9,16 +9,16 @@ env:
 jobs:
 ##### linux #####
   linux:
-    runs-on: [docker] # ubuntu-latest
+    runs-on: ${{ (matrix.labels == '' && 'ubuntu-latest') || matrix.labels }}
     strategy:
       fail-fast: false
       matrix:
         include:
           - {os: debian, codename: buster, image_owner: , package_type: deb}
-          # - {os: debian, codename: buster, image_owner: i386/, package_type: deb}
+          - {os: debian, codename: buster, image_owner: i386/, package_type: deb, labels: [qemu,docker]}
           - {os: ubuntu, codename: bionic, image_owner: , package_type: deb}
           - {os: ubuntu, codename: focal, image_owner: , package_type: deb}
-          # - {os: raspbian, codename: buster, image_owner: igagis/, package_type: deb}
+          - {os: raspbian, codename: buster, image_owner: igagis/, package_type: deb, labels: [arm,docker]}
     container: ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }}
     name: linux - ${{ matrix.os }}:${{ matrix.codename }}
     steps:
