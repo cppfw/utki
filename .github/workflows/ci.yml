@@ -9,7 +9,6 @@ env:
 jobs:
 ##### linux #####
   linux:
-    runs-on: ${{ (matrix.labels == '' && 'ubuntu-latest') || matrix.labels }}
     strategy:
       fail-fast: false
       matrix:
@@ -19,11 +18,12 @@ jobs:
           - {os: ubuntu, codename: bionic, image_owner: , package_type: deb}
           - {os: ubuntu, codename: focal, image_owner: , package_type: deb}
           - {os: raspbian, codename: buster, image_owner: igagis/, package_type: deb, labels: [arm,docker]}
+    runs-on: ${{ (matrix.labels == '' && 'ubuntu-latest') || matrix.labels }}
     container: ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }}
-    name: linux - ${{ matrix.os }}:${{ matrix.codename }}
+    name: linux - ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }}
     steps:
       - name: git clone
-        uses: actions/checkout@main
+        uses: actions/checkout@v1
       - name: add cppfw deb repo
         uses: myci-actions/add-deb-repo@master
         with:
