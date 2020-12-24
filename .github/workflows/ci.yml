@@ -32,7 +32,7 @@ jobs:
           keys: 379CE192D401AB61
       - name: install ci tools
         run: |
-          # configure timezone to avoid 'tzdata' package to require user interaction during installation
+          # configure timezone to avoid 'tzdata' package to require user interaction during installation (needed for ubuntu:focal)
           TZ=Europe/Helsinki ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
           
           apt install --assume-yes devscripts equivs myci
