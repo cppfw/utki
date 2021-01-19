@@ -11,4 +11,3 @@ this_no_install := true
 $(eval $(prorab-build-app))
 
 include $(d)../test_target.mk
-

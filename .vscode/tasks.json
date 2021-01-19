@@ -12,7 +12,7 @@
 		{
 			"label": "test_debug",
 			"type": "shell",
-			"command": "make test debug=true",
+			"command": "make test config=dbg",
 			"dependsOn": "build_debug",
 			"problemMatcher": [],
 			"group": "build"
@@ -35,6 +35,13 @@
 			"group": "build"
 		},
 		{
+			"label": "clean_debug",
+			"type": "shell",
+			"command": "make clean config=dbg",
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
 			"label": "build",
 			"type": "shell",
 			"command": "make autojobs=true",
@@ -47,7 +54,7 @@
 		{
 			"label": "build_debug",
 			"type": "shell",
-			"command": "make autojobs=true debug=true",
+			"command": "make autojobs=true config=dbg",
 			"args": [],
 			"problemMatcher": [
 				"$gcc"
