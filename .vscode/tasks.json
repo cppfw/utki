@@ -6,14 +6,16 @@
 			"type": "shell",
 			"command": "make test",
 			"dependsOn": "build",
-			"problemMatcher": []
+			"problemMatcher": [],
+			"group": "build"
 		},
 		{
 			"label": "test_debug",
 			"type": "shell",
-			"command": "make test debug=true",
+			"command": "make test config=dbg",
 			"dependsOn": "build_debug",
-			"problemMatcher": []
+			"problemMatcher": [],
+			"group": "build"
 		},
 		{
 			"label": "test_tree",
@@ -22,13 +24,22 @@
 			"problemMatcher": [
 				"$gcc"
 			],
-			"dependsOn": "build"
+			"dependsOn": "build",
+			"group": "build"
 		},
 		{
 			"label": "clean",
 			"type": "shell",
 			"command": "make clean",
-			"problemMatcher": []
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "clean_debug",
+			"type": "shell",
+			"command": "make clean config=dbg",
+			"problemMatcher": [],
+			"group": "build"
 		},
 		{
 			"label": "build",
@@ -37,16 +48,18 @@
 			"args": [],
 			"problemMatcher": [
 				"$gcc"
-			]
+			],
+			"group": "build"
 		},
 		{
 			"label": "build_debug",
 			"type": "shell",
-			"command": "make autojobs=true debug=true",
+			"command": "make autojobs=true config=dbg",
 			"args": [],
 			"problemMatcher": [
 				"$gcc"
-			]
+			],
+			"group": "build"
 		}
 	]
 }
