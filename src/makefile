@@ -8,6 +8,4 @@ this_srcs := $(call prorab-src-dir, utki)
 
 $(eval $(call prorab-config, ../config))
 
-this_ldlibs += -lstdc++
-
 $(eval $(prorab-build-lib))
