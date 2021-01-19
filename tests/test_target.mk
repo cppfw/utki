@@ -1,10 +1,10 @@
 ifeq ($(os),windows)
     # to avoid /C converted to C:\ need to escape it as //C
-    this_test_cmd := (cd $$(dir $$^) && cmd //C 'set PATH=$(d)../../src/out/$(c);%PATH% && $$(notdir $$^)')
+    this_test_cmd := (cd $$(dir $$^) && cmd //C 'set PATH=../../../../src/out/$(c);%PATH% && $$(notdir $$^)')
 else ifeq ($(os),macosx)
-    this_test_cmd := (cd $$(dir $$^) && DYLD_LIBRARY_PATH=$(d)../../src/out/$(c):. ./$$(notdir $$^))
+    this_test_cmd := (cd $$(dir $$^) && DYLD_LIBRARY_PATH=../../../../src/out/$(c):. ./$$(notdir $$^))
 else ifeq ($(os),linux)
-    this_test_cmd := (cd $$(dir $$^) && LD_LIBRARY_PATH=$(d)../../src/out/$(c):. ./$$(notdir $$^))
+    this_test_cmd := (cd $$(dir $$^) && LD_LIBRARY_PATH=../../../../src/out/$(c):. ./$$(notdir $$^))
 else
     $(error "Unknown OS")
 endif
