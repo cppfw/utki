@@ -5,6 +5,7 @@
 #include "tests.hpp"
 
 #include <array>
+#include <vector>
 
 using namespace utki;
 
@@ -106,3 +107,51 @@ void run(){
 	ASSERT_ALWAYS(fm["42"] == 42)
 }
 }
+
+#if __cplusplus >= 201703L
+namespace test_variant_get_index{
+void run(){
+	typedef std::variant<int, const char*, std::string, std::pair<bool, int>> variant_type;
+
+	std::array<variant_type, std::variant_size<variant_type>::value> variants = {{
+		std::string("hello world!"),
+		int(123),
+		"const char*",
+		std::make_pair(true, 45)
+	}};
+
+	ASSERT_ALWAYS(variants.size() == 4)
+
+	std::vector<std::string> res;
+
+	for(auto& v : variants){
+		switch(v.index()){
+			case utki::get_index<int, decltype(variants)::value_type>::value:
+				res.push_back("int");
+				break;
+			case utki::get_index<std::pair<bool, int>, decltype(variants)::value_type>::value:
+				res.push_back("pair");
+				break;
+			case utki::get_index<std::string, decltype(variants)::value_type>::value:
+				res.push_back("string");
+				break;
+			case utki::get_index<const char*, decltype(variants)::value_type>::value:
+				res.push_back("const char*");
+				break;
+			default:
+				break;
+		}
+	}
+
+#ifdef DEBUG
+	for(auto& r : res){
+		TRACE(<< "r = " << r << std::endl)
+	}
+#endif
+
+	std::vector<std::string> expected = {{"string", "int", "const char*", "pair"}};
+
+	ASSERT_ALWAYS(res == expected)
+}
+}
+#endif

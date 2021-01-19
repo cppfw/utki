@@ -5,14 +5,28 @@
 #include <algorithm>
 #include <memory>
 
+#if __cplusplus >= 201703L
+#	include <variant>
+#endif
+
 #include "debug.hpp"
 
 namespace utki{
 
+/**
+ * @brief Construct std::pair with swapped components.
+ * @param p - initial std::pair.
+ * @return a new std::pair with swapped component.
+ */
 template<typename T_A, typename T_B> std::pair<T_B, T_A> flip_pair(const std::pair<T_A, T_B> &p){
     return std::pair<T_B, T_A>(p.second, p.first);
 }
 
+/**
+ * @brief Flip map's keys and values.
+ * @param m - initial map to flip.
+ * @return a new map with flipped keys and values in each element.
+ */
 template<typename A, typename B> std::map<B, A> flip_map(const std::map<A, B> &m){
     std::map<B, A> ret;
     std::transform(m.begin(), m.end(), std::inserter(ret, ret.begin()), flip_pair<A, B>);
@@ -165,7 +179,7 @@ inline std::uint16_t deserialize16le(const std::uint8_t* buf)noexcept{
 inline std::uint32_t deserialize32le(const std::uint8_t* buf)noexcept{
 	std::uint32_t ret;
 
-	//assume little-endian
+	// assume little-endian
 	ret = std::uint32_t(*buf);
 	++buf;
 	ret |= ((std::uint32_t(*buf)) << 8);
@@ -187,7 +201,7 @@ inline std::uint32_t deserialize32le(const std::uint8_t* buf)noexcept{
 inline std::uint64_t deserialize64le(const std::uint8_t* buf)noexcept{
 	std::uint64_t ret;
 
-	//assume little-endian
+	// assume little-endian
 	ret = std::uint64_t(*buf);
 	++buf;
 	ret |= ((std::uint64_t(*buf)) << 8);
@@ -278,7 +292,7 @@ inline std::uint8_t* serialize64be(std::uint64_t value, std::uint8_t* out_buf)no
 inline std::uint16_t deserialize16be(const std::uint8_t* buf)noexcept{
 	std::uint16_t ret;
 
-	//assume big-endian
+	// assume big-endian
 	ret = ((std::uint16_t(*buf)) << 8);
 	++buf;
 	ret |= std::uint16_t(*buf);
@@ -296,7 +310,7 @@ inline std::uint16_t deserialize16be(const std::uint8_t* buf)noexcept{
 inline std::uint32_t deserialize32be(const std::uint8_t* buf)noexcept{
 	std::uint32_t ret;
 
-	//assume big-endian
+	// assume big-endian
 	ret = ((std::uint32_t(*buf)) << 24);
 	++buf;
 	ret |= ((std::uint32_t(*buf)) << 16);
@@ -318,7 +332,7 @@ inline std::uint32_t deserialize32be(const std::uint8_t* buf)noexcept{
 inline std::uint64_t deserialize64be(const std::uint8_t* buf)noexcept{
 	std::uint64_t ret;
 
-	//assume big-endian
+	// assume big-endian
 	ret = ((std::uint64_t(*buf)) << 56);
 	++buf;
 	ret = ((std::uint64_t(*buf)) << 48);
@@ -344,8 +358,21 @@ inline std::uint64_t deserialize64be(const std::uint8_t* buf)noexcept{
  * @param args - object constructor arguments.
  * @return std::unique_ptr to a newly created object.
  */
+// TODO: remove in favor of std::make_unique in C++14
 template< class T, class... Args > std::unique_ptr<T> make_unique(Args&&... args){
 	return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
 }
+
+#if __cplusplus >= 201703L
+template <typename> struct tag { };
+template <typename T, typename V> struct get_index;
+
+/**
+ * @brief Get variant's alternative index by its type in compile time.
+ */
+template <typename T, typename... Ts> struct get_index<T, std::variant<Ts...>> :
+		std::integral_constant<size_t, std::variant<tag<Ts>...>(tag<T>()).index()>
+{};
+#endif
 
 }

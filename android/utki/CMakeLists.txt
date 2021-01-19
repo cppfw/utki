@@ -12,6 +12,8 @@ cmake_minimum_required(VERSION 3.4.1)
 
 file(GLOB_RECURSE srcs "../../src/utki/*.cpp")
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
+
 add_library( # Specifies the name of the library.
              utki
 

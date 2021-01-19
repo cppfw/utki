@@ -4,7 +4,7 @@
 		{
 			"label": "test",
 			"type": "shell",
-			"command": "make test",
+			"command": "make test autojobs=true",
 			"dependsOn": "build",
 			"problemMatcher": [],
 			"group": "build"
@@ -12,7 +12,7 @@
 		{
 			"label": "test_debug",
 			"type": "shell",
-			"command": "make test config=dbg",
+			"command": "make test config=dbg autojobs=true",
 			"dependsOn": "build_debug",
 			"problemMatcher": [],
 			"group": "build"
