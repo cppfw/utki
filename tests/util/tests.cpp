@@ -108,6 +108,7 @@ void run(){
 }
 }
 
+#if __cplusplus >= 201703L
 namespace test_variant_get_index{
 void run(){
 	typedef std::variant<int, const char*, std::string, std::pair<bool, int>> variant_type;
@@ -153,3 +154,4 @@ void run(){
 	ASSERT_ALWAYS(res == expected)
 }
 }
+#endif

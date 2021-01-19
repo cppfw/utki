@@ -4,7 +4,10 @@
 #include <map>
 #include <algorithm>
 #include <memory>
-#include <variant>
+
+#if __cplusplus >= 201703L
+#	include <variant>
+#endif
 
 #include "debug.hpp"
 
@@ -360,6 +363,7 @@ template< class T, class... Args > std::unique_ptr<T> make_unique(Args&&... args
 	return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
 }
 
+#if __cplusplus >= 201703L
 template <typename> struct tag { };
 template <typename T, typename V> struct get_index;
 
@@ -369,5 +373,6 @@ template <typename T, typename V> struct get_index;
 template <typename T, typename... Ts> struct get_index<T, std::variant<Ts...>> :
 		std::integral_constant<size_t, std::variant<tag<Ts>...>(tag<T>()).index()>
 {};
+#endif
 
 }
