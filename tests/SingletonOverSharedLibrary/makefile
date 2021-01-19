@@ -3,11 +3,7 @@ include prorab.mk
 this_name := testso
 this_soname := 0
 
-this_cxxflags += -std=c++11
-this_cxxflags += -Wall
-this_cxxflags += #-DDEBUG
-this_cxxflags += -fstrict-aliasing
-this_cxxflags += -O3
+$(eval $(call prorab-config, ../../config))
 
 ifeq ($(os),macosx)
     this_cxxflags += -stdlib=libc++ # this is needed to be able to use c++11 std lib
@@ -32,10 +28,7 @@ $(eval $(prorab-clear-this-vars))
 
 this_name := tests
 
-this_cxxflags += -std=c++11
-this_cxxflags += -Wall
-this_cxxflags += -DDEBUG
-this_cxxflags += -fstrict-aliasing
+$(eval $(call prorab-config, ../../config))
 
 this_srcs += Singleton_test.cpp
 
@@ -52,15 +45,15 @@ $(eval $(prorab-build-app))
 
 $(prorab_this_name): $(lib_target_name)
 
-
+include $(d)../test_target.mk
 # no test under windows, it fails there
-ifneq ($(os),windows)
-define this_rules
-test:: $(prorab_this_name)
-	@myci-running-test.sh $$(notdir $$(patsubst %/, %, $$(dir $$^)))
-	@(cd $(d); $(if $(filter windows,$(os)), $$^, LD_LIBRARY_PATH=. $$^))
-	@myci-passed.sh
-endef
-$(eval $(this_rules))
-endif
+# ifneq ($(os),windows)
+# define this_rules
+# test:: $(prorab_this_name)
+# 	@myci-running-test.sh $$(notdir $$(patsubst %/, %, $$(dir $$^)))
+# 	@(cd $(d); $(if $(filter windows,$(os)), $$^, LD_LIBRARY_PATH=. $$^))
+# 	@myci-passed.sh
+# endef
+# $(eval $(this_rules))
+# endif
 

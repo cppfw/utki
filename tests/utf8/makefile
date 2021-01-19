@@ -2,11 +2,7 @@ include prorab.mk
 
 this_name := tests
 
-this_cxxflags += -std=c++11
-this_cxxflags += -Wall
-this_cxxflags += -DDEBUG
-this_cxxflags += -fstrict-aliasing
-this_cxxflags += -O3
+$(eval $(call prorab-config, ../../config))
 
 this_srcs += main.cpp tests.cpp
 

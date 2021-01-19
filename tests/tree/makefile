@@ -2,18 +2,7 @@ include prorab.mk
 
 this_name := tests
 
-# compiler flags
-this_cxxflags += -std=c++11
-this_cxxflags += -Wall
-this_cxxflags += -Werror
-this_cxxflags += -fstrict-aliasing
-this_cxxflags += -g
-
-ifeq ($(debug),true)
-	this_cxxflags += -DDEBUG
-else
-	this_cxxflags += -O3
-endif
+$(eval $(call prorab-config, ../../config))
 
 this_srcs += main.cpp tests.cpp
 
