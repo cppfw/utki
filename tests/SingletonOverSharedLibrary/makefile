@@ -45,15 +45,7 @@ $(eval $(prorab-build-app))
 
 $(prorab_this_name): $(lib_target_name)
 
-include $(d)../test_target.mk
 # no test under windows, it fails there
-# ifneq ($(os),windows)
-# define this_rules
-# test:: $(prorab_this_name)
-# 	@myci-running-test.sh $$(notdir $$(patsubst %/, %, $$(dir $$^)))
-# 	@(cd $(d); $(if $(filter windows,$(os)), $$^, LD_LIBRARY_PATH=. $$^))
-# 	@myci-passed.sh
-# endef
-# $(eval $(this_rules))
-# endif
-
+ifneq ($(os),windows)
+    include $(d)../test_target.mk
+endif
