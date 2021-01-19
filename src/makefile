@@ -10,6 +10,4 @@ $(eval $(call prorab-config, ../config))
 
 this_ldlibs += -lstdc++
 
-this_out_dir := build
-
 $(eval $(prorab-build-lib))

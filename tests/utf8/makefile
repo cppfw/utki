@@ -8,7 +8,7 @@ this_srcs += main.cpp tests.cpp
 
 this_ldlibs += -lutki -lstdc++
 
-this_ldflags += -L$(d)../../src/build
+this_ldflags += -L$(d)../../src/out/$(c)
 
 ifeq ($(os),linux)
     this_cxxflags += -fPIC
@@ -26,6 +26,6 @@ $(eval $(prorab-build-app))
 include $(d)../test_target.mk
 
 # add dependency on libutki
-$(prorab_this_name): $(abspath $(d)../../src/build/libutki$(dot_so))
+$(prorab_this_name): $(abspath $(d)../../src/out/$(c)/libutki$(dot_so))
 
 $(eval $(call prorab-include, ../../src/makefile))

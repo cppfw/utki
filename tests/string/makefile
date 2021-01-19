@@ -11,7 +11,7 @@ ifeq ($(os),macosx)
     this_ldlibs += -lc++
 endif
 
-this_ldflags += -L $(d)../../src/build
+this_ldflags += -L $(d)../../src/out/$(c)
 
 this_ldlibs += -lutki -lstdc++
 
@@ -21,6 +21,6 @@ $(eval $(prorab-build-app))
 
 include $(d)../test_target.mk
 
-$(prorab_this_name): $(abspath $(d)../../src/build/libutki$(soext))
+$(prorab_this_name): $(abspath $(d)../../src/out/$(c)/libutki$(dot_so))
 
 $(eval $(call prorab-include, ../../src/makefile))
