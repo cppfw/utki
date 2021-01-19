@@ -24,13 +24,12 @@ $(eval $(this_rule))
 
 ifeq ($(os),windows)
     # to avoid /C converted to C:\ need to escape it as //C
-    this_gdb_cmd := (cd $(d) && cmd //C 'set PATH=../../src/out/$(c);%PATH% && gdb $$(notdir $$^)')
+    this_gdb_cmd := (cd $$(dir $$^) && cmd //C 'set PATH=../../../../src/out/$(c);%PATH% && gdb $$(notdir $$^)')
 else ifeq ($(os),macosx)
-    this_gdb_cmd := (cd $(d) && DYLD_LIBRARY_PATH=../../src/out/$(c) gdb ./$$(notdir $$^))
+    this_gdb_cmd := (cd $$(dir $$^) && DYLD_LIBRARY_PATH=../../../../src/out/$(c) gdb ./$$(notdir $$^))
 else ifeq ($(os),linux)
-    this_gdb_cmd := (cd $(d) && LD_LIBRARY_PATH=../../src/out/$(c) gdb ./$$(notdir $$^))
+    this_gdb_cmd := (cd $$(dir $$^) && LD_LIBRARY_PATH=../../../../src/out/$(c) gdb ./$$(notdir $$^))
 endif
-
 
 define this_rule
 gdb:: $(prorab_this_name)

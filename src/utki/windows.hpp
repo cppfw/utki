@@ -2,10 +2,6 @@
 
 #include "config.hpp"
 
-#if M_OS != M_OS_WINDOWS
-#	warning "including windows.hpp from non-windows specific code"
-#endif
-
 #if M_OS == M_OS_WINDOWS
 
 // if _WINSOCKAPI_ macro is not defined then it means that the winsock header file
@@ -23,13 +19,13 @@
 #	include <windows.h>
 
 
-#	if (_WINSOCKAPI_ + 0) //if defined and is not empty
+#	if (_WINSOCKAPI_ + 0) // if defined and is not empty
 #		if _WINSOCKAPI_ == 1234567890
 #			undef _WINSOCKAPI_
 #		endif
 #	endif
 
-#	if (_WINSOCK_H + 0) //if defined and is not empty
+#	if (_WINSOCK_H + 0) // if defined and is not empty
 #		if _WINSOCK_H == 1234567890
 #			undef _WINSOCK_H
 #		endif
