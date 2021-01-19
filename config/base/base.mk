@@ -7,13 +7,7 @@ this_cxxflags += -std=c++17
 this_cxxflags += -fPIC
 this_cxxflags += -g
 
-ifeq ($(os),macosx)
-    # this_cxxflags += -stdlib=libc++ # this is needed to be able to use c++11 std lib
-    # this_ldlibs += -lc++
-	this_ldlibs += -lstdc++
-else
-	this_ldlibs += -lstdc++
-endif
+this_ldlibs += -lstdc++
 
 ifeq ($(gprof), true)
     this_cxxflags += -pg
