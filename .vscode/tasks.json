@@ -52,6 +52,16 @@
 			"group": "build"
 		},
 		{
+			"label": "build_clang",
+			"type": "shell",
+			"command": "CXX=clang++ make autojobs=true",
+			"args": [],
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": "build"
+		},
+		{
 			"label": "build_debug",
 			"type": "shell",
 			"command": "make autojobs=true config=dbg",
