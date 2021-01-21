@@ -1,3 +1,9 @@
+libutki (1.1.107) unstable; urgency=medium
+
+  * split() function unified
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 21 Jan 2021 15:59:29 +0200
+
 libutki (1.1.106) unstable; urgency=medium
 
   * get_index
