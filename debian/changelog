@@ -1,3 +1,9 @@
+libutki (1.1.108) unstable; urgency=medium
+
+  * linq select function
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 21 Jan 2021 18:51:34 +0200
+
 libutki (1.1.107) unstable; urgency=medium
 
   * split() function unified
