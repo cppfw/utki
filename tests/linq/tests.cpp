@@ -3,6 +3,8 @@
 
 #include "tests.hpp"
 
+#include <vector>
+
 namespace{
 void test_select(){
 #if __cplusplus >= 201703L
