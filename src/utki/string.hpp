@@ -88,7 +88,35 @@ inline std::string make_string(const std::vector<uint8_t>& buf){
  * @param delimiter - delimiter character to use as a splitter.
  * @return vector of splitted strings.
  */
-std::vector<std::string> split(const std::string& str, char delimiter);
+template <typename T> std::vector<std::basic_string<T>> split(const std::basic_string<T>& str, T delimiter){
+	std::vector<std::basic_string<T>> ret;
+	size_t pos = 0;
+
+	for(;;){
+		auto dpos = str.find(delimiter, pos);
+
+		if(dpos == std::string::npos){
+			ret.emplace_back(str.substr(pos, str.length() - pos));
+			break;
+		}
+
+		ret.emplace_back(str.substr(pos, dpos - pos));
+
+		pos = dpos + 1;
+	}
+
+	return ret;
+}
+
+/**
+ * @brief Split string using given delimiter.
+ * @param str - string to split.
+ * @param delimiter - delimiter character to use as a splitter.
+ * @return vector of splitted strings.
+ */
+template <typename T> std::vector<std::basic_string<T>> split(const T* str, T delimiter){
+	return split(std::basic_string<T>(str), delimiter);
+}
 
 /**
  * @brief Split string to separate words.

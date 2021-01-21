@@ -59,26 +59,6 @@ std::string utki::make_string(const char* format, ...){
 	return ret;
 }
 
-std::vector<std::string> utki::split(const std::string& str, char delimiter){
-	std::vector<std::string> ret;
-	size_t pos = 0;
-
-	for(;;){
-		auto dpos = str.find(delimiter, pos);
-
-		if(dpos == std::string::npos){
-			ret.emplace_back(str.substr(pos, str.length() - pos));
-			break;
-		}
-
-		ret.emplace_back(str.substr(pos, dpos - pos));
-
-		pos = dpos + 1;
-	}
-
-	return ret;
-}
-
 std::vector<std::string> utki::split(const std::string& str){
 	std::istringstream iss(str);
 	return std::vector<std::string>{
