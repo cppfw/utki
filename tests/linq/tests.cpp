@@ -23,6 +23,10 @@ void test_select(){
 				}
 			).get();
 
+		static_assert(std::is_same<decltype(out), std::vector<std::pair<std::string, float>>>::value, "not same");
+
+		TRACE(<< "select done" << std::endl)
+
 		decltype(out) expected = {{
 			{"13", 13.4f},
 			{"14", 13.4f},

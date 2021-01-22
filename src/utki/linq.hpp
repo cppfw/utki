@@ -3,6 +3,7 @@
 #include <functional>
 
 #include "debug.hpp"
+#include "types.hpp"
 
 namespace utki{
 
@@ -39,30 +40,26 @@ auto select(const C<T...>& collection, F func){
 	return ret;
 }
 
-template <
-		template <typename...> typename C,
-		typename... T
-	>
-class linq{
-	C<T...> vec;
+template <typename C> class linq{
+	typename utki::remove_constref<C>::type collection;
 public:
-	linq(C<T...>&& vec) :
-			vec(std::move(vec))
+	linq(C collection) :
+			collection(std::move(collection))
 	{}
 
-	C<T...> get(){
-		return std::move(this->vec);
+	decltype(collection) get(){
+		return std::move(this->collection);
 	}
 
 	template <typename F> auto select(F func){
-		std::vector<decltype(func(std::move(this->vec[0])))> ret;
-		ret.reserve(this->vec.size());
+		std::vector<decltype(func(std::move(*this->collection.begin())))> ret;
+		ret.reserve(this->collection.size());
 
-		for(auto&& e : this->vec){
+		for(auto&& e : this->collection){
 			ret.push_back(func(std::move(e)));
 		}
 
-		return linq<std::vector, typename decltype(ret)::value_type>(std::move(ret));
+		return linq<decltype(ret)&&>(std::move(ret));
 	}
 };
 
