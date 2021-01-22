@@ -29,19 +29,20 @@ template <> struct int_size<6>{typedef std::int64_t type;};
 template <> struct int_size<7>{typedef std::int64_t type;};
 template <> struct int_size<8>{typedef std::int64_t type;};
 
-
-
 template <typename T> struct remove_constptr{
 	typedef typename std::remove_const<typename std::remove_pointer<T>::type>::type type;
 };
 
+template <typename T> struct remove_constref{
+	typedef typename std::remove_const<typename std::remove_reference<T>::type>::type type;
+};
 
 /**
  * @brief Cast pointer to pointer-to-const.
  * @param p - pointer to cast.
  * @return Pointer to const.
  */
-template <class T> inline const T* makePtrToConst(T* p){
+template <class T> inline const T* make_pointer_to_const(T* p){
 	return const_cast<const T*>(p);
 }
 
