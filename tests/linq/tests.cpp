@@ -39,18 +39,18 @@ void test_select(){
 
 	// test select(const&)
 	{
-		std::vector<std::pair<int, std::string>> in = {{
+		const std::vector<std::pair<int, std::string>> in = {{
 			{13, "13"},
 			{14, "14"},
 			{1, "1"}
 		}};
 
-		auto out = utki::select(
-				in,
+		auto out = utki::linq(in).select(
 				[](auto v){
+					TRACE(<< "v.second = " << v.second << std::endl)
 					return std::make_pair(v.second, 13.4f);
 				}
-			);
+			).get();
 
 		decltype(out) expected = {{
 			{"13", 13.4f},

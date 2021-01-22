@@ -40,10 +40,13 @@ auto select(const C<T...>& collection, F func){
 	return ret;
 }
 
-template <typename C> class linq{
-	typename utki::remove_constref<C>::type collection;
+template <typename C> class linq_aggregator{
+	typename std::conditional<std::is_rvalue_reference<C>::value,
+			typename std::remove_reference<C>::type,
+			C
+		>::type collection;
 public:
-	linq(C collection) :
+	linq_aggregator(C collection) :
 			collection(std::move(collection))
 	{}
 
@@ -59,9 +62,19 @@ public:
 			ret.push_back(func(std::move(e)));
 		}
 
-		return linq<decltype(ret)&&>(std::move(ret));
+		return linq_aggregator<decltype(ret)&&>(std::move(ret));
 	}
 };
+
+template <typename C> linq_aggregator<C&&> linq(C&& collection){
+	TRACE(<< "linq&&" << std::endl)
+	return linq_aggregator<C&&>(std::move(collection));
+}
+
+template <typename C> linq_aggregator<const C&> linq(const C& collection){
+	TRACE(<< "const linq&" << std::endl)
+	return linq_aggregator<const C&>(collection);
+}
 
 #endif
 
