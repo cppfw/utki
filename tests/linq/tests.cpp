@@ -4,6 +4,8 @@
 #include "tests.hpp"
 
 #include <vector>
+#include <list>
+#include <map>
 
 namespace{
 void test_select(){
@@ -38,7 +40,7 @@ void test_select(){
 
 	// test linq(&).select()
 	{
-		std::vector<std::pair<int, const std::string>> in = {{
+		std::map<int, const std::string> in = {{
 			{13, "13"},
 			{14, "14"},
 			{1, "1"}
@@ -52,20 +54,21 @@ void test_select(){
 				}
 			).get();
 
+		// since original container is a map, the order of elements is sorted by map key
 		decltype(out) expected = {{
+			{"1", 13.4f},
 			{"13", 13.4f},
-			{"14", 13.4f},
-			{"1", 13.4f}
+			{"14", 13.4f}
 		}};
 
-		ASSERT_ALWAYS(out == expected)
+		ASSERT_INFO_ALWAYS(out == expected, "out.size() = " << out.size() << std::endl)
 		ASSERT_ALWAYS(!in.empty())
-		ASSERT_ALWAYS(!in[0].second.empty())
+		ASSERT_ALWAYS(!in.begin()->second.empty())
 	}
 
 	// test linq(const &).select()
 	{
-		const std::vector<std::pair<int, const std::string>> in = {{
+		const std::list<std::pair<int, const std::string>> in = {{
 			{13, "13"},
 			{14, "14"},
 			{1, "1"}
@@ -87,7 +90,7 @@ void test_select(){
 
 		ASSERT_ALWAYS(out == expected)
 		ASSERT_ALWAYS(!in.empty())
-		ASSERT_ALWAYS(!in[0].second.empty())
+		ASSERT_ALWAYS(!in.front().second.empty())
 	}
 #endif
 }
