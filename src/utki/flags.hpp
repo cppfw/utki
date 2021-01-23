@@ -53,7 +53,7 @@ public:
 	typedef typename utki::uint_size<sizeof(T_Enum)>::type index_type;
 	
 private:
-	std::array<std::uint8_t, index_type(T_Enum::ENUM_SIZE) / 8 + 1> f;
+	std::array<uint8_t, index_type(T_Enum::ENUM_SIZE) / 8 + 1> f;
 
 public:
 
@@ -163,7 +163,7 @@ public:
 	 * @return Reference to this Flags.
 	 */
 	flags& set(bool value = true)noexcept{
-		std::fill(this->f.begin(), this->f.end(), value ? std::uint8_t(-1) : 0);
+		std::fill(this->f.begin(), this->f.end(), value ? uint8_t(-1) : 0);
 		return *this;
 	}
 
@@ -203,7 +203,7 @@ public:
 	bool is_set()const noexcept{
 		ASSERT_INFO(this->f.size() != 0, "given flags enumeration is empty")
 		for(size_t i = 0; i != this->f.size() - 1; ++i){
-			if(this->f[i] != std::uint8_t(-1)){
+			if(this->f[i] != uint8_t(-1)){
 				return false;
 			}
 		}

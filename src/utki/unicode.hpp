@@ -11,7 +11,7 @@ namespace utki{
  */
 class utf8_iterator{
 	char32_t c = 0;
-	const std::uint8_t* n = nullptr;
+	const uint8_t* n = nullptr;
 
 public:
 	/**

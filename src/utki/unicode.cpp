@@ -5,7 +5,7 @@
 using namespace utki;
 
 utf8_iterator::utf8_iterator(const char* begin) :
-		n(reinterpret_cast<const std::uint8_t*> (begin))
+		n(reinterpret_cast<const uint8_t*> (begin))
 {
 	if (this->n == 0) {
 		this->c = 0;
@@ -15,7 +15,7 @@ utf8_iterator::utf8_iterator(const char* begin) :
 }
 
 utf8_iterator& utf8_iterator::operator++() noexcept{
-	std::uint8_t b = *this->n;
+	uint8_t b = *this->n;
 	//		TRACE(<< "utf8::Iterator::operator++(): b = " << std::hex << unsigned(b) << std::endl)
 	++this->n;
 	if ((b & 0x80) == 0) {
@@ -31,16 +31,16 @@ utf8_iterator& utf8_iterator::operator++() noexcept{
 	++this->n;
 
 	unsigned i = 2;
-	for (; (std::uint8_t(b << i) >> 7); ++i, ++this->n) {
-		//			TRACE(<< "utf8::Iterator::operator++(): std::uint8_t(b << i) = " << std::hex << unsigned(std::uint8_t(b << i)) << std::endl)
-		//			TRACE(<< "utf8::Iterator::operator++(): ((b << i) >> 7) = " << std::hex << unsigned(std::uint8_t(b << i) >> 7) << std::endl)
+	for (; (uint8_t(b << i) >> 7); ++i, ++this->n) {
+		//			TRACE(<< "utf8::Iterator::operator++(): uint8_t(b << i) = " << std::hex << unsigned(uint8_t(b << i)) << std::endl)
+		//			TRACE(<< "utf8::Iterator::operator++(): ((b << i) >> 7) = " << std::hex << unsigned(uint8_t(b << i) >> 7) << std::endl)
 		//			TRACE(<< "utf8::Iterator::operator++(): *n = " << std::hex << unsigned(*this->n) << std::endl)
 		this->c <<= 6;
 		//			TRACE(<< "utf8::Iterator::operator++(): c = " << std::hex << c << std::endl)
 		this->c |= (*this->n) & 0x3f;
 		//			TRACE(<< "utf8::Iterator::operator++(): c = " << std::hex << c << std::endl)
 	}
-	this->c |= (char32_t(std::uint8_t(b << (i + 1)) >> (i + 1)) << (6 * (i - 1)));
+	this->c |= (char32_t(uint8_t(b << (i + 1)) >> (i + 1)) << (6 * (i - 1)));
 	//		TRACE(<< "utf8::Iterator::operator++(): c = " << std::hex << c << std::endl)
 
 	return *this;
