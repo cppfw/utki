@@ -58,21 +58,19 @@ template <typename T, typename... Ts> struct get_index<T, std::variant<Ts...>> :
 		std::integral_constant<size_t, std::variant<tag<Ts>...>(tag<T>()).index()>
 {};
 
-/**
- * @brief Get number of function arguments.
- */
-template <typename T>
-struct num_arguments : num_arguments<decltype(&T::operator())> {};
-template <typename R, typename... Args>
-struct num_arguments<R(*)(Args...)> : std::integral_constant<unsigned, sizeof...(Args)> {};
-template <typename R, typename C, typename... Args>
-struct num_arguments<R(C::*)(Args...)> : std::integral_constant<unsigned, sizeof...(Args)> {};
-template <typename R, typename C, typename... Args>
-struct num_arguments<R(C::*)(Args...) const> : std::integral_constant<unsigned, sizeof...(Args)> {};
+template <class T, class = void> struct type_or_void{
+	using type = void;
+};
 
-template <typename F> constexpr unsigned get_num_arguments(F){
-	return num_arguments<F>::value;
-}
+/**
+ * @brief Get type or void.
+ * @param T - type to get T::type from.
+ * Defines 'type' member which is same as T::type in case T::type is defined, or void otherwise.
+ */
+template <class T> struct type_or_void<T, std::void_t<typename T::type>>{
+	using type = typename T::type;
+};
+
 #endif
 
 }

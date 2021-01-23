@@ -24,11 +24,34 @@ public:
 	}
 
 	template <typename F> auto select(F func){
-		std::vector<decltype(func(std::move(*this->collection.begin())))> ret;
+		typedef decltype(std::move(*this->collection.begin())) func_arg_type;
+
+		static constexpr bool func_one_arg = !std::is_same<void, typename type_or_void<std::invoke_result<F, func_arg_type>>::type>::value;
+
+		static_assert(
+				func_one_arg || !std::is_same<void, typename type_or_void<std::invoke_result<F, func_arg_type, size_t>>::type>::value,
+				"passed in function must have one argument or two arguments with the second argument of type size_t"
+			);
+
+		typedef typename std::conditional<
+				func_one_arg,
+				typename type_or_void<std::invoke_result<F, func_arg_type>>::type,
+				typename type_or_void<std::invoke_result<F, func_arg_type, size_t>>::type
+			>::type func_return_type;
+
+		std::vector<func_return_type> ret;
 		ret.reserve(this->collection.size());
 
-		for(auto&& e : this->collection){
-			ret.push_back(func(std::move(e)));
+		if constexpr (func_one_arg){
+			for(auto&& e : this->collection){
+				ret.push_back(func(std::move(e)));
+			}
+		}else{ // two arguments
+			size_t i = 0;
+			for(auto&& e : this->collection){
+				ret.push_back(func(std::move(e), i));
+				++i;
+			}
 		}
 
 		return linq_collection_aggregator<decltype(ret)&&>(std::move(ret));

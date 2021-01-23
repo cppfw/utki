@@ -47,8 +47,8 @@ void test_select(){
 		}};
 
 		auto out = utki::linq(in).select(
-				[](auto v){
-					auto r = std::make_pair(std::move(v.second), 13.4f);
+				[](auto v, auto i){
+					auto r = std::make_pair(std::move(v.second), i);
 					ASSERT_ALWAYS(!v.second.empty())
 					return r;
 				}
@@ -56,9 +56,9 @@ void test_select(){
 
 		// since original container is a map, the order of elements is sorted by map key
 		decltype(out) expected = {{
-			{"1", 13.4f},
-			{"13", 13.4f},
-			{"14", 13.4f}
+			{"1", 0},
+			{"13", 1},
+			{"14", 2}
 		}};
 
 		ASSERT_INFO_ALWAYS(out == expected, "out.size() = " << out.size() << std::endl)
