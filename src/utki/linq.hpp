@@ -14,6 +14,10 @@ template <typename C> class linq_collection_aggregator{
 			typename std::remove_reference<C>::type,
 			C
 		>::type collection;
+	
+	typedef typename std::add_rvalue_reference<
+			typename std::remove_reference<decltype(collection)>::type::value_type
+		>::type func_arg_type;
 public:
 	linq_collection_aggregator(C collection) :
 			collection(std::move(collection))
@@ -24,8 +28,6 @@ public:
 	}
 
 	template <typename F> auto select(F func){
-		typedef decltype(std::move(*this->collection.begin())) func_arg_type;
-
 		static constexpr bool func_one_arg = !std::is_same<void, typename type_or_void<std::invoke_result<F, func_arg_type>>::type>::value;
 
 		static_assert(
@@ -56,6 +58,7 @@ public:
 
 		return linq_collection_aggregator<decltype(ret)&&>(std::move(ret));
 	}
+
 };
 
 template <typename C> linq_collection_aggregator<const C&> linq(const C& collection){
