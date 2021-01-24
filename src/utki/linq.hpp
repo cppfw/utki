@@ -1,6 +1,8 @@
 #pragma once
 
 #include <functional>
+#include <vector>
+#include <map>
 
 #include "debug.hpp"
 #include "types.hpp"
@@ -15,9 +17,7 @@ template <typename C> class linq_collection_aggregator{
 			C
 		>::type collection;
 	
-	typedef typename std::add_rvalue_reference<
-			typename std::remove_reference<decltype(collection)>::type::value_type
-		>::type func_arg_type;
+	typedef typename std::remove_reference<decltype(collection)>::type::value_type value_type;
 public:
 	linq_collection_aggregator(C collection) :
 			collection(std::move(collection))
@@ -28,6 +28,8 @@ public:
 	}
 
 	template <typename F> auto select(F func){
+		typedef typename std::add_rvalue_reference<value_type>::type func_arg_type;
+
 		static constexpr bool func_one_arg = !std::is_same<void, typename type_or_void<std::invoke_result<F, func_arg_type>>::type>::value;
 
 		static_assert(
@@ -59,6 +61,21 @@ public:
 		return linq_collection_aggregator<decltype(ret)&&>(std::move(ret));
 	}
 
+	template <typename F> auto group_by(F func){
+		typedef typename std::add_lvalue_reference<value_type>::type func_arg_type;
+		typedef typename std::remove_reference<
+				typename std::invoke_result<F, func_arg_type>::type
+			>::type func_return_type;
+
+		std::map<func_return_type, std::vector<value_type>> ret;
+
+		for(auto&& v : this->collection){
+			const auto& cv = v;
+			ret[func(cv)].push_back(std::move(v));
+		}
+
+		return linq_collection_aggregator<decltype(ret)&&>(std::move(ret));
+	}
 };
 
 template <typename C> linq_collection_aggregator<const C&> linq(const C& collection){

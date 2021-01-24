@@ -7,9 +7,9 @@
 #include <list>
 #include <map>
 
+#if __cplusplus >= 201703L
 namespace{
 void test_select(){
-#if __cplusplus >= 201703L
 	// test linq(&&).select()
 	{
 		std::vector<std::pair<int, std::string>> in = {{
@@ -92,10 +92,61 @@ void test_select(){
 		ASSERT_ALWAYS(!in.empty())
 		ASSERT_ALWAYS(!in.front().second.empty())
 	}
-#endif
+}
+}
+
+namespace{
+void test_group_by(){
+	// test linq(&&).group_by()
+	{
+		std::vector<std::pair<int, std::string>> in = {{
+			{13, "13"},
+			{14, "14"},
+			{1, "1"},
+			{132, "13"},
+			{15, "15"},
+			{133, "13"},
+			{11, "1"}
+		}};
+
+		auto out = utki::linq(std::move(in)).select(
+				[](auto v, auto i){
+					auto r = std::make_tuple(std::move(v.second), v.first, i);
+					ASSERT_ALWAYS(v.second.empty())
+					return r;
+				}
+			).group_by(
+				[](auto v)->const std::string&{
+					return std::get<0>(v);
+				}
+			).get();
+
+		decltype(out) expected = {{
+			{"1", {
+				{"1", 1, 2}, {"1", 11, 6}
+			} },
+			{"13", {
+				{"13", 13, 0}, {"13", 132, 3}, {"13", 133, 5}
+			} },
+			{"14", {
+				{"14", 14, 1}
+			} },
+			{"15", {
+				{"15", 15, 4}
+			} }
+		}};
+
+		ASSERT_ALWAYS(!out.empty())
+		ASSERT_ALWAYS(out == expected)
+		ASSERT_ALWAYS(in.empty())
+	}
 }
 }
 
 void test_utki_linq(){
 	test_select();
+	test_group_by();
 }
+#else
+void test_utki_linq(){}
+#endif
