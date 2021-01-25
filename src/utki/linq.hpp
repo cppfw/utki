@@ -30,10 +30,10 @@ public:
 	template <typename F> auto select(F func){
 		typedef typename std::add_rvalue_reference<value_type>::type func_arg_type;
 
-		static constexpr bool func_one_arg = is_type_defined<std::invoke_result<F, func_arg_type>>::value;
+		static constexpr bool func_one_arg = std::is_invocable_v<F, func_arg_type>;
 
 		static_assert(
-				func_one_arg || is_type_defined<std::invoke_result<F, func_arg_type, size_t>>::value,
+				func_one_arg || std::is_invocable_v<F, func_arg_type, size_t>,
 				"passed in function must have one argument or two arguments with the second argument of type size_t"
 			);
 
