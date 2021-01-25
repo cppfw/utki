@@ -143,9 +143,60 @@ void test_group_by(){
 }
 }
 
+namespace{
+void test_where(){
+	// test linq(const &).where()
+	{
+		const std::list<std::pair<int, const std::string>> in = {{
+			{13, "13"},
+			{14, "14"},
+			{1, "1"},
+			{13, "13_2"},
+			{3, "3"},
+			{13, "13_3"}
+		}};
+
+		auto out = utki::linq(in).where([](auto v){return v.first == 13;}).get();
+
+		decltype(out) expected = {{
+			{13, "13"},
+			{13, "13_2"},
+			{13, "13_3"}
+		}};
+
+		ASSERT_ALWAYS(out == expected)
+		ASSERT_ALWAYS(!in.empty())
+		ASSERT_ALWAYS(!in.front().second.empty())
+	}
+
+	// test linq(const &).group_by().where()
+	{
+		const std::list<std::pair<int, const std::string>> in = {{
+			{13, "13"},
+			{14, "14"},
+			{1, "1"},
+			{13, "13_2"},
+			{3, "3"},
+			{3, "3_2"}
+		}};
+
+		auto out = utki::linq(in).group_by([](auto v){return v.first;}).where([](const auto& v){return v.second.size() == 2;}).get();
+
+		ASSERT_ALWAYS(!in.empty())
+		ASSERT_ALWAYS(!in.front().second.empty())
+
+		ASSERT_INFO_ALWAYS(out.size() == 2, "out.size() = " << out.size())
+		ASSERT_INFO_ALWAYS(out.begin()->first == 3, "out.begin()->first = " << out.begin()->first)
+		ASSERT_INFO_ALWAYS(std::next(out.begin())->first == 13, "std::next(out.begin())->first = " << std::next(out.begin())->first)
+		ASSERT_INFO_ALWAYS(out.begin()->second.size() == 2, "out.begin()->second.size() = " << out.begin()->second.size())
+	}
+}
+}
+
 void test_utki_linq(){
 	test_select();
 	test_group_by();
+	test_where();
 }
 #else
 void test_utki_linq(){}

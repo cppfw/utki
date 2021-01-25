@@ -58,6 +58,13 @@ template <typename T, typename... Ts> struct get_index<T, std::variant<Ts...>> :
 		std::integral_constant<size_t, std::variant<tag<Ts>...>(tag<T>()).index()>
 {};
 
+template <class T, class = void> struct is_type_defined : std::false_type{};
+/**
+ * @brief Check if T::type is defined.
+ * Defines bool 'value' which is true if T::type is defined and false otherwise.
+ */
+template <class T> struct is_type_defined<T, std::void_t<typename T::type>> : std::true_type{};
+
 template <class T, class = void> struct type_or_void{
 	using type = void;
 };
@@ -65,7 +72,7 @@ template <class T, class = void> struct type_or_void{
 /**
  * @brief Get type or void.
  * @param T - type to get T::type from.
- * Defines 'type' member which is same as T::type in case T::type is defined, or void otherwise.
+ * Defines 'type' member which is same as T::type in case T::type is defined, or void type otherwise.
  */
 template <class T> struct type_or_void<T, std::void_t<typename T::type>>{
 	using type = typename T::type;
