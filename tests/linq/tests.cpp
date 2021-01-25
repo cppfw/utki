@@ -156,7 +156,7 @@ void test_where(){
 			{13, "13_3"}
 		}};
 
-		auto out = utki::linq(in).where([](const auto& v){return v.first == 13;}).get();
+		auto out = utki::linq(in).where([](const decltype(in)::value_type& v){return v.first == 13;}).get();
 
 		decltype(out) expected = {{
 			{13, "13"},
