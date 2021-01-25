@@ -116,7 +116,7 @@ void test_group_by(){
 					return r;
 				}
 			).group_by(
-				[](auto v)->const std::string&{
+				[](const auto& v)->const std::string&{
 					return std::get<0>(v);
 				}
 			).get();
@@ -156,7 +156,7 @@ void test_where(){
 			{13, "13_3"}
 		}};
 
-		auto out = utki::linq(in).where([](auto v){return v.first == 13;}).get();
+		auto out = utki::linq(in).where([](const auto& v){return v.first == 13;}).get();
 
 		decltype(out) expected = {{
 			{13, "13"},
@@ -180,7 +180,7 @@ void test_where(){
 			{3, "3_2"}
 		}};
 
-		auto out = utki::linq(in).group_by([](auto v){return v.first;}).where([](const auto& v){return v.second.size() == 2;}).get();
+		auto out = utki::linq(in).group_by([](const auto& v){return v.first;}).where([](const auto& v){return v.second.size() == 2;}).get();
 
 		ASSERT_ALWAYS(!in.empty())
 		ASSERT_ALWAYS(!in.front().second.empty())

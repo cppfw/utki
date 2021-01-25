@@ -18,6 +18,12 @@ template <typename C> class linq_collection_aggregator{
 		>::type collection;
 	
 	typedef typename std::remove_reference<decltype(collection)>::type::value_type value_type;
+
+	struct noncopyable_value_type : value_type{
+		noncopyable_value_type(const noncopyable_value_type&) = delete;
+		noncopyable_value_type& operator=(const noncopyable_value_type&) = delete;
+	};
+
 public:
 	linq_collection_aggregator(C collection) :
 			collection(std::move(collection))
@@ -62,6 +68,16 @@ public:
 	}
 
 	template <typename F> auto group_by(F func){
+		static_assert(
+				std::is_invocable_v<F, noncopyable_value_type>,
+				"functor must have const reference argument"
+			);
+
+		static_assert(
+				!std::is_same_v<void, std::invoke_result_t<F, const value_type&>>,
+				"functor must return non-void"
+			);
+
 		typedef typename std::add_lvalue_reference<value_type>::type func_arg_type;
 		typedef typename std::remove_reference<
 				typename std::invoke_result<F, func_arg_type>::type
@@ -70,42 +86,24 @@ public:
 		std::map<func_return_type, std::vector<value_type>> ret;
 
 		for(auto&& v : this->collection){
-			const auto& cv = v;
-			ret[func(cv)].push_back(std::move(v));
+			ret[func(v)].push_back(std::move(v));
 		}
 
 		return linq_collection_aggregator<decltype(ret)&&>(std::move(ret));
 	}
 
 	template <typename F> auto where(F func){
-		typename utki::remove_constref<decltype(this->collection)>::type ret;
-
-		// this assertion makes sure that functor argument is not a non-const reference
-		// static_assert(
-		// 		is_type_defined<std::invoke_result<F, const typename remove_constref<C>::type::value_type>>::value,
-		// 		"functor must have const reference argument"
-		// 	);
-
-		// static_assert(
-		// 		!is_type_defined<std::invoke_result<F, value_type>>::value,
-		// 		"functor must have const reference argument"
-		// 	);
-
-		typedef std::invoke_result<
-				F,
-				const value_type&
-			> invoke_result;
-
-		// this assertion makes sure that functor argument is reference
 		static_assert(
-				is_type_defined<invoke_result>::value,
+				std::is_invocable_v<F, noncopyable_value_type>,
 				"functor must have const reference argument"
 			);
 
 		static_assert(
-				std::is_same<bool, typename invoke_result::type>::value,
+				std::is_same<bool, std::invoke_result_t<F, const value_type&>>::value,
 				"functor must return bool"
 			);
+
+		typename utki::remove_constref<decltype(this->collection)>::type ret;
 
 		std::copy_if(
 				std::make_move_iterator(this->collection.begin()),
