@@ -1,3 +1,9 @@
+libutki (1.1.112) unstable; urgency=medium
+
+  * flags: enum_size made lowercase
+
+ -- Ivan Gagis <igagis@gmail.com>  Sat, 13 Feb 2021 15:39:05 +0200
+
 libutki (1.1.111) unstable; urgency=medium
 
   * add LOG
