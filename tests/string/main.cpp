@@ -87,6 +87,22 @@ int main(int argc, char** argv){
 		ASSERT_ALWAYS(r[5] == "[]")
 	}
 
+	// test split with trailing delimiter character
+	{
+		auto str = "qwe/rtyu/io/p//[]/";
+
+		auto r = utki::split(str, '/');
+
+		ASSERT_INFO_ALWAYS(r.size() == 7, "r.size() = " << r.size())
+		ASSERT_ALWAYS(r[0] == "qwe")
+		ASSERT_ALWAYS(r[1] == "rtyu")
+		ASSERT_ALWAYS(r[2] == "io")
+		ASSERT_ALWAYS(r[3] == "p")
+		ASSERT_ALWAYS(r[4] == "")
+		ASSERT_ALWAYS(r[5] == "[]")
+		ASSERT_ALWAYS(r[6] == "")
+	}
+
 	// test empty string split
 	{
 		auto r = utki::split("", '/');
