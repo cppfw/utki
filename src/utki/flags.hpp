@@ -16,7 +16,7 @@ namespace utki{
  * If you define an enumeration according to the following rules:
  * - enumeration is a 'enum class'.
  * - there is no direct assignment of values to enumeration items, i.e. values are in strict ascending order
- * - the very last item is ENUM_SIZE
+ * - the very last item is enum_size
  * 
  * For example:
  * @code
@@ -26,7 +26,7 @@ namespace utki{
  *     second_item,
  *     third_item,
  *     ...
- *     ENUM_SIZE
+ *     enum_size
  * };
  * 
  * @endcode
@@ -47,13 +47,13 @@ namespace utki{
  * @endcode
  */
 template <class T_Enum> class flags{
-	static_assert(int(T_Enum::ENUM_SIZE) >= 0, "enumeration must define ENUM_SIZE item");
-	static_assert(unsigned(T_Enum::ENUM_SIZE) > 0, "enumeration must define at least one item");
+	static_assert(int(T_Enum::enum_size) >= 0, "enumeration must define enum_size item");
+	static_assert(unsigned(T_Enum::enum_size) > 0, "enumeration must define at least one item");
 public:
 	typedef typename utki::uint_size<sizeof(T_Enum)>::type index_type;
 	
 private:
-	std::array<uint8_t, index_type(T_Enum::ENUM_SIZE) / 8 + 1> f;
+	std::array<uint8_t, index_type(T_Enum::enum_size) / 8 + 1> f;
 
 public:
 
@@ -82,7 +82,7 @@ public:
 	 * @return Number of flags in this flag set.
 	 */
 	index_type size()const noexcept{
-		return index_type(T_Enum::ENUM_SIZE);
+		return index_type(T_Enum::enum_size);
 	}
 
 	/**
@@ -92,7 +92,7 @@ public:
 	 * @return false otherwise.
 	 */
 	bool get(T_Enum flag)const noexcept{
-		ASSERT(flag < T_Enum::ENUM_SIZE)
+		ASSERT(flag < T_Enum::enum_size)
 		return (this->f[index_type(flag) / 8] & (1 << (index_type(flag) % 8))) != 0;
 	}
 
@@ -115,7 +115,7 @@ public:
 	 * @return Reference to this Flags.
 	 */
 	flags& set(T_Enum flag, bool value = true)noexcept{
-		ASSERT(flag < T_Enum::ENUM_SIZE)
+		ASSERT(flag < T_Enum::enum_size)
 		if(value){
 			this->f[index_type(flag) / 8] |= (1 << (index_type(flag) % 8));
 		}else{

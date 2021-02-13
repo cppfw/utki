@@ -52,7 +52,7 @@ enum class TestEnum{
 	THIRTY_EIGHTH,
 	THIRTY_NINETH,
 
-	ENUM_SIZE
+	enum_size
 };
 
 
@@ -66,7 +66,7 @@ void Run(){
 		ASSERT_ALWAYS(fs.get(TestEnum::SECOND))
 		
 		
-		TRACE(<< "ENUM_SIZE = " << size_t(TestEnum::ENUM_SIZE) << " sizeof(fs) = " << sizeof(fs) << " sizeof(index_t) = " << sizeof(utki::flags<TestEnum>::index_type) << std::endl)
+		TRACE(<< "enum_size = " << size_t(TestEnum::enum_size) << " sizeof(fs) = " << sizeof(fs) << " sizeof(index_t) = " << sizeof(utki::flags<TestEnum>::index_type) << std::endl)
 				
 		TRACE(<< "fs = " << fs << std::endl)
 		
