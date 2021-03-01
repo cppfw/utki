@@ -645,6 +645,33 @@ void test_traversal(){
 		ASSERT_ALWAYS(!traversal.is_valid({3, 1}))
 	}
 
+	// test operator[]
+	{
+		typedef utki::tree<int> tree;
+		const tree::container_type roots{
+			tree(1,{34, 45}),
+
+			tree(2,{
+				tree(3, {78, 89, 96}),
+				tree(4,{32, 64, 128}),
+				tree(42, {98, 99, 100})
+			})
+		};
+
+		std::vector<int> encountered;
+
+		const auto traversal = utki::make_traversal(roots);
+
+		ASSERT_ALWAYS(traversal[{0}].value == 1)
+		ASSERT_ALWAYS((traversal[{0, 0}].value) == 34)
+		ASSERT_ALWAYS((traversal[{0, 1}].value) == 45)
+		ASSERT_ALWAYS((traversal[{1}].value) == 2)
+		ASSERT_ALWAYS((traversal[{1, 0}].value) == 3)
+		ASSERT_ALWAYS((traversal[{1, 0, 0}].value) == 78)
+		ASSERT_ALWAYS((traversal[{1, 1, 0}].value) == 32)
+		ASSERT_ALWAYS((traversal[{1, 1, 2}].value) == 128)
+	}
+
 	// iterator comparison
 	{
 		typedef utki::tree<int> tree;
@@ -805,7 +832,6 @@ void test_traversal(){
 	}
 }
 }
-
 
 void test_utki_tree(){
 	basic();
