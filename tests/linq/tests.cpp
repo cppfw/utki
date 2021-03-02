@@ -193,10 +193,125 @@ void test_where(){
 }
 }
 
+namespace{
+void test_order_by(){
+	// test linq(&&).order_by()
+	{
+		std::vector<std::pair<int, std::string>> in = {{
+			{13, "13"},
+			{14, "hgb"},
+			{14, "asdh"},
+			{5, "asd"},
+			{1, "1"}
+		}};
+
+		auto out = utki::linq(std::move(in)).order_by(
+				[](const auto& v) -> const int&{
+					return v.first;
+				}
+			).get();
+
+		static_assert(std::is_same<decltype(out), decltype(in)>::value, "not same");
+
+		decltype(out) expected = {{
+			{1, "1"},
+			{5, "asd"},
+			{13, "13"},
+			{14, "hgb"},
+			{14, "asdh"}
+		}};
+
+#ifdef DEBUG
+		for(auto& e : out){
+			LOG("e = " << e.first << " " << e.second << std::endl)
+		}
+#endif
+
+		ASSERT_ALWAYS(out == expected)
+		ASSERT_ALWAYS(in.empty())
+	}
+
+	// test linq(&).order_by()
+	{
+		std::vector<std::pair<int, std::string>> in = {{
+			{13, "13"},
+			{14, "hgb"},
+			{14, "asdh"},
+			{5, "asd"},
+			{1, "1"}
+		}};
+
+		auto out = utki::linq(in).order_by(
+				[](const auto& v) -> const int&{
+					return v.first;
+				}
+			).get();
+
+		static_assert(std::is_same<decltype(out), decltype(in)>::value, "not same");
+
+		decltype(out) expected = {{
+			{1, "1"},
+			{5, "asd"},
+			{13, "13"},
+			{14, "hgb"},
+			{14, "asdh"}
+		}};
+
+#ifdef DEBUG
+		for(auto& e : out){
+			LOG("e = " << e.first << " " << e.second << std::endl)
+		}
+#endif
+
+		ASSERT_ALWAYS(out == expected)
+		ASSERT_ALWAYS(!in.empty())
+		ASSERT_ALWAYS(!in.begin()->second.empty())
+	}
+
+	// test linq(const &).order_by()
+	{
+		const std::vector<std::pair<int, std::string>> in = {{
+			{13, "13"},
+			{14, "hgb"},
+			{14, "asdh"},
+			{5, "asd"},
+			{1, "1"}
+		}};
+
+		auto out = utki::linq(in).order_by(
+				[](const auto& v) -> const int&{
+					return v.first;
+				}
+			).get();
+
+		static_assert(std::is_same<decltype(out), std::remove_const<decltype(in)>::type>::value, "not same");
+
+		decltype(out) expected = {{
+			{1, "1"},
+			{5, "asd"},
+			{13, "13"},
+			{14, "hgb"},
+			{14, "asdh"}
+		}};
+
+#ifdef DEBUG
+		for(auto& e : out){
+			LOG("e = " << e.first << " " << e.second << std::endl)
+		}
+#endif
+
+		ASSERT_ALWAYS(out == expected)
+		ASSERT_ALWAYS(!in.empty())
+		ASSERT_ALWAYS(!in.begin()->second.empty())
+	}
+}
+}
+
 void test_utki_linq(){
 	test_select();
 	test_group_by();
 	test_where();
+	test_order_by();
 }
 #else
 void test_utki_linq(){}

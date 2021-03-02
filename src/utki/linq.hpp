@@ -12,6 +12,11 @@ namespace utki{
 #if __cplusplus >= 201703L
 
 template <typename C> class linq_collection_aggregator{
+	template <typename CC> friend class linq_collection_aggregator;
+	template <typename CC> friend linq_collection_aggregator<const CC&> linq(const CC&);
+	template <typename CC> friend linq_collection_aggregator<const CC&> linq(CC&);
+	template <typename CC> friend linq_collection_aggregator<CC&&> linq(CC&&);
+
 	typename std::conditional<std::is_rvalue_reference<C>::value,
 			typename std::remove_reference<C>::type,
 			C
@@ -24,11 +29,11 @@ template <typename C> class linq_collection_aggregator{
 		noncopyable_value_type& operator=(const noncopyable_value_type&) = delete;
 	};
 
-public:
 	linq_collection_aggregator(C collection) :
 			collection(std::move(collection))
 	{}
 
+public:
 	decltype(collection) get(){
 		return std::move(this->collection);
 	}
@@ -113,6 +118,44 @@ public:
 			);
 
 		return linq_collection_aggregator<decltype(ret)&&>(std::move(ret));
+	}
+
+	template <typename F> auto order_by(F func){
+		static_assert(
+				std::is_invocable_v<F, noncopyable_value_type>,
+				"functor must have const reference argument"
+			);
+
+		typedef std::invoke_result_t<F, const value_type&> invoke_result;
+
+		static_assert(
+				std::is_reference<invoke_result>::value &&
+						std::is_const<typename std::remove_reference<invoke_result>::type>::value
+					,
+				"functor must return const reference"
+			);
+		
+		if constexpr (std::is_rvalue_reference<C>::value){
+			std::sort(
+					this->collection.begin(),
+					this->collection.end(),
+					[&func](const value_type& a, const value_type& b){
+						return func(a) < func(b);
+					}
+				);
+			return linq_collection_aggregator<decltype(this->collection)&&>(std::move(this->collection));
+		}else{
+			auto ret = this->collection; // make a copy of the collection
+			
+			std::sort(
+					ret.begin(),
+					ret.end(),
+					[&func](const value_type& a, const value_type& b){
+						return func(a) < func(b);
+					}
+				);
+			return linq_collection_aggregator<decltype(ret)&&>(std::move(ret));
+		}
 	}
 };
 
