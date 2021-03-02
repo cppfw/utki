@@ -566,6 +566,64 @@ public:
 	}
 
 	/**
+	 * @brief Get reference to tree element by index.
+	 * @param index - index of the tree element.
+	 * @return reference to the tree elemenet referred by index.
+	 */
+	typename C::value_type& operator[](utki::span<const size_type> index){
+		ASSERT(this->is_valid(index))
+		// TODO: rewrite without creating iterator, for more performance
+		return *this->make_iterator(index);
+	}
+
+	/**
+	 * @brief Get constant reference to tree element by index.
+	 * @param index - index of the tree element.
+	 * @return reference to the tree elemenet referred by index.
+	 */
+	const typename C::value_type& operator[](utki::span<const size_type> index)const{
+		ASSERT(this->is_valid(index))
+		// TODO: rewrite without creating iterator, for more performance
+		return *this->make_const_iterator(index);
+	}
+
+	/**
+	 * @brief Get reference to tree element by index.
+	 * @param index - index of the tree element.
+	 * @return reference to the tree elemenet referred by index.
+	 */
+	typename C::value_type& operator[](const std::vector<size_t>& index){
+		return this->operator[](utki::make_span(index));
+	}
+
+	/**
+	 * @brief Get constant reference to tree element by index.
+	 * @param index - index of the tree element.
+	 * @return reference to the tree elemenet referred by index.
+	 */
+	const typename C::value_type& operator[](const std::vector<size_t>& index)const{
+		return this->operator[](utki::make_span(index));
+	}
+
+	/**
+	 * @brief Get reference to tree element by index.
+	 * @param index - index of the tree element.
+	 * @return reference to the tree elemenet referred by index.
+	 */
+	typename C::value_type& operator[](std::initializer_list<size_t> index){
+		return this->operator[](std::vector<size_t>(index));
+	}
+
+	/**
+	 * @brief Get constant reference to tree element by index.
+	 * @param index - index of the tree element.
+	 * @return reference to the tree elemenet referred by index.
+	 */
+	const typename C::value_type& operator[](std::initializer_list<size_t> index)const{
+		return this->operator[](std::vector<size_t>(index));
+	}
+
+	/**
 	 * @brief Get iterator pointing to the beginning of the tree hierarchy.
 	 * @return Iterator pointing to the beginning of the tree hierarchy.
 	 */
