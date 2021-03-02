@@ -135,24 +135,29 @@ public:
 				"functor must return const reference"
 			);
 		
+		auto comparer = [&func](const value_type& a, const value_type& b){
+			return func(a) < func(b);
+		};
+
 		if constexpr (std::is_rvalue_reference<C>::value){
 			std::sort(
 					this->collection.begin(),
 					this->collection.end(),
-					[&func](const value_type& a, const value_type& b){
-						return func(a) < func(b);
-					}
+					comparer
 				);
 			return linq_collection_aggregator<decltype(this->collection)&&>(std::move(this->collection));
 		}else{
-			auto ret = this->collection; // make a copy of the collection
+			std::vector<value_type> ret;
+			std::copy(
+					this->collection.begin(),
+					this->collection.end(),
+					std::back_inserter(ret)
+				);
 			
 			std::sort(
 					ret.begin(),
 					ret.end(),
-					[&func](const value_type& a, const value_type& b){
-						return func(a) < func(b);
-					}
+					comparer
 				);
 			return linq_collection_aggregator<decltype(ret)&&>(std::move(ret));
 		}
