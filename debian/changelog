@@ -1,3 +1,9 @@
+libutki (1.1.115) unstable; urgency=medium
+
+  * add linq::order_by()
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 02 Mar 2021 23:47:34 +0200
+
 libutki (1.1.114) unstable; urgency=medium
 
   * add traversal::operator[]()
