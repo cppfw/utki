@@ -1,3 +1,9 @@
+libutki (1.1.116) unstable; urgency=medium
+
+  * msvs: turn off whole program optimization
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 16 Mar 2021 22:33:01 +0200
+
 libutki (1.1.115) unstable; urgency=medium
 
   * add linq::order_by()
