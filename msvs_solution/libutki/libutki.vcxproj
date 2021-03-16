@@ -590,28 +590,10 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\utki\string.cpp" />
-    <ClCompile Include="..\..\src\utki\time.cpp" />
-    <ClCompile Include="..\..\src\utki\unicode.cpp" />
+    <ClCompile Include="..\..\src\**\*.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\utki\config.hpp" />
-    <ClInclude Include="..\..\src\utki\debug.hpp" />
-    <ClInclude Include="..\..\src\utki\destructable.hpp" />
-    <ClInclude Include="..\..\src\utki\flags.hpp" />
-    <ClInclude Include="..\..\src\utki\linq.hpp" />
-    <ClInclude Include="..\..\src\utki\math.hpp" />
-    <ClInclude Include="..\..\src\utki\shared.hpp" />
-    <ClInclude Include="..\..\src\utki\singleton.hpp" />
-    <ClInclude Include="..\..\src\utki\span.hpp" />
-    <ClInclude Include="..\..\src\utki\spin_lock.hpp" />
-    <ClInclude Include="..\..\src\utki\string.hpp" />
-    <ClInclude Include="..\..\src\utki\time.hpp" />
-    <ClInclude Include="..\..\src\utki\tree.hpp" />
-    <ClInclude Include="..\..\src\utki\types.hpp" />
-    <ClInclude Include="..\..\src\utki\unicode.hpp" />
-    <ClInclude Include="..\..\src\utki\util.hpp" />
-    <ClInclude Include="..\..\src\utki\windows.hpp" />
+    <ClInclude Include="..\..\src\**\*.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
