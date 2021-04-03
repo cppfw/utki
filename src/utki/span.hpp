@@ -217,6 +217,26 @@ public:
 		return this->buf;
 	}
 
+	value_type& front()noexcept{
+		ASSERT(!this->empty())
+		return this->operator[](0);
+	}
+
+	const value_type& front()const noexcept{
+		ASSERT(!this->empty())
+		return this->operator[](0);
+	}
+
+	value_type& back()noexcept{
+		ASSERT(!this->empty())
+		return this->operator[](this->size() - 1);
+	}
+
+	const value_type& back()const noexcept{
+		ASSERT(!this->empty())
+		return this->operator[](this->size() - 1);
+	}
+
 	/**
 	 * @brief Checks if pointer points somewhere within the span.
 	 * @param p - pointer to check.
