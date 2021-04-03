@@ -1,3 +1,9 @@
+libutki (1.1.117) unstable; urgency=medium
+
+  * add span::front() and span::back()
+
+ -- Ivan Gagis <igagis@gmail.com>  Sun, 04 Apr 2021 00:31:53 +0300
+
 libutki (1.1.116) unstable; urgency=medium
 
   * msvs: turn off whole program optimization
