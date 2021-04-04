@@ -74,7 +74,7 @@ public:
 
 	template <typename F> auto group_by(F func){
 		static_assert(
-				std::is_invocable_v<F, noncopyable_value_type>,
+				std::is_invocable_v<F, noncopyable_value_type>, // non-const lvalue reference cannot bind to temproray objects, thus F(auto&) will fail the assert, but F(const auto&) succeeds
 				"functor must have const reference argument"
 			);
 
@@ -99,7 +99,7 @@ public:
 
 	template <typename F> auto where(F func){
 		static_assert(
-				std::is_invocable_v<F, noncopyable_value_type>,
+				std::is_invocable_v<F, noncopyable_value_type>, // non-const lvalue reference cannot bind to temproray objects, thus F(auto&) will fail the assert, but F(const auto&) succeeds
 				"functor must have const reference argument"
 			);
 
@@ -122,7 +122,7 @@ public:
 
 	template <typename F> auto order_by(F func){
 		static_assert(
-				std::is_invocable_v<F, noncopyable_value_type>,
+				std::is_invocable_v<F, noncopyable_value_type>, // non-const lvalue reference cannot bind to temproray objects, thus F(auto&) will fail the assert, but F(const auto&) succeeds
 				"functor must have const reference argument"
 			);
 
