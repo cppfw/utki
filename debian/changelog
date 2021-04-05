@@ -1,3 +1,9 @@
+libutki (1.1.118) unstable; urgency=medium
+
+  * add span::subspan()
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 05 Apr 2021 13:40:37 +0300
+
 libutki (1.1.117) unstable; urgency=medium
 
   * add span::front() and span::back()
