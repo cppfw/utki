@@ -68,9 +68,9 @@ inline void logAssert(const char* msg, const char* file, int line){
 
 #define ASSERT_INFO_ALWAYS(x, y) \
 	if(!(x)){ \
-		std::stringstream ss; \
-		ss << y; \
-		utki::logAssert(ss.str().c_str(), __FILE__, __LINE__); \
+		std::stringstream assert_info_always_string_stream; \
+		assert_info_always_string_stream << y; \
+		utki::logAssert(assert_info_always_string_stream.str().c_str(), __FILE__, __LINE__); \
 		assert(false); \
 	}
 

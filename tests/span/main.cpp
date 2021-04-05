@@ -6,5 +6,6 @@ int main(int argc, char *argv[]){
 	TestBufferConstCast::Run();
 	testOutputToStream::run();
 	test_make_span::run();
+	test_subspan::run();
 	return 0;
 }

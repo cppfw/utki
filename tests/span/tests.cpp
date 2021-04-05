@@ -83,8 +83,6 @@ void Run(){
 
 }
 
-
-
 namespace TestBufferConstCast{
 
 class TestClass{
@@ -125,7 +123,6 @@ void Run(){
 
 }
 
-
 namespace testOutputToStream{
 void run(){
 	{
@@ -159,6 +156,47 @@ void run(){
 
 		ASSERT_ALWAYS(s.size() == strlen(str))
 		ASSERT_ALWAYS(s.data() == str)
+	}
+}
+}
+
+namespace test_subspan{
+void run(){
+	std::string str = "Hello world!";
+
+	auto s = utki::make_span(str);
+
+	ASSERT_ALWAYS(s.size() == str.size())
+	ASSERT_ALWAYS(s.data() == str.data())
+	
+	// test subspan(offset)
+	{
+		auto ss = s.subspan(3);
+
+		ASSERT_ALWAYS(ss.size() == str.size() - 3)
+		ASSERT_ALWAYS(ss.data() == str.data() + 3)
+	}
+
+	// test subspan(offset == size)
+	{
+		auto ss = s.subspan(s.size());
+
+		ASSERT_INFO_ALWAYS(ss.size() == 0, "ss.size() = " << ss.size())
+	}
+
+	// test subspan(offset > size)
+	{
+		auto ss = s.subspan(1000);
+
+		ASSERT_INFO_ALWAYS(ss.size() == 0, "ss.size() = " << ss.size())
+	}
+
+	// test subspan(offset, count)
+	{
+		auto ss = s.subspan(3, 4);
+
+		ASSERT_INFO_ALWAYS(ss.size() == 4, "ss.size() = " << ss.size())
+		ASSERT_ALWAYS(ss.data() == str.data() + 3)
 	}
 }
 }

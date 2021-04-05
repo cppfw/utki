@@ -20,3 +20,7 @@ void run();
 namespace test_make_span{
 void run();
 }
+
+namespace test_subspan{
+void run();
+}

@@ -237,6 +237,19 @@ public:
 		return this->operator[](this->size() - 1);
 	}
 
+	span subspan(
+			size_type offset,
+			size_type count = std::numeric_limits<size_type>::max()
+		)const noexcept
+	{
+		pointer new_p = offset > this->size() ? this->end() : this->data() + offset;
+		ASSERT(new_p <= this->end())
+		size_type max_new_s = this->end() - new_p;
+		size_type new_s = count > max_new_s ? max_new_s : count;
+		ASSERT(new_p + new_s <= this->end())
+		return span(new_p, new_s);
+	}
+
 	/**
 	 * @brief Checks if pointer points somewhere within the span.
 	 * @param p - pointer to check.
