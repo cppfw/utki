@@ -1,4 +1,4 @@
-//make sure all ting debugging facilities are turned on
+// make sure all debugging facilities are turned on
 #ifndef DEBUG
 #	define DEBUG
 #endif
@@ -48,7 +48,7 @@ void Run(){
 		// make sure, "c" is not 0 before accessing member a.
 		c->a = 13;
 		int b = c->a;
-		ASSERT_ALWAYS(b == 13)
+		utki::assert(b == 13, SL);
 		delete c;
 	}
 
@@ -58,7 +58,7 @@ void Run(){
 		// make sure, "pc" is valid before accessing member a.
 		pc->a = 13;
 		int b = pc->a;
-		ASSERT_ALWAYS(b == 13)
+		utki::assert(b == 13, [&](auto&o){o << "b = " << b;}, SL);
 	}
 }
 

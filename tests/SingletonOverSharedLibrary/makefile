@@ -9,6 +9,9 @@ this_srcs += testso.cpp
 
 this_no_install := true
 
+this_ldflags += -L $(d)../../src/out/$(c)
+this_ldlibs += -lutki
+
 $(eval $(prorab-build-lib))
 
 lib_target_name := $(prorab_this_name)
@@ -26,6 +29,9 @@ this_srcs += Singleton_test.cpp
 this_ldlibs += $(lib_target_name)
 
 this_no_install := true
+
+this_ldflags += -L $(d)../../src/out/$(c)
+this_ldlibs += -lutki
 
 $(eval $(prorab-build-app))
 
