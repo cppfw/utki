@@ -109,11 +109,7 @@ inline void assert(bool condition, std::pair<const char*, size_t> source_locatio
 #ifdef DEBUG
 
 // TODO: deprecated, remove.
-#	define ASSERT_INFO(x, y) \
-	if(!(x)){ \
-		LOG_ALWAYS(__FILE__ << ":" << __LINE__ << ": \e[1;31merror\e[0m: assertion failed:" << std::endl << "  " << y << std::endl) \
-		abort(); \
-	}
+#	define ASSERT_INFO(x, y) utki::assert(x, [&](auto&o){o << y;}, SL);
 
 #	define ASSERT1(condition) utki::assert(condition, SL);
 #	define ASSERT2(condition, print) utki::assert(condition, print, SL);
