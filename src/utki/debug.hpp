@@ -60,7 +60,7 @@ void log(const std::function<void(std::ostream&)>& print);
 // TODO: deprecated, remove.
 #	define TRACE(x) TRACE_ALWAYS(x)
 
-#	define LOG(x) utki::log([&](auto&o){o << x;});
+#	define LOG(x) utki::log([&](auto& log_output_stream){log_output_stream << x;});
 #else
 
 // TODO: deprecated, remove.
@@ -79,7 +79,7 @@ void log(const std::function<void(std::ostream&)>& print);
  * @brief Source location macro.
  * Constructs an object which holds current filename and current line number.
  */
-#define SL std::make_pair(__FILE__, __LINE__)
+#define SL std::make_pair(__FILE__, size_t(__LINE__))
 
 namespace utki{
 
@@ -96,12 +96,7 @@ inline void assert(bool condition, std::pair<const char*, size_t> source_locatio
 }
 
 // TODO: deprecated, remove.
-#define ASSERT_INFO_ALWAYS(x, y) \
-	if(!(x)){ \
-		std::stringstream assert_info_always_string_stream; \
-		assert_info_always_string_stream << y; \
-		utki::assert(false, [&](auto&o){o << assert_info_always_string_stream.str();}, SL); \
-	}
+#define ASSERT_INFO_ALWAYS(x, y) utki::assert(bool(x), [&](auto& assert_output_stream){assert_output_stream << y;}, SL);
 
 // TODO: deprecated, remove.
 #define ASSERT_ALWAYS(x) ASSERT_INFO_ALWAYS((x), "no additional info")
@@ -109,10 +104,10 @@ inline void assert(bool condition, std::pair<const char*, size_t> source_locatio
 #ifdef DEBUG
 
 // TODO: deprecated, remove.
-#	define ASSERT_INFO(x, y) utki::assert(x, [&](auto&o){o << y;}, SL);
+#	define ASSERT_INFO(x, y) utki::assert(bool(x), [&](auto& assert_output_stream){assert_output_stream << y;}, SL);
 
-#	define ASSERT1(condition) utki::assert(condition, SL);
-#	define ASSERT2(condition, print) utki::assert(condition, print, SL);
+#	define ASSERT1(condition) utki::assert(bool(condition), SL);
+#	define ASSERT2(condition, print) utki::assert(bool(condition), print, SL);
 
 #else // No DEBUG macro defined
 
