@@ -17,6 +17,10 @@
 #	define DEBUG
 #endif
 
+#ifdef assert
+#	undef assert
+#endif
+
 namespace utki{
 
 void log(const std::function<void(std::ostream&)>& print);
