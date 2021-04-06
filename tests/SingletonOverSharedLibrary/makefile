@@ -16,9 +16,11 @@ $(eval $(prorab-build-lib))
 
 lib_target_name := $(prorab_this_name)
 
+$(prorab_this_name): $(abspath $(d)../../src/out/$(c)/libutki$(dot_so))
 
-
+#================================
 $(eval $(prorab-clear-this-vars))
+#================================
 
 this_name := tests
 
@@ -41,3 +43,7 @@ $(prorab_this_name): $(lib_target_name)
 ifneq ($(os),windows)
     include $(d)../test_target.mk
 endif
+
+$(prorab_this_name): $(abspath $(d)../../src/out/$(c)/libutki$(dot_so))
+
+$(eval $(call prorab-include, ../../src/makefile))

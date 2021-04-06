@@ -23,7 +23,7 @@ void utki::assert(
 	}
 
 	std::stringstream ss;
-	ss << source_location.first << ":" << source_location.second << ": \e[1;31merror\e[0m: assertion failed";
+	ss << source_location.first << ":" << source_location.second << ": \033[1;31merror\033[0m: assertion failed";
 
 	if(print){
 		ss << ":" << std::endl << "  ";

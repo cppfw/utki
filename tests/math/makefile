@@ -16,3 +16,7 @@ this_ldlibs += -lutki
 $(eval $(prorab-build-app))
 
 include $(d)../test_target.mk
+
+$(prorab_this_name): $(abspath $(d)../../src/out/$(c)/libutki$(dot_so))
+
+$(eval $(call prorab-include, ../../src/makefile))
