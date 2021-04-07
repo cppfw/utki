@@ -1,3 +1,9 @@
+libutki (1.1.120) unstable; urgency=medium
+
+  * add is_cerr_terminal() and is_cout_terminal() functions
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 07 Apr 2021 21:05:30 +0300
+
 libutki (1.1.119) unstable; urgency=medium
 
   * refactor assertions and logging macros
