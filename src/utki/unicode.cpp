@@ -19,7 +19,7 @@ utf8_iterator& utf8_iterator::operator++() noexcept{
 	//		TRACE(<< "utf8::Iterator::operator++(): b = " << std::hex << unsigned(b) << std::endl)
 	++this->n;
 	if ((b & 0x80) == 0) {
-		this->c = std::uint32_t(b);
+		this->c = uint32_t(b);
 		return *this;
 	}
 

@@ -13,7 +13,7 @@ using namespace utki;
 namespace TestSerialization{
 void Run(){
 	//16 bit
-	for(std::uint32_t i = 0; i <= uint16_t(-1); ++i){
+	for(uint32_t i = 0; i <= uint16_t(-1); ++i){
 		std::array<uint8_t, sizeof(uint16_t)> buf;
 		utki::serialize16le(uint16_t(i), &*buf.begin());
 
@@ -26,25 +26,25 @@ void Run(){
 	}
 
 	//32 bit
-	for(std::uint64_t i = 0; i <= std::uint32_t(-1); i += 1317){//increment by 1317, because if increment by 1 it takes too long to run the test
-		std::array<uint8_t, sizeof(std::uint32_t)> buf;
-		utki::serialize32le(std::uint32_t(i), &*buf.begin());
+	for(uint64_t i = 0; i <= uint32_t(-1); i += 1317){//increment by 1317, because if increment by 1 it takes too long to run the test
+		std::array<uint8_t, sizeof(uint32_t)> buf;
+		utki::serialize32le(uint32_t(i), &*buf.begin());
 
 		ASSERT_ALWAYS(buf[0] == uint8_t(i & 0xff))
 		ASSERT_ALWAYS(buf[1] == uint8_t((i >> 8) & 0xff))
 		ASSERT_ALWAYS(buf[2] == uint8_t((i >> 16) & 0xff))
 		ASSERT_ALWAYS(buf[3] == uint8_t((i >> 24) & 0xff))
 
-		std::uint32_t res = utki::deserialize32le(&*buf.begin());
-		ASSERT_ALWAYS(res == std::uint32_t(i))
+		uint32_t res = utki::deserialize32le(&*buf.begin());
+		ASSERT_ALWAYS(res == uint32_t(i))
 //		TRACE(<< "TestSerialization(): i32 = " << i << std::endl)
 	}
 	
 	
 	//64 bit
 	{
-		std::uint64_t val = 0xabcdef87bcde67af;
-		std::array<uint8_t, sizeof(std::uint64_t)> buf;
+		uint64_t val = 0xabcdef87bcde67af;
+		std::array<uint8_t, sizeof(uint64_t)> buf;
 		utki::serialize64le(val, &*buf.begin());
 
 		ASSERT_ALWAYS(buf[0] == uint8_t(val & 0xff))
@@ -56,7 +56,7 @@ void Run(){
 		ASSERT_ALWAYS(buf[6] == uint8_t((val >> 48) & 0xff))
 		ASSERT_ALWAYS(buf[7] == uint8_t((val >> 56) & 0xff))
 
-		std::uint64_t res = utki::deserialize64le(&*buf.begin());
+		uint64_t res = utki::deserialize64le(&*buf.begin());
 		ASSERT_ALWAYS(res == val)
 //		TRACE(<< "TestSerialization(): i64 = " << i << std::endl)
 	}

@@ -98,7 +98,7 @@ inline uint8_t* serialize16le(uint16_t value, uint8_t* out_buf)noexcept{
  * @param out_buf - pointer to the 4 byte buffer where the result will be placed.
  * @return pointer to the next byte after serialized value.
  */
-inline uint8_t* serialize32le(std::uint32_t value, uint8_t* out_buf)noexcept{
+inline uint8_t* serialize32le(uint32_t value, uint8_t* out_buf)noexcept{
 	*out_buf = uint8_t(value & 0xff);
 	++out_buf;
 	value >>= 8;
@@ -120,7 +120,7 @@ inline uint8_t* serialize32le(std::uint32_t value, uint8_t* out_buf)noexcept{
  * @param out_buf - pointer to the 8 byte buffer where the result will be placed.
  * @return pointer to the next byte after serialized value.
  */
-inline uint8_t* serialize64le(std::uint64_t value, uint8_t* out_buf)noexcept{
+inline uint8_t* serialize64le(uint64_t value, uint8_t* out_buf)noexcept{
 	*out_buf = uint8_t(value & 0xff);
 	++out_buf;
 	value >>= 8;
@@ -172,17 +172,17 @@ inline uint16_t deserialize16le(const uint8_t* buf)noexcept{
  * @param buf - pointer to buffer containing 4 bytes to convert from little-endian format.
  * @return 32 bit unsigned integer converted from little-endian byte order to native byte order.
  */
-inline std::uint32_t deserialize32le(const uint8_t* buf)noexcept{
-	std::uint32_t ret;
+inline uint32_t deserialize32le(const uint8_t* buf)noexcept{
+	uint32_t ret;
 
 	// assume little-endian
-	ret = std::uint32_t(*buf);
+	ret = uint32_t(*buf);
 	++buf;
-	ret |= ((std::uint32_t(*buf)) << 8);
+	ret |= ((uint32_t(*buf)) << 8);
 	++buf;
-	ret |= ((std::uint32_t(*buf)) << 16);
+	ret |= ((uint32_t(*buf)) << 16);
 	++buf;
-	ret |= ((std::uint32_t(*buf)) << 24);
+	ret |= ((uint32_t(*buf)) << 24);
 
 	return ret;
 }
@@ -194,25 +194,25 @@ inline std::uint32_t deserialize32le(const uint8_t* buf)noexcept{
  * @param buf - pointer to buffer containing 8 bytes to convert from little-endian format.
  * @return 64 bit unsigned integer converted from little-endian byte order to native byte order.
  */
-inline std::uint64_t deserialize64le(const uint8_t* buf)noexcept{
-	std::uint64_t ret;
+inline uint64_t deserialize64le(const uint8_t* buf)noexcept{
+	uint64_t ret;
 
 	// assume little-endian
-	ret = std::uint64_t(*buf);
+	ret = uint64_t(*buf);
 	++buf;
-	ret |= ((std::uint64_t(*buf)) << 8);
+	ret |= ((uint64_t(*buf)) << 8);
 	++buf;
-	ret |= ((std::uint64_t(*buf)) << 16);
+	ret |= ((uint64_t(*buf)) << 16);
 	++buf;
-	ret |= ((std::uint64_t(*buf)) << 24);
+	ret |= ((uint64_t(*buf)) << 24);
 	++buf;
-	ret |= ((std::uint64_t(*buf)) << 32);
+	ret |= ((uint64_t(*buf)) << 32);
 	++buf;
-	ret |= ((std::uint64_t(*buf)) << 40);
+	ret |= ((uint64_t(*buf)) << 40);
 	++buf;
-	ret |= ((std::uint64_t(*buf)) << 48);
+	ret |= ((uint64_t(*buf)) << 48);
 	++buf;
-	ret |= ((std::uint64_t(*buf)) << 56);
+	ret |= ((uint64_t(*buf)) << 56);
 
 	return ret;
 }
@@ -239,7 +239,7 @@ inline uint8_t* serialize16be(uint16_t value, uint8_t* out_buf)noexcept{
  * @param out_buf - pointer to the 4 byte buffer where the result will be placed.
  * @return pointer to the next byte after serialized value.
  */
-inline uint8_t* serialize32be(std::uint32_t value, uint8_t* out_buf)noexcept{
+inline uint8_t* serialize32be(uint32_t value, uint8_t* out_buf)noexcept{
 	*out_buf = uint8_t((value >> 24) & 0xff);
 	++out_buf;
 	*out_buf = uint8_t((value >> 16) & 0xff);
@@ -258,7 +258,7 @@ inline uint8_t* serialize32be(std::uint32_t value, uint8_t* out_buf)noexcept{
  * @param out_buf - pointer to the 8 byte buffer where the result will be placed.
  * @return pointer to the next byte after serialized value.
  */
-inline uint8_t* serialize64be(std::uint64_t value, uint8_t* out_buf)noexcept{
+inline uint8_t* serialize64be(uint64_t value, uint8_t* out_buf)noexcept{
 	*out_buf = uint8_t((value >> 56) & 0xff);
 	++out_buf;
 	*out_buf = uint8_t((value >> 48) & 0xff);
@@ -303,17 +303,17 @@ inline uint16_t deserialize16be(const uint8_t* buf)noexcept{
  * @param buf - pointer to buffer containing 4 bytes to convert from big-endian format.
  * @return 32 bit unsigned integer converted from big-endian byte order to native byte order.
  */
-inline std::uint32_t deserialize32be(const uint8_t* buf)noexcept{
-	std::uint32_t ret;
+inline uint32_t deserialize32be(const uint8_t* buf)noexcept{
+	uint32_t ret;
 
 	// assume big-endian
-	ret = ((std::uint32_t(*buf)) << 24);
+	ret = ((uint32_t(*buf)) << 24);
 	++buf;
-	ret |= ((std::uint32_t(*buf)) << 16);
+	ret |= ((uint32_t(*buf)) << 16);
 	++buf;
-	ret |= ((std::uint32_t(*buf)) << 8);
+	ret |= ((uint32_t(*buf)) << 8);
 	++buf;
-	ret |= std::uint32_t(*buf);
+	ret |= uint32_t(*buf);
 
 	return ret;
 }
@@ -325,25 +325,25 @@ inline std::uint32_t deserialize32be(const uint8_t* buf)noexcept{
  * @param buf - pointer to buffer containing 4 bytes to convert from big-endian format.
  * @return 64 bit unsigned integer converted from big-endian byte order to native byte order.
  */
-inline std::uint64_t deserialize64be(const uint8_t* buf)noexcept{
-	std::uint64_t ret;
+inline uint64_t deserialize64be(const uint8_t* buf)noexcept{
+	uint64_t ret;
 
 	// assume big-endian
-	ret = ((std::uint64_t(*buf)) << 56);
+	ret = ((uint64_t(*buf)) << 56);
 	++buf;
-	ret = ((std::uint64_t(*buf)) << 48);
+	ret = ((uint64_t(*buf)) << 48);
 	++buf;
-	ret = ((std::uint64_t(*buf)) << 40);
+	ret = ((uint64_t(*buf)) << 40);
 	++buf;
-	ret = ((std::uint64_t(*buf)) << 32);
+	ret = ((uint64_t(*buf)) << 32);
 	++buf;
-	ret = ((std::uint64_t(*buf)) << 24);
+	ret = ((uint64_t(*buf)) << 24);
 	++buf;
-	ret |= ((std::uint64_t(*buf)) << 16);
+	ret |= ((uint64_t(*buf)) << 16);
 	++buf;
-	ret |= ((std::uint64_t(*buf)) << 8);
+	ret |= ((uint64_t(*buf)) << 8);
 	++buf;
-	ret |= std::uint64_t(*buf);
+	ret |= uint64_t(*buf);
 
 	return ret;
 }
@@ -358,5 +358,19 @@ inline std::uint64_t deserialize64be(const uint8_t* buf)noexcept{
 template< class T, class... Args > std::unique_ptr<T> make_unique(Args&&... args){
 	return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
 }
+
+/**
+ * @brief Check if stderr is terminal or file/pipe.
+ * @return true in case stderr outputs to terminal.
+ * @return false in case stderr outputs to file or pipe.
+ */
+bool is_cerr_terminal();
+
+/**
+ * @brief Check if stdout is terminal or file/pipe.
+ * @return true in case stdout outputs to terminal.
+ * @return false in case stdout outputs to file or pipe.
+ */
+bool is_cout_terminal();
 
 }
