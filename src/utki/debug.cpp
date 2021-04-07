@@ -1,5 +1,8 @@
 #include "debug.hpp"
 
+#include <unistd.h>
+#include <cstdio>
+
 #include "config.hpp"
 
 #if M_OS_NAME == M_OS_NAME_ANDROID
@@ -13,7 +16,8 @@
 using namespace utki;
 
 namespace{
-const std::string error_string = "\033[1;31merror\033[0m";
+const std::string colored_error_string = "\033[1;31merror\033[0m";
+const std::string uncolored_error_string = "error";
 }
 
 void utki::assert(
@@ -27,7 +31,15 @@ void utki::assert(
 	}
 
 	std::stringstream ss;
-	ss << source_location.first << ":" << source_location.second << ": " << error_string << ": assertion failed";
+	ss << source_location.first << ":" << source_location.second << ": ";
+
+	if(isatty(fileno(stderr))){ // if we have terminal
+		ss << colored_error_string;
+	}else{
+		ss << uncolored_error_string;
+	}
+	 
+	ss << ": assertion failed";
 
 	if(print){
 		ss << ":" << std::endl << "  ";
