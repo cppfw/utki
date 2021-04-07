@@ -14,7 +14,7 @@
 #	include <io.h>
 namespace{
 bool is_stderr_terminal(){
-	return _isatty(fileno(stderr));
+	return _isatty(_fileno(stderr));
 }
 }
 #else
