@@ -101,7 +101,7 @@ jobs:
     - name: create package
       run: myci-create-zip-package.sh --headers-dir src --file xcode/build/lib$PACKAGE_NAME.a///lib/ios --file LICENSE $PACKAGE_NAME-$PACKAGE_VERSION.zip
     - name: deploy
-      run: myci-deploy-cocoapods.sh --repo cppfw --version $PACKAGE_VERSION --bintray-owner cppfw --bintray-repo cocoapods --package-file $PACKAGE_NAME-$PACKAGE_VERSION.zip cocoapods/$PACKAGE_NAME.podspec.in
+      run: myci-deploy-cocoapods-jfrog.sh --repo cppfw --version $PACKAGE_VERSION --domain cppfw --jfrog-repo cocoapods --package-file $PACKAGE_NAME-$PACKAGE_VERSION.zip cocoapods/$PACKAGE_NAME.podspec.in
       if: startsWith(github.ref, 'refs/tags/')
 ##### android #####
   android:
@@ -113,9 +113,10 @@ jobs:
     - name: add cppfw deb repo
       uses: myci-actions/add-deb-repo@master
       with:
-        repo: deb http://dl.bintray.com/cppfw/$(lsb_release --id --short | tr '[:upper:]' '[:lower:]') $(lsb_release --codename --short) main
+        repo: deb https://cppfw.jfrog.io/artifactory/$(lsb_release --id --short | tr '[:upper:]' '[:lower:]') $(lsb_release --codename --short) main
         repo-name: cppfw
-        keys: 379CE192D401AB61
+        key-server: https://cppfw.jfrog.io/artifactory/api/gpg/key/public
+        keys: 4A949240F79AD8027C6CA2F4953AE777616ADEDF
     - name: install ci tools
       run: apt install --assume-yes myci
     - name: set PACKAGE_VERSION
@@ -128,7 +129,7 @@ jobs:
         myci-apply-version.sh -v $PACKAGE_VERSION *.pom.in
         myci-apply-version.sh -v $PACKAGE_VERSION *.aar.in --filename-only
     - name: deploy
-      run: myci-deploy-maven-bintray.sh --owner cppfw --repo android --path io/github/cppfw --package $PACKAGE_NAME --version $PACKAGE_VERSION android/$PACKAGE_NAME-$PACKAGE_VERSION.aar
+      run: myci-deploy-maven-jfrog.sh --domain cppfw --repo android --version $PACKAGE_VERSION android/$PACKAGE_NAME-$PACKAGE_VERSION.aar
       if: startsWith(github.ref, 'refs/tags/')
 ##### msys2 #####
   msys2:
