@@ -12,6 +12,10 @@
 
 using namespace utki;
 
+namespace{
+const std::string error_string = "\033[1;31merror\033[0m";
+}
+
 void utki::assert(
 		bool condition,
 		const std::function<void(std::ostream&)>& print,
@@ -23,7 +27,7 @@ void utki::assert(
 	}
 
 	std::stringstream ss;
-	ss << source_location.first << ":" << source_location.second << ": \033[1;31merror\033[0m: assertion failed";
+	ss << source_location.first << ":" << source_location.second << ": " << error_string << ": assertion failed";
 
 	if(print){
 		ss << ":" << std::endl << "  ";
