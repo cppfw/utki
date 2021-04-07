@@ -31,7 +31,7 @@ void utki::assert(
 	}
 
 #if M_OS_NAME == M_OS_NAME_ANDROID
-	// TODO: remove commented code
+	// TODO: remove commented code after __android_log_assert() is tested to be working
 	// __android_log_write(ANDROID_LOG_INFO, "utki", ss.str().c_str());
 
 	__android_log_assert(ss.str().c_str(), "utki", nullptr);

@@ -223,7 +223,7 @@ void test_order_by(){
 
 #ifdef DEBUG
 		for(auto& e : out){
-			LOG("e = " << e.first << " " << e.second << std::endl)
+			LOG([&](auto&o){o << "e = " << e.first << " " << e.second << std::endl;})
 		}
 #endif
 
@@ -259,7 +259,7 @@ void test_order_by(){
 
 #ifdef DEBUG
 		for(auto& e : out){
-			LOG("e = " << e.first << " " << e.second << std::endl)
+			LOG([&](auto&o){o << "e = " << e.first << " " << e.second << std::endl;})
 		}
 #endif
 
@@ -296,7 +296,7 @@ void test_order_by(){
 
 #ifdef DEBUG
 		for(auto& e : out){
-			LOG("e = " << e.first << " " << e.second << std::endl)
+			LOG([&](auto&o){o << "e = " << e.first << " " << e.second << std::endl;})
 		}
 #endif
 

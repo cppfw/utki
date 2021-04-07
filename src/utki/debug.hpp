@@ -60,7 +60,7 @@ void log(const std::function<void(std::ostream&)>& print);
 // TODO: deprecated, remove.
 #	define TRACE(x) TRACE_ALWAYS(x)
 
-#	define LOG(x) utki::log([&](auto& log_output_stream){log_output_stream << x;});
+#	define LOG(print) utki::log(print);
 #else
 
 // TODO: deprecated, remove.
@@ -109,7 +109,7 @@ inline void assert(bool condition, std::pair<const char*, size_t> source_locatio
 #	define ASSERT1(condition) utki::assert(bool(condition), SL);
 #	define ASSERT2(condition, print) utki::assert(bool(condition), print, SL);
 
-#else // No DEBUG macro defined
+#else // no DEBUG macro defined
 
 // TODO: deprecated, remove.
 #	define ASSERT_INFO(x, y)
