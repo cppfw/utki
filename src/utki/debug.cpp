@@ -1,11 +1,5 @@
 #include "debug.hpp"
 
-#if M_OS == M_OS_WINDOWS
-#	include <io.h>
-#else
-#	include <unistd.h>
-#endif
-
 #include "config.hpp"
 
 #if M_OS_NAME == M_OS_NAME_ANDROID
@@ -14,6 +8,22 @@
 #else
 #	include <iostream>
 
+#endif
+
+#if M_OS == M_OS_WINDOWS
+#	include <io.h>
+namespace{
+bool is_stderr_terminal(){
+	return _isatty(fileno(stderr));
+}
+}
+#else
+#	include <unistd.h>
+namespace{
+bool is_stderr_terminal(){
+	return isatty(fileno(stderr));
+}
+}
 #endif
 
 using namespace utki;
@@ -36,7 +46,7 @@ void utki::assert(
 	std::stringstream ss;
 	ss << source_location.first << ":" << source_location.second << ": ";
 
-	if(isatty(fileno(stderr))){ // if we have terminal
+	if(is_stderr_terminal()){ // if we have terminal
 		ss << colored_error_string;
 	}else{
 		ss << uncolored_error_string;
