@@ -90,6 +90,10 @@ void assert(
 		std::pair<const char*, size_t> source_location
 	);
 
+inline void assert(bool condition, std::pair<const char*, size_t> source_location){
+	utki::assert(condition, nullptr, source_location);
+}
+
 // MSVC compiler gives warning about implicit conversion of pointer to bool,
 // so define template overloads of the assert for that
 
@@ -133,10 +137,6 @@ void assert(
 	)
 {
 	assert(p != nullptr, print, source_location);
-}
-
-inline void assert(bool condition, std::pair<const char*, size_t> source_location){
-	utki::assert(condition, nullptr, source_location);
 }
 
 template <class type>
