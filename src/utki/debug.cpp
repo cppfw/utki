@@ -1,7 +1,10 @@
 #include "debug.hpp"
 
-#include <unistd.h>
-#include <cstdio>
+#if M_OS == M_OS_WINDOWS
+#	include <io.h>
+#else
+#	include <unistd.h>
+#endif
 
 #include "config.hpp"
 
