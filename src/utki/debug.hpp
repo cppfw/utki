@@ -4,6 +4,7 @@
 
 #include <functional>
 #include <sstream>
+#include <memory>
 
 #if M_OS_NAME == M_OS_NAME_ANDROID
 #	include <android/log.h>
@@ -89,25 +90,66 @@ void assert(
 		std::pair<const char*, size_t> source_location
 	);
 
+// smart pointers do not have implicit conversion to bool, so we need to define
+// template overloads of the assert function for those
+
+template <class type>
+void assert(
+		const std::shared_ptr<type>& p,
+		const std::function<void(std::ostream&)>& print,
+		std::pair<const char*, size_t> source_location
+	)
+{
+	assert(p != nullptr, print, source_location);
+}
+
+template <class type>
+void assert(
+		const std::unique_ptr<type>& p,
+		const std::function<void(std::ostream&)>& print,
+		std::pair<const char*, size_t> source_location
+	)
+{
+	assert(p != nullptr, print, source_location);
+}
+
 inline void assert(bool condition, std::pair<const char*, size_t> source_location){
 	utki::assert(condition, nullptr, source_location);
 }
 
+template <class type>
+void assert(
+		const std::shared_ptr<type>& p,
+		std::pair<const char*, size_t> source_location
+	)
+{
+	assert(p != nullptr, nullptr, source_location);
+}
+
+template <class type>
+void assert(
+		const std::unique_ptr<type>& p,
+		std::pair<const char*, size_t> source_location
+	)
+{
+	assert(p != nullptr, nullptr, source_location);
+}
+
 }
 
 // TODO: deprecated, remove.
-#define ASSERT_INFO_ALWAYS(x, y) utki::assert(bool(x), [&](auto& assert_output_stream){assert_output_stream << y;}, SL);
+#define ASSERT_INFO_ALWAYS(x, y) utki::assert(x, [&](auto& assert_output_stream){assert_output_stream << y;}, SL);
 
 // TODO: deprecated, remove.
-#define ASSERT_ALWAYS(x) ASSERT_INFO_ALWAYS((x), "no additional info")
+#define ASSERT_ALWAYS(x) ASSERT_INFO_ALWAYS(x, "no additional info")
 
 #ifdef DEBUG
 
 // TODO: deprecated, remove.
-#	define ASSERT_INFO(x, y) utki::assert(bool(x), [&](auto& assert_output_stream){assert_output_stream << y;}, SL);
+#	define ASSERT_INFO(x, y) utki::assert(x, [&](auto& assert_output_stream){assert_output_stream << y;}, SL);
 
-#	define ASSERT1(condition) utki::assert(bool(condition), SL);
-#	define ASSERT2(condition, print) utki::assert(bool(condition), print, SL);
+#	define ASSERT1(condition) utki::assert(condition, SL);
+#	define ASSERT2(condition, print) utki::assert(condition, print, SL);
 
 #else // no DEBUG macro defined
 
