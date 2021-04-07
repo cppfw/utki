@@ -90,6 +90,28 @@ void assert(
 		std::pair<const char*, size_t> source_location
 	);
 
+// MSVC compiler gives warning about implicit conversion of pointer to bool,
+// so define template overloads of the assert for that
+
+template <class type>
+void assert(
+		type* p,
+		const std::function<void(std::ostream&)>& print,
+		std::pair<const char*, size_t> source_location
+	)
+{
+	assert(p != nullptr, print, source_location);
+}
+
+template <class type>
+void assert(
+		type* p,
+		std::pair<const char*, size_t> source_location
+	)
+{
+	assert(p != nullptr, nullptr, source_location);
+}
+
 // smart pointers do not have implicit conversion to bool, so we need to define
 // template overloads of the assert function for those
 
