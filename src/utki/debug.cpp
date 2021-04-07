@@ -14,7 +14,8 @@
 #	include <io.h>
 namespace{
 bool is_stderr_terminal(){
-	return _isatty(_fileno(stderr));
+	// need explicit conversion to bool to avoid MSVC compiler warning
+	return bool(_isatty(_fileno(stderr)));
 }
 }
 #else
