@@ -549,6 +549,11 @@
     <ClCompile Include="..\..\tests\util\main.cpp" />
     <ClCompile Include="..\..\tests\util\tests.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\libutki\libutki.vcxproj">
+      <Project>{7000d75d-4b4b-43d9-a99d-c34805558d52}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
