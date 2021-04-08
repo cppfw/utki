@@ -80,12 +80,12 @@ int main(int argc, char** argv){
 		auto r = utki::split(str, '/');
 
 		utki::assert(r.size() == 6, [&](auto&o){o << "r.size() = " << r.size();}, SL);
-		ASSERT_ALWAYS(r[0] == "qwe")
-		ASSERT_ALWAYS(r[1] == "rtyu")
-		ASSERT_ALWAYS(r[2] == "io")
-		ASSERT_ALWAYS(r[3] == "p")
-		ASSERT_ALWAYS(r[4] == "")
-		ASSERT_ALWAYS(r[5] == "[]")
+		utki::assert(r[0] == "qwe", SL);
+		utki::assert(r[1] == "rtyu", SL);
+		utki::assert(r[2] == "io", SL);
+		utki::assert(r[3] == "p", SL);
+		utki::assert(r[4] == "", SL);
+		utki::assert(r[5] == "[]", SL);
 	}
 
 	// test split with trailing delimiter character
@@ -95,13 +95,13 @@ int main(int argc, char** argv){
 		auto r = utki::split(str, '/');
 
 		utki::assert(r.size() == 7, [&](auto&o){o << "r.size() = " << r.size();}, SL);
-		ASSERT_ALWAYS(r[0] == "qwe")
-		ASSERT_ALWAYS(r[1] == "rtyu")
-		ASSERT_ALWAYS(r[2] == "io")
-		ASSERT_ALWAYS(r[3] == "p")
-		ASSERT_ALWAYS(r[4] == "")
-		ASSERT_ALWAYS(r[5] == "[]")
-		ASSERT_ALWAYS(r[6] == "")
+		utki::assert(r[0] == "qwe", SL);
+		utki::assert(r[1] == "rtyu", SL);
+		utki::assert(r[2] == "io", SL);
+		utki::assert(r[3] == "p", SL);
+		utki::assert(r[4] == "", SL);
+		utki::assert(r[5] == "[]", SL);
+		utki::assert(r[6] == "", SL);
 	}
 
 	// test empty string split
@@ -116,12 +116,12 @@ int main(int argc, char** argv){
 		auto str = " hello world    bla\tblah\n!";
 
 		auto r = utki::split(str);
-		ASSERT_ALWAYS(r.size() == 5)
-		ASSERT_ALWAYS(r[0] == "hello")
-		ASSERT_ALWAYS(r[1] == "world")
-		ASSERT_ALWAYS(r[2] == "bla")
-		ASSERT_ALWAYS(r[3] == "blah")
-		ASSERT_ALWAYS(r[4] == "!")
+		utki::assert(r.size() == 5, SL);
+		utki::assert(r[0] == "hello", SL);
+		utki::assert(r[1] == "world", SL);
+		utki::assert(r[2] == "bla", SL);
+		utki::assert(r[3] == "blah", SL);
+		utki::assert(r[4] == "!", SL);
 	}
 
 	// test basic word wrap
@@ -195,10 +195,10 @@ int main(int argc, char** argv){
 		std::vector<char> vec = {{'H', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', '!'}};
 
 		auto str_arr = utki::make_string(utki::make_span(arr));
-		ASSERT_ALWAYS(str_arr == "Hello world!")
+		utki::assert(str_arr == "Hello world!", SL);
 
 		auto str_vec = utki::make_string(utki::make_span(vec));
-		ASSERT_ALWAYS(str_vec == "Hello world!")
+		utki::assert(str_vec == "Hello world!", SL);
 	}
 
 	// test make_string(std::array<char>)
@@ -206,7 +206,7 @@ int main(int argc, char** argv){
 		std::array<char, 12> arr = {{'H', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', '!'}};
 
 		auto str_arr = utki::make_string(arr);
-		ASSERT_ALWAYS(str_arr == "Hello world!")
+		utki::assert(str_arr == "Hello world!", SL);
 	}
 
 	// test make_string(std::array<uint8_t>)
@@ -214,7 +214,7 @@ int main(int argc, char** argv){
 		std::array<uint8_t, 12> arr = {{'H', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', '!'}};
 
 		auto str_arr = utki::make_string(arr);
-		ASSERT_ALWAYS(str_arr == "Hello world!")
+		utki::assert(str_arr == "Hello world!", SL);
 	}
 
 	// test make_string(std::vector<char>)
@@ -222,7 +222,7 @@ int main(int argc, char** argv){
 		std::vector<char> vec = {{'H', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', '!'}};
 
 		auto str_vec = utki::make_string(vec);
-		ASSERT_ALWAYS(str_vec == "Hello world!")
+		utki::assert(str_vec == "Hello world!", SL);
 	}
 
 	// test make_string(std::vector<uint8_t>)
@@ -230,7 +230,7 @@ int main(int argc, char** argv){
 		std::vector<uint8_t> vec = {{'H', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', '!'}};
 
 		auto str_vec = utki::make_string(vec);
-		ASSERT_ALWAYS(str_vec == "Hello world!")
+		utki::assert(str_vec == "Hello world!", SL);
 	}
 
 

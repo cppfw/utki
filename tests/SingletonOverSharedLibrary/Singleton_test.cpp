@@ -12,25 +12,25 @@ int main(int argc, char *argv[]){
 
 //	TRACE_ALWAYS(<< "32 a = " << TestSingleton::Inst().a << std::endl)
 
-	ASSERT_ALWAYS(TestSingleton::inst().a == 32)
+	utki::assert(TestSingleton::inst().a == 32, SL);
 
 	++TestSingleton::inst().a;
 
-	ASSERT_ALWAYS(TestSingleton::inst().a == 33)
+	utki::assert(TestSingleton::inst().a == 33, SL);
 
 	IncA();
 
-	ASSERT_ALWAYS(TestSingleton::inst().a == 34)
-	ASSERT_ALWAYS(ts.a == 34)
+	utki::assert(TestSingleton::inst().a == 34, SL);
+	utki::assert(ts.a == 34, SL);
 
 	TestSingleton::inst().a = 101;
 
-	ASSERT_ALWAYS(GetA() == 101)
+	utki::assert(GetA() == 101, SL);
 
 	GetA() = 145;
 
-	ASSERT_ALWAYS(ts.a == 145)
-	ASSERT_ALWAYS(TestSingleton::inst().a == 145)
+	utki::assert(ts.a == 145, SL);
+	utki::assert(TestSingleton::inst().a == 145, SL);
 
 	return 0;
 }

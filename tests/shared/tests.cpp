@@ -31,30 +31,30 @@ void run(){
 		
 		std::shared_ptr<TestClass> p2 = std::make_shared<TestClass>(21);
 		
-		ASSERT_ALWAYS(p1->a == 4)
-		ASSERT_ALWAYS(p2->a == 21)
+		utki::assert(p1->a == 4, SL);
+		utki::assert(p2->a == 21, SL);
 		
-		ASSERT_ALWAYS(p2->getPtr().operator->() == p2.operator->())
+		utki::assert(p2->getPtr().operator->() == p2.operator->(), SL);
 	}
 
 	// test make_shared_from_this
 	{
 		auto o = std::make_shared<TestClass>();
-		ASSERT_ALWAYS(o)
+		utki::assert(o, SL);
 
 		auto sft = utki::make_shared_from(*o);
-		ASSERT_ALWAYS(sft)
-		ASSERT_ALWAYS(sft->a == 4)
+		utki::assert(sft, SL);
+		utki::assert(sft->a == 4, SL);
 	}
 
 	// test make_weak_from_this
 	{
 		auto o = std::make_shared<TestClass>();
-		ASSERT_ALWAYS(o)
+		utki::assert(o, SL);
 
 		auto sft = utki::make_weak_from(*o);
-		ASSERT_ALWAYS(sft.lock())
-		ASSERT_ALWAYS(sft.lock()->a == 4)
+		utki::assert(sft.lock(), SL);
+		utki::assert(sft.lock()->a == 4, SL);
 	}
 }
 

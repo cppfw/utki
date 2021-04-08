@@ -4,16 +4,16 @@
 #include "TestSingleton.hpp_"
 
 int& GetA(){
-	ASSERT_ALWAYS(TestSingleton::is_created())
+	utki::assert(TestSingleton::is_created(), SL);
 	return TestSingleton::inst().a;
 }
 
 void IncA(){
-	ASSERT_ALWAYS(TestSingleton::is_created())
+	utki::assert(TestSingleton::is_created(), SL);
 	++(TestSingleton::inst().a);
 }
 
 void PrintA(){
-	ASSERT_ALWAYS(TestSingleton::is_created())
+	utki::assert(TestSingleton::is_created(), SL);
 	TRACE_ALWAYS(<< "PrintA(): a = " << TestSingleton::inst().a << std::endl)
 }

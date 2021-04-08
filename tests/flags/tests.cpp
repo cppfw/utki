@@ -62,8 +62,8 @@ void Run(){
 		utki::flags<TestEnum> fs;
 		
 		fs.set(TestEnum::EIGHTH, true).set(TestEnum::SECOND, true).set(TestEnum::EIGHTH, false);
-		ASSERT_ALWAYS(!fs.get(TestEnum::EIGHTH))
-		ASSERT_ALWAYS(fs.get(TestEnum::SECOND))
+		utki::assert(!fs.get(TestEnum::EIGHTH), SL);
+		utki::assert(fs.get(TestEnum::SECOND), SL);
 		
 		
 		TRACE(<< "enum_size = " << size_t(TestEnum::enum_size) << " sizeof(fs) = " << sizeof(fs) << " sizeof(index_t) = " << sizeof(utki::flags<TestEnum>::index_type) << std::endl)
@@ -72,33 +72,33 @@ void Run(){
 		
 		{
 			utki::flags<TestEnum> fs;
-			ASSERT_ALWAYS(fs.is_clear())
-			ASSERT_ALWAYS(!fs.is_set())
+			utki::assert(fs.is_clear(), SL);
+			utki::assert(!fs.is_set(), SL);
 			
 			fs.set(fs.size() - 1, true);
-			ASSERT_ALWAYS(!fs.is_clear())
-			ASSERT_ALWAYS(!fs.is_set())
+			utki::assert(!fs.is_clear(), SL);
+			utki::assert(!fs.is_set(), SL);
 			
 			fs.clear();
 			
 			fs.set(TestEnum::EIGHTH, true);
-			ASSERT_ALWAYS(!fs.is_clear())
-			ASSERT_ALWAYS(!fs.is_set())
+			utki::assert(!fs.is_clear(), SL);
+			utki::assert(!fs.is_set(), SL);
 		}
 		{
 			utki::flags<TestEnum> fs(true);
-			ASSERT_ALWAYS(!fs.is_clear())
-			ASSERT_ALWAYS(fs.is_set())
+			utki::assert(!fs.is_clear(), SL);
+			utki::assert(fs.is_set(), SL);
 			
 			fs.set(fs.size() - 1, false);
-			ASSERT_ALWAYS(!fs.is_clear())
-			ASSERT_ALWAYS(!fs.is_set())
+			utki::assert(!fs.is_clear(), SL);
+			utki::assert(!fs.is_set(), SL);
 					
 			fs.set();
 			
 			fs.set(TestEnum::EIGHTH, false);
-			ASSERT_ALWAYS(!fs.is_clear())
-			ASSERT_ALWAYS(!fs.is_set())
+			utki::assert(!fs.is_clear(), SL);
+			utki::assert(!fs.is_set(), SL);
 		}
 	}
 
@@ -106,64 +106,64 @@ void Run(){
 	{
 		auto flags = utki::flags<TestEnum>({});
 
-		ASSERT_ALWAYS(flags.is_clear())
+		utki::assert(flags.is_clear(), SL);
 	}
 
 	// test initializer list
 	{
 		auto flags = utki::flags<TestEnum>({TestEnum::TWENTY_SEVENTH, TestEnum::NINETEENTH});
 
-		ASSERT_ALWAYS(!flags.is_clear())
-		ASSERT_ALWAYS(flags.get(TestEnum::TWENTY_SEVENTH))
-		ASSERT_ALWAYS(flags.get(TestEnum::NINETEENTH))
+		utki::assert(!flags.is_clear(), SL);
+		utki::assert(flags.get(TestEnum::TWENTY_SEVENTH), SL);
+		utki::assert(flags.get(TestEnum::NINETEENTH), SL);
 
 		flags.clear(TestEnum::TWENTY_SEVENTH);
-		ASSERT_ALWAYS(!flags.is_clear())
-		ASSERT_ALWAYS(!flags.get(TestEnum::TWENTY_SEVENTH))
-		ASSERT_ALWAYS(flags.get(TestEnum::NINETEENTH))
+		utki::assert(!flags.is_clear(), SL);
+		utki::assert(!flags.get(TestEnum::TWENTY_SEVENTH), SL);
+		utki::assert(flags.get(TestEnum::NINETEENTH), SL);
 		
 		flags.clear(TestEnum::NINETEENTH);
-		ASSERT_ALWAYS(flags.is_clear())
-		ASSERT_ALWAYS(!flags.get(TestEnum::TWENTY_SEVENTH))
-		ASSERT_ALWAYS(!flags.get(TestEnum::NINETEENTH))
+		utki::assert(flags.is_clear(), SL);
+		utki::assert(!flags.get(TestEnum::TWENTY_SEVENTH), SL);
+		utki::assert(!flags.get(TestEnum::NINETEENTH), SL);
 	}
 
 	// test make_flags
 	{
 		auto flags = make_flags({TestEnum::TWENTY_SEVENTH, TestEnum::NINETEENTH});
 
-		ASSERT_ALWAYS(!flags.is_clear())
-		ASSERT_ALWAYS(flags.get(TestEnum::TWENTY_SEVENTH))
-		ASSERT_ALWAYS(flags.get(TestEnum::NINETEENTH))
+		utki::assert(!flags.is_clear(), SL);
+		utki::assert(flags.get(TestEnum::TWENTY_SEVENTH), SL);
+		utki::assert(flags.get(TestEnum::NINETEENTH), SL);
 
 		flags.clear(TestEnum::TWENTY_SEVENTH);
-		ASSERT_ALWAYS(!flags.is_clear())
-		ASSERT_ALWAYS(!flags.get(TestEnum::TWENTY_SEVENTH))
-		ASSERT_ALWAYS(flags.get(TestEnum::NINETEENTH))
+		utki::assert(!flags.is_clear(), SL);
+		utki::assert(!flags.get(TestEnum::TWENTY_SEVENTH), SL);
+		utki::assert(flags.get(TestEnum::NINETEENTH), SL);
 		
 		flags.clear(TestEnum::NINETEENTH);
-		ASSERT_ALWAYS(flags.is_clear())
-		ASSERT_ALWAYS(!flags.get(TestEnum::TWENTY_SEVENTH))
-		ASSERT_ALWAYS(!flags.get(TestEnum::NINETEENTH))
+		utki::assert(flags.is_clear(), SL);
+		utki::assert(!flags.get(TestEnum::TWENTY_SEVENTH), SL);
+		utki::assert(!flags.get(TestEnum::NINETEENTH), SL);
 	}
 
 	// test twice initialized flag
 	{
 		auto flags = make_flags({TestEnum::NINETEENTH, TestEnum::TWENTY_SEVENTH, TestEnum::NINETEENTH});
 
-		ASSERT_ALWAYS(!flags.is_clear())
-		ASSERT_ALWAYS(flags.get(TestEnum::TWENTY_SEVENTH))
-		ASSERT_ALWAYS(flags.get(TestEnum::NINETEENTH))
+		utki::assert(!flags.is_clear(), SL);
+		utki::assert(flags.get(TestEnum::TWENTY_SEVENTH), SL);
+		utki::assert(flags.get(TestEnum::NINETEENTH), SL);
 
 		flags.clear(TestEnum::TWENTY_SEVENTH);
-		ASSERT_ALWAYS(!flags.is_clear())
-		ASSERT_ALWAYS(!flags.get(TestEnum::TWENTY_SEVENTH))
-		ASSERT_ALWAYS(flags.get(TestEnum::NINETEENTH))
+		utki::assert(!flags.is_clear(), SL);
+		utki::assert(!flags.get(TestEnum::TWENTY_SEVENTH), SL);
+		utki::assert(flags.get(TestEnum::NINETEENTH), SL);
 		
 		flags.clear(TestEnum::NINETEENTH);
-		ASSERT_ALWAYS(flags.is_clear())
-		ASSERT_ALWAYS(!flags.get(TestEnum::TWENTY_SEVENTH))
-		ASSERT_ALWAYS(!flags.get(TestEnum::NINETEENTH))
+		utki::assert(flags.is_clear(), SL);
+		utki::assert(!flags.get(TestEnum::TWENTY_SEVENTH), SL);
+		utki::assert(!flags.get(TestEnum::NINETEENTH), SL);
 	}
 }
 

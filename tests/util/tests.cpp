@@ -17,11 +17,11 @@ void Run(){
 		std::array<uint8_t, sizeof(uint16_t)> buf;
 		utki::serialize16le(uint16_t(i), &*buf.begin());
 
-		ASSERT_ALWAYS(buf[0] == uint8_t(i & 0xff))
-		ASSERT_ALWAYS(buf[1] == uint8_t((i >> 8) & 0xff))
+		utki::assert(buf[0] == uint8_t(i & 0xff), SL);
+		utki::assert(buf[1] == uint8_t((i >> 8) & 0xff), SL);
 
 		uint16_t res = utki::deserialize16le(&*buf.begin());
-		ASSERT_ALWAYS(res == uint16_t(i))
+		utki::assert(res == uint16_t(i), SL);
 //		TRACE(<< "TestSerialization(): i16 = " << i << std::endl)
 	}
 
@@ -30,13 +30,13 @@ void Run(){
 		std::array<uint8_t, sizeof(uint32_t)> buf;
 		utki::serialize32le(uint32_t(i), &*buf.begin());
 
-		ASSERT_ALWAYS(buf[0] == uint8_t(i & 0xff))
-		ASSERT_ALWAYS(buf[1] == uint8_t((i >> 8) & 0xff))
-		ASSERT_ALWAYS(buf[2] == uint8_t((i >> 16) & 0xff))
-		ASSERT_ALWAYS(buf[3] == uint8_t((i >> 24) & 0xff))
+		utki::assert(buf[0] == uint8_t(i & 0xff), SL);
+		utki::assert(buf[1] == uint8_t((i >> 8) & 0xff), SL);
+		utki::assert(buf[2] == uint8_t((i >> 16) & 0xff), SL);
+		utki::assert(buf[3] == uint8_t((i >> 24) & 0xff), SL);
 
 		uint32_t res = utki::deserialize32le(&*buf.begin());
-		ASSERT_ALWAYS(res == uint32_t(i))
+		utki::assert(res == uint32_t(i), SL);
 //		TRACE(<< "TestSerialization(): i32 = " << i << std::endl)
 	}
 	
@@ -47,17 +47,17 @@ void Run(){
 		std::array<uint8_t, sizeof(uint64_t)> buf;
 		utki::serialize64le(val, &*buf.begin());
 
-		ASSERT_ALWAYS(buf[0] == uint8_t(val & 0xff))
-		ASSERT_ALWAYS(buf[1] == uint8_t((val >> 8) & 0xff))
-		ASSERT_ALWAYS(buf[2] == uint8_t((val >> 16) & 0xff))
-		ASSERT_ALWAYS(buf[3] == uint8_t((val >> 24) & 0xff))
-		ASSERT_ALWAYS(buf[4] == uint8_t((val >> 32) & 0xff))
-		ASSERT_ALWAYS(buf[5] == uint8_t((val >> 40) & 0xff))
-		ASSERT_ALWAYS(buf[6] == uint8_t((val >> 48) & 0xff))
-		ASSERT_ALWAYS(buf[7] == uint8_t((val >> 56) & 0xff))
+		utki::assert(buf[0] == uint8_t(val & 0xff), SL);
+		utki::assert(buf[1] == uint8_t((val >> 8) & 0xff), SL);
+		utki::assert(buf[2] == uint8_t((val >> 16) & 0xff), SL);
+		utki::assert(buf[3] == uint8_t((val >> 24) & 0xff), SL);
+		utki::assert(buf[4] == uint8_t((val >> 32) & 0xff), SL);
+		utki::assert(buf[5] == uint8_t((val >> 40) & 0xff), SL);
+		utki::assert(buf[6] == uint8_t((val >> 48) & 0xff), SL);
+		utki::assert(buf[7] == uint8_t((val >> 56) & 0xff), SL);
 
 		uint64_t res = utki::deserialize64le(&*buf.begin());
-		ASSERT_ALWAYS(res == val)
+		utki::assert(res == val, SL);
 //		TRACE(<< "TestSerialization(): i64 = " << i << std::endl)
 	}
 }
@@ -74,7 +74,7 @@ void Run(){
 				flag = true;
 			});
 		}
-		ASSERT_ALWAYS(flag)
+		utki::assert(flag, SL);
 	}
 	
 	{
@@ -86,7 +86,7 @@ void Run(){
 			
 			se.reset();
 		}
-		ASSERT_ALWAYS(!flag)
+		utki::assert(!flag, SL);
 	}
 }
 }
@@ -101,10 +101,10 @@ void run(){
 	
 	auto fm = utki::flip_map(m);
 	
-	ASSERT_ALWAYS(fm.size() == 3)
-	ASSERT_ALWAYS(fm["10"] == 10)
-	ASSERT_ALWAYS(fm["13"] == 13)
-	ASSERT_ALWAYS(fm["42"] == 42)
+	utki::assert(fm.size() == 3, SL);
+	utki::assert(fm["10"] == 10, SL);
+	utki::assert(fm["13"] == 13, SL);
+	utki::assert(fm["42"] == 42, SL);
 }
 }
 
@@ -120,7 +120,7 @@ void run(){
 		std::make_pair(true, 45)
 	}};
 
-	ASSERT_ALWAYS(variants.size() == 4)
+	utki::assert(variants.size() == 4, SL);
 
 	std::vector<std::string> res;
 
@@ -151,7 +151,7 @@ void run(){
 
 	std::vector<std::string> expected = {{"string", "int", "const char*", "pair"}};
 
-	ASSERT_ALWAYS(res == expected)
+	utki::assert(res == expected, SL);
 }
 }
 #endif

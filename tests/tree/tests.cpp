@@ -11,7 +11,7 @@ void basic(){
 
 		t.children.push_back(35);
 
-		ASSERT_ALWAYS(t.children.size() == 1)
+		utki::assert(t.children.size() == 1, SL);
 	}
 
 	{
@@ -30,22 +30,22 @@ void basic(){
 			}
 		};
 
-		ASSERT_ALWAYS(t.children.size() == 2)
+		utki::assert(t.children.size() == 2, SL);
 
-		ASSERT_ALWAYS(t.children[0].children.size() == 2)
-		ASSERT_ALWAYS(t.children[0].children[0].value == 34)
-		ASSERT_ALWAYS(t.children[0].children[1].value == 45)
+		utki::assert(t.children[0].children.size() == 2, SL);
+		utki::assert(t.children[0].children[0].value == 34, SL);
+		utki::assert(t.children[0].children[1].value == 45, SL);
 
-		ASSERT_ALWAYS(t.children[1].children.size() == 3)
-		ASSERT_ALWAYS(t.children[1].children[0].children.size() == 3)
-		ASSERT_ALWAYS(t.children[1].children[1].children.size() == 3)
+		utki::assert(t.children[1].children.size() == 3, SL);
+		utki::assert(t.children[1].children[0].children.size() == 3, SL);
+		utki::assert(t.children[1].children[1].children.size() == 3, SL);
 
-		ASSERT_ALWAYS(t.children[1].children[2].children.size() == 3)
-		ASSERT_ALWAYS(t.children[1].children[2].value == 42)
+		utki::assert(t.children[1].children[2].children.size() == 3, SL);
+		utki::assert(t.children[1].children[2].value == 42, SL);
 
-		ASSERT_ALWAYS(t.children[1].children[2].children[0].value == 98)
-		ASSERT_ALWAYS(t.children[1].children[2].children[1].value == 99)
-		ASSERT_ALWAYS(t.children[1].children[2].children[2].value == 100)
+		utki::assert(t.children[1].children[2].children[0].value == 98, SL);
+		utki::assert(t.children[1].children[2].children[1].value == 99, SL);
+		utki::assert(t.children[1].children[2].children[2].value == 100, SL);
 	}
 }
 
@@ -62,20 +62,20 @@ void test_move_assignment(){
 
 	t.children[0].children = std::move(t.children[1].children);
 
-	ASSERT_ALWAYS(t.children.size() == 2)
+	utki::assert(t.children.size() == 2, SL);
 
-	ASSERT_ALWAYS(t.children[0].children.size() == 3)
-	ASSERT_ALWAYS(t.children[0].children[0].children.size() == 3)
-	ASSERT_ALWAYS(t.children[0].children[1].children.size() == 3)
+	utki::assert(t.children[0].children.size() == 3, SL);
+	utki::assert(t.children[0].children[0].children.size() == 3, SL);
+	utki::assert(t.children[0].children[1].children.size() == 3, SL);
 
-	ASSERT_ALWAYS(t.children[0].children[2].children.size() == 3)
-	ASSERT_ALWAYS(t.children[0].children[2].value == 42)
+	utki::assert(t.children[0].children[2].children.size() == 3, SL);
+	utki::assert(t.children[0].children[2].value == 42, SL);
 
-	ASSERT_ALWAYS(t.children[0].children[2].children[0].value == 98)
-	ASSERT_ALWAYS(t.children[0].children[2].children[1].value == 99)
-	ASSERT_ALWAYS(t.children[0].children[2].children[2].value == 100)
+	utki::assert(t.children[0].children[2].children[0].value == 98, SL);
+	utki::assert(t.children[0].children[2].children[1].value == 99, SL);
+	utki::assert(t.children[0].children[2].children[2].value == 100, SL);
 
-	ASSERT_ALWAYS(t.children[1].children.size() == 0)
+	utki::assert(t.children[1].children.size() == 0, SL);
 }
 
 void test_assignment(){
@@ -91,20 +91,20 @@ void test_assignment(){
 
 	t.children[0].children = t.children[1].children;
 
-	ASSERT_ALWAYS(t.children.size() == 2)
+	utki::assert(t.children.size() == 2, SL);
 
-	ASSERT_ALWAYS(t.children[0].children.size() == 3)
-	ASSERT_ALWAYS(t.children[0].children[0].children.size() == 3)
-	ASSERT_ALWAYS(t.children[0].children[1].children.size() == 3)
+	utki::assert(t.children[0].children.size() == 3, SL);
+	utki::assert(t.children[0].children[0].children.size() == 3, SL);
+	utki::assert(t.children[0].children[1].children.size() == 3, SL);
 
-	ASSERT_ALWAYS(t.children[0].children[2].children.size() == 3)
-	ASSERT_ALWAYS(t.children[0].children[2].value == 42)
+	utki::assert(t.children[0].children[2].children.size() == 3, SL);
+	utki::assert(t.children[0].children[2].value == 42, SL);
 
-	ASSERT_ALWAYS(t.children[0].children[2].children[0].value == 98)
-	ASSERT_ALWAYS(t.children[0].children[2].children[1].value == 99)
-	ASSERT_ALWAYS(t.children[0].children[2].children[2].value == 100)
+	utki::assert(t.children[0].children[2].children[0].value == 98, SL);
+	utki::assert(t.children[0].children[2].children[1].value == 99, SL);
+	utki::assert(t.children[0].children[2].children[2].value == 100, SL);
 
-	ASSERT_ALWAYS(t.children[1].children.size() == 3)
+	utki::assert(t.children[1].children.size() == 3, SL);
 }
 
 void test_comparison(){
@@ -119,20 +119,20 @@ void test_comparison(){
 	};
 
 
-	ASSERT_ALWAYS(t.children.size() == 2)
+	utki::assert(t.children.size() == 2, SL);
 
-	ASSERT_ALWAYS(t.children[1].children.size() == 3)
-	ASSERT_ALWAYS(t.children[1].children[0].children.size() == 3)
-	ASSERT_ALWAYS(t.children[1].children[1].children.size() == 3)
+	utki::assert(t.children[1].children.size() == 3, SL);
+	utki::assert(t.children[1].children[0].children.size() == 3, SL);
+	utki::assert(t.children[1].children[1].children.size() == 3, SL);
 
-	ASSERT_ALWAYS(t.children[1].children[2].children.size() == 3)
-	ASSERT_ALWAYS(t.children[1].children[2] == 42)
+	utki::assert(t.children[1].children[2].children.size() == 3, SL);
+	utki::assert(t.children[1].children[2] == 42, SL);
 
-	ASSERT_ALWAYS(t.children[1].children[2].children[0] == 98)
-	ASSERT_ALWAYS(t.children[1].children[2].children[1] == 99)
-	ASSERT_ALWAYS(t.children[1].children[2].children[2] == 100)
+	utki::assert(t.children[1].children[2].children[0] == 98, SL);
+	utki::assert(t.children[1].children[2].children[1] == 99, SL);
+	utki::assert(t.children[1].children[2].children[2] == 100, SL);
 
-	ASSERT_ALWAYS(t.children[1].children.size() == 3)
+	utki::assert(t.children[1].children.size() == 3, SL);
 }
 
 void test_constructors_from_container(){
@@ -143,10 +143,10 @@ void test_constructors_from_container(){
 			tree_int(10),
 			tree_int(20)
 		};
-		ASSERT_ALWAYS(children.size() == 2)
+		utki::assert(children.size() == 2, SL);
 		tree_int t(13, children);
 
-		ASSERT_ALWAYS(t.value == 13)
+		utki::assert(t.value == 13, SL);
 		utki::assert(t.children.size() == 2, [&](auto&o){o << "t.children.size() = " << t.children.size();}, SL);
 		utki::assert(t.children[0].value == 10, [&](auto&o){o << "t.children[0].value = " << t.children[0].value;}, SL);
 		utki::assert(t.children[1].value == 20, [&](auto&o){o << "t.children[1].value = " << t.children[1].value;}, SL);
@@ -159,10 +159,10 @@ void test_constructors_from_container(){
 			tree_int(10),
 			tree_int(20)
 		};
-		ASSERT_ALWAYS(children.size() == 2)
+		utki::assert(children.size() == 2, SL);
 		tree_int t(13, std::move(children));
 
-		ASSERT_ALWAYS(t.value == 13)
+		utki::assert(t.value == 13, SL);
 		utki::assert(t.children.size() == 2, [&](auto&o){o << "t.children.size() = " << t.children.size();}, SL);
 		utki::assert(t.children[0].value == 10, [&](auto&o){o << "t.children[0].value = " << t.children[0].value;}, SL);
 		utki::assert(t.children[1].value == 20, [&](auto&o){o << "t.children[1].value = " << t.children[1].value;}, SL);
@@ -175,12 +175,12 @@ void test_constructors_from_container(){
 			tree_str("10"),
 			tree_str("20")
 		};
-		ASSERT_ALWAYS(children.size() == 2)
+		utki::assert(children.size() == 2, SL);
 		std::string str("13");
 		tree_str t(std::move(str), std::move(children));
-		ASSERT_ALWAYS(str.length() == 0)
+		utki::assert(str.length() == 0, SL);
 
-		ASSERT_ALWAYS(t.value == "13")
+		utki::assert(t.value == "13", SL);
 		utki::assert(t.children.size() == 2, [&](auto&o){o << "t.children.size() = " << t.children.size();}, SL);
 		utki::assert(t.children[0].value == "10", [&](auto&o){o << "t.children[0].value = " << t.children[0].value;}, SL);
 		utki::assert(t.children[1].value == "20", [&](auto&o){o << "t.children[1].value = " << t.children[1].value;}, SL);
@@ -256,7 +256,7 @@ void test_traversal(){
 				TRACE_ALWAYS(<< i << ", ")
 			}
 			TRACE_ALWAYS(<< std::endl)
-			ASSERT_ALWAYS(false)
+			utki::assert(false, SL);
 		}
 	}
 
@@ -534,7 +534,7 @@ void test_traversal(){
 
 		auto iter = traversal.make_iterator(index);
 
-		ASSERT_ALWAYS(i == iter)
+		utki::assert(i == iter, SL);
 
 		auto index_2 = iter.index();
 
@@ -594,7 +594,7 @@ void test_traversal(){
 
 		auto iter = traversal.make_const_iterator(index);
 
-		ASSERT_ALWAYS(i == iter)
+		utki::assert(i == iter, SL);
 
 		auto index_2 = iter.index();
 
@@ -625,18 +625,18 @@ void test_traversal(){
 
 		const auto traversal = utki::make_traversal(roots);
 
-		ASSERT_ALWAYS(!traversal.is_valid(utki::make_span<size_t>(nullptr)))
-		ASSERT_ALWAYS(traversal.is_valid({0}))
-		ASSERT_ALWAYS(traversal.is_valid({0, 0}))
-		ASSERT_ALWAYS(traversal.is_valid({0, 1}))
-		ASSERT_ALWAYS(!traversal.is_valid({0, 1, 0}))
-		ASSERT_ALWAYS(!traversal.is_valid({0, 2}))
-		ASSERT_ALWAYS(traversal.is_valid({1}))
-		ASSERT_ALWAYS(traversal.is_valid({1, 0}))
-		ASSERT_ALWAYS(traversal.is_valid({1, 0, 0}))
-		ASSERT_ALWAYS(traversal.is_valid({1, 1, 0}))
-		ASSERT_ALWAYS(!traversal.is_valid({1, 1, 0, 2}))
-		ASSERT_ALWAYS(!traversal.is_valid({3, 1}))
+		utki::assert(!traversal.is_valid(utki::make_span<size_t>(nullptr)), SL);
+		utki::assert(traversal.is_valid({0}), SL);
+		utki::assert(traversal.is_valid({0, 0}), SL);
+		utki::assert(traversal.is_valid({0, 1}), SL);
+		utki::assert(!traversal.is_valid({0, 1, 0}), SL);
+		utki::assert(!traversal.is_valid({0, 2}), SL);
+		utki::assert(traversal.is_valid({1}), SL);
+		utki::assert(traversal.is_valid({1, 0}), SL);
+		utki::assert(traversal.is_valid({1, 0, 0}), SL);
+		utki::assert(traversal.is_valid({1, 1, 0}), SL);
+		utki::assert(!traversal.is_valid({1, 1, 0, 2}), SL);
+		utki::assert(!traversal.is_valid({3, 1}), SL);
 	}
 
 	// test operator[]
@@ -656,14 +656,14 @@ void test_traversal(){
 
 		const auto traversal = utki::make_traversal(roots);
 
-		ASSERT_ALWAYS(traversal[{0}].value == 1)
-		ASSERT_ALWAYS((traversal[{0, 0}].value) == 34)
-		ASSERT_ALWAYS((traversal[{0, 1}].value) == 45)
-		ASSERT_ALWAYS((traversal[{1}].value) == 2)
-		ASSERT_ALWAYS((traversal[{1, 0}].value) == 3)
-		ASSERT_ALWAYS((traversal[{1, 0, 0}].value) == 78)
-		ASSERT_ALWAYS((traversal[{1, 1, 0}].value) == 32)
-		ASSERT_ALWAYS((traversal[{1, 1, 2}].value) == 128)
+		utki::assert(traversal[{0}].value == 1, SL);
+		utki::assert((traversal[{0, 0}].value) == 34, SL);
+		utki::assert((traversal[{0, 1}].value) == 45, SL);
+		utki::assert((traversal[{1}].value) == 2, SL);
+		utki::assert((traversal[{1, 0}].value) == 3, SL);
+		utki::assert((traversal[{1, 0, 0}].value) == 78, SL);
+		utki::assert((traversal[{1, 1, 0}].value) == 32, SL);
+		utki::assert((traversal[{1, 1, 2}].value) == 128, SL);
 	}
 
 	// iterator comparison
@@ -685,14 +685,14 @@ void test_traversal(){
 		auto iter2 = traversal.make_const_iterator({1, 1, 2});
 		auto iter3 = traversal.make_const_iterator({1, 1, 2});
 
-		ASSERT_ALWAYS(iter1 < iter2)
-		ASSERT_ALWAYS(iter2 > iter1)
-		ASSERT_ALWAYS(iter1 <= iter2)
-		ASSERT_ALWAYS(iter2 >= iter1)
-		ASSERT_ALWAYS(iter1 != iter3)
-		ASSERT_ALWAYS(iter2 == iter3)
-		ASSERT_ALWAYS(iter2 >= iter3)
-		ASSERT_ALWAYS(iter2 <= iter3)
+		utki::assert(iter1 < iter2, SL);
+		utki::assert(iter2 > iter1, SL);
+		utki::assert(iter1 <= iter2, SL);
+		utki::assert(iter2 >= iter1, SL);
+		utki::assert(iter1 != iter3, SL);
+		utki::assert(iter2 == iter3, SL);
+		utki::assert(iter2 >= iter3, SL);
+		utki::assert(iter2 <= iter3, SL);
 	}
 
 	// insertion
@@ -712,14 +712,14 @@ void test_traversal(){
 
 		auto iter = traversal.make_iterator({1, 1});
 
-		ASSERT_ALWAYS(!iter.is_last_child())
+		utki::assert(!iter.is_last_child(), SL);
 
 		auto new_iter = traversal.insert(iter, tree(45));
 
-		ASSERT_ALWAYS(new_iter->value == 45)
-		ASSERT_ALWAYS(new_iter->children.empty())
-		ASSERT_ALWAYS(traversal.make_iterator({1, 1})->value == 45)
-		ASSERT_ALWAYS(std::next(traversal.make_iterator({1, 1}))->value == 4)
+		utki::assert(new_iter->value == 45, SL);
+		utki::assert(new_iter->children.empty(), SL);
+		utki::assert(traversal.make_iterator({1, 1})->value == 45, SL);
+		utki::assert(std::next(traversal.make_iterator({1, 1}))->value == 4, SL);
 	}
 
 	// insert after
@@ -739,18 +739,18 @@ void test_traversal(){
 
 		auto iter = traversal.make_iterator({1, 2});
 
-		ASSERT_ALWAYS(iter.is_last_child())
+		utki::assert(iter.is_last_child(), SL);
 
 		tree t(45, {46, 47});
 
 		auto new_iter = traversal.insert_after(iter, t);
 
-		ASSERT_ALWAYS(new_iter.is_last_child())
-		ASSERT_ALWAYS(new_iter->value == 45)
+		utki::assert(new_iter.is_last_child(), SL);
+		utki::assert(new_iter->value == 45, SL);
 
 		++new_iter;
 
-		ASSERT_ALWAYS(new_iter->value == 46)
+		utki::assert(new_iter->value == 46, SL);
 	}
 
 	// erase non-last
@@ -769,12 +769,12 @@ void test_traversal(){
 		auto traversal = utki::make_traversal(roots);
 
 		auto iter = traversal.make_iterator({1, 1});
-		ASSERT_ALWAYS(!iter.is_last_child())
+		utki::assert(!iter.is_last_child(), SL);
 
 		iter = traversal.erase(iter);
 
-		ASSERT_ALWAYS(iter->value == 42)
-		ASSERT_ALWAYS(iter.is_last_child())
+		utki::assert(iter->value == 42, SL);
+		utki::assert(iter.is_last_child(), SL);
 	}
 
 	// erase last child
@@ -793,12 +793,12 @@ void test_traversal(){
 		auto traversal = utki::make_traversal(roots);
 
 		auto iter = traversal.make_iterator({1, 0, 2});
-		ASSERT_ALWAYS(iter.is_last_child())
+		utki::assert(iter.is_last_child(), SL);
 
 		iter = traversal.erase(iter);
 
-		ASSERT_ALWAYS(!iter.is_last_child())
-		ASSERT_ALWAYS(iter->value == 4)
+		utki::assert(!iter.is_last_child(), SL);
+		utki::assert(iter->value == 4, SL);
 	}
 
 	// erase very last
@@ -817,12 +817,12 @@ void test_traversal(){
 		auto traversal = utki::make_traversal(roots);
 
 		auto iter = traversal.make_iterator({1, 2, 2});
-		ASSERT_ALWAYS(iter.is_last_child())
+		utki::assert(iter.is_last_child(), SL);
 
 		iter = traversal.erase(iter);
 
-		ASSERT_ALWAYS(!iter.is_last_child())
-		ASSERT_ALWAYS(iter == traversal.end())
+		utki::assert(!iter.is_last_child(), SL);
+		utki::assert(iter == traversal.end(), SL);
 	}
 }
 }

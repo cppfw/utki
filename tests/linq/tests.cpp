@@ -21,7 +21,7 @@ void test_select(){
 		auto out = utki::linq(std::move(in)).select(
 				[](auto v){
 					auto r = std::make_pair(std::move(v.second), 13.4f);
-					ASSERT_ALWAYS(v.second.empty())
+					utki::assert(v.second.empty(), SL);
 					return r;
 				}
 			).get();
@@ -34,8 +34,8 @@ void test_select(){
 			{"1", 13.4f}
 		}};
 
-		ASSERT_ALWAYS(out == expected)
-		ASSERT_ALWAYS(in.empty())
+		utki::assert(out == expected, SL);
+		utki::assert(in.empty(), SL);
 	}
 
 	// test linq(&).select()
@@ -49,7 +49,7 @@ void test_select(){
 		auto out = utki::linq(in).select(
 				[](auto v, auto i){
 					auto r = std::make_pair(std::move(v.second), i);
-					ASSERT_ALWAYS(!v.second.empty())
+					utki::assert(!v.second.empty(), SL);
 					return r;
 				}
 			).get();
@@ -77,7 +77,7 @@ void test_select(){
 		auto out = utki::linq(in).select(
 				[](auto v){
 					auto r = std::make_pair(std::move(v.second), 13.4f);
-					ASSERT_ALWAYS(!v.second.empty())
+					utki::assert(!v.second.empty(), SL);
 					return r;
 				}
 			).get();
@@ -88,9 +88,9 @@ void test_select(){
 			{"1", 13.4f}
 		}};
 
-		ASSERT_ALWAYS(out == expected)
-		ASSERT_ALWAYS(!in.empty())
-		ASSERT_ALWAYS(!in.front().second.empty())
+		utki::assert(out == expected, SL);
+		utki::assert(!in.empty(), SL);
+		utki::assert(!in.front().second.empty(), SL);
 	}
 }
 }
@@ -112,7 +112,7 @@ void test_group_by(){
 		auto out = utki::linq(std::move(in)).select(
 				[](auto v, auto i){
 					auto r = std::make_tuple(std::move(v.second), v.first, i);
-					ASSERT_ALWAYS(v.second.empty())
+					utki::assert(v.second.empty(), SL);
 					return r;
 				}
 			).group_by(
@@ -136,9 +136,9 @@ void test_group_by(){
 			} }
 		}};
 
-		ASSERT_ALWAYS(!out.empty())
-		ASSERT_ALWAYS(out == expected)
-		ASSERT_ALWAYS(in.empty())
+		utki::assert(!out.empty(), SL);
+		utki::assert(out == expected, SL);
+		utki::assert(in.empty(), SL);
 	}
 }
 }
@@ -164,9 +164,9 @@ void test_where(){
 			{13, "13_3"}
 		}};
 
-		ASSERT_ALWAYS(out == expected)
-		ASSERT_ALWAYS(!in.empty())
-		ASSERT_ALWAYS(!in.front().second.empty())
+		utki::assert(out == expected, SL);
+		utki::assert(!in.empty(), SL);
+		utki::assert(!in.front().second.empty(), SL);
 	}
 
 	// test linq(const &).group_by().where()
@@ -182,8 +182,8 @@ void test_where(){
 
 		auto out = utki::linq(in).group_by([](const auto& v){return v.first;}).where([](const auto& v){return v.second.size() == 2;}).get();
 
-		ASSERT_ALWAYS(!in.empty())
-		ASSERT_ALWAYS(!in.front().second.empty())
+		utki::assert(!in.empty(), SL);
+		utki::assert(!in.front().second.empty(), SL);
 
 		utki::assert(out.size() == 2, [&](auto&o){o << "out.size() = " << out.size();}, SL);
 		utki::assert(out.begin()->first == 3, [&](auto&o){o << "out.begin()->first = " << out.begin()->first;}, SL);
@@ -227,8 +227,8 @@ void test_order_by(){
 		}
 #endif
 
-		ASSERT_ALWAYS(out == expected)
-		ASSERT_ALWAYS(in.empty())
+		utki::assert(out == expected, SL);
+		utki::assert(in.empty(), SL);
 	}
 
 	// test linq(&).order_by()
@@ -263,9 +263,9 @@ void test_order_by(){
 		}
 #endif
 
-		ASSERT_ALWAYS(out == expected)
-		ASSERT_ALWAYS(!in.empty())
-		ASSERT_ALWAYS(!in.begin()->second.empty())
+		utki::assert(out == expected, SL);
+		utki::assert(!in.empty(), SL);
+		utki::assert(!in.begin()->second.empty(), SL);
 	}
 
 	// test linq(const &).order_by()
@@ -300,9 +300,9 @@ void test_order_by(){
 		}
 #endif
 
-		ASSERT_ALWAYS(out == expected)
-		ASSERT_ALWAYS(!in.empty())
-		ASSERT_ALWAYS(!in.begin()->second.empty())
+		utki::assert(out == expected, SL);
+		utki::assert(!in.empty(), SL);
+		utki::assert(!in.begin()->second.empty(), SL);
 	}
 }
 }

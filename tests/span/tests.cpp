@@ -27,10 +27,10 @@ void Run(){
 	T_TestStaticBuffer arr;
 	T_TestStaticBuffer brr(arr);
 
-	ASSERT_ALWAYS(arr.size() == brr.size())
+	utki::assert(arr.size() == brr.size(), SL);
 	for(size_t i = 0; i < arr.size(); ++i){
-		ASSERT_ALWAYS(arr[i].a == 0)
-		ASSERT_ALWAYS(brr[i].a == 1)
+		utki::assert(arr[i].a == 0, SL);
+		utki::assert(brr[i].a == 1, SL);
 	}
 }
 
@@ -64,20 +64,20 @@ void Run(){
 	T_TestStaticBuffer brr;
 	TestClass* oldArrBegin = &*arr.begin();
 	TestClass* oldBrrBegin = &*brr.begin();
-	ASSERT_ALWAYS(&*brr.begin() != &*arr.begin())
+	utki::assert(&*brr.begin() != &*arr.begin(), SL);
 	
 	brr = arr;
 	
-	ASSERT_ALWAYS(&*brr.begin() != &*arr.begin())
-	ASSERT_ALWAYS(&*arr.begin() == oldArrBegin)
-	ASSERT_ALWAYS(&*brr.begin() == oldBrrBegin)
+	utki::assert(&*brr.begin() != &*arr.begin(), SL);
+	utki::assert(&*arr.begin() == oldArrBegin, SL);
+	utki::assert(&*brr.begin() == oldBrrBegin, SL);
 
-	ASSERT_ALWAYS(arr.size() == brr.size())
+	utki::assert(arr.size() == brr.size(), SL);
 	for(size_t i = 0; i < arr.size(); ++i){
-		ASSERT_ALWAYS(arr[i].a == 0)
+		utki::assert(arr[i].a == 0, SL);
 		utki::assert(brr[i].a == 0, [&](auto&o){o << "brr[i].a = " << brr[i].a;}, SL);
 		utki::assert(arr[i].id == brr[i].id, [&](auto&o){o << "arr[i].id = " << arr[i].id << " brr[i].id = " << brr[i].id;}, SL);
-		ASSERT_ALWAYS(arr[i].id == i)
+		utki::assert(arr[i].id == i, SL);
 	}
 }
 
@@ -132,7 +132,7 @@ void run(){
 
 		ss << utki::make_span(buf);
 
-		ASSERT_ALWAYS(ss.str() == "Hello world!")
+		utki::assert(ss.str() == "Hello world!", SL);
 	}
 }
 }
@@ -145,8 +145,8 @@ void run(){
 
 		auto s = utki::make_span(str);
 
-		ASSERT_ALWAYS(s.size() == str.size())
-		ASSERT_ALWAYS(s.data() == str.data())
+		utki::assert(s.size() == str.size(), SL);
+		utki::assert(s.data() == str.data(), SL);
 	}
 
 	// test make_span(const char*)
@@ -154,8 +154,8 @@ void run(){
 		const char* str = "Hello world!";
 		auto s = utki::make_span(str);
 
-		ASSERT_ALWAYS(s.size() == strlen(str))
-		ASSERT_ALWAYS(s.data() == str)
+		utki::assert(s.size() == strlen(str), SL);
+		utki::assert(s.data() == str, SL);
 	}
 }
 }
@@ -166,15 +166,15 @@ void run(){
 
 	auto s = utki::make_span(str);
 
-	ASSERT_ALWAYS(s.size() == str.size())
-	ASSERT_ALWAYS(s.data() == str.data())
+	utki::assert(s.size() == str.size(), SL);
+	utki::assert(s.data() == str.data(), SL);
 	
 	// test subspan(offset)
 	{
 		auto ss = s.subspan(3);
 
-		ASSERT_ALWAYS(ss.size() == str.size() - 3)
-		ASSERT_ALWAYS(ss.data() == str.data() + 3)
+		utki::assert(ss.size() == str.size() - 3, SL);
+		utki::assert(ss.data() == str.data() + 3, SL);
 	}
 
 	// test subspan(offset == size)
@@ -196,7 +196,7 @@ void run(){
 		auto ss = s.subspan(3, 4);
 
 		utki::assert(ss.size() == 4, [&](auto&o){o << "ss.size() = " << ss.size();}, SL);
-		ASSERT_ALWAYS(ss.data() == str.data() + 3)
+		utki::assert(ss.data() == str.data() + 3, SL);
 	}
 }
 }
