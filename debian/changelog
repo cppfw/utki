@@ -1,3 +1,9 @@
+libutki (1.1.123) unstable; urgency=medium
+
+  * add assert(std::function)
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 08 Apr 2021 20:21:26 +0300
+
 libutki (1.1.122) unstable; urgency=medium
 
   * deploy to jfrog
