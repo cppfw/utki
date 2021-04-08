@@ -1,3 +1,9 @@
+libutki (1.1.122) unstable; urgency=medium
+
+  * deploy to jfrog
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 08 Apr 2021 14:15:17 +0300
+
 libutki (1.1.121) unstable; urgency=medium
 
   * deploy to jfrog
