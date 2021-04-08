@@ -61,9 +61,9 @@ void test_select(){
 			{"14", 2}
 		}};
 
-		ASSERT_INFO_ALWAYS(out == expected, "out.size() = " << out.size() << std::endl)
-		ASSERT_ALWAYS(!in.empty())
-		ASSERT_ALWAYS(!in.begin()->second.empty())
+		utki::assert(out == expected, [&](auto&o){o << "out.size() = " << out.size() << std::endl;}, SL);
+		utki::assert(!in.empty(), SL);
+		utki::assert(!in.begin()->second.empty(), SL);
 	}
 
 	// test linq(const &).select()
@@ -185,10 +185,10 @@ void test_where(){
 		ASSERT_ALWAYS(!in.empty())
 		ASSERT_ALWAYS(!in.front().second.empty())
 
-		ASSERT_INFO_ALWAYS(out.size() == 2, "out.size() = " << out.size())
-		ASSERT_INFO_ALWAYS(out.begin()->first == 3, "out.begin()->first = " << out.begin()->first)
-		ASSERT_INFO_ALWAYS(std::next(out.begin())->first == 13, "std::next(out.begin())->first = " << std::next(out.begin())->first)
-		ASSERT_INFO_ALWAYS(out.begin()->second.size() == 2, "out.begin()->second.size() = " << out.begin()->second.size())
+		utki::assert(out.size() == 2, [&](auto&o){o << "out.size() = " << out.size();}, SL);
+		utki::assert(out.begin()->first == 3, [&](auto&o){o << "out.begin()->first = " << out.begin()->first;}, SL);
+		utki::assert(std::next(out.begin())->first == 13, [&](auto&o){o << "std::next(out.begin())->first = " << std::next(out.begin())->first;}, SL);
+		utki::assert(out.begin()->second.size() == 2, [&](auto&o){o << "out.begin()->second.size() = " << out.begin()->second.size();}, SL);
 	}
 }
 }

@@ -181,7 +181,7 @@ public:
 	 * @return false otherwise.
 	 */
 	bool is_clear()const noexcept{
-		ASSERT_INFO(this->f.size() != 0, "given flags enumeration is empty")
+		ASSERT(this->f.size() != 0, [](auto&o){o << "given flags enumeration is empty";})
 		for(size_t i = 0; i != this->f.size() - 1; ++i){
 			if(this->f[i] != 0){
 				return false;
@@ -201,7 +201,7 @@ public:
 	 * @return false otherwise.
 	 */
 	bool is_set()const noexcept{
-		ASSERT_INFO(this->f.size() != 0, "given flags enumeration is empty")
+		ASSERT(this->f.size() != 0, [](auto&o){o << "given flags enumeration is empty";})
 		for(size_t i = 0; i != this->f.size() - 1; ++i){
 			if(this->f[i] != uint8_t(-1)){
 				return false;

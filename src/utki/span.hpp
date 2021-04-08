@@ -132,7 +132,7 @@ public:
 	 * @return reference to i'th element of the span.
 	 */
 	reference operator[](size_type i)noexcept{
-		ASSERT_INFO(i < this->size(), "operator[]: index out of bounds")
+		ASSERT(i < this->size(), [&](auto&o){o << "operator[](" << i << "): index out of bounds";})
 		return this->buf[i];
 	}
 

@@ -70,7 +70,7 @@ public:
 	 * @return reference to singleton object instance.
 	 */
 	static T& inst(){
-		ASSERT_INFO(is_created(), "intrusive_singleton::inst(): singleton object is not created")
+		ASSERT(is_created(), [](auto&o){o << "intrusive_singleton::inst(): singleton object is not created";})
 		return *T_InstanceOwner::instance;
 	}
 

@@ -75,8 +75,8 @@ void Run(){
 	ASSERT_ALWAYS(arr.size() == brr.size())
 	for(size_t i = 0; i < arr.size(); ++i){
 		ASSERT_ALWAYS(arr[i].a == 0)
-		ASSERT_INFO_ALWAYS(brr[i].a == 0, "brr[i].a = " << brr[i].a)
-		ASSERT_INFO_ALWAYS(arr[i].id == brr[i].id, "arr[i].id = " << arr[i].id << " brr[i].id = " << brr[i].id)
+		utki::assert(brr[i].a == 0, [&](auto&o){o << "brr[i].a = " << brr[i].a;}, SL);
+		utki::assert(arr[i].id == brr[i].id, [&](auto&o){o << "arr[i].id = " << arr[i].id << " brr[i].id = " << brr[i].id;}, SL);
 		ASSERT_ALWAYS(arr[i].id == i)
 	}
 }
@@ -181,21 +181,21 @@ void run(){
 	{
 		auto ss = s.subspan(s.size());
 
-		ASSERT_INFO_ALWAYS(ss.size() == 0, "ss.size() = " << ss.size())
+		utki::assert(ss.size() == 0, [&](auto&o){o << "ss.size() = " << ss.size();}, SL);
 	}
 
 	// test subspan(offset > size)
 	{
 		auto ss = s.subspan(1000);
 
-		ASSERT_INFO_ALWAYS(ss.size() == 0, "ss.size() = " << ss.size())
+		utki::assert(ss.size() == 0, [&](auto&o){o << "ss.size() = " << ss.size();}, SL);
 	}
 
 	// test subspan(offset, count)
 	{
 		auto ss = s.subspan(3, 4);
 
-		ASSERT_INFO_ALWAYS(ss.size() == 4, "ss.size() = " << ss.size())
+		utki::assert(ss.size() == 4, [&](auto&o){o << "ss.size() = " << ss.size();}, SL);
 		ASSERT_ALWAYS(ss.data() == str.data() + 3)
 	}
 }
