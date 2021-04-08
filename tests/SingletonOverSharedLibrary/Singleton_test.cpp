@@ -6,11 +6,7 @@
 
 
 int main(int argc, char *argv[]){
-//	TRACE_ALWAYS(<< "Started" << std::endl)
-
 	TestSingleton ts;
-
-//	TRACE_ALWAYS(<< "32 a = " << TestSingleton::Inst().a << std::endl)
 
 	utki::assert(TestSingleton::inst().a == 32, SL);
 

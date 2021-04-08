@@ -15,5 +15,5 @@ void IncA(){
 
 void PrintA(){
 	utki::assert(TestSingleton::is_created(), SL);
-	TRACE_ALWAYS(<< "PrintA(): a = " << TestSingleton::inst().a << std::endl)
+	utki::log([](auto&o){o << "PrintA(): a = " << TestSingleton::inst().a << std::endl;});
 }

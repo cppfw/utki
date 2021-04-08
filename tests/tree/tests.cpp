@@ -218,11 +218,11 @@ void test_traversal(){
 		};
 
 		if(encountered != expected){
-			TRACE_ALWAYS(<< "encountered = ")
+			utki::log([&](auto&o){o << "encountered = ";});
 			for(auto& i : encountered){
-				TRACE_ALWAYS(<< i << ", ")
+				utki::log([&](auto&o){o << i << ", ";});
 			}
-			TRACE_ALWAYS(<< std::endl)
+			utki::log([&](auto&o){o << std::endl;});
 			utki::assert(false, [&](auto&o){o << "traversed tree is not as expected";}, SL);
 		}
 	}
@@ -251,11 +251,11 @@ void test_traversal(){
 		};
 
 		if(encountered != expected){
-			TRACE_ALWAYS(<< "encountered = ")
+			utki::log([&](auto&o){o << "encountered = ";});
 			for(auto& i : encountered){
-				TRACE_ALWAYS(<< i << ", ")
+				utki::log([&](auto&o){o << i << ", ";});
 			}
-			TRACE_ALWAYS(<< std::endl)
+			utki::log([&](auto&o){o << std::endl;});
 			utki::assert(false, SL);
 		}
 	}
@@ -289,11 +289,11 @@ void test_traversal(){
 		};
 
 		if(encountered != expected){
-			TRACE_ALWAYS(<< "encountered = ")
+			utki::log([&](auto&o){o << "encountered = ";});
 			for(auto& i : encountered){
-				TRACE_ALWAYS(<< i << ", ")
+				utki::log([&](auto&o){o << i << ", ";});
 			}
-			TRACE_ALWAYS(<< std::endl)
+			utki::log([&](auto&o){o << std::endl;});
 			utki::assert(false, [&](auto&o){o << "traversed tree is not as expected";}, SL);
 		}
 	}
@@ -327,11 +327,11 @@ void test_traversal(){
 		};
 
 		if(encountered != expected){
-			TRACE_ALWAYS(<< "encountered = ")
+			utki::log([&](auto&o){o << "encountered = ";});
 			for(auto& i : encountered){
-				TRACE_ALWAYS(<< i << ", ")
+				utki::log([&](auto&o){o << i << ", ";});
 			}
-			TRACE_ALWAYS(<< std::endl)
+			utki::log([&](auto&o){o << std::endl;});
 			utki::assert(false, [&](auto&o){o << "traversed tree is not as expected";}, SL);
 		}
 	}
@@ -365,11 +365,11 @@ void test_traversal(){
 		};
 
 		if(encountered != expected){
-			TRACE_ALWAYS(<< "encountered = ")
+			utki::log([&](auto&o){o << "encountered = ";});
 			for(auto& i : encountered){
-				TRACE_ALWAYS(<< i << ", ")
+				utki::log([&](auto&o){o << i << ", ";});
 			}
-			TRACE_ALWAYS(<< std::endl)
+			utki::log([&](auto&o){o << std::endl;});
 			utki::assert(false, [&](auto&o){o << "traversed tree is not as expected";}, SL);
 		}
 	}
@@ -403,11 +403,11 @@ void test_traversal(){
 		};
 
 		if(encountered != expected){
-			TRACE_ALWAYS(<< "encountered = ")
+			utki::log([&](auto&o){o << "encountered = ";});
 			for(auto& i : encountered){
-				TRACE_ALWAYS(<< i << ", ")
+				utki::log([&](auto&o){o << i << ", ";});
 			}
-			TRACE_ALWAYS(<< std::endl)
+			utki::log([&](auto&o){o << std::endl;});
 			utki::assert(false, [&](auto&o){o << "traversed tree is not as expected";}, SL);
 		}
 	}
@@ -441,11 +441,11 @@ void test_traversal(){
 		};
 
 		if(encountered != expected){
-			TRACE_ALWAYS(<< "encountered = ")
+			utki::log([&](auto&o){o << "encountered = ";});
 			for(auto& i : encountered){
-				TRACE_ALWAYS(<< i << ", ")
+				utki::log([&](auto&o){o << i << ", ";});
 			}
-			TRACE_ALWAYS(<< std::endl)
+			utki::log([&](auto&o){o << std::endl;});
 			utki::assert(false, [&](auto&o){o << "traversed tree is not as expected";}, SL);
 		}
 	}
@@ -479,11 +479,11 @@ void test_traversal(){
 		};
 
 		if(encountered != expected){
-			TRACE_ALWAYS(<< "encountered = ")
+			utki::log([&](auto&o){o << "encountered = ";});
 			for(auto& i : encountered){
-				TRACE_ALWAYS(<< i << ", ")
+				utki::log([&](auto&o){o << i << ", ";});
 			}
-			TRACE_ALWAYS(<< std::endl)
+			utki::log([&](auto&o){o << std::endl;});
 			utki::assert(false, [&](auto&o){o << "traversed tree is not as expected";}, SL);
 		}
 	}
@@ -524,11 +524,11 @@ void test_traversal(){
 		};
 
 		if(index != expected){
-			TRACE_ALWAYS(<< "index = ")
+			utki::log([&](auto&o){o << "index = ";});
 			for(auto& i : index){
-				TRACE_ALWAYS(<< i << ", ")
+				utki::log([&](auto&o){o << i << ", ";});
 			}
-			TRACE_ALWAYS(<< std::endl)
+			utki::log([&](auto&o){o << std::endl;});
 			utki::assert(false, [&](auto&o){o << "index is not as expected";}, SL);
 		}
 
@@ -539,11 +539,11 @@ void test_traversal(){
 		auto index_2 = iter.index();
 
 		if(index_2 != expected){
-			TRACE_ALWAYS(<< "index_2 = ")
+			utki::log([&](auto&o){o << "index_2 = ";});
 			for(auto& i : index_2){
-				TRACE_ALWAYS(<< i << ", ")
+				utki::log([&](auto&o){o << i << ", ";});
 			}
-			TRACE_ALWAYS(<< std::endl)
+			utki::log([&](auto&o){o << std::endl;});
 			utki::assert(false, [&](auto&o){o << "index_2 is not as expected";}, SL);
 		}
 	}
@@ -584,11 +584,11 @@ void test_traversal(){
 		};
 
 		if(index != expected){
-			TRACE_ALWAYS(<< "index = ")
+			utki::log([&](auto&o){o << "index = ";});
 			for(auto& i : index){
-				TRACE_ALWAYS(<< i << ", ")
+				utki::log([&](auto&o){o << i << ", ";});
 			}
-			TRACE_ALWAYS(<< std::endl)
+			utki::log([&](auto&o){o << std::endl;});
 			utki::assert(false, [&](auto&o){o << "index is not as expected";}, SL);
 		}
 
@@ -599,11 +599,11 @@ void test_traversal(){
 		auto index_2 = iter.index();
 
 		if(index_2 != expected){
-			TRACE_ALWAYS(<< "index_2 = ")
+			utki::log([&](auto&o){o << "index_2 = ";});
 			for(auto& i : index_2){
-				TRACE_ALWAYS(<< i << ", ")
+				utki::log([&](auto&o){o << i << ", ";});
 			}
-			TRACE_ALWAYS(<< std::endl)
+			utki::log([&](auto&o){o << std::endl;});
 			utki::assert(false, [&](auto&o){o << "index_2 is not as expected";}, SL);
 		}
 	}
