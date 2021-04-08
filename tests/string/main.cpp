@@ -6,16 +6,16 @@ int main(int argc, char** argv){
 	{
 		auto str = utki::make_string(" ");
 
-		ASSERT_INFO_ALWAYS(str.length() == 1, "str.length = " << str.length())
-		ASSERT_INFO_ALWAYS(str == " ", "str = " << str)
+		utki::assert(str.length() == 1, [&](auto&o){o << "str.length = " << str.length();}, SL);
+		utki::assert(str == " ", [&](auto&o){o << "str = " << str;}, SL);
 	}
 
 	// test short string
 	{
 		auto str = utki::make_string("Hello %d world!", 13);
 
-		ASSERT_INFO_ALWAYS(str.length() == 15, "str.length = " << str.length())
-		ASSERT_INFO_ALWAYS(str == "Hello 13 world!", "str = " << str)
+		utki::assert(str.length() == 15, [&](auto&o){o << "str.length = " << str.length();}, SL);
+		utki::assert(str == "Hello 13 world!", [&](auto&o){o << "str = " << str;}, SL);
 	}
 
 	// test long string over 1k
@@ -44,8 +44,8 @@ int main(int argc, char** argv){
 				"Hello %d world!", 13
 			);
 
-		ASSERT_INFO_ALWAYS(str.length() == 1024 + 15, "str.length = " << str.length())
-		ASSERT_INFO_ALWAYS(
+		utki::assert(str.length() == 1024 + 15, [&](auto&o){o << "str.length = " << str.length();}, SL);
+		utki::assert(
 				str == 
 						"1234567890abcdef" "1234567890abcdef" "1234567890abcdef" "1234567890abcdef"
 						"1234567890abcdef" "1234567890abcdef" "1234567890abcdef" "1234567890abcdef"
@@ -68,8 +68,9 @@ int main(int argc, char** argv){
 						"1234567890abcdef" "1234567890abcdef" "1234567890abcdef" "1234567890abcdef" 
 
 						"Hello 13 world!",
-				"str = " << str
-			)
+				[&](auto&o){o << "str = " << str;},
+				SL
+			);
 	}
 
 	// test string split
@@ -78,7 +79,7 @@ int main(int argc, char** argv){
 
 		auto r = utki::split(str, '/');
 
-		ASSERT_INFO_ALWAYS(r.size() == 6, "r.size() = " << r.size())
+		utki::assert(r.size() == 6, [&](auto&o){o << "r.size() = " << r.size();}, SL);
 		ASSERT_ALWAYS(r[0] == "qwe")
 		ASSERT_ALWAYS(r[1] == "rtyu")
 		ASSERT_ALWAYS(r[2] == "io")
@@ -93,7 +94,7 @@ int main(int argc, char** argv){
 
 		auto r = utki::split(str, '/');
 
-		ASSERT_INFO_ALWAYS(r.size() == 7, "r.size() = " << r.size())
+		utki::assert(r.size() == 7, [&](auto&o){o << "r.size() = " << r.size();}, SL);
 		ASSERT_ALWAYS(r[0] == "qwe")
 		ASSERT_ALWAYS(r[1] == "rtyu")
 		ASSERT_ALWAYS(r[2] == "io")
@@ -107,7 +108,7 @@ int main(int argc, char** argv){
 	{
 		auto r = utki::split("", '/');
 
-		ASSERT_INFO_ALWAYS(r.size() == 1, "r.size() = " << r.size())
+		utki::assert(r.size() == 1, [&](auto&o){o << "r.size() = " << r.size();}, SL);
 	}
 
 	// test string split into words
@@ -127,11 +128,11 @@ int main(int argc, char** argv){
 	{
 		auto res = utki::word_wrap("abcd efgh i jkl mnop", 7);
 
-		ASSERT_INFO_ALWAYS(res.size() == 4, "res.size() = " << res.size())
-		ASSERT_INFO_ALWAYS(res[0] == "abcd", "res[0] = '" << res[0] << "'")
-		ASSERT_INFO_ALWAYS(res[1] == "efgh i", "res[1] = '" << res[1] << "'")
-		ASSERT_INFO_ALWAYS(res[2] == "jkl", "res[2] = '" << res[2] << "'")
-		ASSERT_INFO_ALWAYS(res[3] == "mnop", "res[3] = '" << res[3] << "'")
+		utki::assert(res.size() == 4, [&](auto&o){o << "res.size() = " << res.size();}, SL);
+		utki::assert(res[0] == "abcd", [&](auto&o){o << "res[0] = '" << res[0] << "'";}, SL);
+		utki::assert(res[1] == "efgh i", [&](auto&o){o << "res[1] = '" << res[1] << "'";}, SL);
+		utki::assert(res[2] == "jkl", [&](auto&o){o << "res[2] = '" << res[2] << "'";}, SL);
+		utki::assert(res[3] == "mnop", [&](auto&o){o << "res[3] = '" << res[3] << "'";}, SL);
 	}
 
 	// test word wrap with width 0
@@ -139,8 +140,8 @@ int main(int argc, char** argv){
 		auto str = "abcd efgh i jkl mnop";
 		auto res = utki::word_wrap(str, 0);
 
-		ASSERT_INFO_ALWAYS(res.size() == 1, "res.size() = " << res.size())
-		ASSERT_INFO_ALWAYS(res[0] == str, "res[0] = '" << res[0] << "'")
+		utki::assert(res.size() == 1, [&](auto&o){o << "res.size() = " << res.size();}, SL);
+		utki::assert(res[0] == str, [&](auto&o){o << "res[0] = '" << res[0] << "'";}, SL);
 	}
 
 	// test word wrap with width 1
@@ -148,12 +149,12 @@ int main(int argc, char** argv){
 		auto str = "ab cd e ";
 		auto res = utki::word_wrap(str, 1);
 
-		ASSERT_INFO_ALWAYS(res.size() == 5, "res.size() = " << res.size())
-		ASSERT_INFO_ALWAYS(res[0] == "a", "res[0] = '" << res[0] << "'")
-		ASSERT_INFO_ALWAYS(res[1] == "b", "res[1] = '" << res[1] << "'")
-		ASSERT_INFO_ALWAYS(res[2] == "c", "res[2] = '" << res[2] << "'")
-		ASSERT_INFO_ALWAYS(res[3] == "d", "res[3] = '" << res[3] << "'")
-		ASSERT_INFO_ALWAYS(res[4] == "e", "res[4] = '" << res[4] << "'")
+		utki::assert(res.size() == 5, [&](auto&o){o << "res.size() = " << res.size();}, SL);
+		utki::assert(res[0] == "a", [&](auto&o){o << "res[0] = '" << res[0] << "'";}, SL);
+		utki::assert(res[1] == "b", [&](auto&o){o << "res[1] = '" << res[1] << "'";}, SL);
+		utki::assert(res[2] == "c", [&](auto&o){o << "res[2] = '" << res[2] << "'";}, SL);
+		utki::assert(res[3] == "d", [&](auto&o){o << "res[3] = '" << res[3] << "'";}, SL);
+		utki::assert(res[4] == "e", [&](auto&o){o << "res[4] = '" << res[4] << "'";}, SL);
 	}
 
 	// test long word wrap
@@ -161,11 +162,11 @@ int main(int argc, char** argv){
 		auto str = "ab cdefghijklmno p";
 		auto res = utki::word_wrap(str, 5);
 
-		ASSERT_INFO_ALWAYS(res.size() == 4, "res.size() = " << res.size())
-		ASSERT_INFO_ALWAYS(res[0] == "ab", "res[0] = '" << res[0] << "'")
-		ASSERT_INFO_ALWAYS(res[1] == "cdefg", "res[1] = '" << res[1] << "'")
-		ASSERT_INFO_ALWAYS(res[2] == "hijkl", "res[2] = '" << res[2] << "'")
-		ASSERT_INFO_ALWAYS(res[3] == "mno p", "res[3] = '" << res[3] << "'")
+		utki::assert(res.size() == 4, [&](auto&o){o << "res.size() = " << res.size();}, SL);
+		utki::assert(res[0] == "ab", [&](auto&o){o << "res[0] = '" << res[0] << "'";}, SL);
+		utki::assert(res[1] == "cdefg", [&](auto&o){o << "res[1] = '" << res[1] << "'";}, SL);
+		utki::assert(res[2] == "hijkl", [&](auto&o){o << "res[2] = '" << res[2] << "'";}, SL);
+		utki::assert(res[3] == "mno p", [&](auto&o){o << "res[3] = '" << res[3] << "'";}, SL);
 	}
 
 	// test word wrap with newlines
@@ -173,19 +174,19 @@ int main(int argc, char** argv){
 		auto str = "ab cd\nef\n g\n  h\n  ijk   \nlm   no p \n\nq\n";
 		auto res = utki::word_wrap(str, 5);
 
-		ASSERT_INFO_ALWAYS(res.size() == 12, "res.size() = " << res.size())
-		ASSERT_INFO_ALWAYS(res[0] == "ab cd", "res[0] = '" << res[0] << "'")
-		ASSERT_INFO_ALWAYS(res[1] == "ef", "res[1] = '" << res[1] << "'")
-		ASSERT_INFO_ALWAYS(res[2] == " g", "res[2] = '" << res[2] << "'")
-		ASSERT_INFO_ALWAYS(res[3] == "  h", "res[3] = '" << res[3] << "'")
-		ASSERT_INFO_ALWAYS(res[4] == "  ijk", "res[4] = '" << res[4] << "'")
-		ASSERT_INFO_ALWAYS(res[5] == "   ", "res[5] = '" << res[5] << "'")
-		ASSERT_INFO_ALWAYS(res[6] == "lm", "res[6] = '" << res[6] << "'")
-		ASSERT_INFO_ALWAYS(res[7] == "  no", "res[7] = '" << res[7] << "'")
-		ASSERT_INFO_ALWAYS(res[8] == "p ", "res[8] = '" << res[8] << "'")
-		ASSERT_INFO_ALWAYS(res[9] == "", "res[9] = '" << res[9] << "'")
-		ASSERT_INFO_ALWAYS(res[10] == "q", "res[10] = '" << res[10] << "'")
-		ASSERT_INFO_ALWAYS(res[11] == "", "res[11] = '" << res[11] << "'")
+		utki::assert(res.size() == 12, [&](auto&o){o << "res.size() = " << res.size();}, SL);
+		utki::assert(res[0] == "ab cd", [&](auto&o){o << "res[0] = '" << res[0] << "'";}, SL);
+		utki::assert(res[1] == "ef", [&](auto&o){o << "res[1] = '" << res[1] << "'";}, SL);
+		utki::assert(res[2] == " g", [&](auto&o){o << "res[2] = '" << res[2] << "'";}, SL);
+		utki::assert(res[3] == "  h", [&](auto&o){o << "res[3] = '" << res[3] << "'";}, SL);
+		utki::assert(res[4] == "  ijk", [&](auto&o){o << "res[4] = '" << res[4] << "'";}, SL);
+		utki::assert(res[5] == "   ", [&](auto&o){o << "res[5] = '" << res[5] << "'";}, SL);
+		utki::assert(res[6] == "lm", [&](auto&o){o << "res[6] = '" << res[6] << "'";}, SL);
+		utki::assert(res[7] == "  no", [&](auto&o){o << "res[7] = '" << res[7] << "'";}, SL);
+		utki::assert(res[8] == "p ", [&](auto&o){o << "res[8] = '" << res[8] << "'";}, SL);
+		utki::assert(res[9] == "", [&](auto&o){o << "res[9] = '" << res[9] << "'";}, SL);
+		utki::assert(res[10] == "q", [&](auto&o){o << "res[10] = '" << res[10] << "'";}, SL);
+		utki::assert(res[11] == "", [&](auto&o){o << "res[11] = '" << res[11] << "'";}, SL);
 	}
 
 	// test make_string(span<char>)

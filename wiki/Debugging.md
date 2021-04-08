@@ -1,5 +1,9 @@
 # Debugging with utki #
 
+**OUTDATED**
+
+TODO: update
+
 **utki** provides some useful debugging instruments like assertions, tracing and logging.
 All the debugging functions are wrapped into macros in order to be able to turn them off in the release builds and turn them on in the debug builds.
 

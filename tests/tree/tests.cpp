@@ -16,7 +16,7 @@ void basic(){
 
 	{
 		utki::tree<int> t(1,{34, 45});
-		ASSERT_INFO_ALWAYS(t.value == 1, "t.value = " << t.value)
+		utki::assert(t.value == 1, [&](auto&o){o << "t.value = " << t.value;}, SL);
 	}
 
 	{
@@ -147,9 +147,9 @@ void test_constructors_from_container(){
 		tree_int t(13, children);
 
 		ASSERT_ALWAYS(t.value == 13)
-		ASSERT_INFO_ALWAYS(t.children.size() == 2, "t.children.size() = " << t.children.size())
-		ASSERT_INFO_ALWAYS(t.children[0].value == 10, "t.children[0].value = " << t.children[0].value)
-		ASSERT_INFO_ALWAYS(t.children[1].value == 20, "t.children[1].value = " << t.children[1].value)
+		utki::assert(t.children.size() == 2, [&](auto&o){o << "t.children.size() = " << t.children.size();}, SL);
+		utki::assert(t.children[0].value == 10, [&](auto&o){o << "t.children[0].value = " << t.children[0].value;}, SL);
+		utki::assert(t.children[1].value == 20, [&](auto&o){o << "t.children[1].value = " << t.children[1].value;}, SL);
 	}
 
 	// lvalue, rvalue
@@ -163,9 +163,9 @@ void test_constructors_from_container(){
 		tree_int t(13, std::move(children));
 
 		ASSERT_ALWAYS(t.value == 13)
-		ASSERT_INFO_ALWAYS(t.children.size() == 2, "t.children.size() = " << t.children.size())
-		ASSERT_INFO_ALWAYS(t.children[0].value == 10, "t.children[0].value = " << t.children[0].value)
-		ASSERT_INFO_ALWAYS(t.children[1].value == 20, "t.children[1].value = " << t.children[1].value)
+		utki::assert(t.children.size() == 2, [&](auto&o){o << "t.children.size() = " << t.children.size();}, SL);
+		utki::assert(t.children[0].value == 10, [&](auto&o){o << "t.children[0].value = " << t.children[0].value;}, SL);
+		utki::assert(t.children[1].value == 20, [&](auto&o){o << "t.children[1].value = " << t.children[1].value;}, SL);
 	}
 
 	// rvalue, rvalue
@@ -181,9 +181,9 @@ void test_constructors_from_container(){
 		ASSERT_ALWAYS(str.length() == 0)
 
 		ASSERT_ALWAYS(t.value == "13")
-		ASSERT_INFO_ALWAYS(t.children.size() == 2, "t.children.size() = " << t.children.size())
-		ASSERT_INFO_ALWAYS(t.children[0].value == "10", "t.children[0].value = " << t.children[0].value)
-		ASSERT_INFO_ALWAYS(t.children[1].value == "20", "t.children[1].value = " << t.children[1].value)
+		utki::assert(t.children.size() == 2, [&](auto&o){o << "t.children.size() = " << t.children.size();}, SL);
+		utki::assert(t.children[0].value == "10", [&](auto&o){o << "t.children[0].value = " << t.children[0].value;}, SL);
+		utki::assert(t.children[1].value == "20", [&](auto&o){o << "t.children[1].value = " << t.children[1].value;}, SL);
 	}
 }
 
@@ -205,9 +205,9 @@ void test_traversal(){
 
 		auto traversal = utki::make_traversal(roots);
 
-		ASSERT_INFO_ALWAYS(roots.begin()->value == 1, "roots.begin()->value = " << roots.begin()->value)
+		utki::assert(roots.begin()->value == 1, [&](auto&o){o << "roots.begin()->value = " << roots.begin()->value;}, SL);
 
-		ASSERT_INFO_ALWAYS(traversal.begin()->value == 1, "traversal.begin()->value = " << traversal.begin()->value)
+		utki::assert(traversal.begin()->value == 1, [&](auto&o){o << "traversal.begin()->value = " << traversal.begin()->value;}, SL);
 
 		for(auto i = traversal.begin(); i != traversal.end(); ++i){
 			encountered.push_back(i->value);
@@ -223,7 +223,7 @@ void test_traversal(){
 				TRACE_ALWAYS(<< i << ", ")
 			}
 			TRACE_ALWAYS(<< std::endl)
-			ASSERT_INFO_ALWAYS(false, "traversed tree is not as expected")
+			utki::assert(false, [&](auto&o){o << "traversed tree is not as expected";}, SL);
 		}
 	}
 
@@ -277,9 +277,8 @@ void test_traversal(){
 
 		auto traversal = utki::make_traversal(roots);
 
-		ASSERT_INFO_ALWAYS(roots.begin()->value == 1, "roots.begin()->value = " << roots.begin()->value)
-
-		ASSERT_INFO_ALWAYS(traversal.begin()->value == 1, "traversal.begin()->value = " << traversal.begin()->value)
+		utki::assert(roots.begin()->value == 1, [&](auto&o){o << "roots.begin()->value = " << roots.begin()->value;}, SL);
+		utki::assert(traversal.begin()->value == 1, [&](auto&o){o << "traversal.begin()->value = " << traversal.begin()->value;}, SL);
 
 		for(auto i = traversal.cbegin(); i != traversal.cend(); ++i){
 			encountered.push_back(i->value);
@@ -295,7 +294,7 @@ void test_traversal(){
 				TRACE_ALWAYS(<< i << ", ")
 			}
 			TRACE_ALWAYS(<< std::endl)
-			ASSERT_INFO_ALWAYS(false, "traversed tree is not as expected")
+			utki::assert(false, [&](auto&o){o << "traversed tree is not as expected";}, SL);
 		}
 	}
 
@@ -316,9 +315,8 @@ void test_traversal(){
 
 		auto traversal = utki::make_traversal(roots);
 
-		ASSERT_INFO_ALWAYS(roots.begin()->value == 1, "roots.begin()->value = " << roots.begin()->value)
-
-		ASSERT_INFO_ALWAYS(traversal.begin()->value == 1, "traversal.begin()->value = " << traversal.begin()->value)
+		utki::assert(roots.begin()->value == 1, [&](auto&o){o << "roots.begin()->value = " << roots.begin()->value;}, SL);
+		utki::assert(traversal.begin()->value == 1, [&](auto&o){o << "traversal.begin()->value = " << traversal.begin()->value;}, SL);
 
 		for(auto i = traversal.cbegin(); i != traversal.cend(); ++i){
 			encountered.push_back(i->value);
@@ -334,7 +332,7 @@ void test_traversal(){
 				TRACE_ALWAYS(<< i << ", ")
 			}
 			TRACE_ALWAYS(<< std::endl)
-			ASSERT_INFO_ALWAYS(false, "traversed tree is not as expected")
+			utki::assert(false, [&](auto&o){o << "traversed tree is not as expected";}, SL);
 		}
 	}
 
@@ -355,9 +353,8 @@ void test_traversal(){
 
 		auto traversal = utki::make_traversal(roots);
 
-		ASSERT_INFO_ALWAYS(roots.begin()->value == 1, "roots.begin()->value = " << roots.begin()->value)
-
-		ASSERT_INFO_ALWAYS(traversal.begin()->value == 1, "traversal.begin()->value = " << traversal.begin()->value)
+		utki::assert(roots.begin()->value == 1, [&](auto&o){o << "roots.begin()->value = " << roots.begin()->value;}, SL);
+		utki::assert(traversal.begin()->value == 1, [&](auto&o){o << "traversal.begin()->value = " << traversal.begin()->value;}, SL);
 
 		for(auto i = traversal.rbegin(); i != traversal.rend(); ++i){
 			encountered.push_back(i->value);
@@ -373,7 +370,7 @@ void test_traversal(){
 				TRACE_ALWAYS(<< i << ", ")
 			}
 			TRACE_ALWAYS(<< std::endl)
-			ASSERT_INFO_ALWAYS(false, "traversed tree is not as expected")
+			utki::assert(false, [&](auto&o){o << "traversed tree is not as expected";}, SL);
 		}
 	}
 
@@ -394,9 +391,8 @@ void test_traversal(){
 
 		auto traversal = utki::make_traversal(roots);
 
-		ASSERT_INFO_ALWAYS(roots.begin()->value == 1, "roots.begin()->value = " << roots.begin()->value)
-
-		ASSERT_INFO_ALWAYS(traversal.begin()->value == 1, "traversal.begin()->value = " << traversal.begin()->value)
+		utki::assert(roots.begin()->value == 1, [&](auto&o){o << "roots.begin()->value = " << roots.begin()->value;}, SL);
+		utki::assert(traversal.begin()->value == 1, [&](auto&o){o << "traversal.begin()->value = " << traversal.begin()->value;}, SL);
 
 		for(auto i = traversal.rbegin(); i != traversal.rend(); ++i){
 			encountered.push_back(i->value);
@@ -412,7 +408,7 @@ void test_traversal(){
 				TRACE_ALWAYS(<< i << ", ")
 			}
 			TRACE_ALWAYS(<< std::endl)
-			ASSERT_INFO_ALWAYS(false, "traversed tree is not as expected")
+			utki::assert(false, [&](auto&o){o << "traversed tree is not as expected";}, SL);
 		}
 	}
 
@@ -433,9 +429,8 @@ void test_traversal(){
 
 		auto traversal = utki::make_traversal(roots);
 
-		ASSERT_INFO_ALWAYS(roots.begin()->value == 1, "roots.begin()->value = " << roots.begin()->value)
-
-		ASSERT_INFO_ALWAYS(traversal.begin()->value == 1, "traversal.begin()->value = " << traversal.begin()->value)
+		utki::assert(roots.begin()->value == 1, [&](auto&o){o << "roots.begin()->value = " << roots.begin()->value;}, SL);
+		utki::assert(traversal.begin()->value == 1, [&](auto&o){o << "traversal.begin()->value = " << traversal.begin()->value;}, SL);
 
 		for(auto i = traversal.crbegin(); i != traversal.crend(); ++i){
 			encountered.push_back(i->value);
@@ -451,7 +446,7 @@ void test_traversal(){
 				TRACE_ALWAYS(<< i << ", ")
 			}
 			TRACE_ALWAYS(<< std::endl)
-			ASSERT_INFO_ALWAYS(false, "traversed tree is not as expected")
+			utki::assert(false, [&](auto&o){o << "traversed tree is not as expected";}, SL);
 		}
 	}
 
@@ -472,9 +467,8 @@ void test_traversal(){
 
 		auto traversal = utki::make_traversal(roots);
 
-		ASSERT_INFO_ALWAYS(roots.begin()->value == 1, "roots.begin()->value = " << roots.begin()->value)
-
-		ASSERT_INFO_ALWAYS(traversal.begin()->value == 1, "traversal.begin()->value = " << traversal.begin()->value)
+		utki::assert(roots.begin()->value == 1, [&](auto&o){o << "roots.begin()->value = " << roots.begin()->value;}, SL);
+		utki::assert(traversal.begin()->value == 1, [&](auto&o){o << "traversal.begin()->value = " << traversal.begin()->value;}, SL);
 
 		for(auto i = traversal.crbegin(); i != traversal.crend(); ++i){
 			encountered.push_back(i->value);
@@ -490,7 +484,7 @@ void test_traversal(){
 				TRACE_ALWAYS(<< i << ", ")
 			}
 			TRACE_ALWAYS(<< std::endl)
-			ASSERT_INFO_ALWAYS(false, "traversed tree is not as expected")
+			utki::assert(false, [&](auto&o){o << "traversed tree is not as expected";}, SL);
 		}
 	}
 
@@ -511,8 +505,8 @@ void test_traversal(){
 
 		auto traversal = utki::make_traversal(roots);
 
-		ASSERT_INFO_ALWAYS(roots.begin()->value == 1, "roots.begin()->value = " << roots.begin()->value)
-		ASSERT_INFO_ALWAYS(traversal.begin()->value == 1, "traversal.begin()->value = " << traversal.begin()->value)
+		utki::assert(roots.begin()->value == 1, [&](auto&o){o << "roots.begin()->value = " << roots.begin()->value;}, SL);
+		utki::assert(traversal.begin()->value == 1, [&](auto&o){o << "traversal.begin()->value = " << traversal.begin()->value;}, SL);
 
 		auto i = traversal.begin();
 
@@ -535,7 +529,7 @@ void test_traversal(){
 				TRACE_ALWAYS(<< i << ", ")
 			}
 			TRACE_ALWAYS(<< std::endl)
-			ASSERT_INFO_ALWAYS(false, "index is not as expected")
+			utki::assert(false, [&](auto&o){o << "index is not as expected";}, SL);
 		}
 
 		auto iter = traversal.make_iterator(index);
@@ -550,7 +544,7 @@ void test_traversal(){
 				TRACE_ALWAYS(<< i << ", ")
 			}
 			TRACE_ALWAYS(<< std::endl)
-			ASSERT_INFO_ALWAYS(false, "index_2 is not as expected")
+			utki::assert(false, [&](auto&o){o << "index_2 is not as expected";}, SL);
 		}
 	}
 
@@ -571,8 +565,8 @@ void test_traversal(){
 
 		const auto traversal = utki::make_traversal(roots);
 
-		ASSERT_INFO_ALWAYS(roots.begin()->value == 1, "roots.begin()->value = " << roots.begin()->value)
-		ASSERT_INFO_ALWAYS(traversal.cbegin()->value == 1, "traversal.begin()->value = " << traversal.cbegin()->value)
+		utki::assert(roots.begin()->value == 1, [&](auto&o){o << "roots.begin()->value = " << roots.begin()->value;}, SL);
+		utki::assert(traversal.cbegin()->value == 1, [&](auto&o){o << "traversal.begin()->value = " << traversal.cbegin()->value;}, SL);
 
 		auto i = traversal.cbegin();
 
@@ -595,7 +589,7 @@ void test_traversal(){
 				TRACE_ALWAYS(<< i << ", ")
 			}
 			TRACE_ALWAYS(<< std::endl)
-			ASSERT_INFO_ALWAYS(false, "index is not as expected")
+			utki::assert(false, [&](auto&o){o << "index is not as expected";}, SL);
 		}
 
 		auto iter = traversal.make_const_iterator(index);
@@ -610,7 +604,7 @@ void test_traversal(){
 				TRACE_ALWAYS(<< i << ", ")
 			}
 			TRACE_ALWAYS(<< std::endl)
-			ASSERT_INFO_ALWAYS(false, "index_2 is not as expected")
+			utki::assert(false, [&](auto&o){o << "index_2 is not as expected";}, SL);
 		}
 	}
 
