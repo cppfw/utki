@@ -131,16 +131,6 @@ void assert(
 
 template <class type>
 void assert(
-		const std::unique_ptr<type>& p,
-		const std::function<void(std::ostream&)>& print,
-		std::pair<const char*, size_t> source_location
-	)
-{
-	assert(p != nullptr, print, source_location);
-}
-
-template <class type>
-void assert(
 		const std::shared_ptr<type>& p,
 		std::pair<const char*, size_t> source_location
 	)
@@ -151,6 +141,38 @@ void assert(
 template <class type>
 void assert(
 		const std::unique_ptr<type>& p,
+		const std::function<void(std::ostream&)>& print,
+		std::pair<const char*, size_t> source_location
+	)
+{
+	assert(p != nullptr, print, source_location);
+}
+
+template <class type>
+void assert(
+		const std::unique_ptr<type>& p,
+		std::pair<const char*, size_t> source_location
+	)
+{
+	assert(p != nullptr, nullptr, source_location);
+}
+
+// std::function does not have implicit conversion to bool, so we need to define
+// template overloads of the assert function for it
+
+template <class type>
+void assert(
+		const std::function<type>& p,
+		const std::function<void(std::ostream&)>& print,
+		std::pair<const char*, size_t> source_location
+	)
+{
+	assert(p != nullptr, print, source_location);
+}
+
+template <class type>
+void assert(
+		const std::function<type>& p,
 		std::pair<const char*, size_t> source_location
 	)
 {
