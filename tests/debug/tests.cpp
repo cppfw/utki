@@ -28,8 +28,6 @@ public:
 
 
 void Run(){
-	// LOG("debug test" << std::endl)
-
 	{
 		int a = 13;
 		ASSERT(a == 13)

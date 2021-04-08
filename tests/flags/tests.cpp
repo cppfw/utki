@@ -66,9 +66,9 @@ void Run(){
 		utki::assert(fs.get(TestEnum::SECOND), SL);
 		
 		
-		TRACE(<< "enum_size = " << size_t(TestEnum::enum_size) << " sizeof(fs) = " << sizeof(fs) << " sizeof(index_t) = " << sizeof(utki::flags<TestEnum>::index_type) << std::endl)
+		LOG([&](auto&o){o << "enum_size = " << size_t(TestEnum::enum_size) << " sizeof(fs) = " << sizeof(fs) << " sizeof(index_t) = " << sizeof(utki::flags<TestEnum>::index_type) << std::endl;})
 				
-		TRACE(<< "fs = " << fs << std::endl)
+		LOG([&](auto&o){o << "fs = " << fs << std::endl;})
 		
 		{
 			utki::flags<TestEnum> fs;

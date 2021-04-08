@@ -2,8 +2,6 @@
 
 #include "../../src/utki/singleton.hpp"
 
-
-
 class TestSingleton : public utki::singleton<TestSingleton>{
 public:
 	int a;
@@ -11,9 +9,7 @@ public:
 	TestSingleton() :
 			a(32)
 	{
-//		TRACE(<< "TestSingleton(): constructed, this->a = " << this->a << std::endl)
 	}
 	~TestSingleton()noexcept{
-//		TRACE(<< "~TestSingleton(): destructed" << std::endl)
 	}
 };

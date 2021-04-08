@@ -22,7 +22,6 @@ void Run(){
 
 		uint16_t res = utki::deserialize16le(&*buf.begin());
 		utki::assert(res == uint16_t(i), SL);
-//		TRACE(<< "TestSerialization(): i16 = " << i << std::endl)
 	}
 
 	//32 bit
@@ -37,7 +36,6 @@ void Run(){
 
 		uint32_t res = utki::deserialize32le(&*buf.begin());
 		utki::assert(res == uint32_t(i), SL);
-//		TRACE(<< "TestSerialization(): i32 = " << i << std::endl)
 	}
 	
 	
@@ -58,7 +56,6 @@ void Run(){
 
 		uint64_t res = utki::deserialize64le(&*buf.begin());
 		utki::assert(res == val, SL);
-//		TRACE(<< "TestSerialization(): i64 = " << i << std::endl)
 	}
 }
 }//~namespace
@@ -145,7 +142,7 @@ void run(){
 
 #ifdef DEBUG
 	for(auto& r : res){
-		TRACE(<< "r = " << r << std::endl)
+		utki::log([&](auto&o){o << "r = " << r << std::endl;});
 	}
 #endif
 
