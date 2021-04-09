@@ -12,6 +12,11 @@
 #include "util.hpp"
 #include "debug.hpp"
 
+// undefine the max macro in case it is defined (e.g. by windows.h)
+#ifdef max
+#	undef max
+#endif
+
 namespace utki{
 
 /**
