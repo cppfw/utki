@@ -1,3 +1,9 @@
+libutki (1.1.124) unstable; urgency=medium
+
+  * undefine the max macro in span.hpp
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 09 Apr 2021 10:05:26 +0300
+
 libutki (1.1.123) unstable; urgency=medium
 
   * add assert(std::function)
