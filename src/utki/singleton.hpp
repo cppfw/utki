@@ -62,7 +62,7 @@ public:
 	 * @return false otherwise.
 	 */
 	static bool is_created(){
-		return T_InstanceOwner::instance.operator bool();
+		return T_InstanceOwner::instance != nullptr;
 	}
 
 	/**
@@ -75,7 +75,7 @@ public:
 	}
 
 	virtual ~intrusive_singleton()noexcept{
-		ASSERT(T_InstanceOwner::instance.operator->() == static_cast<T*>(this))
+		ASSERT(T_InstanceOwner::instance.get() == static_cast<T*>(this))
 		T_InstanceOwner::instance.release();
 	}
 };
