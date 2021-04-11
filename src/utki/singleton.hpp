@@ -124,7 +124,10 @@ template <class T> typename utki::intrusive_singleton<T, singleton<T> >::T_Insta
 #else
 
 template <class T> class singleton{
-	static_assert(false, "non-intrusive singleton is not supported under MSVC compiler, use utki::intrusive_singleton");
+	static_assert(
+			std::is_same<T, T&>::value, // always false
+			"non-intrusive singleton is not supported under MSVC compiler, use utki::intrusive_singleton"
+		);
 };
 
 #endif
