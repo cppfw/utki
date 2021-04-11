@@ -121,6 +121,12 @@ private:
 
 template <class T> typename utki::intrusive_singleton<T, singleton<T> >::T_Instance utki::singleton<T>::instance;
 
+#else
+
+template <class T> class singleton{
+	static_assert(false, "non-intrusive singleton is not supported under MSVC compiler, use utki::intrusive_singleton");
+};
+
 #endif
 
 }
