@@ -81,8 +81,8 @@ public:
 	}
 };
 
-// non-intrusive singleton is not supported in windows
-#if M_OS != M_OS_WINDOWS
+// non-intrusive singleton is not supported in MSVC
+#if M_COMPILER != M_COMPILER_MSVC
 
 /**
  * @brief Singleton base class.
