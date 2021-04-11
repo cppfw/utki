@@ -1,6 +1,7 @@
 #pragma once
 
 #include "debug.hpp"
+#include "config.hpp"
 
 #include <memory>
 
@@ -80,6 +81,9 @@ public:
 	}
 };
 
+// non-intrusive singleton is not supported in windows
+#if M_OS != M_OS_WINDOWS
+
 /**
  * @brief Singleton base class.
  * This is a basic non-intrusive singleton template.
@@ -116,5 +120,7 @@ private:
 };
 
 template <class T> typename utki::intrusive_singleton<T, singleton<T> >::T_Instance utki::singleton<T>::instance;
+
+#endif
 
 }
