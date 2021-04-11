@@ -1,3 +1,9 @@
+libutki (1.1.126) unstable; urgency=medium
+
+  * change static_assert condition
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 12 Apr 2021 00:08:08 +0300
+
 libutki (1.1.125) unstable; urgency=medium
 
   * add sattic_assert when trying to use utki::singleton under MSVC
