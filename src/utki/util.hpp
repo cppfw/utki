@@ -373,4 +373,11 @@ bool is_cerr_terminal();
  */
 bool is_cout_terminal();
 
+/**
+ * @brief Check if stdin is terminal or pipe.
+ * @return true in case stdin inputs from terminal.
+ * @return false in case stdin inputs from pipe.
+ */
+bool is_cin_terminal();
+
 }

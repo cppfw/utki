@@ -25,3 +25,12 @@ bool utki::is_cout_terminal(){
 	return isatty(fileno(stdout));
 #endif
 }
+
+bool utki::is_cin_terminal(){
+#if M_OS == M_OS_WINDOWS
+	// need to compare result with 0 to avoid MSVC compiler warning
+	return _isatty(_fileno(stdin)) != 0;
+#else
+	return isatty(fileno(stdin));
+#endif
+}
