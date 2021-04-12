@@ -37,6 +37,7 @@ void Run(){
 
 	{
 		int a = 13;
+		ASSERT(a == 13, [&](auto&o){o << "a is not 13, a is " << a;})
 		ASSERT_INFO(a == 13, "a is not 13, a is " << a)
 	}
 

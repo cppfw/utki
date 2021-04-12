@@ -1,6 +1,7 @@
 #pragma once
 
 #include "config.hpp"
+#include "macros.hpp"
 
 #include <functional>
 #include <sstream>
@@ -205,5 +206,4 @@ void assert(
 
 #endif // ~DEBUG
 
-#define UTKI_GET_MACRO(_1, _2, NAME, ...) NAME
-#define ASSERT(...) UTKI_GET_MACRO(__VA_ARGS__, ASSERT2, ASSERT1)(__VA_ARGS__)
+#define ASSERT(...) UTKI_GET_MACRO(__VA_ARGS__, _10, _9, _8, _7, _6, _5, _4, _3, ASSERT2, ASSERT1)(__VA_ARGS__)
