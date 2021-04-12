@@ -1,3 +1,9 @@
+libutki (1.1.128) unstable; urgency=medium
+
+  * add is_cin_terminal() function
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 12 Apr 2021 13:24:05 +0300
+
 libutki (1.1.127) unstable; urgency=medium
 
   * add macros.hpp
