@@ -21,7 +21,8 @@ class UtkiConan(ConanFile):
 
 	def source(self):
 		self.run("git clone https://github.com/cppfw/" + self.name + ".git")
-		self.run("cd " + self.name + " && git checkout " + self.version)
+		if self.version != "none":
+			self.run("cd " + self.name + " && git checkout " + self.version)
 
 		# This small hack might be useful to guarantee proper /MT /MD linkage
 		# in MSVC if the packaged project doesn't have variables to set it

@@ -207,6 +207,7 @@ jobs:
   conan-linux:
     env:
       CONAN_V2_MODE: 1
+      PACKAGE_VERSION: none
     strategy:
       fail-fast: false
       matrix:
@@ -238,6 +239,7 @@ jobs:
       - name: set PACKAGE_VERSION
         uses: myci-actions/export-env-var@master
         with: {name: PACKAGE_VERSION, value: $(myci-deb-version.sh debian/changelog)}
+        if: startsWith(github.ref, 'refs/tags/')
       - name: prepare conanfile
         run: myci-apply-version.sh -v $PACKAGE_VERSION conan/conanfile.py.in
       - name: build
@@ -255,6 +257,7 @@ jobs:
     name: conan - macosx 
     env:
       CONAN_V2_MODE: 1
+      PACKAGE_VERSION: none
     runs-on: macos-latest
     steps:
       - name: git clone
@@ -268,6 +271,7 @@ jobs:
       - name: set PACKAGE_VERSION
         uses: myci-actions/export-env-var@master
         with: {name: PACKAGE_VERSION, value: $(myci-deb-version.sh debian/changelog)}
+        if: startsWith(github.ref, 'refs/tags/')
       - name: prepare conanfile
         run: myci-apply-version.sh -v $PACKAGE_VERSION conan/conanfile.py.in
       - name: build
