@@ -202,3 +202,47 @@ jobs:
         filename: '.\nuget\*.nupkg'
         api-key: ${{ secrets.NUGET_DOT_ORG_API_KEY }}
       if: startsWith(github.ref, 'refs/tags/')
+##### conan - linux #####
+  linux:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {os: debian, codename: buster, image_owner: , package_type: deb}
+          - {os: debian, codename: buster, image_owner: i386/, package_type: deb, labels: [i386,docker]}
+          # - {os: ubuntu, codename: bionic, image_owner: , package_type: deb}
+          # - {os: ubuntu, codename: focal, image_owner: , package_type: deb}
+          # - {os: raspbian, codename: buster, image_owner: igagis/, package_type: deb, labels: [arm,docker]}
+    runs-on: ${{ (matrix.labels == '' && 'ubuntu-latest') || matrix.labels }}
+    container: ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }}
+    name: conan - linux - ${{ matrix.image_owner }}${{ matrix.os }}
+    steps:
+      - name: git clone
+        uses: actions/checkout@v1
+      - name: add cppfw deb repo
+        uses: myci-actions/add-deb-repo@master
+        with:
+          repo: deb https://cppfw.jfrog.io/artifactory/${{ matrix.os }} ${{ matrix.codename }} main
+          repo-name: cppfw
+          key-server: https://cppfw.jfrog.io/artifactory/api/gpg/key/public
+          keys: 4A949240F79AD8027C6CA2F4953AE777616ADEDF
+      - name: install conan
+        run: pip3 install conan
+      - name: install ci tools
+        run: |
+          # configure timezone to avoid 'tzdata' package to require user interaction during installation (needed for ubuntu:focal)
+          TZ=Europe/Helsinki ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+          
+          apt install --assume-yes devscripts equivs myci
+      - name: set PACKAGE_VERSION
+        uses: myci-actions/export-env-var@master
+        with: {name: PACKAGE_VERSION, value: $(myci-deb-version.sh debian/changelog)}
+      - name: prepare conanfile
+        run: myci-apply-version.sh -v $PACKAGE_VERSION conan/conanfile.py.in
+      # - name: install deps
+      #   run: myci-deb-install-build-deps.sh
+      - name: build
+        run: conan create conan
+      # - name: deploy deb packages
+      #   run: myci-deploy-debian-jfrog.sh --domain cppfw --repo ${{ matrix.os }} --distro ${{ matrix.codename }} --component main ../lib${PACKAGE_NAME}*_${PACKAGE_VERSION}_*.deb
+      #   if: matrix.package_type == 'deb' && startsWith(github.ref, 'refs/tags/')
