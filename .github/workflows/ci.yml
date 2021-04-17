@@ -241,9 +241,9 @@ jobs:
       #   run: 
       - name: build
         run: conan create conan
-      - name: deploy deb packages
+      - name: deploy conan package
         run: |
-          conan remot add cppfw https://cppfw.jfrog.io/artifactory/api/conan/conan
+          conan remote add cppfw https://cppfw.jfrog.io/artifactory/api/conan/conan
           conan user --remote cppfw --password $MYCI_JFROG_PASSWORD $MYCI_JFROG_USERNAME
           CONAN_REVISIONS_ENABLED=1 conan upload --remote cppfw --all $PACKAGE_NAME/$PACKAGE_VERSION@
         # if: startsWith(github.ref, 'refs/tags/')
