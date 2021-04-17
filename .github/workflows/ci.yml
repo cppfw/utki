@@ -232,6 +232,7 @@ jobs:
       - name: install conan
         run: |
           pip3 install conan
+          conan profile new --detect default
           conan profile update settings.compiler.libcxx=libstdc++11 default
       - name: set PACKAGE_VERSION
         uses: myci-actions/export-env-var@master
