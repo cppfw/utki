@@ -209,7 +209,7 @@ jobs:
       matrix:
         include:
           - {os: debian, codename: buster, image_owner: , arch: x86_64}
-          - {os: debian, codename: buster, image_owner: i386/, arch: x86, labels: [i386,docker]}
+          # - {os: debian, codename: buster, image_owner: i386/, arch: x86, labels: [i386,docker]}
           - {os: raspbian, codename: buster, image_owner: igagis/, arch: armhf, labels: [arm,docker]}
     runs-on: ${{ (matrix.labels == '' && 'ubuntu-latest') || matrix.labels }}
     container: ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }}
@@ -248,4 +248,4 @@ jobs:
           conan remote add cppfw https://cppfw.jfrog.io/artifactory/api/conan/conan
           conan user --remote cppfw --password $MYCI_JFROG_PASSWORD $MYCI_JFROG_USERNAME
           conan upload --remote cppfw --all $PACKAGE_NAME/$PACKAGE_VERSION@
-        # if: startsWith(github.ref, 'refs/tags/')
+        if: startsWith(github.ref, 'refs/tags/')
