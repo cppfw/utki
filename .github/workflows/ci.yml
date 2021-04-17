@@ -230,7 +230,9 @@ jobs:
         run: |
           apt install --assume-yes devscripts equivs myci python3-pip
       - name: install conan
-        run: pip3 install conan
+        run: |
+          pip3 install conan
+          conan profile update settings.compiler.libcxx=libstdc++11 default
       - name: set PACKAGE_VERSION
         uses: myci-actions/export-env-var@master
         with: {name: PACKAGE_VERSION, value: $(myci-deb-version.sh debian/changelog)}
