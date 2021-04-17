@@ -204,6 +204,8 @@ jobs:
       if: startsWith(github.ref, 'refs/tags/')
 ##### conan - linux #####
   conan-linux:
+    env:
+      CONAN_V2_MODE: 1
     strategy:
       fail-fast: false
       matrix:
