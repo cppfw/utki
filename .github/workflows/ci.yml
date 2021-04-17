@@ -251,3 +251,29 @@ jobs:
           conan user --remote cppfw --password $MYCI_JFROG_PASSWORD $MYCI_JFROG_USERNAME
           conan upload --remote cppfw --all $PACKAGE_NAME/$PACKAGE_VERSION@
         if: startsWith(github.ref, 'refs/tags/')
+##### conan - macosx #####
+  conan-macosx:
+    env:
+      CONAN_V2_MODE: 1
+    runs-on: macos-latest
+    steps:
+    - name: git clone
+      uses: actions/checkout@v2
+    - name: add cppfw tap
+      run: |
+        brew tap cppfw/tap
+        brew update
+    - name: install ci tools
+      run: brew install myci conan
+    # - name: install deps
+    #   run: myci-brew-install.sh `myci-list-deps-homebrew.sh`
+    - name: build
+      run: conan create conan
+    - name: deploy conan package
+        env:
+          CONAN_REVISIONS_ENABLED: 1
+        run: |
+          conan remote add cppfw https://cppfw.jfrog.io/artifactory/api/conan/conan
+          conan user --remote cppfw --password $MYCI_JFROG_PASSWORD $MYCI_JFROG_USERNAME
+          conan upload --remote cppfw --all $PACKAGE_NAME/$PACKAGE_VERSION@
+        if: startsWith(github.ref, 'refs/tags/')
