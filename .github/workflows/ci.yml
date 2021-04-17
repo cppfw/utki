@@ -6,6 +6,7 @@ env:
   MYCI_JFROG_PASSWORD: ${{ secrets.MYCI_JFROG_PASSWORD }}
   MYCI_GIT_USERNAME: igagis
   MYCI_GIT_PASSWORD: ${{ secrets.MYCI_GIT_ACCESS_TOKEN }}
+  CONAN_REMOTE: https://cppfw.jfrog.io/artifactory/api/conan/conan
 jobs:
 ##### linux #####
   linux:
@@ -247,7 +248,7 @@ jobs:
         env:
           CONAN_REVISIONS_ENABLED: 1
         run: |
-          conan remote add cppfw https://cppfw.jfrog.io/artifactory/api/conan/conan
+          conan remote add cppfw $CONAN_REMOTE
           conan user --remote cppfw --password $MYCI_JFROG_PASSWORD $MYCI_JFROG_USERNAME
           conan upload --remote cppfw --all $PACKAGE_NAME/$PACKAGE_VERSION@
         if: startsWith(github.ref, 'refs/tags/')
@@ -264,7 +265,7 @@ jobs:
           brew tap cppfw/tap
           brew update
       - name: install ci tools
-        run: brew install myci conan
+        run: brew install myci prorab prorab-extra conan
       - name: set PACKAGE_VERSION
         uses: myci-actions/export-env-var@master
         with: {name: PACKAGE_VERSION, value: $(myci-deb-version.sh debian/changelog)}
@@ -278,7 +279,7 @@ jobs:
         env:
           CONAN_REVISIONS_ENABLED: 1
         run: |
-          conan remote add cppfw https://cppfw.jfrog.io/artifactory/api/conan/conan
+          conan remote add cppfw $CONAN_REMOTE
           conan user --remote cppfw --password $MYCI_JFROG_PASSWORD $MYCI_JFROG_USERNAME
           conan upload --remote cppfw --all $PACKAGE_NAME/$PACKAGE_VERSION@
         # if: startsWith(github.ref, 'refs/tags/')
