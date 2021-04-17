@@ -203,7 +203,7 @@ jobs:
         api-key: ${{ secrets.NUGET_DOT_ORG_API_KEY }}
       if: startsWith(github.ref, 'refs/tags/')
 ##### conan - linux #####
-  linux:
+  conan-linux:
     strategy:
       fail-fast: false
       matrix:
