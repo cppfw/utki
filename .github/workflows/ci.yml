@@ -208,11 +208,9 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - {os: debian, codename: buster, image_owner: , package_type: deb}
-          - {os: debian, codename: buster, image_owner: i386/, package_type: deb, labels: [i386,docker]}
-          # - {os: ubuntu, codename: bionic, image_owner: , package_type: deb}
-          # - {os: ubuntu, codename: focal, image_owner: , package_type: deb}
-          # - {os: raspbian, codename: buster, image_owner: igagis/, package_type: deb, labels: [arm,docker]}
+          - {os: debian, codename: buster, image_owner: , arch: x86_64}
+          - {os: debian, codename: buster, image_owner: i386/, arch: x86, labels: [i386,docker]}
+          - {os: raspbian, codename: buster, image_owner: igagis/, arch: armhf, labels: [arm,docker]}
     runs-on: ${{ (matrix.labels == '' && 'ubuntu-latest') || matrix.labels }}
     container: ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }}
     name: conan - linux - ${{ matrix.image_owner }}${{ matrix.os }}
@@ -228,7 +226,7 @@ jobs:
           keys: 4A949240F79AD8027C6CA2F4953AE777616ADEDF
       - name: install ci tools
         run: |
-          apt install --assume-yes devscripts equivs myci prorab prorab-extra python3-pip
+          apt install --assume-yes devscripts equivs myci prorab prorab-extra python3-pip cmake
       - name: install conan
         run: |
           pip3 install conan

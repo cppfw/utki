@@ -33,6 +33,7 @@ class UtkiConan(ConanFile):
 
 	def build(self):
 		self.run("make --directory " + self.source_dir + " autojobs=true")
+		self.run("make --directory " + self.source_dir + " autojobs=true test")
 		# cmake = CMake(self)
 		# cmake.configure(source_folder="../../source/utki/src")
 		# cmake.build()
