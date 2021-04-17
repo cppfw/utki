@@ -240,8 +240,6 @@ jobs:
         with: {name: PACKAGE_VERSION, value: $(myci-deb-version.sh debian/changelog)}
       - name: prepare conanfile
         run: myci-apply-version.sh -v $PACKAGE_VERSION conan/conanfile.py.in
-      # - name: install deps
-      #   run: 
       - name: build
         run: conan create conan
       - name: deploy conan package
@@ -254,6 +252,7 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
 ##### conan - macosx #####
   conan-macosx:
+    name: conan - macosx 
     env:
       CONAN_V2_MODE: 1
     runs-on: macos-latest
@@ -271,8 +270,6 @@ jobs:
         with: {name: PACKAGE_VERSION, value: $(myci-deb-version.sh debian/changelog)}
       - name: prepare conanfile
         run: myci-apply-version.sh -v $PACKAGE_VERSION conan/conanfile.py.in
-      # - name: install deps
-      #   run: myci-brew-install.sh `myci-list-deps-homebrew.sh`
       - name: build
         run: conan create conan
       - name: deploy conan package
