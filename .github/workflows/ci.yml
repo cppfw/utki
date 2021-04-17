@@ -228,7 +228,7 @@ jobs:
           keys: 4A949240F79AD8027C6CA2F4953AE777616ADEDF
       - name: install ci tools
         run: |
-          apt install --assume-yes devscripts equivs myci python3-pip
+          apt install --assume-yes devscripts equivs myci prorab prorab-extra python3-pip
       - name: install conan
         run: |
           pip3 install conan
