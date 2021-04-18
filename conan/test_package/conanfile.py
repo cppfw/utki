@@ -24,4 +24,6 @@ class UtkiTestConan(ConanFile):
 			env_build = RunEnvironment(self)
 			os.chdir("bin")
 			with tools.environment_append(env_build.vars):
+				self.run("echo DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH")
+				self.run("ls $DYLD_LIBRARY_PATH")
 				self.run(".%sexample" % os.sep)
