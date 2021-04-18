@@ -22,4 +22,4 @@ class UtkiTestConan(ConanFile):
 	def test(self):
 		if not tools.cross_building(self):
 			os.chdir("bin")
-			self.run(".%sexample" % os.sep, run_environment=True)
+			self.run(".%sexample" % os.sep, run_environment=True) # run_environment sets LD_LIBRARY_PATH etc. to find dependency libs
