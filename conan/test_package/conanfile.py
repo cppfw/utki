@@ -21,9 +21,5 @@ class UtkiTestConan(ConanFile):
 
 	def test(self):
 		if not tools.cross_building(self):
-			env_build = RunEnvironment(self)
 			os.chdir("bin")
-			with tools.environment_append(env_build.vars):
-				self.run("echo DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH", run_environment=True)
-				self.run("ls $DYLD_LIBRARY_PATH", run_environment=True)
-				self.run(".%sexample" % os.sep, run_environment=True)
+			self.run(".%sexample" % os.sep, run_environment=True)
