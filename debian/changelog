@@ -1,3 +1,9 @@
+libutki (1.1.133) unstable; urgency=medium
+
+  * fix soname
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 20 Apr 2021 17:29:44 +0300
+
 libutki (1.1.132) unstable; urgency=medium
 
   * add source_location struct
