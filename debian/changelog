@@ -1,3 +1,9 @@
+libutki (1.1.136) unstable; urgency=medium
+
+  * add default constructor to source_location
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 20 Apr 2021 22:34:37 +0300
+
 libutki (1.1.135) unstable; urgency=medium
 
   * check for <source_location> header existance
