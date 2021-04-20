@@ -48,6 +48,9 @@ void Run(){
 		c->a = 13;
 		int b = c->a;
 		utki::assert(b == 13, SL);
+#if M_CPP >= 20
+		utki::assert(b == 13);
+#endif
 		delete c;
 	}
 
@@ -58,6 +61,9 @@ void Run(){
 		pc->a = 13;
 		int b = pc->a;
 		utki::assert(b == 13, [&](auto&o){o << "b = " << b;}, SL);
+#if M_CPP >= 20
+		utki::assert(b == 13, [&](auto&o){o << "b = " << b;});
+#endif
 	}
 }
 

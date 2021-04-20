@@ -53,6 +53,7 @@
 		"cinttypes": "cpp",
 		"typeinfo": "cpp",
 		"hash_map": "cpp",
-		"memory": "cpp"
+		"memory": "cpp",
+		"source_location": "cpp"
 	}
 }

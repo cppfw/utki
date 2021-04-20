@@ -1,3 +1,5 @@
+# this_cxx := clang++-11
+
 this_cxxflags += -Wall # enable all warnings
 this_cxxflags += -Wno-comment # enable all warnings
 this_cxxflags += -Wnon-virtual-dtor # warn if base class has non-virtual destructor

@@ -1,6 +1,22 @@
 #pragma once
 
 //====================================================|
+//            C++ standard                            |
+//                                                    |
+
+#if __cplusplus > 201703L
+#	define M_CPP                                     20
+#elif __cplusplus > 201402L
+#	define M_CPP                                     17
+#elif __cplusplus > 201103L
+#	define M_CPP                                     14
+#elif __cplusplus > 199711L
+#	define M_CPP                                     11
+#else
+#	define M_CPP                                      3
+#endif
+
+//====================================================|
 //            Compiler definitions                    |
 //                                                    |
 
@@ -19,8 +35,6 @@
 #	define M_COMPILER M_COMPILER_UNKNOWN
 #endif
 
-
-
 //====================================================|
 //            CPU architecture definitions            |
 //                                                    |
@@ -28,7 +42,6 @@
 #define M_CPU_X86                                     1
 #define M_CPU_X86_64                                  2
 #define M_CPU_ARM                                     3
-
 
 #if M_COMPILER == M_COMPILER_GCC
 #	if defined(__i386__) // __i386__ is defined for any x86 processor
