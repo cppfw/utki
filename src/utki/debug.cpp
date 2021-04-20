@@ -20,7 +20,7 @@ const std::string uncolored_error_string = "error";
 void utki::assert(
 		bool condition,
 		const std::function<void(std::ostream&)>& print,
-		std::pair<const char*, size_t> source_location
+		utki::source_location source_location
 	)
 {
 	if(condition){
@@ -28,7 +28,7 @@ void utki::assert(
 	}
 
 	std::stringstream ss;
-	ss << source_location.first << ":" << source_location.second << ": ";
+	ss << source_location.file_name() << ":" << source_location.line() << ": ";
 
 	if(is_cerr_terminal()){
 		ss << colored_error_string;

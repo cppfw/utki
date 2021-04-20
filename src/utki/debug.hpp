@@ -77,21 +77,49 @@ void log(const std::function<void(std::ostream&)>& print);
 //
 //
 
+namespace utki{
+// backport of std::source_location
+struct source_location {
+    constexpr source_location(
+			uint_least32_t l,
+			uint_least32_t c,
+			char const* fn,
+			char const* fnn
+		)noexcept :
+			line_{l},
+			column_{c},
+			file_name_{fn},
+			function_name_{fnn} 
+    {}
+
+    constexpr auto line() const noexcept            -> uint_least32_t   { return line_; }
+    constexpr auto column() const noexcept          -> uint_least32_t   { return column_; }
+    constexpr auto file_name() const noexcept       -> char const*      { return file_name_; }
+    constexpr auto function_name() const noexcept   -> char const*      { return function_name_; }
+
+    private:
+        uint_least32_t line_;
+        uint_least32_t column_;
+        char const* file_name_;
+        char const* function_name_;
+};
+}
+
 /**
  * @brief Source location macro.
  * Constructs an object which holds current filename and current line number.
  */
-#define SL std::make_pair(__FILE__, size_t(__LINE__))
+#define SL utki::source_location(__LINE__, 0, __FILE__, __func__)
 
 namespace utki{
 
 void assert(
 		bool condition,
 		const std::function<void(std::ostream&)>& print,
-		std::pair<const char*, size_t> source_location
+		utki::source_location source_location
 	);
 
-inline void assert(bool condition, std::pair<const char*, size_t> source_location){
+inline void assert(bool condition, utki::source_location source_location){
 	utki::assert(condition, nullptr, source_location);
 }
 
@@ -102,7 +130,7 @@ template <class type>
 void assert(
 		type* p,
 		const std::function<void(std::ostream&)>& print,
-		std::pair<const char*, size_t> source_location
+		utki::source_location source_location
 	)
 {
 	assert(p != nullptr, print, source_location);
@@ -111,7 +139,7 @@ void assert(
 template <class type>
 void assert(
 		type* p,
-		std::pair<const char*, size_t> source_location
+		utki::source_location source_location
 	)
 {
 	assert(p != nullptr, nullptr, source_location);
@@ -124,7 +152,7 @@ template <class type>
 void assert(
 		const std::shared_ptr<type>& p,
 		const std::function<void(std::ostream&)>& print,
-		std::pair<const char*, size_t> source_location
+		utki::source_location source_location
 	)
 {
 	assert(p != nullptr, print, source_location);
@@ -133,7 +161,7 @@ void assert(
 template <class type>
 void assert(
 		const std::shared_ptr<type>& p,
-		std::pair<const char*, size_t> source_location
+		utki::source_location source_location
 	)
 {
 	assert(p != nullptr, nullptr, source_location);
@@ -143,7 +171,7 @@ template <class type>
 void assert(
 		const std::unique_ptr<type>& p,
 		const std::function<void(std::ostream&)>& print,
-		std::pair<const char*, size_t> source_location
+		utki::source_location source_location
 	)
 {
 	assert(p != nullptr, print, source_location);
@@ -152,7 +180,7 @@ void assert(
 template <class type>
 void assert(
 		const std::unique_ptr<type>& p,
-		std::pair<const char*, size_t> source_location
+		utki::source_location source_location
 	)
 {
 	assert(p != nullptr, nullptr, source_location);
@@ -165,7 +193,7 @@ template <class type>
 void assert(
 		const std::function<type>& p,
 		const std::function<void(std::ostream&)>& print,
-		std::pair<const char*, size_t> source_location
+		utki::source_location source_location
 	)
 {
 	assert(p != nullptr, print, source_location);
@@ -174,7 +202,7 @@ void assert(
 template <class type>
 void assert(
 		const std::function<type>& p,
-		std::pair<const char*, size_t> source_location
+		utki::source_location source_location
 	)
 {
 	assert(p != nullptr, nullptr, source_location);
