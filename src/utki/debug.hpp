@@ -96,10 +96,10 @@ namespace utki{
 // backport of std::source_location
 struct source_location {
     constexpr source_location(
-			uint_least32_t l,
-			uint_least32_t c,
-			char const* fn,
-			char const* fnn
+			uint_least32_t l = 0,
+			uint_least32_t c = 0,
+			char const* fn = nullptr,
+			char const* fnn = nullptr
 		)noexcept :
 			line_{l},
 			column_{c},
@@ -141,7 +141,7 @@ namespace utki{
 void assert(
 		bool condition,
 		const std::function<void(std::ostream&)>& print,
-		utki::source_location source_location
+		utki::source_location&& source_location
 #if M_CPP >= 20
 				= std_source_location::current()
 #endif
@@ -149,13 +149,13 @@ void assert(
 
 inline void assert(
 		bool condition,
-		utki::source_location source_location
+		utki::source_location&& source_location
 #if M_CPP >= 20
 				= std_source_location::current()
 #endif
 	)
 {
-	utki::assert(condition, nullptr, source_location);
+	utki::assert(condition, nullptr, std::move(source_location));
 }
 
 // MSVC compiler gives warning about implicit conversion of pointer to bool,
@@ -165,25 +165,25 @@ template <class type>
 void assert(
 		type* p,
 		const std::function<void(std::ostream&)>& print,
-		utki::source_location source_location
+		utki::source_location&& source_location
 #if M_CPP >= 20
 				= std_source_location::current()
 #endif
 	)
 {
-	assert(p != nullptr, print, source_location);
+	assert(p != nullptr, print, std::move(source_location));
 }
 
 template <class type>
 void assert(
 		type* p,
-		utki::source_location source_location
+		utki::source_location&& source_location
 #if M_CPP >= 20
 				= std_source_location::current()
 #endif
 	)
 {
-	assert(p != nullptr, nullptr, source_location);
+	assert(p != nullptr, nullptr, std::move(source_location));
 }
 
 // smart pointers do not have implicit conversion to bool, so we need to define
@@ -193,50 +193,50 @@ template <class type>
 void assert(
 		const std::shared_ptr<type>& p,
 		const std::function<void(std::ostream&)>& print,
-		utki::source_location source_location
+		utki::source_location&& source_location
 #if M_CPP >= 20
 				= std_source_location::current()
 #endif
 	)
 {
-	assert(p != nullptr, print, source_location);
+	assert(p != nullptr, print, std::move(source_location));
 }
 
 template <class type>
 void assert(
 		const std::shared_ptr<type>& p,
-		utki::source_location source_location
+		utki::source_location&& source_location
 #if M_CPP >= 20
 				= std_source_location::current()
 #endif
 	)
 {
-	assert(p != nullptr, nullptr, source_location);
+	assert(p != nullptr, nullptr, std::move(source_location));
 }
 
 template <class type>
 void assert(
 		const std::unique_ptr<type>& p,
 		const std::function<void(std::ostream&)>& print,
-		utki::source_location source_location
+		utki::source_location&& source_location
 #if M_CPP >= 20
 				= std_source_location::current()
 #endif
 	)
 {
-	assert(p != nullptr, print, source_location);
+	assert(p != nullptr, print, std::move(source_location));
 }
 
 template <class type>
 void assert(
 		const std::unique_ptr<type>& p,
-		utki::source_location source_location
+		utki::source_location&& source_location
 #if M_CPP >= 20
 				= std_source_location::current()
 #endif
 	)
 {
-	assert(p != nullptr, nullptr, source_location);
+	assert(p != nullptr, nullptr, std::move(source_location));
 }
 
 // std::function does not have implicit conversion to bool, so we need to define
@@ -246,25 +246,25 @@ template <class type>
 void assert(
 		const std::function<type>& p,
 		const std::function<void(std::ostream&)>& print,
-		utki::source_location source_location
+		utki::source_location&& source_location
 #if M_CPP >= 20
 				= std_source_location::current()
 #endif
 	)
 {
-	assert(p != nullptr, print, source_location);
+	assert(p != nullptr, print, std::move(source_location));
 }
 
 template <class type>
 void assert(
 		const std::function<type>& p,
-		utki::source_location source_location
+		utki::source_location&& source_location
 #if M_CPP >= 20
 				= std_source_location::current()
 #endif
 	)
 {
-	assert(p != nullptr, nullptr, source_location);
+	assert(p != nullptr, nullptr, std::move(source_location));
 }
 
 }

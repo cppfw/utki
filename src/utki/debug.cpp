@@ -20,7 +20,7 @@ const std::string uncolored_error_string = "error";
 void utki::assert(
 		bool condition,
 		const std::function<void(std::ostream&)>& print,
-		utki::source_location source_location
+		utki::source_location&& source_location
 	)
 {
 	if(condition){
