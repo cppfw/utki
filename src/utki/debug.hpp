@@ -8,10 +8,17 @@
 #include <memory>
 
 #if M_CPP >= 20
-#	include <experimental/source_location>
+#	if __has_include(<source_location>)
+#		include <source_location>
+namespace utki{
+typedef std::source_location std_source_location;
+}
+#	else
+#		include <experimental/source_location>
 namespace utki{
 typedef std::experimental::source_location std_source_location;
 }
+#	endif
 #endif
 
 #if M_OS_NAME == M_OS_NAME_ANDROID
