@@ -1,3 +1,9 @@
+libutki (1.1.134) unstable; urgency=medium
+
+  * allow using std::source_location if standard allows
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 20 Apr 2021 20:17:08 +0300
+
 libutki (1.1.133) unstable; urgency=medium
 
   * fix soname
