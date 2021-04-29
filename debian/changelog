@@ -1,3 +1,9 @@
+libutki (1.1.137) unstable; urgency=medium
+
+  * add tree to tree comparison operator==()
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 30 Apr 2021 00:04:23 +0300
+
 libutki (1.1.136) unstable; urgency=medium
 
   * add default constructor to source_location
