@@ -142,22 +142,22 @@ void test_comparison(){
 	// test tree to tree comparison
 	{
 		utki::tree<int> t1(10, {
-			decltype(t1)(13, {34, 45}),
+			utki::tree<int>(13, {34, 45}),
 
-			decltype(t1)(11, {
-				decltype(t1)(14, {78, 89, 96}),
-				decltype(t1)(15, {32, 64, 128}),
-				decltype(t1)(42, {98, 99, 100})
+			utki::tree<int>(11, {
+				utki::tree<int>(14, {78, 89, 96}),
+				utki::tree<int>(15, {32, 64, 128}),
+				utki::tree<int>(42, {98, 99, 100})
 			})
 		});
 
 		utki::tree<int> t2(10, {
-			decltype(t2)(13, {34, 45}),
+			utki::tree<int>(13, {34, 45}),
 
-			decltype(t2)(11, {
-				decltype(t2)(14, {78, 89, 96}),
-				decltype(t2)(15, {32, 64, 128}),
-				decltype(t2)(42, {98, 99, 100})
+			utki::tree<int>(11, {
+				utki::tree<int>(14, {78, 89, 96}),
+				utki::tree<int>(15, {32, 64, 128}),
+				utki::tree<int>(42, {98, 99, 100})
 			})
 		});
 
