@@ -108,31 +108,65 @@ void test_assignment(){
 }
 
 void test_comparison(){
-	utki::tree<int> t{
-		{34, 45},
+	// test tree to value comparison
+	{
+		utki::tree<int> t{
+			{34, 45},
 
-		{
-			{78, 89, 96},
-			{32, 64, 128},
-			decltype(t)(42, {98, 99, 100})
-		}
-	};
+			{
+				{78, 89, 96},
+				{32, 64, 128},
+				decltype(t)(42, {98, 99, 100})
+			}
+		};
 
 
-	utki::assert(t.children.size() == 2, SL);
+		utki::assert(t.children.size() == 2, SL);
+		utki::assert(t.children[0].children.size() == 2, SL);
+		utki::assert(t.children[0].children[0].value == 34, [&](auto&o){o << "value = " << t.children[0].value;}, SL);
 
-	utki::assert(t.children[1].children.size() == 3, SL);
-	utki::assert(t.children[1].children[0].children.size() == 3, SL);
-	utki::assert(t.children[1].children[1].children.size() == 3, SL);
+		utki::assert(t.children[1].children.size() == 3, SL);
+		utki::assert(t.children[1].children[0].children.size() == 3, SL);
+		utki::assert(t.children[1].children[1].children.size() == 3, SL);
 
-	utki::assert(t.children[1].children[2].children.size() == 3, SL);
-	utki::assert(t.children[1].children[2] == 42, SL);
+		utki::assert(t.children[1].children[2].children.size() == 3, SL);
+		utki::assert(t.children[1].children[2] == 42, SL);
 
-	utki::assert(t.children[1].children[2].children[0] == 98, SL);
-	utki::assert(t.children[1].children[2].children[1] == 99, SL);
-	utki::assert(t.children[1].children[2].children[2] == 100, SL);
+		utki::assert(t.children[1].children[2].children[0] == 98, SL);
+		utki::assert(t.children[1].children[2].children[1] == 99, SL);
+		utki::assert(t.children[1].children[2].children[2] == 100, SL);
 
-	utki::assert(t.children[1].children.size() == 3, SL);
+		utki::assert(t.children[1].children.size() == 3, SL);
+	}
+
+	// test tree to tree comparison
+	{
+		utki::tree<int> t1(10, {
+			decltype(t1)(13, {34, 45}),
+
+			decltype(t1)(11, {
+				decltype(t1)(14, {78, 89, 96}),
+				decltype(t1)(15, {32, 64, 128}),
+				decltype(t1)(42, {98, 99, 100})
+			})
+		});
+
+		utki::tree<int> t2(10, {
+			decltype(t2)(13, {34, 45}),
+
+			decltype(t2)(11, {
+				decltype(t2)(14, {78, 89, 96}),
+				decltype(t2)(15, {32, 64, 128}),
+				decltype(t2)(42, {98, 99, 100})
+			})
+		});
+
+		utki::assert(t1.children[0].value == t2.children[0].value, SL);
+		utki::assert(t1.children[0].children[0].value == t2.children[0].children[0].value, SL);
+		utki::assert(t1.children[0].children[1].value == t2.children[0].children[1].value, SL);
+		utki::assert(t1 == t2, SL);
+		utki::assert(t1 == t1, SL);
+	}
 }
 
 void test_constructors_from_container(){

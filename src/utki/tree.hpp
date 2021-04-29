@@ -149,6 +149,10 @@ public:
 	bool operator==(const T& value)const noexcept{
 		return this->value == value;
 	}
+
+	bool operator==(const tree& t)const noexcept{
+		return this->value == t.value && this->children == t.children;
+	}
 };
 
 /**
