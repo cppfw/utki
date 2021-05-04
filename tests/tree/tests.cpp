@@ -153,6 +153,7 @@ void test_comparison(){
 
 		utki::tree<wrapper> t({str});
 
+		// this should use template tree::operator==()
 		utki::assert(t == str.c_str(), SL);
 	}
 

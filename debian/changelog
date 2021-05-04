@@ -1,3 +1,9 @@
+libutki (1.1.138) unstable; urgency=medium
+
+  * make tree::opertor==() a template
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 04 May 2021 16:54:20 +0300
+
 libutki (1.1.137) unstable; urgency=medium
 
   * add tree to tree comparison operator==()
