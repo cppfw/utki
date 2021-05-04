@@ -139,6 +139,23 @@ void test_comparison(){
 		utki::assert(t.children[1].children.size() == 3, SL);
 	}
 
+	// test tree to non-value comparison
+	{
+		struct wrapper{
+			std::string str;
+
+			bool operator==(const char* str)const{
+				return this->str == str;
+			}
+		};
+
+		std::string str = "hello";
+
+		utki::tree<wrapper> t({str});
+
+		utki::assert(t == str.c_str(), SL);
+	}
+
 	// test tree to tree comparison
 	{
 		utki::tree<int> t1(10, {

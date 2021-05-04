@@ -146,7 +146,8 @@ public:
 	 * Calls operator==() on the tree node's value.
 	 * This operator is provided for compatibility with STL algorithms.
 	 */
-	bool operator==(const T& value)const noexcept{
+	template <typename compare_value_type>
+	bool operator==(const compare_value_type& value)const noexcept{
 		return this->value == value;
 	}
 
