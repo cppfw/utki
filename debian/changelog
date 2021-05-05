@@ -1,3 +1,9 @@
+libutki (1.1.139) unstable; urgency=medium
+
+  * update iphone deployment target to 9.0
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 06 May 2021 00:42:59 +0300
+
 libutki (1.1.138) unstable; urgency=medium
 
   * make tree::opertor==() a template
