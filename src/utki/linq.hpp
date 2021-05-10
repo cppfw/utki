@@ -6,10 +6,11 @@
 
 #include "debug.hpp"
 #include "types.hpp"
+#include "config.hpp"
 
 namespace utki{
 
-#if __cplusplus >= 201703L
+#if M_CPP >= 17
 
 template <typename C> class linq_collection_aggregator{
 	template <typename CC> friend class linq_collection_aggregator;
