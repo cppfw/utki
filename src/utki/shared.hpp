@@ -38,6 +38,7 @@ template <class T> std::weak_ptr<T> make_weak(const std::shared_ptr<T>& ptr){
  * @return shared pointer to the given shared object.
  */
 template <class T> std::shared_ptr<T> make_shared_from(T& o){
+	static_assert(std::is_base_of<shared, T>::value, "make_shared_from(): argument must be derived from utki::shared");
 	return std::dynamic_pointer_cast<T>(o.shared_from_this());
 }
 
@@ -49,6 +50,7 @@ template <class T> std::shared_ptr<T> make_shared_from(T& o){
  * @return weak pointer to the given shared object.
  */
 template <class T> std::weak_ptr<T> make_weak_from(T& o){
+	static_assert(std::is_base_of<shared, T>::value, "make_shared_from(): argument must be derived from utki::shared");
 	return utki::make_weak(utki::make_shared_from(o));
 }
 

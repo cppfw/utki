@@ -37,7 +37,7 @@ void run(){
 		utki::assert(p2->getPtr().operator->() == p2.operator->(), SL);
 	}
 
-	// test make_shared_from_this
+	// test make_shared_from
 	{
 		auto o = std::make_shared<TestClass>();
 		utki::assert(o, SL);
@@ -47,7 +47,7 @@ void run(){
 		utki::assert(sft->a == 4, SL);
 	}
 
-	// test make_weak_from_this
+	// test make_weak_from
 	{
 		auto o = std::make_shared<TestClass>();
 		utki::assert(o, SL);
