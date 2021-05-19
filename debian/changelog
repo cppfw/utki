@@ -1,3 +1,9 @@
+libutki (1.1.140) unstable; urgency=medium
+
+  * add make_vector(span)
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 19 May 2021 17:21:00 +0300
+
 libutki (1.1.139) unstable; urgency=medium
 
   * update iphone deployment target to 9.0
