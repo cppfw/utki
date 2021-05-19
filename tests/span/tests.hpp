@@ -24,3 +24,7 @@ void run();
 namespace test_subspan{
 void run();
 }
+
+namespace test_make_vector{
+void run();
+}

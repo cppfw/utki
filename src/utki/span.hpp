@@ -315,4 +315,12 @@ inline utki::span<const char> make_span(const char* str){
 	return make_span(str, strlen(str));
 }
 
+template <class value_type>
+std::vector<typename std::remove_const<value_type>::type> make_vector(span<value_type> s){
+	std::vector<typename std::remove_const<value_type>::type> ret;
+	ret.reserve(s.size());
+	std::copy(s.begin(), s.end(), std::back_inserter(ret));
+	return ret;
+}
+
 }

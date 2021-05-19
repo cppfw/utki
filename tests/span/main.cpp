@@ -7,5 +7,6 @@ int main(int argc, char *argv[]){
 	testOutputToStream::run();
 	test_make_span::run();
 	test_subspan::run();
+	test_make_vector::run();
 	return 0;
 }

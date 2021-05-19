@@ -200,3 +200,31 @@ void run(){
 	}
 }
 }
+
+namespace test_make_vector{
+void run(){
+	// test non-const span
+	{
+		std::vector<size_t> in = {10, 20, 13, 65};
+
+		auto sp = utki::make_span(in);
+
+		auto out = utki::make_vector(sp);
+
+		utki::assert(in == out, SL);
+	}
+
+	// test const span
+	{
+		std::vector<size_t> in = {10, 20, 13, 65};
+
+		auto sp = utki::make_span(in);
+
+		auto csp = utki::make_span(const_cast<decltype(sp)::const_pointer>(sp.data()), sp.size());
+
+		auto out = utki::make_vector(csp);
+
+		utki::assert(in == out, SL);
+	}
+}
+}
