@@ -1,3 +1,9 @@
+libutki (1.1.143) unstable; urgency=medium
+
+  * add span::operator< > <= >=
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 20 May 2021 17:34:51 +0300
+
 libutki (1.1.142) unstable; urgency=medium
 
   * add const span::operator==
