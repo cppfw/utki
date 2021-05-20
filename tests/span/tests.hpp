@@ -28,3 +28,7 @@ void run();
 namespace test_make_vector{
 void run();
 }
+
+namespace test_operator_equals{
+void run();
+}

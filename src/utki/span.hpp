@@ -33,11 +33,9 @@ public:
 	typedef value_type& reference;
 	typedef const value_type& const_reference;
 	typedef value_type* iterator;
-	typedef const value_type* const_iterator;
 	typedef std::size_t size_type;
 	typedef std::ptrdiff_t difference_type;
 	typedef std::reverse_iterator<iterator> reverse_iterator;
-	typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
 	
 private:
 	pointer buf = nullptr;
@@ -145,23 +143,15 @@ public:
 	 * @brief get iterator to first element of the span.
 	 * @return iterator to first element of the span.
 	 */
-	iterator begin()noexcept{
+	iterator begin()const noexcept{
 		return this->buf;
-	}
-
-	/**
-	 * @brief get iterator of the first element of the span.
-	 * @return iterator of the first element of the span.
-	 */
-	const_iterator begin()const noexcept{
-		return this->cbegin();
 	}
 
 	/**
 	 * @brief get const iterator of the first element of the span.
 	 * @return const iterator of the first element of the span.
 	 */
-	const_iterator cbegin()const noexcept{
+	iterator cbegin()const noexcept{
 		return this->buf;
 	}
 
@@ -169,56 +159,35 @@ public:
 	 * @brief get iterator to "after last" element of the span.
 	 * @return iterator to "after last" element of the span.
 	 */
-	iterator end()noexcept{
+	iterator end()const noexcept{
 		return this->buf + this->buf_size;
-	}
-
-	/**
-	 * @brief get const iterator to "after last" element of the span.
-	 * @return const iterator to "after last" element of the span.
-	 */
-	const_iterator end()const noexcept{
-		return this->cend();
 	}
 	
 	/**
 	 * @brief get const iterator to "after last" element of the span.
 	 * @return const iterator to "after last" element of the span.
 	 */
-	const_iterator cend()const noexcept{
+	iterator cend()const noexcept{
 		return this->buf + this->buf_size;
 	}
 
-	
-	const_reverse_iterator crbegin()const noexcept{
-		return const_reverse_iterator(this->end());
-	}
-
-	const_reverse_iterator crend()const noexcept{
-		return const_reverse_iterator(this->begin());
-	}
-	
-	reverse_iterator rbegin()noexcept{
+	reverse_iterator crbegin()const noexcept{
 		return reverse_iterator(this->end());
 	}
 
-	const_reverse_iterator rbegin()const noexcept{
-		return const_reverse_iterator(this->end());
-	}
-
-	reverse_iterator rend()noexcept{
+	reverse_iterator crend()const noexcept{
 		return reverse_iterator(this->begin());
 	}
+	
+	reverse_iterator rbegin()const noexcept{
+		return reverse_iterator(this->end());
+	}
 
-	const_reverse_iterator rend()const noexcept{
-		return const_reverse_iterator(this->begin());
+	reverse_iterator rend()const noexcept{
+		return reverse_iterator(this->begin());
 	}
 	
-	pointer data()noexcept{
-		return this->buf;
-	}
-
-	const_pointer data()const noexcept{
+	pointer data()const noexcept{
 		return this->buf;
 	}
 
@@ -263,6 +232,24 @@ public:
 	 */
 	bool overlaps(const_pointer p)const noexcept{
 		return this->begin() <= p && p <= (this->end() - 1);
+	}
+
+	bool operator==(const span& s)const noexcept{
+		if(this->size() != s.size()){
+			return false;
+		}
+
+		for(auto i = this->begin(), j = s.begin(); i != this->end(); ++i, ++j){
+			if(!(*i == *j)){
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	bool operator!=(const span& s)const noexcept{
+		return !this->operator==(s);
 	}
 
 	friend std::ostream& operator<<(std::ostream& s, const span<T>& buf){

@@ -228,3 +228,15 @@ void run(){
 	}
 }
 }
+
+namespace test_operator_equals{
+void run(){
+	{
+		std::vector<size_t> v1 = {10, 20, 13, 65};
+		std::array<size_t, 6> v2 = {3, 10, 20, 13, 65, 73};
+
+		utki::assert(utki::make_span(v1) != utki::make_span(v2), SL);
+		utki::assert(utki::make_span(v1) == utki::make_span(v2).subspan(1, 4), SL);
+	}
+}
+}
