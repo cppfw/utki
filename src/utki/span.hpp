@@ -234,24 +234,6 @@ public:
 		return this->begin() <= p && p <= (this->end() - 1);
 	}
 
-	bool operator==(const span& s)const noexcept{
-		if(this->size() != s.size()){
-			return false;
-		}
-
-		for(auto i = this->begin(), j = s.begin(); i != this->end(); ++i, ++j){
-			if(!(*i == *j)){
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	bool operator!=(const span& s)const noexcept{
-		return !this->operator==(s);
-	}
-
 	friend std::ostream& operator<<(std::ostream& s, const span<T>& buf){
 		for(auto& e : buf){
 			s << e;
@@ -259,6 +241,18 @@ public:
 		return s;
 	}
 };
+
+template <class type>
+constexpr bool operator==(span<type> l, span<type> r)
+{
+    return std::equal(l.begin(), l.end(), r.begin(), r.end());
+}
+
+template <class type>
+constexpr bool operator!=(span<type> l, span<type> r)
+{
+    return !(l == r);
+}
 
 template <class T> inline utki::span<T> make_span(std::nullptr_t){
 	return utki::span<T>(nullptr);
