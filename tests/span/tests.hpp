@@ -29,6 +29,6 @@ namespace test_make_vector{
 void run();
 }
 
-namespace test_operator_equals{
+namespace test_comparison{
 void run();
 }

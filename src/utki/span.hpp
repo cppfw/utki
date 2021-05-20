@@ -240,37 +240,31 @@ public:
 		}
 		return s;
 	}
+
+	constexpr bool operator==(const span<const T>& s)const noexcept{
+		return std::equal(this->begin(), this->end(), s.begin(), s.end());
+	}
+
+	constexpr bool operator!=(const span<const T>& s)const noexcept{
+		return !this->operator==(s);
+	}
+
+	constexpr bool operator<(const span<const T>& s)const noexcept{
+		return std::lexicographical_compare(this->begin(), this->end(), s.begin(), s.end());
+	}
+
+	constexpr bool operator>=(const span<const T>& s)const noexcept{
+		return !this->operator<(s);
+	}
+
+	constexpr bool operator>(const span<const T>& s)const noexcept{
+		return s.operator<(*this);
+	}
+
+	constexpr bool operator<=(const span<const T>& s)const noexcept{
+		return !this->operator>(s);
+	}
 };
-
-template <class type>
-constexpr bool operator==(span<type> l, span<type> r){
-    return std::equal(l.begin(), l.end(), r.begin(), r.end());
-}
-
-template <class type>
-constexpr bool operator==(span<type> l, span<const type> r){
-    return std::equal(l.begin(), l.end(), r.begin(), r.end());
-}
-
-template <class type>
-constexpr bool operator==(span<const type> l, span<type> r){
-    return std::equal(l.begin(), l.end(), r.begin(), r.end());
-}
-
-template <class type>
-constexpr bool operator!=(span<type> l, span<type> r){
-    return !(l == r);
-}
-
-template <class type>
-constexpr bool operator!=(span<const type> l, span<type> r){
-    return !(l == r);
-}
-
-template <class type>
-constexpr bool operator!=(span<type> l, span<const type> r){
-    return !(l == r);
-}
 
 template <class T> inline utki::span<T> make_span(std::nullptr_t){
 	return utki::span<T>(nullptr);
