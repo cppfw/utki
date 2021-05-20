@@ -243,14 +243,32 @@ public:
 };
 
 template <class type>
-constexpr bool operator==(span<type> l, span<type> r)
-{
+constexpr bool operator==(span<type> l, span<type> r){
     return std::equal(l.begin(), l.end(), r.begin(), r.end());
 }
 
 template <class type>
-constexpr bool operator!=(span<type> l, span<type> r)
-{
+constexpr bool operator==(span<type> l, span<const type> r){
+    return std::equal(l.begin(), l.end(), r.begin(), r.end());
+}
+
+template <class type>
+constexpr bool operator==(span<const type> l, span<type> r){
+    return std::equal(l.begin(), l.end(), r.begin(), r.end());
+}
+
+template <class type>
+constexpr bool operator!=(span<type> l, span<type> r){
+    return !(l == r);
+}
+
+template <class type>
+constexpr bool operator!=(span<const type> l, span<type> r){
+    return !(l == r);
+}
+
+template <class type>
+constexpr bool operator!=(span<type> l, span<const type> r){
     return !(l == r);
 }
 
