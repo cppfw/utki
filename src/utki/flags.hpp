@@ -264,17 +264,6 @@ public:
 	flags operator^(const flags& f)const noexcept{
 		return flags(*this).operator^=(f);
 	}
-
-	friend std::ostream& operator<<(std::ostream& s, const flags& fs){
-		s << "(";
-
-		for(size_t i = 0; i != fs.size(); ++i){
-			s << (fs[i] ? "1" : "0");
-		}
-
-		s << ")";
-		return s;
-	}
 };
 
 /**
