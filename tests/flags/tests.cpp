@@ -66,8 +66,8 @@ void Run(){
 		utki::assert(fs.get(TestEnum::SECOND), SL);
 		
 		
-		LOG([&](auto&o){o << "enum_size = " << size_t(TestEnum::enum_size) << " sizeof(fs) = " << sizeof(fs) << " sizeof(index_t) = " << sizeof(utki::flags<TestEnum>::index_type) << std::endl;})
-				
+		LOG([&](auto&o){o << "enum_size = " << size_t(TestEnum::enum_size) << " sizeof(fs) = " << sizeof(fs) << std::endl;})
+
 		LOG([&](auto&o){o << "fs = " << fs << std::endl;})
 		
 		{
@@ -115,17 +115,23 @@ void Run(){
 
 		utki::assert(!flags.is_clear(), SL);
 		utki::assert(flags.get(TestEnum::TWENTY_SEVENTH), SL);
+		utki::assert(flags[TestEnum::TWENTY_SEVENTH], SL);
 		utki::assert(flags.get(TestEnum::NINETEENTH), SL);
+		utki::assert(flags[TestEnum::NINETEENTH], SL);
 
 		flags.clear(TestEnum::TWENTY_SEVENTH);
 		utki::assert(!flags.is_clear(), SL);
 		utki::assert(!flags.get(TestEnum::TWENTY_SEVENTH), SL);
+		utki::assert(!flags[TestEnum::TWENTY_SEVENTH], SL);
 		utki::assert(flags.get(TestEnum::NINETEENTH), SL);
+		utki::assert(flags[TestEnum::NINETEENTH], SL);
 		
 		flags.clear(TestEnum::NINETEENTH);
 		utki::assert(flags.is_clear(), SL);
 		utki::assert(!flags.get(TestEnum::TWENTY_SEVENTH), SL);
+		utki::assert(!flags[TestEnum::TWENTY_SEVENTH], SL);
 		utki::assert(!flags.get(TestEnum::NINETEENTH), SL);
+		utki::assert(!flags[TestEnum::NINETEENTH], SL);
 	}
 
 	// test make_flags
@@ -141,7 +147,7 @@ void Run(){
 		utki::assert(!flags.get(TestEnum::TWENTY_SEVENTH), SL);
 		utki::assert(flags.get(TestEnum::NINETEENTH), SL);
 		
-		flags.clear(TestEnum::NINETEENTH);
+		flags[TestEnum::NINETEENTH] = false;
 		utki::assert(flags.is_clear(), SL);
 		utki::assert(!flags.get(TestEnum::TWENTY_SEVENTH), SL);
 		utki::assert(!flags.get(TestEnum::NINETEENTH), SL);

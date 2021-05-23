@@ -45,6 +45,27 @@
 			],
 			"preLaunchTask": "build",
 			"miDebuggerPath": "/usr/bin/gdb"
-		}
+		},
+		{
+			"name": "g++ test flags",
+			"type": "cppdbg",
+			"request": "launch",
+			"program": "${workspaceFolder}/tests/flags/out/rel/tests",
+			"args": [],
+			"stopAtEntry": false,
+			"cwd": "${workspaceFolder}/tests/flags/",
+			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/build/"}],
+			"externalConsole": false,
+			"MIMode": "gdb",
+			"setupCommands": [
+				{
+					"description": "Enable pretty-printing for gdb",
+					"text": "-enable-pretty-printing",
+					"ignoreFailures": true
+				}
+			],
+			"preLaunchTask": "build",
+			"miDebuggerPath": "/usr/bin/gdb"
+		},
 	]
 }
