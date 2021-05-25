@@ -261,7 +261,7 @@ template <class T> flags<T> make_flags(std::initializer_list<T> initially_set_fl
 
 template <class enum_type>
 typename std::enable_if<
-		std::is_enum<enum_type>::value && int(enum_type::enum_size) >= 0, // if type is enum and it has enum_size item
+		std::is_enum<enum_type>::value,
 		utki::flags<enum_type>
 	>::type
 operator|(enum_type e1, enum_type e2){
