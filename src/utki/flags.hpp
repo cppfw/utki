@@ -42,12 +42,12 @@ namespace utki{
  * 
  * @endcode
  */
-template <class enum_type> class flags : public std::bitset<size_t(enum_type::enum_size)>{
+template <class enum_type> class flags{
 	static_assert(int(enum_type::enum_size) >= 0, "enumeration must define enum_size item");
 	static_assert(unsigned(enum_type::enum_size) > 0, "enumeration must define at least one item");
 
+	std::bitset<size_t(enum_type::enum_size)> bitset;
 public:
-	typedef std::bitset<size_t(enum_type::enum_size)> bitset_type;
 
 	/**
 	 * @brief Constructor.
@@ -56,7 +56,7 @@ public:
 	 */
 	flags(bool initial_value = false){
 		if(initial_value){
-			this->bitset_type::set();
+			this->bitset.set();
 		}
 	}
 
@@ -66,18 +66,20 @@ public:
 	 */
 	flags(std::initializer_list<enum_type> initially_set_flags){
 		for(auto v : initially_set_flags){
-			this->bitset_type::set(size_t(v));
+			this->bitset.set(size_t(v));
 		}
 	}
 
-	using bitset_type::operator[];
-
-	constexpr bool operator[](enum_type flag)const{
-		return this->bitset_type::operator[](size_t(flag));
+	constexpr size_t size()const noexcept{
+		return this->bitset.size();
 	}
 
-	typename bitset_type::reference operator[](enum_type flag){
-		return this->bitset_type::operator[](size_t(flag));
+	constexpr bool operator[](enum_type flag)const{
+		return this->bitset[size_t(flag)];
+	}
+
+	typename decltype(bitset)::reference operator[](enum_type flag){
+		return this->bitset[size_t(flag)];
 	}
 
 	/**
@@ -88,19 +90,7 @@ public:
 	 */
 	bool get(enum_type flag)const noexcept{
 		ASSERT(flag < enum_type::enum_size)
-		return this->bitset_type::operator[](size_t(flag));
-	}
-
-	/**
-	 * @brief Get value for i'th flag.
-	 * Returns the value of the flag given by index.
-	 * Note, the index must be less than enumeration size,
-	 * otherwise the behavior is undefined.
-	 * @param i - index of the flag to get value of.
-	 * @return value of the flag given by index.
-	 */
-	bool get(size_t i)const noexcept{
-		return this->bitset_type::test(i);
+		return this->bitset[size_t(flag)];
 	}
 
 	/**
@@ -111,21 +101,7 @@ public:
 	 */
 	flags& set(enum_type flag, bool value = true)noexcept{
 		ASSERT(flag < enum_type::enum_size)
-		this->bitset_type::set(size_t(flag), value);
-		return *this;
-	}
-
-	/**
-	 * @brief Set value of an i'th flag.
-	 * Sets the value of the flag given by index.
-	 * Note, the index must be less than enumeration size,
-	 * otherwise the behavior is undefined.
-	 * @param i - index of the flag to set value of.
-	 * @param value - value to set.
-	 * @return Reference to this Flags.
-	 */
-	flags& set(size_t i, bool value = true)noexcept{
-		this->bitset_type::set(i, value);
+		this->bitset.set(size_t(flag), value);
 		return *this;
 	}
 
@@ -136,9 +112,9 @@ public:
 	 */
 	flags& set(bool value = true)noexcept{
 		if(value){
-			this->bitset_type::set();
+			this->bitset.set();
 		}else{
-			this->bitset_type::reset();
+			this->bitset.reset();
 		}
 		return *this;
 	}
@@ -149,19 +125,8 @@ public:
 	 * @return Reference to this Flags.
 	 */
 	flags& clear(enum_type flag)noexcept{
-		this->bitset_type::reset(size_t(flag));
+		this->bitset.reset(size_t(flag));
 		return *this;
-	}
-
-	/**
-	 * @brief Clear flag given by index.
-	 * Note, the index must be less than enumeration size,
-	 * otherwise the behavior is undefined.
-	 * @param i - index of the flag to clear.
-	 * @return Reference to this Flags.
-	 */
-	flags& clear(size_t i)noexcept{
-		return this->bitset_type::set(i, false);
 	}
 
 	/**
@@ -169,7 +134,7 @@ public:
 	 * @return Reference to this Flags.
 	 */
 	flags& clear()noexcept{
-		this->reset();
+		this->bitset.reset();
 		return *this;
 	}
 
@@ -179,7 +144,7 @@ public:
 	 * @return false otherwise.
 	 */
 	bool is_clear()const noexcept{
-		return this->none();
+		return this->bitset.none();
 	}
 
 	/**
@@ -188,7 +153,7 @@ public:
 	 * @return false otherwise.
 	 */
 	bool is_set()const noexcept{
-		return this->all();
+		return this->bitset.all();
 	}
 
 	/**
@@ -196,7 +161,7 @@ public:
 	 * @return Reference to this Flags.
 	 */
 	flags& invert()noexcept{
-		this->flip();
+		this->bitset.flip();
 		return *this;
 	}
 
@@ -214,7 +179,7 @@ public:
 	 * @return Reference to this Flags.
 	 */
 	flags& operator&=(const flags& f)noexcept{
-		this->bitset_type::operator&=(f);
+		this->bitset &= f.bitset;
 		return *this;
 	}
 	
@@ -233,7 +198,7 @@ public:
 	 * @return Reference to this Flags.
 	 */
 	flags& operator|=(const flags& f)noexcept{
-		this->bitset_type::operator|=(f);
+		this->bitset |= f.bitset;
 		return *this;
 	}
 	
@@ -252,7 +217,7 @@ public:
 	 * @return Reference to this Flags.
 	 */
 	flags& operator^=(const flags& f)noexcept{
-		this->bitset_type::operator^=(f);
+		this->bitset ^= f.bitset;
 		return *this;
 	}
 	
@@ -263,6 +228,10 @@ public:
 	 */
 	flags operator^(const flags& f)const noexcept{
 		return flags(*this).operator^=(f);
+	}
+
+	friend std::ostream& operator<<(std::ostream& o, const flags& f){
+		return o << f.bitset;
 	}
 };
 

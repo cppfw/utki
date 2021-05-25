@@ -75,12 +75,6 @@ void Run(){
 			utki::assert(fs.is_clear(), SL);
 			utki::assert(!fs.is_set(), SL);
 			
-			fs.set(fs.size() - 1, true);
-			utki::assert(!fs.is_clear(), SL);
-			utki::assert(!fs.is_set(), SL);
-			
-			fs.clear();
-			
 			fs.set(TestEnum::EIGHTH, true);
 			utki::assert(!fs.is_clear(), SL);
 			utki::assert(!fs.is_set(), SL);
@@ -89,10 +83,6 @@ void Run(){
 			utki::flags<TestEnum> fs(true);
 			utki::assert(!fs.is_clear(), SL);
 			utki::assert(fs.is_set(), SL);
-			
-			fs.set(fs.size() - 1, false);
-			utki::assert(!fs.is_clear(), SL);
-			utki::assert(!fs.is_set(), SL);
 					
 			fs.set();
 			
