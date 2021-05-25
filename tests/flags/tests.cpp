@@ -3,12 +3,6 @@
 
 #include "tests.hpp"
 
-
-
-using namespace utki;
-
-
-
 namespace TestFlags{
 
 enum class TestEnum{
@@ -126,7 +120,7 @@ void Run(){
 
 	// test make_flags
 	{
-		auto flags = make_flags({TestEnum::TWENTY_SEVENTH, TestEnum::NINETEENTH});
+		auto flags = utki::make_flags({TestEnum::TWENTY_SEVENTH, TestEnum::NINETEENTH});
 
 		utki::assert(!flags.is_clear(), SL);
 		utki::assert(flags.get(TestEnum::TWENTY_SEVENTH), SL);
@@ -145,7 +139,7 @@ void Run(){
 
 	// test twice initialized flag
 	{
-		auto flags = make_flags({TestEnum::NINETEENTH, TestEnum::TWENTY_SEVENTH, TestEnum::NINETEENTH});
+		auto flags = utki::make_flags({TestEnum::NINETEENTH, TestEnum::TWENTY_SEVENTH, TestEnum::NINETEENTH});
 
 		utki::assert(!flags.is_clear(), SL);
 		utki::assert(flags.get(TestEnum::TWENTY_SEVENTH), SL);
@@ -160,6 +154,41 @@ void Run(){
 		utki::assert(flags.is_clear(), SL);
 		utki::assert(!flags.get(TestEnum::TWENTY_SEVENTH), SL);
 		utki::assert(!flags.get(TestEnum::NINETEENTH), SL);
+	}
+
+	// test operator|(enum)
+	{
+		auto flags = utki::make_flags({TestEnum::NINETEENTH, TestEnum::TWENTY_SEVENTH, TestEnum::NINETEENTH});
+
+		utki::assert(!flags.get(TestEnum::EIGHTH), SL);
+
+		flags = flags | TestEnum::EIGHTH;
+
+		utki::assert(flags.get(TestEnum::EIGHTH), SL);
+	}
+
+	// test constructor(enum)
+	{
+		utki::flags<TestEnum> flags(TestEnum::ELEVENTH);
+
+		utki::assert(flags.get(TestEnum::ELEVENTH), SL);
+
+		flags.clear(TestEnum::ELEVENTH);
+
+		utki::assert(flags.is_clear(), SL);
+	}
+
+	// test operator|(enum, enum)
+	{
+		auto flags = TestEnum::EIGHTH | TestEnum::ELEVENTH;
+
+		utki::assert(flags.get(TestEnum::EIGHTH), SL);
+		utki::assert(flags.get(TestEnum::ELEVENTH), SL);
+
+		flags.clear(TestEnum::EIGHTH);
+		flags.clear(TestEnum::ELEVENTH);
+
+		utki::assert(flags.is_clear(), SL);
 	}
 }
 

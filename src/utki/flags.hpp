@@ -70,6 +70,15 @@ public:
 		}
 	}
 
+	/**
+	 * @brief Constructor.
+	 * Constructs a flags instance with only one flag set initially.
+	 * @param e - flag to set.
+	 */
+	flags(enum_type e) :
+			flags({e})
+	{}
+
 	constexpr size_t size()const noexcept{
 		return this->bitset.size();
 	}
@@ -211,6 +220,10 @@ public:
 		return flags(*this).operator|=(f);
 	}
 	
+	flags operator|(enum_type e)const noexcept{
+		return flags(*this).set(e);
+	}
+
 	/**
 	 * @brief Operator assignment XOR.
 	 * @param f - flags to perform XOR operation with.
@@ -244,4 +257,13 @@ template <class T> flags<T> make_flags(std::initializer_list<T> initially_set_fl
 	return flags<T>(initially_set_flags);
 }
 
+}
+
+template <class enum_type>
+typename std::enable_if<
+		std::is_enum<enum_type>::value && int(enum_type::enum_size) >= 0, // if type is enum and it has enum_size item
+		utki::flags<enum_type>
+	>::type
+operator|(enum_type e1, enum_type e2){
+	return {e1, e2};
 }
