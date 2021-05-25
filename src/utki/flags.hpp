@@ -78,7 +78,7 @@ public:
 		return this->bitset[size_t(flag)];
 	}
 
-	typename decltype(bitset)::reference operator[](enum_type flag){
+	typename std::bitset<size_t(enum_type::enum_size)>::reference operator[](enum_type flag){
 		return this->bitset[size_t(flag)];
 	}
 
