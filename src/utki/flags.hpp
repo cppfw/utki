@@ -264,7 +264,9 @@ struct is_flaggable : public std::false_type{};
 
 template <class enum_type>
 typename std::enable_if<
-		std::is_enum<enum_type>::value && enum_type::enum_size == enum_type::enum_size,
+		std::is_enum<enum_type>::value
+				// TODO: add std::is_scoped_enum check when C++'23 is widely available
+				&& enum_type::enum_size == enum_type::enum_size, // check that enum has enum_size item. Note, that this is the only way to do it for MSVC compiler.
 		utki::flags<enum_type>
 	>::type
 operator|(enum_type e1, enum_type e2){
