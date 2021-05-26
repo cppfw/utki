@@ -49,6 +49,12 @@ enum class TestEnum{
 	enum_size
 };
 
+enum non_flag_enum{
+	item1,
+	item2,
+	item3,
+	item4
+};
 
 void Run(){
 	// basic test
@@ -189,6 +195,13 @@ void Run(){
 		flags.clear(TestEnum::ELEVENTH);
 
 		utki::assert(flags.is_clear(), SL);
+	}
+
+	// check that operator|(enum, enum) is not applied for enums not defining enum_size item
+	{
+		auto flags = non_flag_enum::item1 | non_flag_enum::item2;
+
+		utki::assert(flags, SL);
 	}
 }
 
