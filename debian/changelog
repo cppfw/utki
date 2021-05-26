@@ -1,3 +1,9 @@
+libutki (1.1.144) unstable; urgency=medium
+
+  * implement flags via bitset
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 26 May 2021 16:43:42 +0300
+
 libutki (1.1.143) unstable; urgency=medium
 
   * add span::operator< > <= >=
