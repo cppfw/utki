@@ -257,11 +257,14 @@ template <class T> flags<T> make_flags(std::initializer_list<T> initially_set_fl
 	return flags<T>(initially_set_flags);
 }
 
+template <class enum_type>
+struct is_flaggable : public std::false_type{};
+
 }
 
 template <class enum_type>
 typename std::enable_if<
-		std::is_enum<enum_type>::value && (static_cast<int>(enum_type::enum_size) >= 0),
+		std::is_enum<enum_type>::value && enum_type::enum_size == enum_type::enum_size,
 		utki::flags<enum_type>
 	>::type
 operator|(enum_type e1, enum_type e2){
