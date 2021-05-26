@@ -201,7 +201,7 @@ void Run(){
 	{
 		auto flags = non_flag_enum::item1 | non_flag_enum::item2;
 
-		utki::assert(flags, SL);
+		utki::assert(flags != 0, SL);
 	}
 }
 
