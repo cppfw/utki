@@ -1,3 +1,9 @@
+libutki (1.1.145) unstable; urgency=medium
+
+  * flags: define operator| only for enums which define enum_size item
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 26 May 2021 17:29:40 +0300
+
 libutki (1.1.144) unstable; urgency=medium
 
   * implement flags via bitset
