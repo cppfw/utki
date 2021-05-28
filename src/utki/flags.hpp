@@ -42,7 +42,10 @@ namespace utki{
  * 
  * @endcode
  */
-template <class enum_type> class flags{
+template <class enumeration_type> class flags{
+public:
+	typedef enumeration_type enum_type;
+private:
 	static_assert(int(enum_type::enum_size) >= 0, "enumeration must define enum_size item");
 	static_assert(unsigned(enum_type::enum_size) > 0, "enumeration must define at least one item");
 

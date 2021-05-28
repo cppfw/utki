@@ -57,6 +57,15 @@ enum non_flag_enum{
 };
 
 void Run(){
+	// check that enum_type is typedef'ed
+	{
+		utki::flags<TestEnum> flags;
+
+		decltype(flags)::enum_type t = TestEnum::EIGHTH;
+		
+		utki::assert(t == TestEnum::EIGHTH, SL);
+	}
+
 	// basic test
 	{
 		utki::flags<TestEnum> fs;
