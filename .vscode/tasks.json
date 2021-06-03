@@ -10,10 +10,10 @@
 			"group": "build"
 		},
 		{
-			"label": "test_debug",
+			"label": "test_dbg",
 			"type": "shell",
 			"command": "make test config=dbg autojobs=true",
-			"dependsOn": "build_debug",
+			"dependsOn": "build_dbg",
 			"problemMatcher": [],
 			"group": "build"
 		},
@@ -28,6 +28,13 @@
 			"group": "build"
 		},
 		{
+			"label": "clean-all",
+			"type": "shell",
+			"command": "make clean-all",
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
 			"label": "clean",
 			"type": "shell",
 			"command": "make clean",
@@ -35,7 +42,7 @@
 			"group": "build"
 		},
 		{
-			"label": "clean_debug",
+			"label": "clean_dbg",
 			"type": "shell",
 			"command": "make clean config=dbg",
 			"problemMatcher": [],
@@ -62,7 +69,7 @@
 			"group": "build"
 		},
 		{
-			"label": "build_debug",
+			"label": "build_dbg",
 			"type": "shell",
 			"command": "make autojobs=true config=dbg",
 			"args": [],

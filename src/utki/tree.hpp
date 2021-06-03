@@ -469,7 +469,9 @@ private:
 
 		for(auto i : index){
 			ret.list_stack.push_back(list);
-			ASSERT(i < list->size())
+			if(i >= list->size()){
+				throw std::out_of_range("given index points out of the tree");
+			}
 			ret.iter_stack.push_back(std::next(iter, i));
 			list = &ret.iter_stack.back()->children;
 			iter = list->begin();
