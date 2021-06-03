@@ -422,6 +422,38 @@ private:
 		}
 
 		/**
+		 * @brief Get iterator depth.
+		 * Zero depth means that the iterator does not point to any tree node.
+		 * Depth of one means that the iterator points to one of the root nodes.
+		 * And so on.
+		 * @return number depth of the tree node the iterator points to.
+		 */
+		size_t depth()const noexcept{
+			return this->iter_stack.size();
+		}
+
+		/**
+		 * @brief Dereference the tree node at given tree level.
+		 * @param d - tree level.
+		 * @return Reference to the tree node this iterator points to on the requested tree level.
+		 * @throw std::out_of_range - in case the requested tree level is higher than the iterator depth.
+		 */
+		typename std::conditional<Is_const, const typename C::value_type, typename C::value_type>::type&
+		at_level(size_t d)noexcept{
+			return *this->iter_stack.at(d);
+		}
+
+		/**
+		 * @brief Dereference the tree node at given tree level.
+		 * Constant version of at_level().
+		 * @return Reference to the tree node this iterator points to on the requested tree level.
+		 * @throw std::out_of_range - in case the requested tree level is higher than the iterator depth.
+		 */
+		const typename C::value_type& at_level(size_t d)const noexcept{
+			return *this->iter_stack.at(d);
+		}
+
+		/**
 		 * @brief Check if this iterator points to the last tree node on the current tree level.
 		 * @return true if the iterator points to the last tree node on the current tree level.
 		 * @return false otherwise.
@@ -496,6 +528,15 @@ public:
 	 */
 	iterator make_iterator(const std::vector<size_type>& index){
 		return this->make_iterator(utki::make_span(index));
+	}
+
+	/**
+	 * @brief Create iterator which points to the tree node given by index.
+	 * @param index - the index of the tree node.
+	 * @return iterator which points to the tree node given by index.
+	 */
+	iterator make_iterator(std::initializer_list<size_t> index){
+		return this->make_iterator(std::vector<size_t>(index));
 	}
 
 	/**

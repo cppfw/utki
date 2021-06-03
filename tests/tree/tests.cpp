@@ -3,7 +3,6 @@
 
 #include "tests.hpp"
 
-
 namespace{
 void basic(){
 	{
@@ -875,6 +874,68 @@ void test_traversal(){
 
 		utki::assert(!iter.is_last_child(), SL);
 		utki::assert(iter == traversal.end(), SL);
+	}
+
+	// iterator depth
+	{
+		typedef utki::tree<int> tree;
+		tree::container_type roots{
+			tree(1,{34, 45}),
+
+			tree(2,{
+				tree(3, {78, 89, 96}),
+				tree(4,{32, 64, 128}),
+				tree(42, {98, 99, 100})
+			})
+		};
+
+		auto traversal = utki::make_traversal(roots);
+
+		{
+			auto iter = traversal.make_iterator(nullptr);
+			utki::assert(iter.depth() == 0, SL);
+		}
+
+		{
+			auto iter = traversal.make_iterator({1, 2, 2});
+			utki::assert(iter.depth() == 3, SL);
+		}
+
+		{
+			auto iter = traversal.make_iterator({1, 2});
+			utki::assert(iter.depth() == 2, SL);
+		}
+	}
+
+	// iterator at_level
+	{
+		typedef utki::tree<int> tree;
+		tree::container_type roots{
+			tree(1,{34, 45}),
+
+			tree(2,{
+				tree(3, {78, 89, 96}),
+				tree(4,{32, 64, 128}),
+				tree(42, {98, 99, 100})
+			})
+		};
+
+		auto traversal = utki::make_traversal(roots);
+
+		{
+			auto iter = traversal.make_iterator({1, 2, 2});
+			utki::assert(iter.depth() == 3, SL);
+			utki::assert(iter.at_level(0).value == 2, SL);
+			utki::assert(iter.at_level(1).value == 42, SL);
+			utki::assert(iter.at_level(2).value == 100, SL);
+		}
+
+		{
+			auto iter = traversal.make_iterator({0, 1});
+			utki::assert(iter.depth() == 2, SL);
+			utki::assert(iter.at_level(0) == 1, SL);
+			utki::assert(iter.at_level(1) == 45, SL);
+		}
 	}
 }
 }
