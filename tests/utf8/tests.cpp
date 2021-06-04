@@ -110,9 +110,9 @@ void run(){
 	// test span<const char> to utf32
 	{
 		// string in utf8 = aБцﺶ𠀋
-		auto buf = "aБцﺶ𠀋";
+		const char* buf = "aБцﺶ𠀋";
 
-		auto str = utki::to_utf32(buf);
+		auto str = utki::to_utf32(utki::make_span(buf));
 
 		utki::assert(str == U"aБцﺶ𠀋", SL);
 	}
