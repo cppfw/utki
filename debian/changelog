@@ -1,3 +1,10 @@
+libutki (1.1.147) unstable; urgency=medium
+
+  * add span constructors for automatic conversion from vector, array,
+    string
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 04 Jun 2021 14:40:29 +0300
+
 libutki (1.1.146) unstable; urgency=medium
 
   * tree traversal iterator levels access
