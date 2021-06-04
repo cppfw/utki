@@ -4,6 +4,8 @@
 #include <vector>
 #include <array>
 
+#include "span.hpp"
+
 namespace utki{
 
 /**
@@ -11,7 +13,9 @@ namespace utki{
  */
 class utf8_iterator{
 	char32_t c = 0;
-	const uint8_t* n = nullptr;
+	const uint8_t* p = nullptr;
+	size_t pos = 0;
+	size_t size; // maximum number of characters to iterate through
 
 public:
 	/**
@@ -19,11 +23,13 @@ public:
      */
 	utf8_iterator(){}
 
+	utf8_iterator(utki::span<const uint8_t> str);
+
 	/**
 	 * @brief Create iterator pointing to the begin of the given utf-8 encoded string.
-     * @param begin - pointer to the first byte of the null-terminated utf-8 encoded string.
+     * @param str - pointer to the null-terminated utf-8 encoded string.
      */
-	utf8_iterator(const char* begin);
+	utf8_iterator(const char* str);
 
 	/**
 	 * @brief Get current unicode character.
@@ -53,6 +59,10 @@ public:
 	bool is_end()const noexcept{
 		return this->c == 0;
 	}
+
+	const uint8_t* position()const noexcept{
+		return this->p;
+	}
 };
 
 /**
@@ -80,6 +90,35 @@ inline std::u32string to_utf32(const std::string& str){
 	return to_utf32(str.c_str());
 }
 
+/**
+ * @brief Convert UTF-8 to UTF-32.
+ * @param str - string to convert.
+ * @return UTF-32 string.
+ */
+std::u32string to_utf32(utki::span<const uint8_t> str);
+
+/**
+ * @brief Convert UTF-8 to UTF-32.
+ * @param str - string to convert.
+ * @return UTF-32 string.
+ */
+inline std::u32string to_utf32(utki::span<const char> str){
+	static_assert(sizeof(char) == sizeof(uint8_t), "unexpected char size");
+	return to_utf32(utki::make_span(
+			reinterpret_cast<const uint8_t*>(str.data()),
+			str.size()
+		));
+}
+
+/**
+ * @brief Convert UTF-8 to UTF-32.
+ * @param str - string to convert.
+ * @return UTF-32 string.
+ */
+inline std::u32string to_utf32(std::string_view str){
+	return to_utf32(utki::make_span(str));
+}
+
 const unsigned max_size_of_utf8_encoded_character = 6;
 
 /**
@@ -94,6 +133,15 @@ std::array<char, max_size_of_utf8_encoded_character + 1> to_utf8(char32_t c);
  * @param str - UTF-32 string to convert.
  * @return UTF-8 string.
  */
-std::string to_utf8(const std::u32string& str);
+std::string to_utf8(utki::span<const char32_t> str);
+
+/**
+ * @brief Convert UTF-32 string to UTF-8 string.
+ * @param str - UTF-32 string to convert.
+ * @return UTF-8 string.
+ */
+inline std::string to_utf8(const std::u32string& str){
+	return to_utf8(utki::make_span(str));
+}
 
 }

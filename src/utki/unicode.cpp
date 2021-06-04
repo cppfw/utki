@@ -4,45 +4,57 @@
 
 using namespace utki;
 
-utf8_iterator::utf8_iterator(const char* begin) :
-		n(reinterpret_cast<const uint8_t*> (begin))
+utf8_iterator::utf8_iterator(utki::span<const uint8_t> str) :
+		p(str.data()),
+		size(str.size())
 {
-	if (this->n == 0) {
-		this->c = 0;
-	} else {
+	if(this->p){
 		this->operator++();
 	}
 }
 
-utf8_iterator& utf8_iterator::operator++() noexcept{
-	uint8_t b = *this->n;
+static_assert(sizeof(char) == sizeof(uint8_t), "unexpected char size");
+
+utf8_iterator::utf8_iterator(const char* str) :
+		utf8_iterator(utki::make_span(
+				reinterpret_cast<const uint8_t*>(str),
+				std::numeric_limits<size_t>::max()
+			))
+{}
+
+utf8_iterator& utf8_iterator::operator++()noexcept{
+	++this->pos;
+
+	utki::scope_exit check_size_scope_exit([this](){
+		if(this->pos == this->size){
+			this->c = 0; // end reached
+		}
+	});
+
+	uint8_t b = *this->p;
 	
-	++this->n;
+	++this->p;
 	if ((b & 0x80) == 0) {
 		this->c = uint32_t(b);
 		return *this;
 	}
 
-	this->c = (*this->n) & 0x3f;
+	this->c = (*this->p) & 0x3f;
 
-	++this->n;
+	++this->p;
 
 	unsigned i = 2;
-	for (; (uint8_t(b << i) >> 7); ++i, ++this->n) {
+	for(;
+			(uint8_t(b << i) >> 7);
+			++i, ++this->p
+		)
+	{
 		this->c <<= 6;
-		this->c |= (*this->n) & 0x3f;
+		this->c |= (*this->p) & 0x3f;
 	}
 	this->c |= (char32_t(uint8_t(b << (i + 1)) >> (i + 1)) << (6 * (i - 1)));
 
 	return *this;
-}
-
-std::u32string utki::to_utf32(utf8_iterator str){
-	std::vector<char32_t> buf;
-	for(; !str.is_end(); ++str){
-		buf.push_back(str.character());
-	}
-	return std::u32string(buf.begin(), buf.end());
 }
 
 std::array<char, max_size_of_utf8_encoded_character + 1> utki::to_utf8(char32_t c){
@@ -115,7 +127,7 @@ std::array<char, max_size_of_utf8_encoded_character + 1> utki::to_utf8(char32_t 
 	return ret;
 }
 
-std::string utki::to_utf8(const std::u32string& str){
+std::string utki::to_utf8(utki::span<const char32_t> str){
 	std::stringstream ss;
 
 	for(auto c : str){
@@ -124,4 +136,24 @@ std::string utki::to_utf8(const std::u32string& str){
 	}
 
 	return ss.str();
+}
+
+std::u32string utki::to_utf32(utf8_iterator str){
+	std::vector<char32_t> buf;
+	for(; !str.is_end(); ++str){
+		buf.push_back(str.character());
+	}
+	return std::u32string(buf.begin(), buf.end());
+}
+
+std::u32string utki::to_utf32(utki::span<const uint8_t> str){
+	utf8_iterator iter(str);
+
+	std::vector<char32_t> buf;
+
+	for(; !iter.is_end(); ++iter){
+		buf.push_back(iter.character());
+	}
+
+	return std::u32string(buf.begin(), buf.end());
 }

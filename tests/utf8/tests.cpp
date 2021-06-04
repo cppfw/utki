@@ -6,9 +6,8 @@
 #include "../../src/utki/unicode.hpp"
 
 namespace TestSimple{
-
 void Run(){
-	//string in utf8 = aБцﺶ𠀋
+	// string in utf8 = aБцﺶ𠀋
 	std::vector<uint8_t> buf = {{0x61, 0xd0, 0x91, 0xd1, 0x86, 0xef, 0xba, 0xb6, 0xf0, 0xa0, 0x80, 0x8b}};
 	
 	std::vector<uint8_t> str(buf.size() + 1);
@@ -30,9 +29,7 @@ void Run(){
 	utki::assert(i.character() == 0, [&](auto&o){o << "i.Char() = " << i.character();}, SL);
 	utki::assert(i.is_end(), SL);
 }
-
 }
-
 
 namespace testUtf32ToUtf8{
 void run(){
@@ -94,6 +91,40 @@ void run(){
 		auto utf8 = utki::to_utf8(utf32);
 
 		utki::assert(utf8 == "Hello world!", SL);
+	}
+}
+}
+
+namespace test_utf8_to_utf32{
+void run(){
+	// test span<const uint8_t> to utf32
+	{
+		// string in utf8 = aБцﺶ𠀋
+		std::vector<uint8_t> buf = {{0x61, 0xd0, 0x91, 0xd1, 0x86, 0xef, 0xba, 0xb6, 0xf0, 0xa0, 0x80, 0x8b}};
+
+		auto str = utki::to_utf32(buf);
+
+		utki::assert(str == U"aБцﺶ𠀋", SL);
+	}
+
+	// test span<const char> to utf32
+	{
+		// string in utf8 = aБцﺶ𠀋
+		auto buf = "aБцﺶ𠀋";
+
+		auto str = utki::to_utf32(buf);
+
+		utki::assert(str == U"aБцﺶ𠀋", SL);
+	}
+
+	// test string_view to utf32
+	{
+		// string in utf8 = aБцﺶ𠀋
+		std::string_view buf = "aБцﺶ𠀋";
+
+		auto str = utki::to_utf32(buf);
+
+		utki::assert(str == U"aБцﺶ𠀋", SL);
 	}
 }
 }
