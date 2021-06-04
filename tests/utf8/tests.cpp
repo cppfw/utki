@@ -104,7 +104,16 @@ void run(){
 
 		auto str = utki::to_utf32(buf);
 
-		utki::assert(str == U"aБцﺶ𠀋", SL);
+		utki::assert(
+				str == U"aБцﺶ𠀋",
+				[&](auto&o){
+					o << "str = " << utki::to_utf8(str) << '\n';
+					for(auto c : str){
+						o << std::hex << "0x" << c << ", ";
+					}
+				},
+				SL
+			);
 	}
 
 	// test span<const char> to utf32
