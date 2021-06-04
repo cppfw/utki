@@ -16,7 +16,12 @@ namespace utki{
  * @param C - the container type the tree is based on.
  * @param A - memory allocator.
  */
-template <class T, template <class, class> class C = std::vector, template <class> class A = std::allocator> class tree{
+template <
+		class T,
+		template <class, class> class C = std::vector,
+		template <class> class A = std::allocator
+	>
+class tree{
 public:
 	/**
 	 * @brief Type of the tree node value.
