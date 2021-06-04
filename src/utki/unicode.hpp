@@ -15,7 +15,9 @@ class utf8_iterator{
 	char32_t c = 0;
 	const uint8_t* p = nullptr;
 	size_t pos = 0;
-	size_t size; // maximum number of characters to iterate through
+
+	// maximum number of characters to iterate through
+	const size_t size = std::numeric_limits<size_t>::max();
 
 public:
 	/**
