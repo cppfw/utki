@@ -35,7 +35,7 @@ utf8_iterator& utf8_iterator::operator++()noexcept{
 	
 	++this->p;
 	if ((b & 0x80) == 0) {
-		this->c = uint32_t(b);
+		this->c = char32_t(b);
 		return *this;
 	}
 
