@@ -14,10 +14,7 @@ namespace utki{
 class utf8_iterator{
 	char32_t c = 0;
 	const uint8_t* p = nullptr;
-	size_t pos = 0;
-
-	// maximum number of characters to iterate through
-	const size_t size = std::numeric_limits<size_t>::max();
+	const uint8_t* end = nullptr;
 
 public:
 	/**

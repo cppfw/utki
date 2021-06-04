@@ -6,41 +6,39 @@ using namespace utki;
 
 utf8_iterator::utf8_iterator(utki::span<const uint8_t> str) :
 		p(str.data()),
-		size(str.size())
+		end(str.end_pointer())
 {
-	if(this->p && this->size != 0){
-		this->operator++();
-	}
+	this->operator++();
 }
 
 static_assert(sizeof(char) == sizeof(uint8_t), "unexpected char size");
 
 utf8_iterator::utf8_iterator(const char* str) :
-		utf8_iterator(utki::make_span(
-				reinterpret_cast<const uint8_t*>(str),
-				std::numeric_limits<size_t>::max()
-			))
-{}
+		p(reinterpret_cast<const uint8_t*>(str))
+{
+	this->operator++();
+}
 
 utf8_iterator& utf8_iterator::operator++()noexcept{
-	++this->pos;
-
-	utki::scope_exit check_size_scope_exit([this](){
-		if(this->pos == this->size){
-			this->c = 0; // end reached
-		}
-	});
+	if(this->p == this->end){
+		this->c = 0;
+		return *this;
+	}
 
 	uint8_t b = *this->p;
-	
 	++this->p;
-	if ((b & 0x80) == 0) {
+
+	if((b & 0x80) == 0){
 		this->c = char32_t(b);
 		return *this;
 	}
 
-	this->c = (*this->p) & 0x3f;
+	if(this->p == this->end){
+		this->c = 0;
+		return *this;
+	}
 
+	this->c = (*this->p) & 0x3f;
 	++this->p;
 
 	unsigned i = 2;
@@ -49,6 +47,11 @@ utf8_iterator& utf8_iterator::operator++()noexcept{
 			++i, ++this->p
 		)
 	{
+		if(this->p == this->end){
+			this->c = 0;
+			return *this;
+		}
+		
 		this->c <<= 6;
 		this->c |= (*this->p) & 0x3f;
 	}

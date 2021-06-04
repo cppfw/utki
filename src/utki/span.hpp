@@ -216,6 +216,10 @@ public:
 		return this->buf;
 	}
 
+	pointer end_pointer()const noexcept{
+		return this->data() + this->size();
+	}
+
 	value_type& front()noexcept{
 		ASSERT(!this->empty())
 		return this->operator[](0);
