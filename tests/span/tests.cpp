@@ -36,7 +36,6 @@ void Run(){
 
 }
 
-
 namespace TestStaticBufferOperatorEquals{
 
 class TestClass{
@@ -156,6 +155,140 @@ void run(){
 
 		utki::assert(s.size() == strlen(str), SL);
 		utki::assert(s.data() == str, SL);
+	}
+
+	// test span constructor from vector
+	{
+		std::vector<int> v = {10, 13, 14};
+
+		utki::span<int> s(v);
+		utki::assert(s == utki::make_span(v), SL);
+
+		utki::span<const int> cs(v);
+		utki::assert(s == utki::make_span(v), SL);
+
+		auto f = [&](utki::span<int> s){
+			utki::assert(s == v, SL);
+		};
+
+		f(v);
+
+		auto cf = [&](utki::span<const int> s){
+			utki::assert(s == v, SL);
+		};
+		cf(v);
+		cf(s);
+	}
+
+	// test span constructor from const vector
+	{
+		const std::vector<int> v = {10, 13, 14};
+
+		utki::span<const int> cs(v);
+		utki::assert(cs == utki::make_span(v), SL);
+
+		auto cf = [&](utki::span<const int> s){
+			utki::assert(s == v, SL);
+		};
+		cf(v);
+	}
+
+	// test span constructor from array
+	{
+		std::array<int, 3> v = {10, 13, 14};
+
+		utki::span<int> s(v);
+		utki::assert(s == utki::make_span(v), SL);
+
+		utki::span<const int> cs(v);
+		utki::assert(s == utki::make_span(v), SL);
+
+		auto f = [&](utki::span<int> s){
+			utki::assert(s == v, SL);
+		};
+
+		f(v);
+
+		auto cf = [&](utki::span<const int> s){
+			utki::assert(s == v, SL);
+		};
+		cf(v);
+		cf(s);
+	}
+
+	// test span constructor from const array
+	{
+		const std::array<int, 3> v = {10, 13, 14};
+
+		utki::span<const int> cs(v);
+		utki::assert(cs == utki::make_span(v), SL);
+
+		auto cf = [&](utki::span<const int> s){
+			utki::assert(s == v, SL);
+		};
+		cf(v);
+	}
+
+	// test span constructor from string
+	{
+		std::string v = "hello world!";
+
+		utki::span<char> s(v);
+		utki::assert(s == utki::make_span(v), SL);
+
+		utki::span<const char> cs(v);
+		utki::assert(s == utki::make_span(v), SL);
+
+		auto f = [&](utki::span<char> s){
+			utki::assert(s == v, SL);
+		};
+
+		f(v);
+
+		auto cf = [&](utki::span<const char> s){
+			utki::assert(s == v, SL);
+		};
+		cf(v);
+		cf(s);
+	}
+
+	// test span constructor from const string
+	{
+		const std::string v = "hello world!";
+
+		utki::span<const char> cs(v);
+		utki::assert(cs == utki::make_span(v), SL);
+
+		auto cf = [&](utki::span<const char> s){
+			utki::assert(s == utki::make_span(v), SL);
+		};
+		cf(v);
+	}
+
+	// test span constructor from string_view
+	{
+		std::string_view v = "hello world!";
+
+		utki::span<const char> cs(v);
+		utki::assert(cs == utki::make_span(v), SL);
+
+		auto cf = [&](utki::span<const char> s){
+			utki::assert(s == v, SL);
+		};
+		cf(v);
+	}
+
+	// test span constructor from const char*
+	{
+		const char* v = "hello world!";
+
+		utki::span<const char> cs(v);
+		utki::assert(cs == utki::make_span(v), SL);
+
+		auto cf = [&](utki::span<const char> s){
+			utki::assert(s == v, SL);
+		};
+		cf(v);
 	}
 }
 }

@@ -57,6 +57,14 @@ template <class T> inline const T* make_pointer_to_const(T* p){
 	return const_cast<const T*>(p);
 }
 
+/**
+ * @brief Dummy class.
+ * This class is supposed to be used as template parameter when there
+ * is a desire to avoid function overload matching.
+ * For example, see utki::span class implementation.
+ */
+class dummy_class{};
+
 #if __cplusplus >= 201703L
 template <typename> struct tag { };
 template <typename T, typename V> struct get_index;

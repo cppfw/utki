@@ -9,6 +9,7 @@
 #	include <iostream>
 #endif
 
+#include "types.hpp"
 #include "util.hpp"
 #include "debug.hpp"
 
@@ -67,16 +68,6 @@ public:
 			buf(nullptr),
 			buf_size(0)
 	{}
-	
-	/**
-	 * @brief for internal use only.
-	 * This class is not supposed to be used by users.
-	 */
-	class dummy_span_class{
-	public:
-		T* data(){return nullptr;}
-		size_t size(){return 0;}
-	};
 
 	/**
 	 * @brief Constructor for automatic conversion to span<const T>.
@@ -86,11 +77,45 @@ public:
 			typename std::conditional<
 					std::is_const<T>::value,
 					typename std::remove_const<T>::type,
-					dummy_span_class
+					const dummy_class // nobody will use span<const dumy_class> so this construtor will not be called for non-const T
 				>::type
 		>& sp) :
 			buf(sp.data()),
 			buf_size(sp.size())
+	{}
+
+	template <size_t array_size>
+	span(std::array<typename std::remove_const<T>::type, array_size>& a) :
+			span(a.data(), a.size())
+	{}
+
+	template <size_t array_size>
+	span(const std::array<typename std::remove_const<T>::type, array_size>& a) :
+			span(a.data(), a.size())
+	{}
+
+	span(std::vector<typename std::remove_const<T>::type>& v) :
+			span(v.data(), v.size())
+	{}
+
+	span(const std::vector<typename std::remove_const<T>::type>& v) :
+			span(v.data(), v.size())
+	{}
+
+	span(std::basic_string<typename std::remove_const<T>::type>& v) :
+			span(v.data(), v.size())
+	{}
+
+	span(const std::basic_string<typename std::remove_const<T>::type>& v) :
+			span(v.data(), v.size())
+	{}
+
+	span(std::basic_string_view<typename std::remove_const<T>::type> v) :
+			span(v.data(), v.size())
+	{}
+
+	span(const char* v) :
+			span(v, strlen(v))
 	{}
 
 	/**
@@ -296,6 +321,14 @@ template <class T> inline utki::span<const T> make_span(const std::vector<T>& v)
  * @return span of the string contents.
  */
 template <class T> inline utki::span<const T> make_span(const std::basic_string<T>& s){
+	return make_span(s.size() == 0 ? nullptr : s.data(), s.size());
+}
+
+template <class T> inline utki::span<T> make_span(std::basic_string<T>& s){
+	return make_span(s.size() == 0 ? nullptr : s.data(), s.size());
+}
+
+template <class T> inline utki::span<const T> make_span(std::basic_string_view<T> s){
 	return make_span(s.size() == 0 ? nullptr : s.data(), s.size());
 }
 
