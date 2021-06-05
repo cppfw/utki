@@ -88,7 +88,7 @@ inline std::string make_string(const std::vector<uint8_t>& buf){
  * @param delimiter - delimiter character to use as a splitter.
  * @return vector of splitted strings.
  */
-template <typename T> std::vector<std::basic_string<T>> split(const std::basic_string<T>& str, T delimiter){
+template <typename T> std::vector<std::basic_string<T>> split(std::basic_string_view<T> str, T delimiter){
 	std::vector<std::basic_string<T>> ret;
 	size_t pos = 0;
 
@@ -96,7 +96,7 @@ template <typename T> std::vector<std::basic_string<T>> split(const std::basic_s
 		auto dpos = str.find(delimiter, pos);
 
 		if(dpos == std::string::npos){
-			ret.emplace_back(str.substr(pos, str.length() - pos));
+			ret.emplace_back(str.substr(pos, str.size() - pos));
 			break;
 		}
 
@@ -115,7 +115,7 @@ template <typename T> std::vector<std::basic_string<T>> split(const std::basic_s
  * @return vector of splitted strings.
  */
 template <typename T> std::vector<std::basic_string<T>> split(const T* str, T delimiter){
-	return split(std::basic_string<T>(str), delimiter);
+	return split(std::basic_string_view<T>(str), delimiter);
 }
 
 /**
@@ -125,7 +125,7 @@ template <typename T> std::vector<std::basic_string<T>> split(const T* str, T de
  * @param str - string to split to words.
  * @return vector of words.
  */
-std::vector<std::string> split(const std::string& str);
+std::vector<std::string> split(const std::string_view& str);
 
 /**
  * @brief Word wrap string.
@@ -133,6 +133,6 @@ std::vector<std::string> split(const std::string& str);
  * @param width - maximum number of characters per line.
  * @return list of word wrapped lines.
  */
-std::vector<std::string> word_wrap(const std::string& str, unsigned width);
+std::vector<std::string> word_wrap(std::string_view str, unsigned width);
 
 }

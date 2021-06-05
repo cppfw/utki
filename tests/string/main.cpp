@@ -116,7 +116,7 @@ int main(int argc, char** argv){
 		auto str = " hello world    bla\tblah\n!";
 
 		auto r = utki::split(str);
-		utki::assert(r.size() == 5, SL);
+		utki::assert(r.size() == 5, [&](auto&o){o << "r.size() = " << r.size();}, SL);
 		utki::assert(r[0] == "hello", SL);
 		utki::assert(r[1] == "world", SL);
 		utki::assert(r[2] == "bla", SL);

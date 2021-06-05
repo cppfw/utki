@@ -59,19 +59,36 @@ std::string utki::make_string(const char* format, ...){
 	return ret;
 }
 
-std::vector<std::string> utki::split(const std::string& str){
-	std::istringstream iss(str);
-	return std::vector<std::string>{
-			std::istream_iterator<std::string>{iss},
-			std::istream_iterator<std::string>{}
-		};
+std::vector<std::string> utki::split(const std::string_view& str){
+	std::vector<std::string> ret;
+
+	std::vector<char> buf;
+
+	const auto add_str = [&](){
+		if(!buf.empty()){
+			ret.emplace_back(buf.data(), buf.size());
+			buf.clear();
+		}
+	};
+
+	for(auto c : str){
+		if(std::isspace(c)){
+			add_str();
+			continue;
+		}
+		buf.push_back(c);
+	}
+
+	add_str();
+
+	return ret;
 }
 
-std::vector<std::string> utki::word_wrap(const std::string& str, unsigned width){
+std::vector<std::string> utki::word_wrap(std::string_view str, unsigned width){
 	std::vector<std::string> ret;
 
 	if(width == 0){
-		ret.push_back(str);
+		ret.emplace_back(str);
 		return ret;
 	}
 
@@ -83,7 +100,7 @@ std::vector<std::string> utki::word_wrap(const std::string& str, unsigned width)
 		if(*i != '\n' && unsigned(std::distance(line_begin, i)) == width){
 			if(*span_begin == ' '){ // span of spaces
 				if(word_ended){
-					ret.push_back(str.substr(
+					ret.emplace_back(str.substr(
 							std::distance(str.begin(), line_begin), 
 							std::distance(line_begin, span_begin)
 						));
@@ -94,13 +111,13 @@ std::vector<std::string> utki::word_wrap(const std::string& str, unsigned width)
 				}
 			}else if(word_ended){ // short word span
 				ASSERT(std::distance(line_begin, span_begin) >= 1)
-				ret.push_back(str.substr(
+				ret.emplace_back(str.substr(
 						std::distance(str.begin(), line_begin), 
 						std::distance(line_begin, std::prev(span_begin, 1))
 					));
 				line_begin = span_begin;
 			}else{ // long word span (word longer than width)
-				ret.push_back(str.substr(
+				ret.emplace_back(str.substr(
 						std::distance(str.begin(), line_begin),
 						std::distance(line_begin, i)
 					));
@@ -117,7 +134,7 @@ std::vector<std::string> utki::word_wrap(const std::string& str, unsigned width)
 				}
 				break;
 			case '\n':
-				ret.push_back(str.substr(
+				ret.emplace_back(str.substr(
 						std::distance(str.begin(), line_begin),
 						std::distance(line_begin, i)
 					));
@@ -136,13 +153,13 @@ std::vector<std::string> utki::word_wrap(const std::string& str, unsigned width)
 	// add last string
 	if(*span_begin == ' '){
 		if(word_ended){
-			ret.push_back(str.substr(
+			ret.emplace_back(str.substr(
 					std::distance(str.begin(), line_begin),
 					std::distance(line_begin, span_begin)
 				));
 		}
 	}else{
-		ret.push_back(str.substr(
+		ret.emplace_back(str.substr(
 				std::distance(str.begin(), line_begin),
 				std::distance(line_begin, str.end())
 			));
