@@ -1,9 +1,8 @@
 #include "string.hpp"
 
-#include <cstdarg>
+#include <cstdarg> // for varargs
 #include <array>
-#include <sstream>
-#include <iterator>
+#include <cctype> // for std::isspace()
 
 #include "debug.hpp"
 
