@@ -201,6 +201,27 @@ int main(int argc, char** argv){
 		utki::assert(str_vec == "Hello world!", SL);
 	}
 
+	// test make_string_view(span<char>)
+	{
+		std::array<char, 12> arr = {{'H', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', '!'}};
+		std::vector<char> vec = {{'H', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', '!'}};
+
+		{ // explicit conversion to span
+			auto str_arr = utki::make_string_view(utki::make_span(arr));
+			utki::assert(str_arr == "Hello world!", SL);
+
+			auto str_vec = utki::make_string_view(utki::make_span(vec));
+			utki::assert(str_vec == "Hello world!", SL);
+		}
+		{ // automatic conversion to span
+			auto str_arr = utki::make_string_view(arr);
+			utki::assert(str_arr == "Hello world!", SL);
+
+			auto str_vec = utki::make_string_view(vec);
+			utki::assert(str_vec == "Hello world!", SL);
+		}
+	}
+
 	// test make_string(std::array<char>)
 	{
 		std::array<char, 12> arr = {{'H', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', '!'}};
