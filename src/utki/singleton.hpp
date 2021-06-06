@@ -24,7 +24,7 @@ namespace utki{
  *		}
  *  };
  * 
- *	//define the static variable somewhere in .cpp file.
+ *	// define the static variable somewhere in .cpp file.
  *  utki::intrusive_singleton<my_singleton, my_singleton>::T_Instance my_singleton::instance;
  *
  *	int main(int, char**){
@@ -87,8 +87,8 @@ public:
 /**
  * @brief Singleton base class.
  * This is a basic non-intrusive singleton template.
- * Note, that Singleton inherits the IntrusiveSingleton class, so it inherits all
- * its static methods, the most important one is Inst().
+ * Note, that singleton inherits the intrusive_singleton class, so it inherits all
+ * its static methods, the most important one is inst().
  * Usage as follows:
  * @code
  *	class my_singleton : public utki::singleton<my_singleton>{
