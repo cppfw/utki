@@ -58,10 +58,6 @@ public:
 	bool is_end()const noexcept{
 		return this->c == 0;
 	}
-
-	const uint8_t* position()const noexcept{
-		return this->p;
-	}
 };
 
 /**
