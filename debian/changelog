@@ -1,3 +1,9 @@
+libutki (1.1.148) unstable; urgency=medium
+
+  * add M_CPU_BITS config macro
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 09 Jun 2021 01:17:43 +0300
+
 libutki (1.1.147) unstable; urgency=medium
 
   * add span constructors for automatic conversion from vector, array,
