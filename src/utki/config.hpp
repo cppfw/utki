@@ -46,6 +46,7 @@
 #if M_COMPILER == M_COMPILER_GCC
 #	if defined(__i386__) // __i386__ is defined for any x86 processor
 #		define M_CPU M_CPU_X86
+#		define M_CPU_BITS 32
 		
 #		if defined(__i686__)
 #			define M_CPU_VERSION 6
@@ -59,11 +60,13 @@
 		
 #	elif defined(__x86_64__)
 #		define M_CPU M_CPU_X86_64
+#		define M_CPU_BITS 64
 
 #		define M_CPU_VERSION 0
 		
 #	elif defined(__arm__)
 #		define M_CPU M_CPU_ARM
+#		define M_CPU_BITS 32
 		
 #		if defined(__thumb2__) // this macro is defined when targeting only thumb-2
 #			define M_CPU_ARM_THUMB_VERSION 2
@@ -85,12 +88,14 @@
 
 #	else
 #		define M_CPU M_CPU_UNKNOWN
+#		define M_CPU_BITS 0
 #		define M_CPU_VERSION 0
 #	endif
 
 #elif M_COMPILER == M_COMPILER_MSVC
 #	if defined(_M_IX86)
 #		define M_CPU M_CPU_X86
+#		define M_CPU_BITS 32
 		
 #		if _M_IX86 == 600
 #			define M_CPU_VERSION 6
@@ -104,14 +109,17 @@
 		
 #	elif defined(_M_AMD64) || defined(_M_X64)
 #		define M_CPU M_CPU_X86_64
+#		define M_CPU_BITS 64
 #		define M_CPU_VERSION 0
 		
 #	else
 #		define M_CPU M_CPU_UNKNOWN
+#		define M_CPU_BITS 0
 #		define M_CPU_VERSION 0
 #	endif
 #else
 #	define M_CPU M_CPU_UNKNOWN
+#	define M_CPU_BITS 0
 #	define M_CPU_VERSION 0
 #endif
 
