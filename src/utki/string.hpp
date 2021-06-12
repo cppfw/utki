@@ -158,7 +158,7 @@ enum class chars_format{
 
 /**
  * @brief Convert chars to float.
- * This is to be removed when std::chars_format is widely supported by compilers.
+ * This is to be removed when std::from_chars(float) is widely supported by compilers.
  * @param first - chars start.
  * @param last - chars end.
  * @param value - the output value.
@@ -174,7 +174,7 @@ std::from_chars_result from_chars(
 
 /**
  * @brief Convert chars to double.
- * This is to be removed when std::chars_format is widely supported by compilers.
+ * This is to be removed when std::from_chars(double) is widely supported by compilers.
  * @param first - chars start.
  * @param last - chars end.
  * @param value - the output value.
