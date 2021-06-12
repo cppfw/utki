@@ -109,7 +109,7 @@ public:
 				"functor must return bool"
 			);
 
-		typename utki::remove_constref<decltype(this->collection)>::type ret;
+		typename utki::remove_const_reference<decltype(this->collection)>::type ret;
 
 		std::copy_if(
 				std::make_move_iterator(this->collection.begin()),
