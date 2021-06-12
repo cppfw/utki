@@ -6,6 +6,8 @@
 
 #include "debug.hpp"
 
+#include "fast_float/fast_float.hxx"
+
 using namespace utki;
 
 std::string utki::make_string_va_list(const char* format, va_list args){
@@ -163,6 +165,56 @@ std::vector<std::string> utki::word_wrap(std::string_view str, unsigned width){
 				std::distance(line_begin, str.end())
 			));
 	}
+
+	return ret;
+}
+
+namespace{
+fast_float::chars_format to_fast_float_format(utki::chars_format f){
+	switch(f){
+		case utki::chars_format::scientific:
+			return fast_float::scientific;
+		case utki::chars_format::fixed:
+			return fast_float::fixed;
+		case utki::chars_format::hex:
+			return fast_float::hex;
+		default:
+		case utki::chars_format::general:
+			return fast_float::general;
+	}
+}
+}
+
+std::from_chars_result from_chars(
+		const char *first,
+		const char *last,
+		float& value,
+		chars_format fmt = chars_format::general
+	)noexcept
+{
+	std::from_chars_result ret;
+
+	auto res = fast_float::from_chars(first, last, value, to_fast_float_format(fmt));
+
+	ret.ptr = res.ptr;
+	ret.ec = res.ec;
+
+	return ret;
+}
+
+std::from_chars_result from_chars(
+		const char *first,
+		const char *last,
+		double& value,
+		chars_format fmt = chars_format::general
+	)noexcept
+{
+	std::from_chars_result ret;
+
+	auto res = fast_float::from_chars(first, last, value, to_fast_float_format(fmt));
+
+	ret.ptr = res.ptr;
+	ret.ec = res.ec;
 
 	return ret;
 }

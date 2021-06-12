@@ -354,8 +354,10 @@ inline uint64_t deserialize64be(const uint8_t* buf)noexcept{
  * @param args - object constructor arguments.
  * @return std::unique_ptr to a newly created object.
  */
-// TODO: remove in favor of std::make_unique in C++14
-template< class T, class... Args > std::unique_ptr<T> make_unique(Args&&... args){
+// TODO: remove
+template< class T, class... Args >
+[[deprecated("use std::make_unique()")]]
+std::unique_ptr<T> make_unique(Args&&... args){
 	return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
 }
 

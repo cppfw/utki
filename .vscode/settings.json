@@ -55,6 +55,7 @@
 		"hash_map": "cpp",
 		"memory": "cpp",
 		"source_location": "cpp",
-		"bitset": "cpp"
+		"bitset": "cpp",
+		"charconv": "cpp"
 	}
 }

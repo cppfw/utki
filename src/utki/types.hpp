@@ -31,7 +31,9 @@ template <> struct int_size<7>{typedef std::int64_t type;};
 template <> struct int_size<8>{typedef std::int64_t type;};
 
 // TODO: deprecated, remove
-template <typename T> struct remove_constptr{
+template <typename T>
+struct remove_constptr{
+	[[deprecated("use utki::remove_const_pointer")]]
 	typedef typename std::remove_const<typename std::remove_pointer<T>::type>::type type;
 };
 
@@ -41,6 +43,7 @@ template <typename T> struct remove_const_pointer{
 
 // TODO: deprecated, remove
 template <typename T> struct remove_constref{
+	[[deprecated("use utki::remove_const_reference")]]
 	typedef typename std::remove_const<typename std::remove_reference<T>::type>::type type;
 };
 

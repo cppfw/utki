@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <array>
+#include <charconv>
 
 #include "config.hpp"
 #include "span.hpp"
@@ -143,5 +144,26 @@ std::vector<std::string> split(const std::string_view& str);
  * @return list of word wrapped lines.
  */
 std::vector<std::string> word_wrap(std::string_view str, unsigned width);
+
+enum class chars_format{
+    scientific,
+    fixed,
+    hex,
+    general
+};
+
+std::from_chars_result from_chars(
+		const char *first,
+		const char *last,
+		float& value,
+		chars_format fmt = chars_format::general
+	)noexcept;
+
+std::from_chars_result from_chars(
+		const char *first,
+		const char *last,
+		double& value,
+		chars_format fmt = chars_format::general
+	)noexcept;
 
 }
