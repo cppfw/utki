@@ -145,6 +145,10 @@ std::vector<std::string> split(const std::string_view& str);
  */
 std::vector<std::string> word_wrap(std::string_view str, unsigned width);
 
+/**
+ * @brief Format for from_chars().
+ * This is to be removed when std::chars_format is widely supported by compilers.
+ */
 enum class chars_format{
     scientific,
     fixed,
@@ -152,6 +156,15 @@ enum class chars_format{
     general
 };
 
+/**
+ * @brief Convert chars to float.
+ * This is to be removed when std::chars_format is widely supported by compilers.
+ * @param first - chars start.
+ * @param last - chars end.
+ * @param value - the output value.
+ * @param fmt - conversion format.
+ * @return covnersion result.
+ */
 std::from_chars_result from_chars(
 		const char *first,
 		const char *last,
@@ -159,6 +172,15 @@ std::from_chars_result from_chars(
 		chars_format fmt = chars_format::general
 	)noexcept;
 
+/**
+ * @brief Convert chars to double.
+ * This is to be removed when std::chars_format is widely supported by compilers.
+ * @param first - chars start.
+ * @param last - chars end.
+ * @param value - the output value.
+ * @param fmt - conversion format.
+ * @return covnersion result.
+ */
 std::from_chars_result from_chars(
 		const char *first,
 		const char *last,

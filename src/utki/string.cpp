@@ -185,11 +185,11 @@ fast_float::chars_format to_fast_float_format(utki::chars_format f){
 }
 }
 
-std::from_chars_result from_chars(
+std::from_chars_result utki::from_chars(
 		const char *first,
 		const char *last,
 		float& value,
-		chars_format fmt = chars_format::general
+		chars_format fmt
 	)noexcept
 {
 	std::from_chars_result ret;
@@ -202,11 +202,11 @@ std::from_chars_result from_chars(
 	return ret;
 }
 
-std::from_chars_result from_chars(
+std::from_chars_result utki::from_chars(
 		const char *first,
 		const char *last,
 		double& value,
-		chars_format fmt = chars_format::general
+		chars_format fmt
 	)noexcept
 {
 	std::from_chars_result ret;

@@ -254,5 +254,31 @@ int main(int argc, char** argv){
 		utki::assert(str_vec == "Hello world!", SL);
 	}
 
+	// test from_chars(float)
+	{
+		using namespace std::string_view_literals;
 
+		auto str = "3.14159  "sv;
+
+		float v;
+
+		auto r = utki::from_chars(str.data(), str.data() + str.size(), v);
+
+		utki::assert(r.ptr != str.data(), SL);
+		utki::assert(r.ec == std::errc(), SL);
+	}
+
+	// test from_chars(double)
+	{
+		using namespace std::string_view_literals;
+
+		auto str = "3.14159  "sv;
+
+		double v;
+
+		auto r = utki::from_chars(str.data(), str.data() + str.size(), v);
+
+		utki::assert(r.ptr != str.data(), SL);
+		utki::assert(r.ec == std::errc(), SL);
+	}
 }
