@@ -270,9 +270,7 @@ int main(int argc, char** argv){
 
 	// test from_chars(double)
 	{
-		using namespace std::string_view_literals;
-
-		auto str = "3.14159  "sv;
+		std::string_view str = "3.14159  ";
 
 		double v;
 
