@@ -27,7 +27,8 @@ template <typename T> constexpr T sign(T n)noexcept{
  * @brief Get number Pi.
  * @return number Pi.
  */
-template <typename T> constexpr T pi()noexcept{
+template <typename T>
+constexpr T pi()noexcept{
 	return T(3.14159265358979323846264338327950288);
 }
 

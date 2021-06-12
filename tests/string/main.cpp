@@ -256,9 +256,7 @@ int main(int argc, char** argv){
 
 	// test from_chars(float)
 	{
-		using namespace std::string_view_literals;
-
-		auto str = "3.14159  "sv;
+		std::string_view str = "3.14159  ";
 
 		float v;
 
@@ -266,6 +264,7 @@ int main(int argc, char** argv){
 
 		utki::assert(r.ptr != str.data(), SL);
 		utki::assert(r.ec == std::errc(), SL);
+		utki::assert(v == 3.14159f, SL);
 	}
 
 	// test from_chars(double)
@@ -278,5 +277,6 @@ int main(int argc, char** argv){
 
 		utki::assert(r.ptr != str.data(), SL);
 		utki::assert(r.ec == std::errc(), SL);
+		utki::assert(v == 3.14159, SL);
 	}
 }
