@@ -320,7 +320,7 @@ int main(int argc, char** argv){
 			auto w = p.read_word();
 			utki::assert(!p.empty(), SL);
 			utki::assert(p.peek_char() == ' ', SL);
-			utki::assert(w == "bla", [&](auto&o){o << "w = " << w;}, SL);
+			utki::assert(w == "bla", SL);
 		}
 
 		p.skip_whitespaces_and_comma();
@@ -341,7 +341,7 @@ int main(int argc, char** argv){
 			auto w = p.read_word();
 			utki::assert(!p.empty(), SL);
 			utki::assert(p.peek_char() == ' ', SL);
-			utki::assert(w == "and", [&](auto&o){o << "w = " << w;}, SL);
+			utki::assert(w == "and", SL);
 		}
 
 		p.skip_whitespaces();
@@ -349,14 +349,14 @@ int main(int argc, char** argv){
 			auto w = p.read_word();
 			utki::assert(!p.empty(), SL);
 			utki::assert(p.peek_char() == ' ', SL);
-			utki::assert(w == "that's", [&](auto&o){o << "w = " << w;}, SL);
+			utki::assert(w == "that's", SL);
 		}
 
 		p.skip_whitespaces();
 		{
 			auto w = p.read_word();
 			utki::assert(p.empty(), SL);
-			utki::assert(w == "it", [&](auto&o){o << "w = " << w;}, SL);
+			utki::assert(w == "it", SL);
 		}
 	}
 }
