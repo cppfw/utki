@@ -1,6 +1,8 @@
 #include "../../src/utki/string.hpp"
 #include "../../src/utki/debug.hpp"
 
+#include <clocale>
+
 int main(int argc, char** argv){
 	// test string without format specifiers
 	{
