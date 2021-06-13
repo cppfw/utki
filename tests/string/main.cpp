@@ -279,4 +279,82 @@ int main(int argc, char** argv){
 		utki::assert(r.ec == std::errc(), SL);
 		utki::assert(v == 3.14159, SL);
 	}
+
+	// test string_parser
+	{
+		// make sure the locale does not affect parsing (decimal delimiter can be "." or "," in different locales)
+		// so, set DE locale which has "," to make sure it does not affect the parsing
+		if(!std::setlocale(LC_ALL, "de_DE.UTF-8")){
+			utki::log([](auto& o){o << "WARNING: failed to set locale de_DE.UTF-8, perhaps the locale is not installed. Testing that locale does not affect parsing will not be done." << std::endl;});
+		}
+		
+		std::string_view str = "  3.14159, some_word, bla , bla e=2.7 and that's it";
+
+		utki::string_parser p(str);
+
+		utki::assert(!p.empty(), SL);
+
+		auto pi = p.read_number<float>();
+		utki::assert(pi == 3.14159f, SL);
+		utki::assert(!p.empty(), SL);
+		utki::assert(p.peek_char() == ',', SL);
+
+		p.skip_whitespaces_and_comma();
+		utki::assert(!p.empty(), SL);
+		utki::assert(p.peek_char() == 's', SL);
+
+		{
+			auto w = p.read_word_until(',');
+			utki::assert(!p.empty(), SL);
+			utki::assert(p.peek_char() == ',', SL);
+			utki::assert(w == "some_word", SL);
+		}
+
+		utki::assert(p.read_char() == ',', SL);
+		utki::assert(!p.empty(), SL);
+
+		{
+			p.skip_whitespaces();
+			auto w = p.read_word();
+			utki::assert(!p.empty(), SL);
+			utki::assert(p.peek_char() == ' ', SL);
+			utki::assert(w == "bla", [&](auto&o){o << "w = " << w;}, SL);
+		}
+
+		p.skip_whitespaces_and_comma();
+		utki::assert(!p.empty(), SL);
+		utki::assert(p.peek_char() == 'b', SL);
+
+		p.skip_inclusive_until('=');
+		utki::assert(!p.empty(), SL);
+		utki::assert(p.peek_char() == '2', SL);
+
+		auto e = p.read_number<double>();
+		utki::assert(e == 2.7, SL);
+		utki::assert(!p.empty(), SL);
+		utki::assert(p.peek_char() == ' ', SL);
+
+		p.skip_whitespaces();
+		{
+			auto w = p.read_word();
+			utki::assert(!p.empty(), SL);
+			utki::assert(p.peek_char() == ' ', SL);
+			utki::assert(w == "and", [&](auto&o){o << "w = " << w;}, SL);
+		}
+
+		p.skip_whitespaces();
+		{
+			auto w = p.read_word();
+			utki::assert(!p.empty(), SL);
+			utki::assert(p.peek_char() == ' ', SL);
+			utki::assert(w == "that's", [&](auto&o){o << "w = " << w;}, SL);
+		}
+
+		p.skip_whitespaces();
+		{
+			auto w = p.read_word();
+			utki::assert(p.empty(), SL);
+			utki::assert(w == "it", [&](auto&o){o << "w = " << w;}, SL);
+		}
+	}
 }
