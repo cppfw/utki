@@ -237,6 +237,9 @@ public:
 					char c = this->peek_char();
 					switch(c){
 						case 'x':
+							if(this->size() < 2){
+								return number_type(0);
+							}
 							c = this->peek_char(1);
 							if(('0' <= c && c <= '9') || ('a' <= c && c <= 'f') || ('A' <= c && c <= 'F')){
 								base = 16;
@@ -246,6 +249,9 @@ public:
 							}
 							break;
 						case 'b':
+							if(this->size() < 2){
+								return number_type(0);
+							}
 							c = this->peek_char(1);
 							if(c == '0' || c == '1'){
 								base = 2;
@@ -289,6 +295,10 @@ public:
 
 	bool empty()const noexcept{
 		return this->view.empty();
+	}
+
+	size_t size()const noexcept{
+		return this->view.size();
 	}
 };
 
