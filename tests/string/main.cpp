@@ -290,7 +290,7 @@ int main(int argc, char** argv){
 			utki::log([](auto& o){o << "WARNING: failed to set locale de_DE.UTF-8, perhaps the locale is not installed. Testing that locale does not affect parsing will not be done." << std::endl;});
 		}
 		
-		std::string_view str = "  3.14159, some_word, bla , bla e=2.7 and that's it";
+		std::string_view str = "  3.14159, some_word, bla , bla e=2.7 and that's it, 13, -13, 0b1101, 015, 0xd";
 
 		utki::string_parser p(str);
 
@@ -355,8 +355,47 @@ int main(int argc, char** argv){
 		p.skip_whitespaces();
 		{
 			auto w = p.read_word();
+			utki::assert(!p.empty(), SL);
+			utki::assert(w == "it,", SL);
+		}
+
+		p.skip_whitespaces();
+		{
+			auto n = p.read_number<int>();
+			utki::assert(!p.empty(), SL);
+			utki::assert(n == 13, SL);
+			utki::assert(p.peek_char() == ',', SL);
+		}
+
+		p.skip_whitespaces_and_comma();
+		{
+			auto n = p.read_number<int>();
+			utki::assert(!p.empty(), SL);
+			utki::assert(n == -13, SL);
+			utki::assert(p.peek_char() == ',', SL);
+		}
+
+		p.skip_whitespaces_and_comma();
+		{
+			auto n = p.read_number<unsigned>();
+			utki::assert(!p.empty(), SL);
+			utki::assert(n == 13, [&](auto&o){o << "n = " << n;}, SL);
+			utki::assert(p.peek_char() == ',', SL);
+		}
+
+		p.skip_whitespaces_and_comma();
+		{
+			auto n = p.read_number<unsigned>();
+			utki::assert(!p.empty(), SL);
+			utki::assert(n == 13, [&](auto&o){o << "n = " << n;}, SL);
+			utki::assert(p.peek_char() == ',', SL);
+		}
+
+		p.skip_whitespaces_and_comma();
+		{
+			auto n = p.read_number<unsigned>();
 			utki::assert(p.empty(), SL);
-			utki::assert(w == "it", SL);
+			utki::assert(n == 13, [&](auto&o){o << "n = " << n;}, SL);
 		}
 	}
 }

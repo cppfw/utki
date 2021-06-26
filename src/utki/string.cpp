@@ -326,6 +326,16 @@ char string_parser::peek_char(){
 	return this->view.front();
 }
 
+char string_parser::peek_char(size_t n){
+	if(this->view.size() <= n){
+		std::stringstream ss;
+		ss << "string_parser string is to short (" << this->view.size() << " chars), requested char index = " << n;
+		throw std::invalid_argument(ss.str());
+	}
+
+	return this->view[n];
+}
+
 std::string_view string_parser::read_chars(size_t n){
 	using std::min;
 	n = min(n, this->view.size());

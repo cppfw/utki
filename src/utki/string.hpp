@@ -225,8 +225,47 @@ public:
 				res = utki::from_chars(this->view.data(), this->view.data() + this->view.size(), ret);
 			}
 		}else{
-			// TODO: detect base
-			res = std::from_chars(this->view.data(), this->view.data() + this->view.size(), ret, 10);
+			int base = 10;
+
+			if constexpr (std::is_unsigned_v<number_type>){
+				// detect base
+				if(this->peek_char() == '0'){
+					this->read_char();
+					if(this->empty()){
+						return number_type(0);
+					}
+					char c = this->peek_char();
+					switch(c){
+						case 'x':
+							c = this->peek_char(1);
+							if(('0' <= c && c <= '9') || ('a' <= c && c <= 'f') || ('A' <= c && c <= 'F')){
+								base = 16;
+								this->read_char();
+							}else{
+								return number_type(0);
+							}
+							break;
+						case 'b':
+							c = this->peek_char(1);
+							if(c == '0' || c == '1'){
+								base = 2;
+								this->read_char();
+							}else{
+								return number_type(0);
+							}
+							break;
+						default:
+							if('0' <= c && c <= '7'){
+								base = 8;
+							}else if(c < '0' || '9' < c){
+								return number_type(0);
+							}
+							break;
+					}
+				}
+			}
+
+			res = std::from_chars(this->view.data(), this->view.data() + this->view.size(), ret, base);
 		}
 
 		if(res.ec == std::errc::invalid_argument){
@@ -243,6 +282,7 @@ public:
 	char read_char();
 
 	char peek_char();
+	char peek_char(size_t n);
 
 	std::string_view read_chars(size_t n);
 	std::string_view read_chars_until(char c);
