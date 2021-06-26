@@ -150,10 +150,10 @@ std::vector<std::string> word_wrap(std::string_view str, unsigned width);
  * This is to be removed when std::chars_format is widely supported by compilers.
  */
 enum class chars_format{
-    scientific,
-    fixed,
-    hex,
-    general
+	scientific,
+	fixed,
+	hex,
+	general
 };
 
 /**
@@ -189,62 +189,66 @@ std::from_chars_result from_chars(
 	)noexcept;
 
 class string_parser{
-    std::string_view view;
+	std::string_view view;
 
-    void throw_if_empty();
+	void throw_if_empty();
 
 public:
-    static bool is_space(char c);
+	static bool is_space(char c);
 
-    string_parser(std::string_view view) :
-            view(view)
-    {}
+	string_parser(std::string_view view) :
+			view(view)
+	{}
 
-    void skip_whitespaces();
-    void skip_whitespaces_and_comma();
-    void skip_inclusive_until(char c);
+	void skip_whitespaces();
+	void skip_whitespaces_and_comma();
+	void skip_inclusive_until(char c);
 
-    std::string_view read_word();
-    std::string_view read_word_until(char c);
+	std::string_view read_word();
+	std::string_view read_word_until(char c);
 
-    // skips leading whitespaces
-    template <class number_type>
-    number_type read_number(){
-        this->skip_whitespaces();
+	// skips leading whitespaces
+	template <class number_type>
+	number_type read_number(){
+		this->skip_whitespaces();
 
-        number_type ret = 0;
+		number_type ret = 0;
 
-        std::from_chars_result res;
+		std::from_chars_result res;
 
-        if constexpr (std::is_floating_point<number_type>::value){
-            // TODO: use std::from_chars for floats when it is widely supported by C++17 compilers,
-            // so if constexpr will not be needed.
-            res = utki::from_chars(this->view.data(), this->view.data() + this->view.size(), ret);
-        }else{
-            res = std::from_chars(this->view.data(), this->view.data() + this->view.size(), ret);
-        }
+		if constexpr (std::is_floating_point<number_type>::value){
+			// TODO: use std::from_chars for floats when it is widely supported by C++17 compilers,
+			// so if constexpr will not be needed.
+			if constexpr (std::is_same<long double, number_type>::value){
+				return number_type(this->read_number<double>());
+			}else{
+				res = utki::from_chars(this->view.data(), this->view.data() + this->view.size(), ret);
+			}
+		}else{
+			res = std::from_chars(this->view.data(), this->view.data() + this->view.size(), ret);
+		}
 
-        if(res.ec == std::errc::invalid_argument){
-            throw std::invalid_argument("string_parser::read_integer(): could not parse integer number");
-        }
+		if(res.ec == std::errc::invalid_argument){
+			throw std::invalid_argument("string_parser::read_integer(): could not parse integer number");
+		}
 
-        ASSERT(this->view.data() != res.ptr)
+		ASSERT(this->view.data() != res.ptr)
 
-        this->view = this->view.substr(res.ptr - this->view.data());
+		this->view = this->view.substr(res.ptr - this->view.data());
 
-        return ret;
-    }
+		return ret;
+	}
 
-    char read_char();
+	char read_char();
 
-    char peek_char();
+	char peek_char();
 
-    std::string_view read_chars(size_t n);
-    std::string_view read_chars_until(char c);
+	std::string_view read_chars(size_t n);
+	std::string_view read_chars_until(char c);
 
-    bool empty()const noexcept{
-        return this->view.empty();
-    }
+	bool empty()const noexcept{
+		return this->view.empty();
+	}
 };
 
 }
