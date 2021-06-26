@@ -225,7 +225,8 @@ public:
 				res = utki::from_chars(this->view.data(), this->view.data() + this->view.size(), ret);
 			}
 		}else{
-			res = std::from_chars(this->view.data(), this->view.data() + this->view.size(), ret);
+			// TODO: detect base
+			res = std::from_chars(this->view.data(), this->view.data() + this->view.size(), ret, 10);
 		}
 
 		if(res.ec == std::errc::invalid_argument){
