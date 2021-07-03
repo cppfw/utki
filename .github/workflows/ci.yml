@@ -68,6 +68,8 @@ jobs:
     steps:
     - name: git clone
       uses: actions/checkout@v2
+      with:
+          submodules: true
     - name: add cppfw tap
       run: |
         brew tap cppfw/tap
