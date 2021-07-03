@@ -28,11 +28,11 @@ jobs:
     container: ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }}
     name: linux - ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }}
     steps:
+      # git should be present in order to make actions/checkout@v2 work with submodules
       - name: install git
         run: |
           apt update
-          apt install --assume-yes git
-          git --version
+          apt install --assume-yes git base-files
       - name: git clone
         uses: actions/checkout@v2
         with:
@@ -43,7 +43,6 @@ jobs:
           repo: deb https://cppfw.jfrog.io/artifactory/${{ matrix.os }} ${{ matrix.codename }} main
           repo-name: cppfw
           key-server: https://cppfw.jfrog.io/artifactory/api/gpg/key/public
-          # keys: 4A949240F79AD8027C6CA2F4953AE777616ADEDF
       - name: install ci tools
         run: |
           # configure timezone to avoid 'tzdata' package to require user interaction during installation (needed for ubuntu:focal)
