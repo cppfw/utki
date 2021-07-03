@@ -1,6 +1,8 @@
 [submodule "tests/harness/clargs"]
 	path = tests/harness/clargs
 	url = git@github.com:cppfw/clargs
+	branch = latest
 [submodule "tests/harness/tst"]
 	path = tests/harness/tst
 	url = git@github.com:cppfw/tst
+	branch = latest
