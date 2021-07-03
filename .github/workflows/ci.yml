@@ -28,8 +28,11 @@ jobs:
     container: ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }}
     name: linux - ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }}
     steps:
-      - name: print git version
-        run: git --version
+      - name: install git
+        run: |
+          apt update
+          apt install --assume-yes git
+          git --version
       - name: git clone
         uses: actions/checkout@v2
         with:
