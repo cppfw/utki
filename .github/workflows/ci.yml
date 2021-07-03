@@ -31,6 +31,7 @@ jobs:
       # git should be present in order to make actions/checkout@v2 work with submodules
       - name: install git
         run: |
+          cat /etc/*release | grep ^ID
           apt update
           apt install --assume-yes git base-files
       - name: git clone
