@@ -21,7 +21,7 @@ $(eval $(call prorab-depend, $(prorab_this_name), $(this_libutki) ../harness/tst
 
 this_test_cmd := $(prorab_this_name) --junit-out=junit.xml
 this_test_deps := $(prorab_this_name)
-this_test_ld_path := $(dir $(this_libutki))
+this_test_ld_path := $(dir $(this_libutki)) ../harness/tst/src/out/no_par ../harness/clargs/src/out/rel
 $(eval $(prorab-test))
 
 $(eval $(call prorab-include, ../../src/makefile))
