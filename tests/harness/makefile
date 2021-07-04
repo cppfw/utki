@@ -8,7 +8,7 @@ harness_old_cxxflags := $(CXXFLAGS)
 harness_old_ldflags := $(LDLFAGS)
 CXXFLAGS += -I$(d)../../src -I$(d)clargs/src
 LDFLAGS += -L$(d)../../src/out/$(c) -L$(d)clargs/src/out/rel
-$(eval $(call prorab-try-include, clargs/src/makefile, rel))
-$(eval $(call prorab-try-include, tst/src/makefile, no_par))
+$(eval $(call prorab-include, clargs/src/makefile, rel))
+$(eval $(call prorab-include, tst/src/makefile, no_par))
 CXXFLAGS := $(harness_old_cxxflags)
 LDFLAGS := $(harness_old_ldflags)

@@ -135,7 +135,6 @@ jobs:
         repo: deb https://cppfw.jfrog.io/artifactory/$(lsb_release --id --short | tr '[:upper:]' '[:lower:]') $(lsb_release --codename --short) main
         repo-name: cppfw
         key-server: https://cppfw.jfrog.io/artifactory/api/gpg/key/public
-        keys: 4A949240F79AD8027C6CA2F4953AE777616ADEDF
     - name: install ci tools
       run: apt install --assume-yes myci
     - name: set PACKAGE_VERSION
@@ -174,6 +173,8 @@ jobs:
           mingw-w64-${{ matrix.arch }}-toolchain
     - name: git clone
       uses: actions/checkout@v2
+      with:
+          submodules: true
     - name: add cppfw pacman msys repo
       uses: myci-actions/add-pacman-repo@master
       with: {name: cppfw_msys, url: 'https://cppfw.jfrog.io/artifactory/msys2/msys', shell: 'msys2 {0}'}
@@ -205,6 +206,8 @@ jobs:
     steps:
     - name: git clone
       uses: actions/checkout@v2
+      with:
+          submodules: true
     - name: install CoAPP tools
       uses: myci-actions/install-coapp-tools@master
     - name: nuget update
@@ -235,14 +238,15 @@ jobs:
     name: conan - linux - ${{ matrix.arch }}
     steps:
       - name: git clone
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
+        with:
+          submodules: true
       - name: add cppfw deb repo
         uses: myci-actions/add-deb-repo@master
         with:
           repo: deb https://cppfw.jfrog.io/artifactory/${{ matrix.os }} ${{ matrix.codename }} main
           repo-name: cppfw
           key-server: https://cppfw.jfrog.io/artifactory/api/gpg/key/public
-          keys: 4A949240F79AD8027C6CA2F4953AE777616ADEDF
       - name: install ci tools
         run: |
           apt install --assume-yes devscripts equivs myci prorab prorab-extra python3-pip cmake
@@ -273,6 +277,8 @@ jobs:
     steps:
       - name: git clone
         uses: actions/checkout@v2
+        with:
+          submodules: true
       - name: add cppfw tap
         run: |
           brew tap cppfw/tap
