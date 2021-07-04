@@ -237,6 +237,12 @@ jobs:
     container: ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }}
     name: conan - linux - ${{ matrix.arch }}
     steps:
+      # git should be installed in order to make actions/checkout@v2 work with submodules,
+      # otherwise it just downloads snapshot without using git
+      - name: install git
+        run: |
+          apt update
+          apt install --assume-yes git base-files
       - name: git clone
         uses: actions/checkout@v2
         with:
