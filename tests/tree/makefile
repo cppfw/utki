@@ -8,7 +8,7 @@ this_srcs += main.cpp tests.cpp
 
 this_no_install := true
 
-this_ldflags += -L $(d)../../src/out/$(c)
+this_ldflags += -L ../../src/out/$(c)
 this_ldlibs += -lutki
 
 $(eval $(prorab-build-app))
