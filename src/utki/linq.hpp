@@ -3,6 +3,7 @@
 #include <functional>
 #include <vector>
 #include <map>
+#include <algorithm>
 
 #include "debug.hpp"
 #include "types.hpp"
