@@ -46,7 +46,7 @@ $(eval $(call prorab-depend, $(prorab_this_name), ../../src/out/$(c)/libutki$(do
 ifneq ($(os),windows)
     this_test_cmd := $(prorab_this_name)
     this_test_deps := $(prorab_this_name)
-    this_test_ld_path := out/$(c)
+    this_test_ld_path := out/$(c) ../../src/out/$(c)
     $(eval $(prorab-test))
 endif
 
