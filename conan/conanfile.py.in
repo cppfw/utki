@@ -13,9 +13,9 @@ class UtkiConan(ConanFile):
 	default_options = {"shared": False, "fPIC": True}
 	generators = "make"
 	scm = {
-		type = "git"
-		url = "auto"
-		revision = "auto"
+		"type": "git"
+		"url": "auto"
+		"revision": "auto"
 	}
 
 	def config_options(self):
