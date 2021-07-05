@@ -12,15 +12,20 @@ class UtkiConan(ConanFile):
 	options = {"shared": [True, False], "fPIC": [True, False]}
 	default_options = {"shared": False, "fPIC": True}
 	generators = "make"
+	scm = {
+		type = "git"
+		url = "auto"
+		revision = "auto"
+	}
 
 	def config_options(self):
 		if self.settings.os == "Windows":
 			del self.options.fPIC
 
-	def source(self):
-		self.run("git clone https://github.com/cppfw/" + self.name + ".git")
-		self.run("cd " + self.name + " && git checkout " + self.version)
-		self.run("cd " + self.name + " && git submodule update --init --recursive")
+	#def source(self):
+		#self.run("git clone https://github.com/cppfw/" + self.name + ".git")
+		#self.run("cd " + self.name + " && git checkout " + self.version)
+		#self.run("cd " + self.name + " && git submodule update --init --recursive")
 
 		# This small hack might be useful to guarantee proper /MT /MD linkage
 		# in MSVC if the packaged project doesn't have variables to set it
