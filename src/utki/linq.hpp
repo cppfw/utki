@@ -10,8 +10,6 @@
 
 namespace utki{
 
-#if M_CPP >= 17
-
 template <typename C> class linq_collection_aggregator{
 	template <typename CC> friend class linq_collection_aggregator;
 	template <typename CC> friend linq_collection_aggregator<const CC&> linq(const CC&);
@@ -176,7 +174,5 @@ template <typename C> linq_collection_aggregator<const C&> linq(C& collection){
 template <typename C> linq_collection_aggregator<C&&> linq(C&& collection){
 	return linq_collection_aggregator<C&&>(std::move(collection));
 }
-
-#endif
 
 }
