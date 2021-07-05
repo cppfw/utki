@@ -18,7 +18,7 @@ class UtkiConan(ConanFile):
 			del self.options.fPIC
 
 	def source(self):
-		self.run("git clone https://github.com/cppfw/" + self.name + ".git")
+		self.run("git clone --recursive https://github.com/cppfw/" + self.name + ".git")
 		self.run("cd " + self.name + " && git checkout " + self.version)
 
 		# This small hack might be useful to guarantee proper /MT /MD linkage
