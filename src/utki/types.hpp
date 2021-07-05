@@ -4,9 +4,7 @@
 #include <cstddef>
 #include <memory>
 
-#if __cplusplus >= 201703L
-#	include <variant>
-#endif
+#include <variant>
 
 namespace utki{
 
@@ -68,7 +66,6 @@ template <class T> inline const T* make_pointer_to_const(T* p){
  */
 class dummy_class{};
 
-#if __cplusplus >= 201703L
 template <typename> struct tag { };
 template <typename T, typename V> struct get_index;
 
@@ -98,7 +95,5 @@ template <class T, class = void> struct type_or_void{
 template <class T> struct type_or_void<T, std::void_t<typename T::type>>{
 	using type = typename T::type;
 };
-
-#endif
 
 }
