@@ -20,7 +20,17 @@
 		{
 			"label": "test_tree",
 			"type": "shell",
-			"command": "make -C tests/tree test",
+			"command": "make --directory tests/tree test",
+			"problemMatcher": [
+				"$gcc"
+			],
+			"dependsOn": "build",
+			"group": "build"
+		},
+		{
+			"label": "test_singleton_over_shared_library",
+			"type": "shell",
+			"command": "make --directory tests/singleton_over_shared_library test",
 			"problemMatcher": [
 				"$gcc"
 			],

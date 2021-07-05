@@ -1,4 +1,5 @@
 include prorab.mk
+include prorab-test.mk
 
 this_name := testso
 this_soname := 0
@@ -39,11 +40,14 @@ $(eval $(prorab-build-app))
 
 $(prorab_this_name): $(lib_target_name)
 
+$(eval $(call prorab-depend, $(prorab_this_name), ../../src/out/$(c)/libutki$(dot_so)))
+
 # no test under windows, it fails there
 ifneq ($(os),windows)
-    include $(d)../test_target.mk
+    this_test_cmd := $(prorab_this_name)
+    this_test_deps := $(prorab_this_name)
+    this_test_ld_path := out/$(c)
+    $(eval $(prorab-test))
 endif
-
-$(prorab_this_name): $(abspath $(d)../../src/out/$(c)/libutki$(dot_so))
 
 $(eval $(call prorab-include, ../../src/makefile))
