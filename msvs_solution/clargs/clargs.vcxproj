@@ -147,7 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\tests\harness\clargs\src\clargs\parser.cpp" />
+    <ClCompile Include="..\..\tests\harness\clargs\src\**\*.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\libutki\libutki.vcxproj">
