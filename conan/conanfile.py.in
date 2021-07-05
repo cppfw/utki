@@ -12,11 +12,7 @@ class UtkiConan(ConanFile):
 	options = {"shared": [True, False], "fPIC": [True, False]}
 	default_options = {"shared": False, "fPIC": True}
 	generators = "make"
-	scm = {
-		"type": "git"
-		"url": "auto"
-		"revision": "auto"
-	}
+	scm = {"type": "git", "url": "auto", "revision": "auto"}
 
 	def config_options(self):
 		if self.settings.os == "Windows":
