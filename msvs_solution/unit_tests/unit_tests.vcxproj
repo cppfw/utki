@@ -281,7 +281,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\tests\unit\src\math.cpp" />
+    <ClCompile Include="..\..\tests\unit\src\*.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\clargs\clargs.vcxproj">
