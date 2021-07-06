@@ -152,7 +152,16 @@ tst::set set("unicode", [](tst::suite& suite){
 
 			auto str = utki::to_utf32(utki::make_span(buf));
 
-			tst::check(str == U"aБцﺶ𠀋", SL);
+			tst::check(
+					str == U"aБцﺶ𠀋",
+					[&](auto& o) {
+						o << "str = " << utki::to_utf8(str) << '\n';
+						for (auto c : str) {
+							o << std::hex << "0x" << c << ", ";
+						}
+					},
+					SL
+				);
 		}
 	);
 
@@ -164,7 +173,16 @@ tst::set set("unicode", [](tst::suite& suite){
 
 			auto str = utki::to_utf32(buf);
 
-			tst::check(str == U"aБцﺶ𠀋", SL);
+			tst::check(
+					str == U"aБцﺶ𠀋",
+					[&](auto& o) {
+						o << "str = " << utki::to_utf8(str) << '\n';
+						for (auto c : str) {
+							o << std::hex << "0x" << c << ", ";
+						}
+					},
+					SL
+				);
 		}
 	);
 });
