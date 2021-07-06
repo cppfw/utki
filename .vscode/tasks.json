@@ -2,7 +2,7 @@
     "version": "2.0.0",
     "tasks": [
 		{
-			"label": "test",
+			"label": "test_",
 			"type": "shell",
 			"command": "make test autojobs=true",
 			"dependsOn": "build",

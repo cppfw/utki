@@ -18,6 +18,7 @@ class UtkiConan(ConanFile):
 		if self.settings.os == "Windows":
 			del self.options.fPIC
 
+	# we use the 'scm' attribute, so the source() method is not needed
 	#def source(self):
 		#self.run("git clone https://github.com/cppfw/" + self.name + ".git")
 		#self.run("cd " + self.name + " && git checkout " + self.version)
