@@ -4,6 +4,8 @@
 #include <utki/unicode.hpp>
 
 using namespace std::string_literals;
+using namespace std::string_view_literals;
+
 
 namespace{
 tst::set set("unicode", [](tst::suite& suite){
@@ -11,7 +13,7 @@ tst::set set("unicode", [](tst::suite& suite){
 		"utf8_iterator",
 		[](){
 			// string in utf8 = aБцﺶ𠀋
-			std::vector<uint8_t> buf = {{0x61, 0xd0, 0x91, 0xd1, 0x86, 0xef, 0xba, 0xb6, 0xf0, 0xa0, 0x80, 0x8b}};
+			std::vector<uint8_t> buf = {0x61, 0xd0, 0x91, 0xd1, 0x86, 0xef, 0xba, 0xb6, 0xf0, 0xa0, 0x80, 0x8b};
 			
 			std::vector<uint8_t> str(buf.size() + 1);
 			memcpy(str.data(), buf.data(), buf.size());
@@ -126,16 +128,23 @@ tst::set set("unicode", [](tst::suite& suite){
 	suite.add(
 		"utf8_to_utf32_span_uint8_t",
 		[](){
+			std::u32string_view expected = U"aБцﺶ𠀋"sv;
 			// string in utf8 = aБцﺶ𠀋
-			std::vector<uint8_t> buf = {{0x61, 0xd0, 0x91, 0xd1, 0x86, 0xef, 0xba, 0xb6, 0xf0, 0xa0, 0x80, 0x8b}};
+			std::vector<uint8_t> buf = {0x61, 0xd0, 0x91, 0xd1, 0x86, 0xef, 0xba, 0xb6, 0xf0, 0xa0, 0x80, 0x8b};
 
 			auto str = utki::to_utf32(buf);
 
 			tst::check(
-					str == U"aБцﺶ𠀋",
+					str == expected,
 					[&](auto&o){
 						o << "str = " << utki::to_utf8(str) << '\n';
+						o << "str = ";
 						for(auto c : str){
+							o << std::hex << "0x" << c << ", ";
+						}
+						o << std::endl;
+						o << "expected = ";
+						for (char32_t c : expected) {
 							o << std::hex << "0x" << c << ", ";
 						}
 					},
