@@ -205,19 +205,19 @@ tst::set set("string", [](tst::suite& suite){
 			auto str = "ab cd\nef\n g\n  h\n  ijk   \nlm   no p \n\nq\n";
 			auto res = utki::word_wrap(str, 5);
 
-			tst::check_eq(res.size(), size_t(12), [&](auto&o){o << "res.size() = " << res.size();}, SL);
-			tst::check_eq(res[0], "ab cd"s, [&](auto&o){o << "res[0] = '" << res[0] << "'";}, SL);
-			tst::check_eq(res[1], "ef"s, [&](auto&o){o << "res[1] = '" << res[1] << "'";}, SL);
-			tst::check_eq(res[2], " g"s, [&](auto&o){o << "res[2] = '" << res[2] << "'";}, SL);
-			tst::check_eq(res[3], "  h"s, [&](auto&o){o << "res[3] = '" << res[3] << "'";}, SL);
-			tst::check_eq(res[4], "  ijk"s, [&](auto&o){o << "res[4] = '" << res[4] << "'";}, SL);
-			tst::check_eq(res[5], "   "s, [&](auto&o){o << "res[5] = '" << res[5] << "'";}, SL);
-			tst::check_eq(res[6], "lm"s, [&](auto&o){o << "res[6] = '" << res[6] << "'";}, SL);
-			tst::check_eq(res[7], "  no"s, [&](auto&o){o << "res[7] = '" << res[7] << "'";}, SL);
-			tst::check_eq(res[8], "p "s, [&](auto&o){o << "res[8] = '" << res[8] << "'";}, SL);
-			tst::check_eq(res[9], ""s, [&](auto&o){o << "res[9] = '" << res[9] << "'";}, SL);
-			tst::check_eq(res[10], "q"s, [&](auto&o){o << "res[10] = '" << res[10] << "'";}, SL);
-			tst::check_eq(res[11], ""s, [&](auto&o){o << "res[11] = '" << res[11] << "'";}, SL);
+			tst::check_eq(res.size(), size_t(12), SL);
+			tst::check_eq(res[0], "ab cd"s, SL);
+			tst::check_eq(res[1], "ef"s, SL);
+			tst::check_eq(res[2], " g"s, SL);
+			tst::check_eq(res[3], "  h"s, SL);
+			tst::check_eq(res[4], "  ijk"s, SL);
+			tst::check_eq(res[5], "   "s, SL);
+			tst::check_eq(res[6], "lm"s, SL);
+			tst::check_eq(res[7], "  no"s, SL);
+			tst::check_eq(res[8], "p "s, SL);
+			tst::check_eq(res[9], ""s, SL);
+			tst::check_eq(res[10], "q"s, SL);
+			tst::check_eq(res[11], ""s, SL);
 		}
 	);
 

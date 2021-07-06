@@ -152,7 +152,7 @@ std::vector<std::string> utki::word_wrap(std::string_view str, unsigned width){
 	}
 
 	// add last string
-	if(*span_begin == ' '){
+	if(span_begin != str.end() && *span_begin == ' '){
 		if(word_ended){
 			ret.emplace_back(str.substr(
 					std::distance(str.begin(), line_begin),
