@@ -128,11 +128,13 @@ tst::set set("unicode", [](tst::suite& suite){
 	suite.add(
 		"utf8_to_utf32_span_uint8_t",
 		[](){
-			std::u32string_view expected = U"aБцﺶ𠀋"sv;
+			auto expected = U"aБцﺶ𠀋"sv;
 			// string in utf8 = aБцﺶ𠀋
 			std::vector<uint8_t> buf = {0x61, 0xd0, 0x91, 0xd1, 0x86, 0xef, 0xba, 0xb6, 0xf0, 0xa0, 0x80, 0x8b};
 
 			auto str = utki::to_utf32(buf);
+
+			tst::check_eq(str.size(), expected.size(), SL);
 
 			tst::check(
 					str == expected,
