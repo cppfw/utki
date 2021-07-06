@@ -5,6 +5,7 @@
 #include <utki/types.hpp>
 
 #include <variant>
+#include <array>
 
 namespace{
 tst::set set("util", [](tst::suite& suite){
