@@ -3,6 +3,8 @@
 
 #include <utki/string.hpp>
 
+#include <locale>
+
 using namespace std::string_literals;
 using namespace std::string_view_literals;
 
