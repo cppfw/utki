@@ -2,11 +2,11 @@ include prorab.mk
 
 $(eval $(call prorab-config, ../../config))
 $(eval $(call prorab-depend, \
-		clargs/src/out/rel/libclargs$(dot_so).$(shell cat $(d)clargs/src/soname.txt), \
+		clargs/src/out/rel/libclargs$(dot_so), \
 		../../src/out/$(c)/libutki$(dot_so) \
 	))
 $(eval $(call prorab-depend, \
-		tst/src/out/no_par/libtst$(dot_so).$(shell cat $(d)tst/src/soname.txt), \
+		tst/src/out/no_par/libtst$(dot_so), \
 		clargs/src/out/rel/libclargs$(dot_so) \
 		../../src/out/$(c)/libutki$(dot_so) \
 	))
