@@ -286,8 +286,8 @@ jobs:
       - name: build
         run: |
           conan remote add cppfw $CONAN_REMOTE
-          conan create conan $CONAN_USER/main
-          conan export conan $PACKAGE_NAME/$PACKAGE_VERSION@$CONAN_USER/main --ignore-dirty
+          conan create conan $CONAN_USER/main --ignore-dirty
+          # conan export conan $PACKAGE_NAME/$PACKAGE_VERSION@$CONAN_USER/main --ignore-dirty
       - name: deploy conan package
         run: |
           conan user --remote cppfw --password $CONAN_PASSWORD $CONAN_USER
