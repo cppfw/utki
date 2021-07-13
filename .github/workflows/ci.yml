@@ -5,13 +5,12 @@ on:
 env:
   PACKAGE_NAME: ${{ github.event.repository.name }}
   PACKAGE_VERSION: ${{ github.sha }}
-  MYCI_JFROG_USERNAME: ivan.gagis@gmail.com
-  MYCI_JFROG_PASSWORD: ${{ secrets.MYCI_JFROG_PASSWORD }}
   MYCI_NEXUS_USERNAME: cppfw
   MYCI_NEXUS_PASSWORD: ${{ secrets.MYCI_NEXUS_PASSWORD }}
   MYCI_GIT_USERNAME: igagis
   MYCI_GIT_PASSWORD: ${{ secrets.MYCI_GIT_ACCESS_TOKEN }}
-  CONAN_REMOTE: https://cppfw.jfrog.io/artifactory/api/conan/conan
+  CONAN_REMOTE: http://gagis.hopto.org/conan
+  CONAN_USER: cppfw
   CONAN_V2_MODE: 1
   CONAN_REVISIONS_ENABLED: 1
 jobs:
@@ -287,12 +286,13 @@ jobs:
       - name: build
         run: |
           conan remote add cppfw $CONAN_REMOTE
-          conan create conan
+          conan create conan $CONAN_USER/main
+          conan export conan $PACKAGE_NAME/$PACKAGE_VERSION@$CONAN_USER/main --ignore-dirty
       - name: deploy conan package
         run: |
-          conan user --remote cppfw --password $MYCI_JFROG_PASSWORD $MYCI_JFROG_USERNAME
-          conan upload --remote cppfw --all $PACKAGE_NAME/$PACKAGE_VERSION@
-        if: startsWith(github.ref, 'refs/tags/')
+          conan user --remote cppfw --password $CONAN_PASSWORD $CONAN_USER
+          conan upload --remote cppfw --all $PACKAGE_NAME/$PACKAGE_VERSION@$CONAN_USER/main
+        # if: startsWith(github.ref, 'refs/tags/')
 ##### conan - macosx #####
   conan-macosx:
     name: conan - macosx
@@ -317,9 +317,10 @@ jobs:
       - name: build
         run: |
           conan remote add cppfw $CONAN_REMOTE
-          conan create conan
+          conan create conan $CONAN_USER/main
+          conan export conan $PACKAGE_NAME/$PACKAGE_VERSION@$CONAN_USER/main --ignore-dirty
       - name: deploy conan package
         run: |
-          conan user --remote cppfw --password $MYCI_JFROG_PASSWORD $MYCI_JFROG_USERNAME
-          conan upload --remote cppfw --all $PACKAGE_NAME/$PACKAGE_VERSION@
-        if: startsWith(github.ref, 'refs/tags/')
+          conan user --remote cppfw --password $CONAN_PASSWORD $CONAN_USER
+          conan upload --remote cppfw --all $PACKAGE_NAME/$PACKAGE_VERSION@$CONAN_USER/main
+        # if: startsWith(github.ref, 'refs/tags/')
