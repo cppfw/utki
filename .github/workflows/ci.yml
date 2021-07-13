@@ -155,9 +155,8 @@ jobs:
         myci-apply-version.sh -v $PACKAGE_VERSION *.pom.in
         myci-apply-version.sh -v $PACKAGE_VERSION *.aar.in --filename-only
     - name: deploy
-      # run: myci-deploy-maven-jfrog.sh --domain cppfw --repo android --path io/github/cppfw/$PACKAGE_NAME/$PACKAGE_VERSION android/$PACKAGE_NAME-$PACKAGE_VERSION.aar
       run: myci-deploy-maven-nexus.sh --base-url http://gagis.hopto.org/nexus --repo android android/$PACKAGE_NAME-$PACKAGE_VERSION.aar
-      # if: startsWith(github.ref, 'refs/tags/')
+      if: startsWith(github.ref, 'refs/tags/')
 ##### msys2 #####
   msys2:
     runs-on: windows-latest
