@@ -21,7 +21,7 @@ jobs:
         include:
           # - {os: debian, codename: stretch, image_owner: , package_type: deb}
           - {os: debian, codename: buster, image_owner: , package_type: deb}
-          # - {os: debian, codename: buster, image_owner: i386/, package_type: deb, labels: [i386,docker]}
+          - {os: debian, codename: buster, image_owner: i386/, package_type: deb, labels: [i386,docker]}
           - {os: debian, codename: buster, image_owner: arm32v7/, package_type: deb, labels: [arm,docker]}
           # - {os: ubuntu, codename: bionic, image_owner: , package_type: deb}
           - {os: ubuntu, codename: focal, image_owner: , package_type: deb}
@@ -40,6 +40,12 @@ jobs:
         uses: actions/checkout@v2
         with:
           submodules: true
+        if: matrix.image_owner != 'i386/'
+      - name: git clone v1
+        uses: actions/checkout@v1
+        with:
+          submodules: true
+        if: matrix.image_owner == 'i386/'
       - name: add cppfw deb repo
         uses: myci-actions/add-deb-repo@master
         with:
