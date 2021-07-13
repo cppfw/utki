@@ -138,11 +138,11 @@ jobs:
     - name: git clone
       uses: actions/checkout@v2
     - name: add cppfw deb repo
-      uses: myci-actions/add-deb-repo@master
-      with:
-        repo: deb https://cppfw.jfrog.io/artifactory/$(lsb_release --id --short | tr '[:upper:]' '[:lower:]') $(lsb_release --codename --short) main
-        repo-name: cppfw
-        key-server: https://cppfw.jfrog.io/artifactory/api/gpg/key/public
+        uses: myci-actions/add-deb-repo@master
+        with:
+          repo: deb http://gagis.hopto.org/repo/cppfw/$(lsb_release --id --short | tr '[:upper:]' '[:lower:]') $(lsb_release --codename --short) main
+          repo-name: cppfw
+          key-server: http://gagis.hopto.org/repo/cppfw/pubkey.gpg
     - name: install ci tools
       run: apt install --assume-yes myci
     - name: set PACKAGE_VERSION
