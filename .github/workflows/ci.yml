@@ -24,7 +24,7 @@ jobs:
         include:
           # - {os: debian, codename: stretch, image_owner: , package_type: deb}
           - {os: debian, codename: buster, image_owner: , package_type: deb}
-          - {os: debian, codename: buster, image_owner: i386/, package_type: deb, labels: [i386,docker]}
+          # - {os: debian, codename: buster, image_owner: i386/, package_type: deb, labels: [i386,docker]}
           - {os: debian, codename: buster, image_owner: arm32v7/, package_type: deb, labels: [arm,docker]}
           # - {os: ubuntu, codename: bionic, image_owner: , package_type: deb}
           - {os: ubuntu, codename: focal, image_owner: , package_type: deb}
@@ -293,7 +293,7 @@ jobs:
         run: |
           conan user --remote cppfw --password $MYCI_CONAN_PASSWORD $MYCI_CONAN_USER
           conan upload --remote cppfw --all $PACKAGE_NAME/$PACKAGE_VERSION@$MYCI_CONAN_USER/main
-        # if: startsWith(github.ref, 'refs/tags/')
+        if: startsWith(github.ref, 'refs/tags/')
 ##### conan - macosx #####
   conan-macosx:
     name: conan - macosx
@@ -323,4 +323,4 @@ jobs:
         run: |
           conan user --remote cppfw --password $MYCI_CONAN_PASSWORD $MYCI_CONAN_USER
           conan upload --remote cppfw --all $PACKAGE_NAME/$PACKAGE_VERSION@$MYCI_CONAN_USER/main
-        # if: startsWith(github.ref, 'refs/tags/')
+        if: startsWith(github.ref, 'refs/tags/')
