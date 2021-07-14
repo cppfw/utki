@@ -137,9 +137,8 @@ jobs:
         repo: deb http://gagis.hopto.org/repo/cppfw/$(lsb_release --id --short | tr '[:upper:]' '[:lower:]') $(lsb_release --codename --short) main
         repo-name: cppfw
         key-server: http://gagis.hopto.org/repo/cppfw/pubkey.gpg
-        update: true
     - name: install ci tools
-      run: apt install --assume-yes myci
+      run: apt --quiet install --assume-yes myci
     - name: set PACKAGE_VERSION
       uses: myci-actions/export-env-var@master
       with: {name: PACKAGE_VERSION, value: $(myci-deb-version.sh debian/changelog)}
@@ -241,7 +240,7 @@ jobs:
       matrix:
         include:
           - {os: debian, codename: buster, image_owner: , arch: x86_64}
-          # - {os: debian, codename: buster, image_owner: i386/, arch: x86, labels: [i386,docker]}
+          - {os: debian, codename: buster, image_owner: i386/, arch: x86, labels: [i386,docker]}
           - {os: debian, codename: buster, image_owner: arm32v7/, arch: armhf, labels: [arm,docker]}
     runs-on: ${{ (matrix.labels == '' && 'ubuntu-latest') || matrix.labels }}
     container: ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }}
@@ -258,7 +257,7 @@ jobs:
           update: true
       - name: install ci tools
         run: |
-          apt install --assume-yes devscripts equivs myci prorab prorab-extra python3-pip cmake git
+          apt --quiet install --assume-yes devscripts equivs myci prorab prorab-extra python3-pip cmake git
       - name: install conan
         run: |
           pip3 --quiet install conan
