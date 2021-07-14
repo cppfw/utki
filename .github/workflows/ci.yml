@@ -5,15 +5,16 @@ on:
 env:
   PACKAGE_NAME: ${{ github.event.repository.name }}
   PACKAGE_VERSION: ${{ github.sha }}
-  MYCI_JFROG_USERNAME: ivan.gagis@gmail.com
-  MYCI_JFROG_PASSWORD: ${{ secrets.MYCI_JFROG_PASSWORD }}
   MYCI_NEXUS_USERNAME: cppfw
   MYCI_NEXUS_PASSWORD: ${{ secrets.MYCI_NEXUS_PASSWORD }}
   MYCI_GIT_USERNAME: igagis
   MYCI_GIT_PASSWORD: ${{ secrets.MYCI_GIT_ACCESS_TOKEN }}
-  CONAN_REMOTE: https://cppfw.jfrog.io/artifactory/api/conan/conan
+  MYCI_CONAN_REMOTE: http://gagis.hopto.org/conan
+  MYCI_CONAN_USER: cppfw
+  MYCI_CONAN_PASSWORD: ${{ secrets.MYCI_CONAN_PASSWORD }}
   CONAN_V2_MODE: 1
   CONAN_REVISIONS_ENABLED: 1
+  CONAN_SCM_TO_CONANDATA: 1
 jobs:
 ##### linux #####
   linux:
@@ -155,9 +156,8 @@ jobs:
         myci-apply-version.sh -v $PACKAGE_VERSION *.pom.in
         myci-apply-version.sh -v $PACKAGE_VERSION *.aar.in --filename-only
     - name: deploy
-      # run: myci-deploy-maven-jfrog.sh --domain cppfw --repo android --path io/github/cppfw/$PACKAGE_NAME/$PACKAGE_VERSION android/$PACKAGE_NAME-$PACKAGE_VERSION.aar
       run: myci-deploy-maven-nexus.sh --base-url http://gagis.hopto.org/nexus --repo android android/$PACKAGE_NAME-$PACKAGE_VERSION.aar
-      # if: startsWith(github.ref, 'refs/tags/')
+      if: startsWith(github.ref, 'refs/tags/')
 ##### msys2 #####
   msys2:
     runs-on: windows-latest
@@ -289,12 +289,12 @@ jobs:
         run: myci-apply-version.sh -v $PACKAGE_VERSION conan/conanfile.py.in
       - name: build
         run: |
-          conan remote add cppfw $CONAN_REMOTE
-          conan create conan
+          conan remote add cppfw $MYCI_CONAN_REMOTE
+          conan create conan $MYCI_CONAN_USER/main --ignore-dirty
       - name: deploy conan package
         run: |
-          conan user --remote cppfw --password $MYCI_JFROG_PASSWORD $MYCI_JFROG_USERNAME
-          conan upload --remote cppfw --all $PACKAGE_NAME/$PACKAGE_VERSION@
+          conan user --remote cppfw --password $MYCI_CONAN_PASSWORD $MYCI_CONAN_USER
+          conan upload --remote cppfw --all $PACKAGE_NAME/$PACKAGE_VERSION@$MYCI_CONAN_USER/main
         if: startsWith(github.ref, 'refs/tags/')
 ##### conan - macosx #####
   conan-macosx:
@@ -321,10 +321,10 @@ jobs:
         run: myci-apply-version.sh -v $PACKAGE_VERSION conan/conanfile.py.in
       - name: build
         run: |
-          conan remote add cppfw $CONAN_REMOTE
-          conan create conan
+          conan remote add cppfw $MYCI_CONAN_REMOTE
+          conan create conan $MYCI_CONAN_USER/main --ignore-dirty
       - name: deploy conan package
         run: |
-          conan user --remote cppfw --password $MYCI_JFROG_PASSWORD $MYCI_JFROG_USERNAME
-          conan upload --remote cppfw --all $PACKAGE_NAME/$PACKAGE_VERSION@
+          conan user --remote cppfw --password $MYCI_CONAN_PASSWORD $MYCI_CONAN_USER
+          conan upload --remote cppfw --all $PACKAGE_NAME/$PACKAGE_VERSION@$MYCI_CONAN_USER/main
         if: startsWith(github.ref, 'refs/tags/')
