@@ -77,9 +77,7 @@ jobs:
     runs-on: macos-latest
     steps:
     - name: git clone
-      uses: actions/checkout@v2
-      with:
-          submodules: true
+      uses: myci-actions/checkout@master
     - name: add cppfw tap
       run: |
         brew tap cppfw/tap
@@ -106,7 +104,7 @@ jobs:
     - name: install ci tools
       run: brew install myci
     - name: git clone
-      uses: actions/checkout@v2
+      uses: myci-actions/checkout@master
     - name: set PACKAGE_VERSION
       uses: myci-actions/export-env-var@master
       with: {name: PACKAGE_VERSION, value: $(myci-deb-version.sh debian/changelog)}
@@ -135,7 +133,7 @@ jobs:
     container: mingc/android-build-box:latest
     steps:
     - name: git clone
-      uses: actions/checkout@v2
+      uses: myci-actions/checkout@master
     - name: add cppfw deb repo
       uses: myci-actions/add-deb-repo@master
       with:
@@ -178,10 +176,6 @@ jobs:
         install: >-
           msys2-devel
           mingw-w64-${{ matrix.arch }}-toolchain
-    - name: git clone
-      uses: actions/checkout@v2
-      with:
-          submodules: true
     - name: add cppfw pacman msys repo
       uses: myci-actions/add-pacman-repo@master
       with:
@@ -198,6 +192,8 @@ jobs:
     #     key-server: http://gagis.hopto.org/repo/cppfw/pubkey.gpg
     - name: install ci tools
       run: pacman -Sy --noconfirm myci
+    - name: git clone
+      uses: myci-actions/checkout@master
     - name: prepare pacman package
       run: myci-apply-version.sh -v $(myci-deb-version.sh debian/changelog) msys2/PKGBUILD.in
     - name: build
@@ -255,16 +251,6 @@ jobs:
     steps:
       - name: clean
         uses: myci-actions/clean@master
-      # git should be installed in order to make actions/checkout@v2 work with submodules,
-      # otherwise it just downloads snapshot without using git
-      - name: install git
-        run: |
-          apt update
-          apt install --assume-yes git base-files
-      - name: git clone
-        uses: actions/checkout@v2
-        with:
-          submodules: true
       - name: add cppfw deb repo
         uses: myci-actions/add-deb-repo@master
         with:
@@ -273,12 +259,14 @@ jobs:
           key-server: http://gagis.hopto.org/repo/cppfw/pubkey.gpg
       - name: install ci tools
         run: |
-          apt install --assume-yes devscripts equivs myci prorab prorab-extra python3-pip cmake
+          apt install --assume-yes devscripts equivs myci prorab prorab-extra python3-pip cmake git
       - name: install conan
         run: |
           pip3 install conan
           conan profile new --detect default
           conan profile update settings.compiler.libcxx=libstdc++11 default
+      - name: git clone
+        uses: myci-actions/checkout@master
       - name: set PACKAGE_VERSION
         uses: myci-actions/export-env-var@master
         with: {name: PACKAGE_VERSION, value: $(myci-deb-version.sh debian/changelog)}
@@ -302,9 +290,7 @@ jobs:
       - name: clean
         uses: myci-actions/clean@master
       - name: git clone
-        uses: actions/checkout@v2
-        with:
-          submodules: true
+        uses: myci-actions/checkout@master
       - name: add cppfw tap
         run: |
           brew tap cppfw/tap
