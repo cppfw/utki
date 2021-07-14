@@ -321,7 +321,7 @@ jobs:
         run: |
           conan remote add cppfw $MYCI_CONAN_REMOTE
           conan create conan
-          conan export $MYCI_CONAN_USER/main --ignore-dirty
+          conan export conan $MYCI_CONAN_USER/main --ignore-dirty
       - name: deploy conan package
         run: |
           conan user --remote cppfw --password $MYCI_CONAN_PASSWORD $MYCI_CONAN_USER
