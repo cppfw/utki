@@ -1,3 +1,9 @@
+libutki (1.1.152) unstable; urgency=medium
+
+  * deploy to own repos
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 14 Jul 2021 23:44:05 +0300
+
 libutki (1.1.151) unstable; urgency=medium
 
   * build for arm debian buster
