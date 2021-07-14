@@ -24,7 +24,7 @@ jobs:
         include:
           # - {os: debian, codename: stretch, image_owner: , package_type: deb}
           - {os: debian, codename: buster, image_owner: , package_type: deb}
-          # - {os: debian, codename: buster, image_owner: i386/, package_type: deb, labels: [i386,docker]}
+          - {os: debian, codename: buster, image_owner: i386/, package_type: deb, labels: [i386,docker]}
           - {os: debian, codename: buster, image_owner: arm32v7/, package_type: deb, labels: [arm,docker]}
           # - {os: ubuntu, codename: bionic, image_owner: , package_type: deb}
           - {os: ubuntu, codename: focal, image_owner: , package_type: deb}
@@ -277,7 +277,7 @@ jobs:
       - name: install conan
         run: |
           pip3 install conan
-          conan profile new --force --detect default
+          conan profile new --detect default
           conan profile update settings.compiler.libcxx=libstdc++11 default
       - name: set PACKAGE_VERSION
         uses: myci-actions/export-env-var@master
