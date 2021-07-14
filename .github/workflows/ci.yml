@@ -256,7 +256,7 @@ jobs:
     name: conan - linux - ${{ matrix.arch }}
     steps:
       - name: clean
-        uses: myci-actions/clean
+        uses: myci-actions/clean@master
       # git should be installed in order to make actions/checkout@v2 work with submodules,
       # otherwise it just downloads snapshot without using git
       - name: install git
@@ -302,7 +302,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: clean
-        uses: myci-actions/clean
+        uses: myci-actions/clean@master
       - name: git clone
         uses: actions/checkout@v2
         with:
