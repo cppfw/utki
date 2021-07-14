@@ -33,26 +33,21 @@ jobs:
     container: ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }}
     name: linux - ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }}
     steps:
-      # git should be installed in order to make actions/checkout@v2 work with submodules,
-      # otherwise it just downloads snapshot without using git
-      - name: install git
-        run: |
-          apt update
-          apt install --assume-yes git base-files
-      - name: git clone
-        uses: myci-actions/checkout@master
       - name: add cppfw deb repo
         uses: myci-actions/add-deb-repo@master
         with:
           repo: deb http://gagis.hopto.org/repo/cppfw/${{ matrix.os }} ${{ matrix.codename }} main
           repo-name: cppfw
           key-server: http://gagis.hopto.org/repo/cppfw/pubkey.gpg
+          update: true
       - name: install ci tools
         run: |
           # configure timezone to avoid 'tzdata' package to require user interaction during installation (needed for ubuntu:focal)
           TZ=Europe/Helsinki ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
           
-          apt install --assume-yes devscripts equivs myci locales
+          apt install --assume-yes devscripts equivs myci locales git
+      - name: git clone
+        uses: myci-actions/checkout@master
       - name: set PACKAGE_VERSION
         uses: myci-actions/export-env-var@master
         with: {name: PACKAGE_VERSION, value: $(myci-deb-version.sh debian/changelog)}
