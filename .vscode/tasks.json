@@ -2,7 +2,7 @@
     "version": "2.0.0",
     "tasks": [
 		{
-			"label": "test",
+			"label": "test_",
 			"type": "shell",
 			"command": "make test autojobs=true",
 			"dependsOn": "build",
@@ -20,7 +20,17 @@
 		{
 			"label": "test_tree",
 			"type": "shell",
-			"command": "make -C tests/tree test",
+			"command": "make --directory tests/tree test",
+			"problemMatcher": [
+				"$gcc"
+			],
+			"dependsOn": "build",
+			"group": "build"
+		},
+		{
+			"label": "test_singleton_over_shared_library",
+			"type": "shell",
+			"command": "make --directory tests/singleton_over_shared_library test",
 			"problemMatcher": [
 				"$gcc"
 			],

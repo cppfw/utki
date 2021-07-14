@@ -56,6 +56,10 @@
 		"memory": "cpp",
 		"source_location": "cpp",
 		"bitset": "cpp",
-		"charconv": "cpp"
+		"charconv": "cpp",
+		"condition_variable": "cpp",
+		"set": "cpp",
+		"mutex": "cpp",
+		"thread": "cpp"
 	}
 }
