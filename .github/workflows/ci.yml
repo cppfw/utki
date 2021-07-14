@@ -259,7 +259,7 @@ jobs:
           apt install --assume-yes devscripts equivs myci prorab prorab-extra python3-pip cmake git
       - name: install conan
         run: |
-          pip3 install conan
+          pip3 --quiet install conan
           conan profile new --detect default
           conan profile update settings.compiler.libcxx=libstdc++11 default
       - name: git clone
