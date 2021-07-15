@@ -39,7 +39,6 @@ jobs:
           repo: deb http://gagis.hopto.org/repo/cppfw/${{ matrix.os }} ${{ matrix.codename }} main
           repo-name: cppfw
           key-server: http://gagis.hopto.org/repo/cppfw/pubkey.gpg
-          update: true
       - name: install ci tools
         run: |
           # configure timezone to avoid 'tzdata' package to require user interaction during installation (needed for ubuntu:focal)
@@ -213,8 +212,7 @@ jobs:
     steps:
     - name: git clone
       uses: actions/checkout@v2
-      with:
-          submodules: true
+      with: {submodules: true}
     - name: install CoAPP tools
       uses: myci-actions/install-coapp-tools@master
     - name: nuget update
@@ -252,7 +250,6 @@ jobs:
           repo: deb http://gagis.hopto.org/repo/cppfw/${{ matrix.os }} ${{ matrix.codename }} main
           repo-name: cppfw
           key-server: http://gagis.hopto.org/repo/cppfw/pubkey.gpg
-          update: true
       - name: install ci tools
         run: |
           apt --quiet install --assume-yes devscripts equivs myci prorab prorab-extra python3-pip cmake git
@@ -263,8 +260,6 @@ jobs:
           conan profile update settings.compiler.libcxx=libstdc++11 default
       - name: git clone
         uses: myci-actions/checkout@master
-        with:
-          submodules: true
       - name: set PACKAGE_VERSION
         uses: myci-actions/export-env-var@master
         with: {name: PACKAGE_VERSION, value: $(myci-deb-version.sh debian/changelog)}
@@ -289,8 +284,6 @@ jobs:
         uses: myci-actions/clean@master
       - name: git clone
         uses: myci-actions/checkout@master
-        with:
-          submodules: true
       - name: add cppfw tap
         run: |
           brew tap cppfw/tap
