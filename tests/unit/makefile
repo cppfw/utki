@@ -24,7 +24,7 @@ $(eval $(prorab-build-app))
 
 $(eval $(call prorab-depend, $(prorab_this_name), $(this_libutki) ../harness/tst/src/out/$(tst_cfg)/libtst$(dot_so)))
 
-this_test_cmd := $(prorab_this_name) --junit-out=junit.xml
+this_test_cmd := $(prorab_this_name) --junit-out=$(dir $(prorab_this_name))/junit.xml
 this_test_deps := $(prorab_this_name)
 this_test_ld_path := $(dir $(this_libutki)) $(this_harness_ld_paths)
 $(eval $(prorab-test))
