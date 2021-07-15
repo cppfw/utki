@@ -308,9 +308,7 @@ jobs:
       - name: build
         run: |
           conan remote add cppfw $MYCI_CONAN_REMOTE
-          # for some reason 'conan create conan $MYCI_CONAN_USER/main --ignore-dirty' does not work on macosx, so do it in 2 steps
-          conan create conan
-          conan export conan $MYCI_CONAN_USER/main --ignore-dirty
+          conan create conan $MYCI_CONAN_USER/main --ignore-dirty
       - name: deploy conan package
         run: |
           conan user --remote cppfw --password $MYCI_CONAN_PASSWORD $MYCI_CONAN_USER
