@@ -1,3 +1,9 @@
+libutki (1.1.155) unstable; urgency=medium
+
+  * fix install
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 15 Jul 2021 18:11:04 +0300
+
 libutki (1.1.154) unstable; urgency=medium
 
   * fix conan macosx package
