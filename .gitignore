@@ -1,5 +1,1 @@
-/doc/doxygen.cfg
-/doc/doxygen
-/doc/doxygen_sqlite3.db
-
-/nbproject/private
+**/out/*
