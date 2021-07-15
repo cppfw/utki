@@ -287,6 +287,8 @@ jobs:
     name: conan - macosx
     runs-on: macos-latest
     steps:
+      - name: clean
+        uses: myci-actions/clean@master
       - name: git clone
         uses: myci-actions/checkout@master
         with:
@@ -306,7 +308,10 @@ jobs:
       - name: build
         run: |
           conan remote add cppfw $MYCI_CONAN_REMOTE
-          conan create conan $PACKAGE_NAME/$PACKAGE_VERSION@$MYCI_CONAN_USER/main --ignore-dirty
+          # for some reason 'conan create conan $MYCI_CONAN_USER/main --ignore-dirty' does not work on macosx, so do it in 2 steps
+          conan create conan --ignore-dirty
+          conan copy --all $PACKAGE_NAME/$PACKAGE_VERSION@ $MYCI_CONAN_USER/main
+          # conan export conan $MYCI_CONAN_USER/main --ignore-dirty
       - name: deploy conan package
         run: |
           conan user --remote cppfw --password $MYCI_CONAN_PASSWORD $MYCI_CONAN_USER
