@@ -64,7 +64,7 @@ jobs:
       - name: deploy deb packages
         run: |
           echo "${{ secrets.MYCI_REPO_SSH_KEY }}" > repo_key_rsa && chmod 600 repo_key_rsa
-          myci-deploy-debian-ssh-freight.sh --key repo_key_rsa --server gagis.hopto.org --owner cppfw --repo ${{ matrix.os }} --distro ${{ matrix.codename }} --component main ../lib${PACKAGE_NAME}*_${PACKAGE_VERSION}_*.deb
+          myci-deploy-debian-ssh-freight.sh --key repo_key_rsa --server gagis.hopto.org --repo cppfw/${{ matrix.os }} --distro ${{ matrix.codename }} --component main ../lib${PACKAGE_NAME}*_${PACKAGE_VERSION}_*.deb
         if: matrix.package_type == 'deb' && startsWith(github.ref, 'refs/tags/')
 ##### macosx #####
   macosx:
@@ -119,7 +119,7 @@ jobs:
     - name: deploy
       run: |
         echo "${{ secrets.MYCI_REPO_SSH_KEY }}" > repo_key_rsa && chmod 600 repo_key_rsa
-        myci-deploy-cocoapods-ssh.sh --repo cppfw --version $PACKAGE_VERSION --server gagis.hopto.org --key repo_key_rsa --owner cppfw --generic-repo cocoapods --package $PACKAGE_NAME-$PACKAGE_VERSION.zip cocoapods/$PACKAGE_NAME.podspec.in
+        myci-deploy-cocoapods-ssh.sh --repo cppfw --version $PACKAGE_VERSION --server gagis.hopto.org --key repo_key_rsa --generic-repo cppfw/cocoapods --package $PACKAGE_NAME-$PACKAGE_VERSION.zip cocoapods/$PACKAGE_NAME.podspec.in
       if: startsWith(github.ref, 'refs/tags/')
 ##### android #####
   android:
@@ -200,7 +200,7 @@ jobs:
       run: |
         echo "${{ secrets.MYCI_REPO_SSH_KEY }}" > repo_key_rsa && chmod 600 repo_key_rsa
         for f in $(find msys2 -name "mingw-w64-${{ matrix.arch }}-$PACKAGE_NAME-*-any.pkg.*"); do
-          myci-deploy-pacman-ssh.sh --server gagis.hopto.org --key repo_key_rsa --owner cppfw --repo msys2/${{ matrix.repo }} --database cppfw_${{ matrix.repo }} $f
+          myci-deploy-pacman-ssh.sh --server gagis.hopto.org --key repo_key_rsa --repo cppfw/msys2/${{ matrix.repo }} --database cppfw_${{ matrix.repo }} $f
         done
       if: startsWith(github.ref, 'refs/tags/')
 ##### msvs #####
