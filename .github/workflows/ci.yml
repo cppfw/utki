@@ -48,8 +48,6 @@ jobs:
           apt --quiet install --assume-yes devscripts equivs myci locales git
       - name: git clone
         uses: myci-actions/checkout@master
-        with:
-          submodules: true
       - name: set PACKAGE_VERSION
         uses: myci-actions/export-env-var@master
         with: {name: PACKAGE_VERSION, value: $(myci-deb-version.sh debian/changelog)}
