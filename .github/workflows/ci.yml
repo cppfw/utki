@@ -287,8 +287,6 @@ jobs:
     name: conan - macosx
     runs-on: macos-latest
     steps:
-      - name: clean
-        uses: myci-actions/clean@master
       - name: git clone
         uses: myci-actions/checkout@master
         with:
