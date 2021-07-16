@@ -39,12 +39,13 @@ jobs:
           repo: deb http://gagis.hopto.org/repo/cppfw/${{ matrix.os }} ${{ matrix.codename }} main
           repo-name: cppfw
           key-server: http://gagis.hopto.org/repo/cppfw/pubkey.gpg
+          install: myci locales git
       - name: install ci tools
         run: |
           # configure timezone to avoid 'tzdata' package to require user interaction during installation (needed for ubuntu:focal)
           TZ=Europe/Helsinki ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
           
-          apt --quiet install --assume-yes devscripts equivs myci locales git
+          apt --quiet install --assume-yes devscripts equivs
       - name: git clone
         uses: myci-actions/checkout@master
       - name: set PACKAGE_VERSION
@@ -134,8 +135,7 @@ jobs:
         repo: deb http://gagis.hopto.org/repo/cppfw/$(lsb_release --id --short | tr '[:upper:]' '[:lower:]') $(lsb_release --codename --short) main
         repo-name: cppfw
         key-server: http://gagis.hopto.org/repo/cppfw/pubkey.gpg
-    - name: install ci tools
-      run: apt --quiet install --assume-yes myci
+        install: myci
     - name: set PACKAGE_VERSION
       uses: myci-actions/export-env-var@master
       with: {name: PACKAGE_VERSION, value: $(myci-deb-version.sh debian/changelog)}
@@ -177,6 +177,7 @@ jobs:
         url: http://gagis.hopto.org/repo/cppfw/msys2/msys
         shell: 'msys2 {0}'
         key-server: http://gagis.hopto.org/repo/cppfw/pubkey.gpg
+        insatll: myci
     # - name: add cppfw pacman msys/mingw repo
     #   uses: myci-actions/add-pacman-repo@master
     #   with:
@@ -184,8 +185,6 @@ jobs:
     #     url: http://gagis.hopto.org/repo/cppfw/msys2/${{ matrix.repo }}
     #     shell: 'msys2 {0}'
     #     key-server: http://gagis.hopto.org/repo/cppfw/pubkey.gpg
-    - name: install ci tools
-      run: pacman -Sy --noconfirm myci
     - name: git clone
       uses: myci-actions/checkout@master
     - name: prepare pacman package
@@ -250,9 +249,7 @@ jobs:
           repo: deb http://gagis.hopto.org/repo/cppfw/${{ matrix.os }} ${{ matrix.codename }} main
           repo-name: cppfw
           key-server: http://gagis.hopto.org/repo/cppfw/pubkey.gpg
-      - name: install ci tools
-        run: |
-          apt --quiet install --assume-yes devscripts equivs myci prorab prorab-extra python3-pip cmake git
+          install: devscripts equivs myci prorab prorab-extra python3-pip cmake git
       - name: install conan
         run: |
           pip3 --quiet install conan
