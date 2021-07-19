@@ -285,6 +285,7 @@ jobs:
         run: |
           brew tap cppfw/tap
           brew update
+      # NOTE: the preinstalled make is old and sometimes crashes, so install latest make
       - name: install ci tools
         run: brew install myci prorab prorab-extra conan make
       - name: set PATH to use latest make
