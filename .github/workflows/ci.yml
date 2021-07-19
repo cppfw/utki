@@ -296,7 +296,11 @@ jobs:
       - name: build
         run: |
           conan remote add cppfw $MYCI_CONAN_REMOTE
-          conan create conan $MYCI_CONAN_USER/main --ignore-dirty
+
+          # For some reason on CI machine the 'conan create conan $MYCI_CONAN_USER/main --ignore-dirty' crashes,
+          # so do 'conan create conan --ignore-dirty' and then copy to user/channel
+          conan create conan --ignore-dirty
+          conan copy --all $PACKAGE_NAME/$PACKAGE_VERSION@ $MYCI_CONAN_USER/main
       - name: deploy conan package
         run: |
           conan user --remote cppfw --password $MYCI_CONAN_PASSWORD $MYCI_CONAN_USER
