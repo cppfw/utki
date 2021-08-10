@@ -7,13 +7,14 @@ class Libutki < Formula
   depends_on "prorab" => :build
   depends_on "prorab-extra" => :build
 
+  # use gmake here because otherwise homebrew uses default Mac's make which is of old version 3.81 which has bugs
   def install
     ENV['PATH'] += ':/usr/local/bin'
-    system "make", "--directory", "src", "install", "PREFIX=#{prefix}"
+    system "/usr/local/opt/make/libexec/gnubin/make", "install", "PREFIX=#{prefix}"
   end
 
   test do
 	# tests require submodules, so skip those in homebrew recepie
-#    system "make", "test"
+#    system "/usr/local/opt/make/libexec/gnubin/make", "test"
   end
 end
