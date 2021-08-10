@@ -1,3 +1,9 @@
+libutki (1.1.157) unstable; urgency=medium
+
+  * fix macosx build
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 10 Aug 2021 14:58:59 +0300
+
 libutki (1.1.156) unstable; urgency=medium
 
   * use latest make in homebrew formulae
