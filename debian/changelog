@@ -1,3 +1,9 @@
+libutki (1.1.156) unstable; urgency=medium
+
+  * use latest make in homebrew formulae
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 10 Aug 2021 14:33:02 +0300
+
 libutki (1.1.155) unstable; urgency=medium
 
   * fix install
