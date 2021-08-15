@@ -1,9 +1,13 @@
 include prorab.mk
 
+$(eval $(call prorab-include, ../../src/makefile))
+
 clargs_cfg := rel_no_install
 tst_cfg := no_par_no_install
 
+# load config in order to resolve 'c' and 'config' in case of default config
 $(eval $(call prorab-config, ../../config))
+
 $(eval $(call prorab-depend, \
 		clargs/src/out/$(clargs_cfg)/libclargs$(dot_so), \
 		../../src/out/$(c)/libutki$(dot_so) \
