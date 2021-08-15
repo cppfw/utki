@@ -26,6 +26,10 @@ SOFTWARE.
 
 #pragma once
 
+#include "config.hpp"
+
+#if M_COMPILER != M_COMPILER_MSVC || M_COMPILER_MSVC_TOOLS_V >= 142
+
 #include <functional>
 #include <vector>
 #include <map>
@@ -203,3 +207,5 @@ template <typename C> linq_collection_aggregator<C&&> linq(C&& collection){
 }
 
 }
+
+#endif // ~ non-MSVC compiler or MSVC compiler tools >= v142

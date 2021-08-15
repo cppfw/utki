@@ -32,6 +32,8 @@ SOFTWARE.
 
 #include <variant>
 
+#include "config.hpp"
+
 namespace utki{
 
 template <size_t type_size> struct uint_size;
@@ -95,12 +97,15 @@ class dummy_class{};
 template <typename> struct tag { };
 template <typename T, typename V> struct get_index;
 
+// MSVC compiler prior to tools v142 doesn't compile this
+#if M_COMPILER != M_COMPILER_MSVC || M_COMPILER_MSVC_TOOLS_V >= 142
 /**
  * @brief Get variant's alternative index by its type in compile time.
  */
 template <typename T, typename... Ts> struct get_index<T, std::variant<Ts...>> :
 		std::integral_constant<size_t, std::variant<tag<Ts>...>(tag<T>()).index()>
 {};
+#endif
 
 template <class T, class = void> struct is_type_defined : std::false_type{};
 /**

@@ -5,6 +5,10 @@
 
 #include <utki/linq.hpp>
 
+#include <utki/config.hpp>
+
+#if M_COMPILER != M_COMPILER_MSVC || M_COMPILER_MSVC_TOOLS_V >= 142
+
 namespace{
 tst::set set("linq", [](tst::suite& suite){
 	suite.add(
@@ -309,3 +313,5 @@ tst::set set("linq", [](tst::suite& suite){
 	);
 });
 }
+
+#endif // ~ non-MSVC compiler or MSVC compiler tools >= v142

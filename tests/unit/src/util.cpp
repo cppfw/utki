@@ -110,6 +110,7 @@ tst::set set("util", [](tst::suite& suite){
 		}
 	);
 
+#if M_COMPILER != M_COMPILER_MSVC || M_COMPILER_MSVC_TOOLS_V >= 142
 	suite.add(
 		"variant_get_index",
 		[](){
@@ -156,5 +157,7 @@ tst::set set("util", [](tst::suite& suite){
 			tst::check(res == expected, SL);
 		}
 	);
+#endif // ~ non-MSVC compiler or MSVC compiler tools >= v142
+
 });
 }

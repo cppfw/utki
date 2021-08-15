@@ -1,3 +1,7 @@
+#include <utki/config.hpp>
+
+#if M_COMPILER != M_COMPILER_MSVC || M_COMPILER_MSVC_TOOLS_V >= 142
+
 #include <tst/set.hpp>
 #include <tst/check.hpp>
 
@@ -5,7 +9,6 @@
 
 using namespace std::string_literals;
 using namespace std::string_view_literals;
-
 
 namespace{
 tst::set set("unicode", [](tst::suite& suite){
@@ -198,3 +201,5 @@ tst::set set("unicode", [](tst::suite& suite){
 	);
 });
 }
+
+#endif // ~ non-MSVC compiler or MSVC compiler tools >= v142
