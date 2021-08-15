@@ -1,3 +1,9 @@
+libutki (1.1.159) unstable; urgency=medium
+
+  * msvs: build for v141 tools
+
+ -- Ivan Gagis <igagis@gmail.com>  Sun, 15 Aug 2021 13:05:25 +0300
+
 libutki (1.1.158) unstable; urgency=medium
 
   * homebrew: install from src dir
