@@ -311,6 +311,45 @@ tst::set set("linq", [](tst::suite& suite){
 			tst::check(!in.begin()->second.empty(), SL);
 		}
 	);
+
+	suite.add(
+		"select_shared_ptr",
+		[](){
+			struct test_struct{
+				bool& destroyed;
+				test_struct(bool& destroyed) : destroyed(destroyed){}
+				~test_struct()noexcept(false){
+					this->destroyed = true;
+				}
+			};
+
+			bool destroyed = false;
+
+			struct wrapper{
+				std::shared_ptr<test_struct> ts;
+				int dummy;
+
+				~wrapper()noexcept(false){}
+			};
+
+			std::vector<wrapper> vec{
+				{ std::make_shared<test_struct>(destroyed), 10 },
+				{ std::make_shared<test_struct>(destroyed), 13 }
+			};
+
+			auto res = utki::linq(vec).select([](const auto& i) -> std::shared_ptr<const test_struct> {
+				return i.ts;
+			}).get();
+
+			vec.clear();
+
+			tst::check(!destroyed, SL);
+
+			res.clear();
+		
+			tst::check(destroyed, SL);
+		}
+	);
 });
 }
 
