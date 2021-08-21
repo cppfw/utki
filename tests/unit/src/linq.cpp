@@ -330,6 +330,10 @@ tst::set set("linq", [](tst::suite& suite){
 				int dummy;
 
 				~wrapper()noexcept(false){}
+
+				std::shared_ptr<test_struct> get_ts()const{
+					return this->ts;
+				}
 			};
 
 			std::vector<wrapper> vec{
@@ -338,7 +342,7 @@ tst::set set("linq", [](tst::suite& suite){
 			};
 
 			auto res = utki::linq(vec).select([](const auto& i) -> std::shared_ptr<const test_struct> {
-				return i.ts;
+				return i.get_ts();
 			}).get();
 
 			vec.clear();
