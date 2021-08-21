@@ -161,7 +161,7 @@ template <typename T> std::vector<std::basic_string<T>> split(const T* str, T de
  * @param str - string to split to words.
  * @return vector of words.
  */
-std::vector<std::string> split(const std::string_view& str);
+std::vector<std::string> split(std::string_view str);
 
 /**
  * @brief Word wrap string.

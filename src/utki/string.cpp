@@ -86,7 +86,7 @@ std::string utki::make_string(const char* format, ...){
 	return ret;
 }
 
-std::vector<std::string> utki::split(const std::string_view& str){
+std::vector<std::string> utki::split(std::string_view str){
 	std::vector<std::string> ret;
 
 	std::vector<char> buf;
