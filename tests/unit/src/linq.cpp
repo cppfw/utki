@@ -318,7 +318,7 @@ tst::set set("linq", [](tst::suite& suite){
 			struct test_struct{
 				bool& destroyed;
 				test_struct(bool& destroyed) : destroyed(destroyed){}
-				~test_struct()noexcept(false){
+				~test_struct(){
 					this->destroyed = true;
 				}
 			};
@@ -329,7 +329,7 @@ tst::set set("linq", [](tst::suite& suite){
 				std::shared_ptr<test_struct> ts;
 				int dummy;
 
-				~wrapper()noexcept(false){}
+				~wrapper(){}
 
 				std::shared_ptr<test_struct> get_ts()const{
 					return this->ts;
