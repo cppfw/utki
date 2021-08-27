@@ -1,3 +1,9 @@
+libutki (1.1.160) unstable; urgency=medium
+
+  * add split(basic_string)
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 27 Aug 2021 15:06:48 +0300
+
 libutki (1.1.159) unstable; urgency=medium
 
   * msvs: build for v141 tools
