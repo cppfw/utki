@@ -119,8 +119,8 @@ inline std::string make_string(const std::vector<uint8_t>& buf){
 }
 
 /**
- * @brief Split string using given delimiter.
- * @param str - string to split.
+ * @brief Split string view using given delimiter.
+ * @param str - string view to split.
  * @param delimiter - delimiter character to use as a splitter.
  * @return vector of splitted strings.
  */
@@ -142,6 +142,21 @@ template <typename T> std::vector<std::basic_string<T>> split(std::basic_string_
 	}
 
 	return ret;
+}
+
+/**
+ * @brief Split string using given delimiter.
+ * @param str - string to split.
+ * @param delimiter - delimiter character to use as a splitter.
+ * @return vector of splitted strings.
+ */
+template <typename char_type>
+std::vector<std::basic_string<char_type>> split(
+		const std::basic_string<char_type>& str,
+		char_type delimiter
+	)
+{
+	return split(std::basic_string_view<char_type>(str), delimiter);
 }
 
 /**

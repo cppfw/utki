@@ -92,7 +92,7 @@ tst::set set("string", [](tst::suite& suite){
 	);
 
 	suite.add(
-		"split",
+		"split_const_char_ptr",
 		[](){
 			auto str = "qwe/rtyu/io/p//[]";
 
@@ -126,9 +126,43 @@ tst::set set("string", [](tst::suite& suite){
 	);
 
 	suite.add(
+		"split_string",
+		[](){
+			auto str = "qwe/rtyu/io/p//[]"s;
+
+			auto r = utki::split(str, '/');
+
+			tst::check_eq(r.size(), size_t(6), [&](auto&o){o << "r.size() = " << r.size();}, SL);
+			tst::check_eq(r[0], "qwe"s, SL);
+			tst::check_eq(r[1], "rtyu"s, SL);
+			tst::check_eq(r[2], "io"s, SL);
+			tst::check_eq(r[3], "p"s, SL);
+			tst::check_eq(r[4], ""s, SL);
+			tst::check_eq(r[5], "[]"s, SL);
+		}
+	);
+
+	suite.add(
 		"split_u32string_view",
 		[](){
 			auto str = U"qwe/rtyu/io/p//[]"sv;
+
+			auto r = utki::split(str, U'/');
+
+			tst::check_eq(r.size(), size_t(6), [&](auto&o){o << "r.size() = " << r.size();}, SL);
+			tst::check(r[0] == U"qwe"s, SL);
+			tst::check(r[1] == U"rtyu"s, SL);
+			tst::check(r[2] == U"io"s, SL);
+			tst::check(r[3] == U"p"s, SL);
+			tst::check(r[4] == U""s, SL);
+			tst::check(r[5] == U"[]"s, SL);
+		}
+	);
+
+	suite.add(
+		"split_u32string",
+		[](){
+			auto str = U"qwe/rtyu/io/p//[]"s;
 
 			auto r = utki::split(str, U'/');
 
