@@ -1,3 +1,9 @@
+libutki (1.1.161) unstable; urgency=medium
+
+  * build for debian bullseye
+
+ -- Ivan Gagis <igagis@gmail.com>  Sun, 29 Aug 2021 19:56:26 +0300
+
 libutki (1.1.160) unstable; urgency=medium
 
   * add split(basic_string)
