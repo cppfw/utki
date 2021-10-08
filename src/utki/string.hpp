@@ -172,7 +172,7 @@ template <typename T> std::vector<std::basic_string<T>> split(const T* str, T de
 /**
  * @brief Split string to separate words.
  * Delimiter for splitting is any sequence of whitespaces.
- * Whitespace includes space, tab, newline characters.
+ * Whitespace includes space, tab, new line characters.
  * @param str - string to split to words.
  * @return vector of words.
  */
