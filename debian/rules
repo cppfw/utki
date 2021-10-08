@@ -1,11 +1,10 @@
 #!/usr/bin/make -f
 
-dbgsrc_pkg_name := $(filter %-dbgsrc, $(shell awk '/^Package: /{print $2}' debian/control))
-debug_prefix_map_arg := -fdebug-prefix-map=$(shell pwd)/src=/usr/src/$(patsubst %-dbgsrc,%,$(dbgsrc_pkg_name))
-
-$(info debug_prefix_map_arg = $(debug_prefix_map_arg))
-
 export PREFIX := /usr
+
+dbgsrc_pkg_name := $(filter %-dbgsrc, $(shell awk '/^Package: /{print $2}' debian/control))
+debug_prefix_map_arg := -fdebug-prefix-map=$(shell pwd)/src=$(PREFIX)/src/$(patsubst %-dbgsrc,%,$(dbgsrc_pkg_name))
+
 export PRORAB_INSTALL_DBGSRC := true
 
 export DEB_CFLAGS_MAINT_APPEND := $(debug_prefix_map_arg)
