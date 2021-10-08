@@ -13,17 +13,16 @@ Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: cross-platform C++ file system library.
  Different C++ utility classes and functions.
 
-Package: libutki$(soname)-dbg
+Package: libutki$(soname)-dbgsrc
 Section: debug
 Architecture: any
-Depends: libutki$(soname) (= ${binary:Version}), ${misc:Depends}
-Description: debugging symbols for libutki$(soname) package.
-
+Depends: libutki$(soname)-dbgsym (= ${binary:Version}), ${misc:Depends}
+Description: sources for debugger for libutki$(soname) package.
 
 Package: libutki-dev
 Section: libdevel
 Architecture: all
-Depends: libutki$(soname) (= ${binary:Version}), libutki$(soname)-dbg (= ${binary:Version}), ${misc:Depends}
+Depends: libutki$(soname) (= ${binary:Version}), ${misc:Depends}
 Suggests: libutki-doc
 Description: cross-platform C++ utility library.
  Different C++ utility classes and functions.
