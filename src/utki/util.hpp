@@ -99,7 +99,7 @@ public:
 		return std::move(this->f);
 	}
 
-	[[deprecated]]
+	[[deprecated("use scope_exit::release()")]]
 	decltype(f) reset()noexcept{
 		return this->release();
 	}
