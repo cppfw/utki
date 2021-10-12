@@ -1,10 +1,10 @@
 [submodule "tests/harness/clargs"]
 	path = tests/harness/clargs
 	url = ../../cppfw/clargs
-	branch = latest
+	branch = master
 #	ignore = dirty
 [submodule "tests/harness/tst"]
 	path = tests/harness/tst
 	url = ../../cppfw/tst
-	branch = latest
+	branch = master
 #	ignore = dirty
