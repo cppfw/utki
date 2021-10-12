@@ -78,7 +78,7 @@ tst::set set("util", [](tst::suite& suite){
 	);
 
 	suite.add(
-		"scope_exit_reset",
+		"scope_exit_release",
 		[](){
 			bool flag = false;
 			{
@@ -86,7 +86,7 @@ tst::set set("util", [](tst::suite& suite){
 					flag = true;
 				});
 				
-				se.reset();
+				se.release();
 			}
 			tst::check(!flag, SL);
 		}

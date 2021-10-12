@@ -95,10 +95,13 @@ public:
 	 * This function disarms the scope_exit object, so that it will not do any action on destruction.
 	 * @return the previous function which had to be executed on object's destruction.
 	 */
+	decltype(f) release()noexcept{
+		return std::move(this->f);
+	}
+
+	[[deprecated]]
 	decltype(f) reset()noexcept{
-		auto ret = std::move(this->f);
-		this->f = nullptr;
-		return ret;
+		return this->release();
 	}
 };
 
