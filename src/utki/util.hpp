@@ -96,7 +96,9 @@ public:
 	 * @return the previous function which had to be executed on object's destruction.
 	 */
 	decltype(f) release()noexcept{
-		return std::move(this->f);
+		auto ret = std::move(this->f);
+		this->f = nullptr;
+		return ret;
 	}
 
 	[[deprecated("use scope_exit::release()")]]
