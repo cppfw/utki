@@ -1,3 +1,9 @@
+libutki (1.1.162) unstable; urgency=medium
+
+  * rename scope_exit::reset -> release
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 12 Oct 2021 18:35:58 +0300
+
 libutki (1.1.161) unstable; urgency=medium
 
   * build for debian bullseye
