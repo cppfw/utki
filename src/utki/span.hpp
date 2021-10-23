@@ -30,6 +30,7 @@ SOFTWARE.
 #include <vector>
 #include <ostream>
 #include <cstring>
+#include <limits>
 
 #ifdef DEBUG
 #	include <iostream>
