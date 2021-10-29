@@ -128,7 +128,7 @@ jobs:
     - name: upload build artifacts to github
       uses: actions/upload-artifact@v2
       with:
-        name: ${{ env.PACKAGE_NAME }}-${{ env.PACKAGE_VERSION }}.zip
+        name: cocoapods-${{ env.PACKAGE_NAME }}-${{ env.PACKAGE_VERSION }}.zip
         path: ${{ env.PACKAGE_NAME }}-${{ env.PACKAGE_VERSION }}.zip
     - name: deploy
       run: |
