@@ -1,3 +1,9 @@
+libutki (1.1.165) unstable; urgency=medium
+
+  * build for ios 9.0
+
+ -- Ivan Gagis <igagis@gmail.com>  Sun, 31 Oct 2021 14:21:10 +0200
+
 libutki (1.1.164) unstable; urgency=medium
 
   * ios: build as framework instead of lib
