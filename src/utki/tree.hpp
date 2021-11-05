@@ -38,9 +38,9 @@ namespace utki{
  * @brief N-ary tree data structure.
  * This class represents a tree node.
  * Each instance of tree node contains some value and a list of children tree nodes.
- * @param T - the tree node data type.
- * @param C - the container type the tree is based on.
- * @param A - memory allocator.
+ * @tparam T - the tree node data type.
+ * @tparam C - the container type the tree is based on.
+ * @tparam A - memory allocator.
  */
 template <
 		class T,
@@ -192,7 +192,7 @@ public:
  * This class is a wrapper class which provides STL-like container interface which
  * allows traversal of the tree data structure.
  * The traversal is done in pre-order, i.e. first the parent node is visited, then its child nodes are visited.
- * @param C - container type the tree is based on.
+ * @tparam C - container type the tree is based on.
  */
 template <class C> class traversal{
 	static_assert(
