@@ -232,5 +232,49 @@ tst::set set("flags", [](tst::suite& suite){
 			tst::check_eq(flags, int(1), SL);
 		}
 	);
+
+	suite.add(
+		"operator_not_equals",
+		[](){
+			utki::flags<TestEnum> flags1{TestEnum::EIGHTH, TestEnum::ELEVENTH};
+			tst::check(!flags1.is_clear(), SL);
+			tst::check(!flags1.is_set(), SL);
+
+			utki::flags<TestEnum> flags2;
+			tst::check(flags2.is_clear(), SL);
+			tst::check(!flags2.is_set(), SL);
+
+			tst::check_ne(flags1, flags2, SL);
+
+			tst::check_ne(flags1, {TestEnum::EIGHTH}, SL);
+			tst::check_ne(flags1, {TestEnum::EIGHTH, TestEnum::TWELVETH}, SL);
+			tst::check_ne(flags1, {TestEnum::EIGHTH, TestEnum::TWELVETH, TestEnum::THIRTY_FIFTH}, SL);
+
+			tst::check_ne(flags1, TestEnum::EIGHTH | TestEnum::TWELVETH, SL);
+			tst::check_ne(flags1, TestEnum::EIGHTH | TestEnum::TWELVETH | TestEnum::THIRTY_FIFTH, SL);
+		}
+	);
+
+	suite.add(
+		"operator_equals_equals",
+		[](){
+			utki::flags<TestEnum> flags1{TestEnum::EIGHTH, TestEnum::ELEVENTH};
+			tst::check(!flags1.is_clear(), SL);
+			tst::check(!flags1.is_set(), SL);
+
+			utki::flags<TestEnum> flags2;
+			tst::check(flags2.is_clear(), SL);
+			tst::check(!flags2.is_set(), SL);
+
+			flags2.set(TestEnum::EIGHTH);
+			flags2.set(TestEnum::ELEVENTH);
+
+			tst::check_eq(flags1, flags2, SL);
+
+			tst::check_eq(flags1, {TestEnum::EIGHTH, TestEnum::ELEVENTH}, SL);
+
+			tst::check_eq(flags1, TestEnum::EIGHTH | TestEnum::ELEVENTH, SL);
+		}
+	);
 });
 }

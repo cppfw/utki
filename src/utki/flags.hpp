@@ -204,6 +204,26 @@ public:
 	}
 
 	/**
+	 * @brief Operator NOT EQUALS.
+	 * @param f - other set of flags to compare this one to.
+	 * @return false if flags set/unset are matching.
+	 * @return true otherwise.
+	 */
+	bool operator!=(const flags& f)const{
+		return this->bitset != f.bitset;
+	}
+
+	/**
+	 * @brief Operator LOGIC EQUALS.
+	 * @param f - other set of flags to compare this one to.
+	 * @return true if flags set/unset are matching.
+	 * @return false otherwise.
+	 */
+	bool operator==(const flags& f)const{
+		return this->bitset == f.bitset;
+	}
+
+	/**
 	 * @brief Operator NOT.
 	 * @return Inverted instance of Flags.
 	 */
