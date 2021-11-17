@@ -1,3 +1,9 @@
+libutki (1.1.166) unstable; urgency=medium
+
+  * add flags::operator!=() and flags::operator==()
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 18 Nov 2021 00:04:34 +0200
+
 libutki (1.1.165) unstable; urgency=medium
 
   * build for ios 9.0
