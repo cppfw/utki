@@ -69,10 +69,6 @@ static_assert(
 
 namespace{
 tst::set set("sort", [](tst::suite& suite){
-	suite.add("compile_time_sort", []{
-		tst::check(test_compile_time_sorting::arr == test_compile_time_sorting::expected, SL);
-	});
-
 	suite.add("sort_strings_with_default_comparator", []{
 		std::array<std::string, 5> arr = {{
 			"hello",
