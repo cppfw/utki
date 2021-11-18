@@ -8,6 +8,7 @@
 
 using namespace std::string_view_literals;
 
+#if M_COMPILER != M_COMPILER_MSVC || M_COMPILER_MSVC_TOOLS_V >= 142
 namespace{
 namespace test_compile_time_sorting{
 struct str_num_pair{
@@ -64,6 +65,7 @@ static_assert(
 	);
 }
 }
+#endif
 
 namespace{
 tst::set set("sort", [](tst::suite& suite){
