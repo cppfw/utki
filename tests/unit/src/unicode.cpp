@@ -24,17 +24,17 @@ tst::set set("unicode", [](tst::suite& suite){
 			
 			utki::utf8_iterator i(reinterpret_cast<char*>(str.data()));
 			
-			tst::check_eq(i.character(), U'a', SL);
+			tst::check_eq(uint32_t(i.character()), uint32_t(U'a'), SL);
 			++i;
-			tst::check_eq(i.character(), char32_t(0x0411), [&](auto&o){o << "i.Char() = " << i.character();}, SL); // capital russian B
+			tst::check_eq(uint32_t(i.character()), uint32_t(0x0411), [&](auto&o){o << "i.character() = " << uint32_t(i.character());}, SL); // capital russian B
 			++i;
-			tst::check_eq(i.character(), char32_t(0x0446), SL); // small russian C
+			tst::check_eq(uint32_t(i.character()), uint32_t(0x0446), SL); // small russian C
 			++i;
-			tst::check_eq(i.character(), char32_t(0xfeb6), [&](auto&o){o << "i.Char() = " << i.character();}, SL); // some arabic stuff
+			tst::check_eq(uint32_t(i.character()), uint32_t(0xfeb6), [&](auto&o){o << "i.character() = " << uint32_t(i.character());}, SL); // some arabic stuff
 			++i;
-			tst::check_eq(i.character(), char32_t(0x2000b), [&](auto&o){o << "i.Char() = " << i.character();}, SL); // some compatibility char
+			tst::check_eq(uint32_t(i.character()), uint32_t(0x2000b), [&](auto&o){o << "i.character() = " << uint32_t(i.character());}, SL); // some compatibility char
 			++i;
-			tst::check_eq(i.character(), char32_t(0), [&](auto&o){o << "i.Char() = " << i.character();}, SL);
+			tst::check_eq(uint32_t(i.character()), uint32_t(0), [&](auto&o){o << "i.character() = " << uint32_t(i.character());}, SL);
 			tst::check(i.is_end(), SL);
 		}
 	);
@@ -145,12 +145,12 @@ tst::set set("unicode", [](tst::suite& suite){
 						o << "str = " << utki::to_utf8(str) << '\n';
 						o << "str = ";
 						for(auto c : str){
-							o << std::hex << "0x" << c << ", ";
+							o << std::hex << "0x" << uint32_t(c) << ", ";
 						}
 						o << std::endl;
 						o << "expected = ";
 						for (char32_t c : expected) {
-							o << std::hex << "0x" << c << ", ";
+							o << std::hex << "0x" << uint32_t(c) << ", ";
 						}
 					},
 					SL
@@ -171,7 +171,7 @@ tst::set set("unicode", [](tst::suite& suite){
 					[&](auto& o) {
 						o << "str = " << utki::to_utf8(str) << '\n';
 						for (auto c : str) {
-							o << std::hex << "0x" << c << ", ";
+							o << std::hex << "0x" << uint32_t(c) << ", ";
 						}
 					},
 					SL
@@ -192,7 +192,7 @@ tst::set set("unicode", [](tst::suite& suite){
 					[&](auto& o) {
 						o << "str = " << utki::to_utf8(str) << '\n';
 						for (auto c : str) {
-							o << std::hex << "0x" << c << ", ";
+							o << std::hex << "0x" << uint32_t(c) << ", ";
 						}
 					},
 					SL
