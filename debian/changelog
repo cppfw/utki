@@ -1,3 +1,9 @@
+libutki (1.1.167) unstable; urgency=medium
+
+  * add utki::sort()
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 19 Nov 2021 02:08:50 +0200
+
 libutki (1.1.166) unstable; urgency=medium
 
   * add flags::operator!=() and flags::operator==()
