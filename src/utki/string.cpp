@@ -41,7 +41,7 @@ std::string utki::make_string_va_list(const char* format, va_list args){
 
 	std::string ret;
 
-	auto buf_ptr = &*buf.begin();
+	auto buf_ptr = buf.data();
 	auto buf_size = buf.size();
 
 	va_list cur_args;

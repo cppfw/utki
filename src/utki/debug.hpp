@@ -120,8 +120,8 @@ void log(const std::function<void(std::ostream&)>& print);
 namespace utki{
 
 // backport of std::source_location
-struct source_location {
-    constexpr source_location(
+struct source_location{
+	constexpr source_location(
 			uint_least32_t l = 0,
 			uint_least32_t c = 0,
 			char const* fn = nullptr,
@@ -131,24 +131,37 @@ struct source_location {
 			column_{c},
 			file_name_{fn},
 			function_name_{fnn} 
-    {}
+	{}
 
 #if M_CPP >= 20
 	constexpr source_location(const std_source_location& sl) :
-			source_location(sl.line(), sl.column(), sl.file_name(), sl.function_name())
+			source_location(
+					sl.line(),
+					sl.column(),
+					sl.file_name(),
+					sl.function_name()
+				)
 	{}
 #endif
 
-    constexpr auto line() const noexcept            -> uint_least32_t   { return line_; }
-    constexpr auto column() const noexcept          -> uint_least32_t   { return column_; }
-    constexpr auto file_name() const noexcept       -> char const*      { return file_name_; }
-    constexpr auto function_name() const noexcept   -> char const*      { return function_name_; }
+	constexpr auto line()const noexcept -> uint_least32_t {
+		return this->line_;
+	}
+	constexpr auto column()const noexcept -> uint_least32_t {
+		return this->column_;
+	}
+	constexpr auto file_name()const noexcept -> char const* {
+		return this->file_name_;
+	}
+	constexpr auto function_name()const noexcept -> char const* {
+		return this->function_name_;
+	}
 
-    private:
-        uint_least32_t line_;
-        uint_least32_t column_;
-        char const* file_name_;
-        char const* function_name_;
+private:
+	uint_least32_t line_;
+	uint_least32_t column_;
+	char const* file_name_;
+	char const* function_name_;
 };
 }
 
