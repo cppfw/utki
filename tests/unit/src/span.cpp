@@ -377,5 +377,15 @@ tst::set set("span", [](tst::suite& suite){
 			tst::check(utki::make_span(v1) <= utki::make_span(v2).subspan(1, 5), SL);
 		}
 	);
+
+	suite.add(
+		"method_empty",
+		[]{
+			std::vector<size_t> v1;
+			utki::span<size_t> s(v1);
+
+			tst::check(s.empty(), SL);
+		}
+	);
 });
 }
