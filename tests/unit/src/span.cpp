@@ -7,6 +7,8 @@
 
 using namespace std::string_literals;
 
+template class utki::span<int>;
+
 namespace{
 tst::set set("span", [](tst::suite& suite){
 	suite.add(

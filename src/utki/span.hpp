@@ -90,23 +90,27 @@ public:
 	
 	/**
 	 * @brief Constructor for automatic conversion from nullptr.
-     */
+	 */
 	span(std::nullptr_t)noexcept :
 			buf(nullptr),
 			buf_size(0)
 	{}
 
 	/**
-	 * @brief Constructor for automatic conversion to span<const T>.
+	 * @brief Constructor for automatic conversion to span<const T> or other convertible type.
 	 * @param sp - span to convert.
 	 */
-	span(const span<
-			typename std::conditional<
-					std::is_const<T>::value,
-					typename std::remove_const<T>::type,
-					const dummy_class // nobody will use span<const dumy_class> so this construtor will not be called for non-const T
-				>::type
-		>& sp) :
+	template<
+			typename TT,
+			typename std::enable_if_t<
+					std::is_convertible_v<
+							TT(*)[],
+							T(*)[]
+						>,
+					bool
+				> = true
+		>
+	constexpr span(const span<TT>& sp)noexcept :
 			buf(sp.data()),
 			buf_size(sp.size())
 	{}
@@ -125,7 +129,17 @@ public:
 			span(v.data(), v.size())
 	{}
 
-	span(const std::vector<typename std::remove_const<T>::type>& v) :
+	template<
+			typename TT,
+			typename std::enable_if_t<
+					std::is_convertible_v<
+							TT(*)[],
+							const T(*)[]
+						>,
+					bool
+				> = true
+		>
+	span(const std::vector<TT>& v) :
 			span(v.data(), v.size())
 	{}
 
@@ -133,15 +147,45 @@ public:
 			span(v.data(), v.size())
 	{}
 
-	span(const std::basic_string<typename std::remove_const<T>::type>& v) :
+	template<
+			typename TT,
+			typename std::enable_if_t<
+					std::is_convertible_v<
+							TT(*)[],
+							const T(*)[]
+						>,
+					bool
+				> = true
+		>
+	span(const std::basic_string<TT>& v) :
 			span(v.data(), v.size())
 	{}
 
-	span(std::basic_string_view<typename std::remove_const<T>::type> v) :
+	template<
+			typename TT,
+			typename std::enable_if_t<
+					std::is_convertible_v<
+							TT(*)[],
+							const T(*)[]
+						>,
+					bool
+				> = true
+		>
+	span(std::basic_string_view<TT> v) :
 			span(v.data(), v.size())
 	{}
 
-	span(const char* v) :
+	template<
+			typename TT,
+			typename std::enable_if_t<
+					std::is_convertible_v<
+							TT(*)[],
+							const char(*)[]
+						>,
+					bool
+				> = true
+		>
+	span(TT* v) :
 			span(v, strlen(v))
 	{}
 
