@@ -7,7 +7,9 @@
 
 using namespace std::string_literals;
 
+// declare templates to instantiate all template methods to include all methods to gcov coverage
 template class utki::span<int>;
+template class utki::span<const int>;
 
 namespace{
 tst::set set("span", [](tst::suite& suite){
