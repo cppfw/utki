@@ -12,3 +12,6 @@ this_cxxflags += -fprofile-arcs
 # this_cxxflags += -fno-inline -fno-inline-small-functions -fno-default-inline
 
 this_ldflags += --coverage
+
+# TODO: remove if not needed
+this_ldflags += -fno-inline -fno-inline-small-functions -fno-default-inline
