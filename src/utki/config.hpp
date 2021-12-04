@@ -53,6 +53,9 @@ SOFTWARE.
 
 #if defined(__GNUC__) || defined(__GNUG__)
 #	define M_COMPILER M_COMPILER_GCC
+#	define M_COMPILER_VERSION_MAJOR __GNUC__
+#	define M_COMPILER_VERSION_MINOR __GNUC_MINOR__
+#	define M_COMPILER_VERSION_PATCH __GNUC_PATCHLEVEL__
 #elif defined(_MSC_VER)
 #	define M_COMPILER M_COMPILER_MSVC
 #	if _MSC_VER < 1916
