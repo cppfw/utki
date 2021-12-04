@@ -32,9 +32,7 @@ SOFTWARE.
 #include <cstddef>
 #include <memory>
 
-#if (M_COMPILER != M_COMPILER_GCC || M_COMPILER_VERSION_MAJOR >= 7)
-#	include <variant>
-#endif
+#include <variant>
 
 namespace utki{
 
@@ -100,7 +98,7 @@ template <typename> struct tag { };
 template <typename T, typename V> struct get_index;
 
 // MSVC compiler prior to tools v142 doesn't compile this
-#if (M_COMPILER != M_COMPILER_MSVC || M_COMPILER_MSVC_TOOLS_V >= 142) && (M_COMPILER != M_COMPILER_GCC || M_COMPILER_VERSION_MAJOR >= 7)
+#if M_COMPILER != M_COMPILER_MSVC || M_COMPILER_MSVC_TOOLS_V >= 142
 /**
  * @brief Get variant's alternative index by its type in compile time.
  */
