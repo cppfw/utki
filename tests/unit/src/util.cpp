@@ -110,7 +110,7 @@ tst::set set("util", [](tst::suite& suite){
 		}
 	);
 
-#if M_COMPILER != M_COMPILER_MSVC || M_COMPILER_MSVC_TOOLS_V >= 142
+#if M_CPP >= 17 && (M_COMPILER != M_COMPILER_MSVC || M_COMPILER_MSVC_TOOLS_V >= 142)
 	suite.add(
 		"variant_get_index",
 		[](){
