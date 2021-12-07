@@ -76,7 +76,7 @@ jobs:
           hide_complexity: false
           indicators: true
           output: both
-          thresholds: '10 20'
+          thresholds: '90 95'
       - name: publish coverage summary
         uses: LouisBrunner/checks-action@v1.2.0
         with:
