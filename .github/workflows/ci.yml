@@ -20,7 +20,7 @@ jobs:
   coverage:
     runs-on: ubuntu-latest
     container: debian:bullseye
-    name: coverage
+    name: measure coverage
     env:
       linux_distro: debian
       linux_release: bullseye
@@ -81,16 +81,16 @@ jobs:
         uses: LouisBrunner/checks-action@v1.2.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          name: coverage
+          name: coverage report
           conclusion: ${{ job.status }}
           # output: "{\"summary\":\"Code Coverage\"}"
           output_text_description_file: code-coverage-results.md
-      - name: add coverage summary to pull request
-        uses: marocchino/sticky-pull-request-comment@v2
-        if: github.event_name == 'pull_request'
-        with:
-          recreate: true
-          path: code-coverage-results.md
+      # - name: add coverage summary to pull request
+      #   uses: marocchino/sticky-pull-request-comment@v2
+      #   if: github.event_name == 'pull_request'
+      #   with:
+      #     recreate: true
+      #     path: code-coverage-results.md
 ##### linux #####
   linux:
     strategy:
