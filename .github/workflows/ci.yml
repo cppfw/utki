@@ -83,7 +83,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           name: coverage report
           conclusion: ${{ job.status }}
-          # output: "{\"summary\":\"Code Coverage\"}"
+          output: "{\"summary\":\"code coverage brief report\"}"
           output_text_description_file: code-coverage-results.md
       # - name: add coverage summary to pull request
       #   uses: marocchino/sticky-pull-request-comment@v2
