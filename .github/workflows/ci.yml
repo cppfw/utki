@@ -76,7 +76,7 @@ jobs:
           hide_complexity: false
           indicators: true
           output: both
-          thresholds: '90 95'
+          thresholds: '10 20'
       - name: publish coverage summary
         if: always() # even if previous steps fail, this one needs to be run
         uses: LouisBrunner/checks-action@v1.2.0
@@ -86,12 +86,6 @@ jobs:
           conclusion: ${{ job.status }}
           output: "{\"summary\":\"code coverage brief report\"}"
           output_text_description_file: code-coverage-results.md
-      # - name: add coverage summary to pull request
-      #   uses: marocchino/sticky-pull-request-comment@v2
-      #   if: github.event_name == 'pull_request'
-      #   with:
-      #     recreate: true
-      #     path: code-coverage-results.md
 ##### linux #####
   linux:
     strategy:
