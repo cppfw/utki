@@ -78,6 +78,7 @@ jobs:
           output: both
           thresholds: '90 95'
       - name: publish coverage summary
+        if: always() # even if previous steps fail, this one needs to be run
         uses: LouisBrunner/checks-action@v1.2.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
