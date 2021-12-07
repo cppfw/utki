@@ -37,7 +37,7 @@ jobs:
           # configure timezone to avoid 'tzdata' package to require user interaction during installation (needed for ubuntu:focal)
           TZ=Europe/Helsinki ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
           
-          apt --quiet install --assume-yes devscripts equivs lcov
+          apt --quiet install --assume-yes devscripts equivs lcov pip
 
           pip install lcov_cobertura
       - name: git clone
