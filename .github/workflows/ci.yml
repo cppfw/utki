@@ -62,7 +62,7 @@ jobs:
       - name: combine lcov coverage data with baseline
         run: lcov --add-tracefile lcov_base.info --add-tracefile lcov_test.info --output-file lcov_all.info
       - name: filter coverage data
-        run: lcov --extract lcov_all.info 'src/*' -o lcov.info
+        run: lcov --extract lcov_all.info "$(pwd)/src/*" -o lcov.info
       - name: generate cobertura report
         run: lcov_cobertura lcov.info --output cobertura.xml
       - name: generate coverage summary in markdown format
