@@ -77,7 +77,7 @@ jobs:
           thresholds: '10 20'
       - name: add coverage summary to pull request
         uses: marocchino/sticky-pull-request-comment@v2
-        # if: github.event_name == 'pull_request'
+        if: github.event_name == 'pull_request'
         with:
           recreate: true
           path: code-coverage-results.md
