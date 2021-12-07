@@ -16,6 +16,7 @@ env:
   CONAN_REVISIONS_ENABLED: 1
   CONAN_SCM_TO_CONANDATA: 1
 jobs:
+##### coverage #####
   coverage:
     runs-on: ubuntu-latest
     container: debian:bullseye
@@ -37,6 +38,8 @@ jobs:
           TZ=Europe/Helsinki ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
           
           apt --quiet install --assume-yes devscripts equivs lcov
+          
+          pip install lcov_cobertura
       - name: git clone
         uses: myci-actions/checkout@master
       - name: prepare debian package
