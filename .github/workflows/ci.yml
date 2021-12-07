@@ -20,7 +20,7 @@ jobs:
   coverage:
     runs-on: ubuntu-latest
     container: debian:bullseye
-    name: measure coverage
+    name: coverage - measure
     env:
       linux_distro: debian
       linux_release: bullseye
@@ -82,7 +82,7 @@ jobs:
         uses: LouisBrunner/checks-action@v1.2.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          name: coverage report
+          name: coverage - report
           conclusion: ${{ job.status }}
           output: "{\"summary\":\"code coverage brief report\"}"
           output_text_description_file: code-coverage-results.md
