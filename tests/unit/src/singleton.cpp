@@ -1,7 +1,10 @@
 #include <tst/set.hpp>
 #include <tst/check.hpp>
 
+#include <utki/config.hpp>
 #include <utki/singleton.hpp>
+
+#if M_COMPILER != M_COMPILER_MSVC
 
 namespace{
 class test_singleton : public utki::singleton<test_singleton>{
@@ -26,3 +29,4 @@ tst::set set("singleton", [](tst::suite& suite){
 	);
 });
 }
+#endif // ~msvc compiler
