@@ -86,6 +86,16 @@ jobs:
           conclusion: ${{ job.status }}
           output: "{\"summary\":\"code coverage brief report\"}"
           output_text_description_file: code-coverage-results.md
+      - name: upload coverage data to codecov.io
+        uses: codecov/codecov-action@v2
+        if: always() # even if previous steps fail, this one needs to be run
+        with:
+          # token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+          files: cobertura.xml
+          # flags: unittests # optional
+          name: codecov-umbrella # optional
+          fail_ci_if_error: true # optional (default = false)
+          verbose: true # optional (default = false)
 ##### linux #####
   linux:
     strategy:
