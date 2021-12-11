@@ -1,3 +1,9 @@
+libutki (1.1.168) unstable; urgency=medium
+
+  * add utki::exception
+
+ -- Ivan Gagis <igagis@gmail.com>  Sat, 11 Dec 2021 20:39:32 +0200
+
 libutki (1.1.167) unstable; urgency=medium
 
   * add utki::sort()
