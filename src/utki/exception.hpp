@@ -35,6 +35,8 @@ namespace utki{
  * @brief Generic exception.
  * 
  * This class allows throwing an std::exception-derived exception with text message.
+ * This exception class is to be mainly used for adding additional text message to already
+ * thrown exception via std::throw_with_nested.
  */
 class exception : public std::exception{
 	std::string message;
