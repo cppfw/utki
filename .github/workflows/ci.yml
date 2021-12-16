@@ -404,8 +404,13 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
 ##### conan - macosx #####
   conan-macosx:
-    name: conan - macosx
-    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {runs-on: macos-10.15}
+          - {runs-on: macos-11}
+    name: conan - ${{ matrix.runs-on }}
     steps:
       - name: clean
         uses: myci-actions/clean@master
