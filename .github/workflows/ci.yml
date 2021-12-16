@@ -407,10 +407,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - {runs-on: macos-10.15}
-          - {runs-on: macos-11}
+        os:
+          - macos-10.15
+          - macos-11
     name: conan - ${{ matrix.runs-on }}
+    runs-on: ${{ matrix.os }}
     steps:
       - name: clean
         uses: myci-actions/clean@master
