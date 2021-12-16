@@ -1,3 +1,9 @@
+libutki (1.1.169) unstable; urgency=medium
+
+  * build conan on different macs
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 16 Dec 2021 17:59:17 +0200
+
 libutki (1.1.168) unstable; urgency=medium
 
   * add utki::exception
