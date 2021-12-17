@@ -34,9 +34,6 @@ jobs:
           install: myci locales git
       - name: install ci tools
         run: |
-          # configure timezone to avoid 'tzdata' package to require user interaction during installation (needed for ubuntu:focal)
-          TZ=Europe/Helsinki ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-          
           apt --quiet install --assume-yes devscripts equivs lcov python3-pip
 
           pip3 install git+https://github.com/eriwen/lcov-to-cobertura-xml.git
