@@ -336,6 +336,34 @@ tst::set set("string", [](tst::suite& suite){
 	);
 
 	suite.add(
+		"make_string_view_from_span_uint8_t_explicit_conversion",
+		[](){
+			std::array<uint8_t, 12> arr = {{'H', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', '!'}};
+			std::vector<uint8_t> vec = {{'H', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', '!'}};
+
+			auto str_arr = utki::make_string_view(utki::make_span(arr));
+			tst::check_eq(str_arr, "Hello world!"sv, SL);
+
+			auto str_vec = utki::make_string_view(utki::make_span(vec));
+			tst::check_eq(str_vec, "Hello world!"sv, SL);
+		}
+	);
+
+	suite.add(
+		"make_string_view_from_span_uint8_t_implicit_conversion",
+		[](){
+			std::array<uint8_t, 12> arr = {{'H', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', '!'}};
+			std::vector<uint8_t> vec = {{'H', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', '!'}};
+
+			auto str_arr = utki::make_string_view(arr);
+			tst::check_eq(str_arr, "Hello world!"sv, SL);
+
+			auto str_vec = utki::make_string_view(vec);
+			tst::check_eq(str_vec, "Hello world!"sv, SL);
+		}
+	);
+
+	suite.add(
 		"make_string_from_array_char",
 		[](){
 			std::array<char, 12> arr = {{'H', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', '!'}};

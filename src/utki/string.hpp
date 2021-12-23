@@ -74,6 +74,15 @@ inline std::string_view make_string_view(utki::span<const char> buf){
 }
 
 /**
+ * @brief Make string_view out of char buffer.
+ * @param buf - char buffer to make the string_view from.
+ * @return string_view pointing to the contents of the char buffer.
+ */
+inline std::string_view make_string_view(utki::span<const uint8_t> buf){
+	return std::string_view(reinterpret_cast<const char*>(buf.data()), buf.size());
+}
+
+/**
  * @brief Make string out of uint8_t buffer.
  * @param buf - uint8_t buffer to make the string from.
  * @return string representing the contents of the uint8_t buffer.
