@@ -1,3 +1,9 @@
+libutki (1.1.171) unstable; urgency=medium
+
+  * build for debian arm64
+
+ -- Ivan Gagis <igagis@gmail.com>  Sat, 05 Feb 2022 17:25:29 +0200
+
 libutki (1.1.170) unstable; urgency=medium
 
   * add make_string_view(span<uint8_t>)
