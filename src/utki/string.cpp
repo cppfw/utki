@@ -70,6 +70,7 @@ std::string utki::make_string_va_list(const char* format, va_list args){
 			buf_ptr = ret.data();
 			buf_size = ret.size() + 1; // NOTE: C++11 guarantees that std::string's internal buffeer has 1 extra byte for null nerminator.
 
+			// after the vsnprintf() call the cur_args remain in altered state, thus, re-initialize it
 			va_end(cur_args);
 			va_copy(cur_args, args);
 		}else{
