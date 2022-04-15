@@ -362,13 +362,13 @@ inline uint64_t deserialize64be(const uint8_t* buf)noexcept{
 	// assume big-endian
 	ret = ((uint64_t(*buf)) << 56);
 	++buf;
-	ret = ((uint64_t(*buf)) << 48);
+	ret |= ((uint64_t(*buf)) << 48);
 	++buf;
-	ret = ((uint64_t(*buf)) << 40);
+	ret |= ((uint64_t(*buf)) << 40);
 	++buf;
-	ret = ((uint64_t(*buf)) << 32);
+	ret |= ((uint64_t(*buf)) << 32);
 	++buf;
-	ret = ((uint64_t(*buf)) << 24);
+	ret |= ((uint64_t(*buf)) << 24);
 	++buf;
 	ret |= ((uint64_t(*buf)) << 16);
 	++buf;
