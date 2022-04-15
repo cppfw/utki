@@ -63,7 +63,7 @@ std::string utki::make_string_va_list(const char* format, va_list args){
 			// resulting string takes more than we have first guessed, allocate enough memory and try again
 			ret.resize(size);
 
-			buf_ptr = &*ret.begin();
+			buf_ptr = ret.data();
 			buf_size = ret.size() + 1; // NOTE: C++11 guarantees that std::string's internal buffeer has 1 extra byte for null nerminator.
 
 			va_copy(cur_args, args);
