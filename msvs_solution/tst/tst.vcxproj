@@ -55,7 +55,7 @@
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{534516a6-03cc-4128-a6d9-31fa91f0ccb3}</ProjectGuid>
     <RootNamespace>tst</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='v142_Debug_MD|Win32'" Label="Configuration">
