@@ -377,7 +377,7 @@ jobs:
           repo: deb http://gagis.hopto.org/repo/cppfw/${{ matrix.os }} ${{ matrix.codename }} main
           repo-name: cppfw
           keys-asc: http://gagis.hopto.org/repo/cppfw/pubkey.gpg
-          install: devscripts equivs myci prorab prorab-extra python3-pip cmake git
+          install: devscripts equivs myci prorab prorab-extra clang-tidy python3-pip cmake git
       - name: install conan
         run: |
           pip3 --quiet install conan
@@ -421,7 +421,7 @@ jobs:
           brew update
       # NOTE: the preinstalled make is old and sometimes crashes, so install latest make
       - name: install ci tools
-        run: brew install myci prorab prorab-extra conan make
+        run: brew install myci prorab prorab-extra clang-tidy conan make
       - name: set PATH to use latest make
         uses: myci-actions/export-env-var@master
         with: {name: PATH, value: "/usr/local/opt/make/libexec/gnubin:$PATH"}
