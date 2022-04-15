@@ -6,7 +6,7 @@ class Libutki < Formula
 
   depends_on "prorab" => :build
   depends_on "prorab-extra" => :build
-  depends_on "clang-tidy" => :build
+  depends_on "fmenezes/tap/clang-tidy" => :build
 
   # use gmake here because otherwise homebrew uses default Mac's make which is of too old version 3.81
   def install
