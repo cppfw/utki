@@ -31,6 +31,7 @@ SOFTWARE.
 #include <cctype> // for std::isspace()
 
 #include "debug.hpp"
+#include "util.hpp"
 
 #include "fast_float/fast_float.hxx"
 
@@ -46,6 +47,9 @@ std::string utki::make_string_va_list(const char* format, va_list args){
 
 	va_list cur_args;
 	va_copy(cur_args, args);
+	utki::scope_exit cur_args_scope_exit([&cur_args](){
+		va_end(cur_args);
+	});
 
 	for(unsigned i = 0;; ++i){
 		int size = vsnprintf(
@@ -66,6 +70,7 @@ std::string utki::make_string_va_list(const char* format, va_list args){
 			buf_ptr = ret.data();
 			buf_size = ret.size() + 1; // NOTE: C++11 guarantees that std::string's internal buffeer has 1 extra byte for null nerminator.
 
+			va_end(cur_args);
 			va_copy(cur_args, args);
 		}else{
 			ret = std::string(buf_ptr, size);
