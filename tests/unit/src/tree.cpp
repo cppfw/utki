@@ -251,7 +251,7 @@ tst::set set("tree", [](tst::suite& suite){
 			tst::check_eq(children.size(), size_t(2), SL);
 			std::string str("13");
 			tree_str t(std::move(str), std::move(children));
-			tst::check_eq(str.size(), size_t(0), SL);
+			tst::check_eq(str.size(), size_t(0), SL); // NOLINT(clang-analyzer-cplusplus.Move): intentional check that the string was moved
 
 			tst::check_eq(t.value, "13"s, SL);
 			tst::check_eq(t.children.size(), size_t(2), [&](auto&o){o << "t.children.size() = " << t.children.size();}, SL);

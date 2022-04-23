@@ -352,7 +352,7 @@ tst::set set("linq", [](tst::suite& suite){
 			res.clear();
 		
 			tst::check(destroyed, SL);
-		}
+		} // NOLINT(clang-analyzer-cplusplus.NewDeleteLeaks): clang-tidy sees potential memory leak here, for some reason...
 	);
 });
 }
