@@ -29,6 +29,7 @@ groups=()
 
 depends=()
 
+# 'clang-tools-extra' for clang-tidy
 makedepends=('myci' 'prorab' 'prorab-extra' 'doxygen' "${pkgPrefix}clang-tools-extra")
 checkdepends=('myci')
 optdepends=()
