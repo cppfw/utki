@@ -1,3 +1,9 @@
+libutki (1.1.172) unstable; urgency=medium
+
+  * fix bug in deserealize64xx()
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 27 Apr 2022 17:13:27 +0300
+
 libutki (1.1.171) unstable; urgency=medium
 
   * build for debian arm64
