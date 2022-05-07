@@ -38,33 +38,31 @@ SOFTWARE.
 
 using namespace utki;
 
-namespace{
-const std::string colored_error_string = "\033[1;31merror\033[0m";
-const std::string uncolored_error_string = "error";
-}
+namespace {
+std::string_view colored_error_string = "\033[1;31merror\033[0m";
+std::string_view uncolored_error_string = "error";
+} // namespace
 
 void utki::assert(
 		bool condition,
 		const std::function<void(std::ostream&)>& print,
-		utki::source_location&& source_location
-	)
-{
-	if(condition){
+		utki::source_location&& source_location) {
+	if (condition) {
 		return;
 	}
 
 	std::stringstream ss;
 	ss << source_location.file_name() << ":" << source_location.line() << ": ";
 
-	if(is_cerr_terminal()){
+	if (is_cerr_terminal()) {
 		ss << colored_error_string;
-	}else{
+	} else {
 		ss << uncolored_error_string;
 	}
-	 
+
 	ss << ": assertion failed";
 
-	if(print){
+	if (print) {
 		ss << ":" << std::endl << "  ";
 		print(ss);
 	}
@@ -82,8 +80,8 @@ void utki::assert(
 	abort();
 }
 
-void utki::log(const std::function<void(std::ostream&)>& print){
-	if(!print){
+void utki::log(const std::function<void(std::ostream&)>& print) {
+	if (!print) {
 		return;
 	}
 

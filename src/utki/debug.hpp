@@ -36,12 +36,12 @@ SOFTWARE.
 #if M_CPP >= 20
 #	if __has_include(<source_location>)
 #		include <source_location>
-namespace utki{
+namespace utki {
 typedef std::source_location std_source_location;
 }
 #	else
 #		include <experimental/source_location>
-namespace utki{
+namespace utki {
 typedef std::experimental::source_location std_source_location;
 }
 #	endif
@@ -63,7 +63,7 @@ typedef std::experimental::source_location std_source_location;
 #	undef assert
 #endif
 
-namespace utki{
+namespace utki {
 
 void log(const std::function<void(std::ostream&)>& print);
 
@@ -90,10 +90,14 @@ void log(const std::function<void(std::ostream&)>& print);
 #else
 
 // TODO: deprecated, remove.
-#	define TRACE_ALWAYS(x) std::cout x; std::cout.flush();
+#	define TRACE_ALWAYS(x) \
+		std::cout x; \
+		std::cout.flush();
 
 // TODO: deprecated, remove.
-#	define LOG_ALWAYS(x) std::cout << x; std::cout.flush();
+#	define LOG_ALWAYS(x) \
+		std::cout << x; \
+		std::cout.flush();
 
 #endif
 
@@ -117,43 +121,35 @@ void log(const std::function<void(std::ostream&)>& print);
 //
 //
 
-namespace utki{
+namespace utki {
 
 // backport of std::source_location
-struct source_location{
+struct source_location {
 	constexpr source_location(
 			uint_least32_t l = 0,
 			uint_least32_t c = 0,
 			char const* fn = nullptr,
-			char const* fnn = nullptr
-		)noexcept :
+			char const* fnn = nullptr) noexcept :
 			line_{l},
 			column_{c},
 			file_name_{fn},
-			function_name_{fnn} 
-	{}
+			function_name_{fnn} {}
 
 #if M_CPP >= 20
 	constexpr source_location(const std_source_location& sl) :
-			source_location(
-					sl.line(),
-					sl.column(),
-					sl.file_name(),
-					sl.function_name()
-				)
-	{}
+			source_location(sl.line(), sl.column(), sl.file_name(), sl.function_name()) {}
 #endif
 
-	constexpr auto line()const noexcept -> uint_least32_t {
+	constexpr auto line() const noexcept -> uint_least32_t {
 		return this->line_;
 	}
-	constexpr auto column()const noexcept -> uint_least32_t {
+	constexpr auto column() const noexcept -> uint_least32_t {
 		return this->column_;
 	}
-	constexpr auto file_name()const noexcept -> char const* {
+	constexpr auto file_name() const noexcept -> char const* {
 		return this->file_name_;
 	}
-	constexpr auto function_name()const noexcept -> char const* {
+	constexpr auto function_name() const noexcept -> char const* {
 		return this->function_name_;
 	}
 
@@ -163,7 +159,7 @@ private:
 	char const* file_name_;
 	char const* function_name_;
 };
-}
+} // namespace utki
 
 /**
  * @brief Source location macro.
@@ -175,25 +171,24 @@ private:
 #	define SL utki::source_location(__LINE__, 0, __FILE__, __func__)
 #endif
 
-namespace utki{
+namespace utki {
 
 void assert(
 		bool condition,
 		const std::function<void(std::ostream&)>& print,
 		utki::source_location&& source_location
 #if M_CPP >= 20
-				= std_source_location::current()
+		= std_source_location::current()
 #endif
-	);
+);
 
 inline void assert(
 		bool condition,
 		utki::source_location&& source_location
 #if M_CPP >= 20
-				= std_source_location::current()
+		= std_source_location::current()
 #endif
-	)
-{
+) {
 	utki::assert(condition, nullptr, std::move(source_location));
 }
 
@@ -206,10 +201,9 @@ void assert(
 		const std::function<void(std::ostream&)>& print,
 		utki::source_location&& source_location
 #if M_CPP >= 20
-				= std_source_location::current()
+		= std_source_location::current()
 #endif
-	)
-{
+) {
 	assert(p != nullptr, print, std::move(source_location));
 }
 
@@ -218,10 +212,9 @@ void assert(
 		type* p,
 		utki::source_location&& source_location
 #if M_CPP >= 20
-				= std_source_location::current()
+		= std_source_location::current()
 #endif
-	)
-{
+) {
 	assert(p != nullptr, nullptr, std::move(source_location));
 }
 
@@ -234,10 +227,9 @@ void assert(
 		const std::function<void(std::ostream&)>& print,
 		utki::source_location&& source_location
 #if M_CPP >= 20
-				= std_source_location::current()
+		= std_source_location::current()
 #endif
-	)
-{
+) {
 	assert(p != nullptr, print, std::move(source_location));
 }
 
@@ -246,10 +238,9 @@ void assert(
 		const std::shared_ptr<type>& p,
 		utki::source_location&& source_location
 #if M_CPP >= 20
-				= std_source_location::current()
+		= std_source_location::current()
 #endif
-	)
-{
+) {
 	assert(p != nullptr, nullptr, std::move(source_location));
 }
 
@@ -259,10 +250,9 @@ void assert(
 		const std::function<void(std::ostream&)>& print,
 		utki::source_location&& source_location
 #if M_CPP >= 20
-				= std_source_location::current()
+		= std_source_location::current()
 #endif
-	)
-{
+) {
 	assert(p != nullptr, print, std::move(source_location));
 }
 
@@ -271,10 +261,9 @@ void assert(
 		const std::unique_ptr<type>& p,
 		utki::source_location&& source_location
 #if M_CPP >= 20
-				= std_source_location::current()
+		= std_source_location::current()
 #endif
-	)
-{
+) {
 	assert(p != nullptr, nullptr, std::move(source_location));
 }
 
@@ -287,10 +276,9 @@ void assert(
 		const std::function<void(std::ostream&)>& print,
 		utki::source_location&& source_location
 #if M_CPP >= 20
-				= std_source_location::current()
+		= std_source_location::current()
 #endif
-	)
-{
+) {
 	assert(p != nullptr, print, std::move(source_location));
 }
 
@@ -299,17 +287,20 @@ void assert(
 		const std::function<type>& p,
 		utki::source_location&& source_location
 #if M_CPP >= 20
-				= std_source_location::current()
+		= std_source_location::current()
 #endif
-	)
-{
+) {
 	assert(p != nullptr, nullptr, std::move(source_location));
 }
 
-}
+} // namespace utki
 
 // TODO: deprecated, remove.
-#define ASSERT_INFO_ALWAYS(x, y) utki::assert(x, [&](auto& assert_output_stream){assert_output_stream << y;}, SL);
+#define ASSERT_INFO_ALWAYS(x, y) \
+	utki::assert( \
+			x, \
+			[&](auto& assert_output_stream) { assert_output_stream << y; }, \
+			SL);
 
 // TODO: deprecated, remove.
 #define ASSERT_ALWAYS(x) ASSERT_INFO_ALWAYS(x, "no additional info")
@@ -317,7 +308,11 @@ void assert(
 #ifdef DEBUG
 
 // TODO: deprecated, remove.
-#	define ASSERT_INFO(x, y) utki::assert(x, [&](auto& assert_output_stream){assert_output_stream << y;}, SL);
+#	define ASSERT_INFO(x, y) \
+		utki::assert( \
+				x, \
+				[&](auto& assert_output_stream) { assert_output_stream << y; }, \
+				SL);
 
 #	define ASSERT1(condition) utki::assert(condition, SL);
 #	define ASSERT2(condition, print) utki::assert(condition, print, SL);
