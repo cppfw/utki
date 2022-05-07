@@ -16,4 +16,25 @@ this_src_dir := $(this_name)
 this_license_file := ../LICENSE
 $(eval $(prorab-license))
 
+this_src_suffixes := c h cpp hpp cxx hxx
+
+define this_rules
+
+    $(eval prorab_private_format_find_patterns := -name *.$(firstword $(this_src_suffixes)) \
+            $(foreach s,$(wordlist 2,$(words $(this_src_suffixes)),$(this_src_suffixes)),-or -name *.$(s)))
+    $(eval prorab_private_format_srcs := $(shell cd $(d) && find . -type f $(prorab_private_format_find_patterns)))
+
+    test::
+$(.RECIPEPREFIX)@echo "check format"
+$(.RECIPEPREFIX)$(a)(cd $(d) && clang-format --dry-run --Werror $(prorab_private_format_srcs))
+
+    apply-format:
+$(.RECIPEPREFIX)@echo "apply format"
+$(.RECIPEPREFIX)$(a)(cd $(d) && clang-format -i --Werror $(prorab_private_format_srcs))
+
+endef
+$(eval $(this_rules))
+# $(info prorab_private_format_find_patterns = $(prorab_private_format_find_patterns))
+# $(info prorab_private_format_srcs = $(prorab_private_format_srcs))
+
 $(eval $(prorab-install-dbgsrc))

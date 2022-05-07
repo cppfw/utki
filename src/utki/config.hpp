@@ -31,25 +31,25 @@ SOFTWARE.
 //                                                    |
 
 #if __cplusplus > 201703L
-#	define M_CPP                                     20
+#	define M_CPP 20
 #elif __cplusplus > 201402L
-#	define M_CPP                                     17
+#	define M_CPP 17
 #elif __cplusplus > 201103L
-#	define M_CPP                                     14
+#	define M_CPP 14
 #elif __cplusplus > 199711L
-#	define M_CPP                                     11
+#	define M_CPP 11
 #else
-#	define M_CPP                                      3
+#	define M_CPP 3
 #endif
 
 //====================================================|
 //            Compiler definitions                    |
 //                                                    |
 
-#define M_COMPILER_UNKNOWN                            0
-#define M_COMPILER_GCC                                1
-#define M_COMPILER_MSVC                               2
-#define M_COMPILER_CLANG                              3
+#define M_COMPILER_UNKNOWN 0
+#define M_COMPILER_GCC 1
+#define M_COMPILER_MSVC 2
+#define M_COMPILER_CLANG 3
 
 #if defined(__GNUC__) || defined(__GNUG__)
 #	define M_COMPILER M_COMPILER_GCC
@@ -74,16 +74,16 @@ SOFTWARE.
 //====================================================|
 //            CPU architecture definitions            |
 //                                                    |
-#define M_CPU_UNKNOWN                                 0
-#define M_CPU_X86                                     1
-#define M_CPU_X86_64                                  2
-#define M_CPU_ARM                                     3
+#define M_CPU_UNKNOWN 0
+#define M_CPU_X86 1
+#define M_CPU_X86_64 2
+#define M_CPU_ARM 3
 
 #if M_COMPILER == M_COMPILER_GCC
 #	if defined(__i386__) // __i386__ is defined for any x86 processor
 #		define M_CPU M_CPU_X86
 #		define M_CPU_BITS 32
-		
+
 #		if defined(__i686__)
 #			define M_CPU_VERSION 6
 #		elif defined(__i586__)
@@ -93,28 +93,30 @@ SOFTWARE.
 #		else
 #			define M_CPU_VERSION 3
 #		endif
-		
+
 #	elif defined(__x86_64__)
 #		define M_CPU M_CPU_X86_64
 #		define M_CPU_BITS 64
 
 #		define M_CPU_VERSION 0
-		
+
 #	elif defined(__arm__)
 #		define M_CPU M_CPU_ARM
 #		define M_CPU_BITS 32
-		
+
 #		if defined(__thumb2__) // this macro is defined when targeting only thumb-2
 #			define M_CPU_ARM_THUMB_VERSION 2
 #		elif defined(__thumb__) // this macro is defined when targeting any, thumb-1 or thumb-2
 #			define M_CPU_ARM_THUMB_VERSION 1
 #		endif
-		
+
 #		if defined(__ARM_ARCH_7__) || defined(__ARM_ARCH_7A__) || defined(__ARM_ARCH_7R__) || defined(__ARM_ARCH_7M__)
 #			define M_CPU_VERSION 7
-#		elif defined(__ARM_ARCH_6T2__) || defined(__ARM_ARCH_6ZK__) || defined(__ARM_ARCH_6Z__) || defined(__ARM_ARCH_6K__) || defined(__ARM_ARCH_6J__) || defined(__ARM_ARCH_6__)
+#		elif defined(__ARM_ARCH_6T2__) || defined(__ARM_ARCH_6ZK__) || defined(__ARM_ARCH_6Z__) || defined(__ARM_ARCH_6K__) \
+				|| defined(__ARM_ARCH_6J__) || defined(__ARM_ARCH_6__)
 #			define M_CPU_VERSION 6
-#		elif defined(__ARM_ARCH_5TEJ__) || defined(__ARM_ARCH_5TE__) || defined(__ARM_ARCH_5T__) || defined(__ARM_ARCH_5E__) || defined(__ARM_ARCH_5__)
+#		elif defined(__ARM_ARCH_5TEJ__) || defined(__ARM_ARCH_5TE__) || defined(__ARM_ARCH_5T__) \
+				|| defined(__ARM_ARCH_5E__) || defined(__ARM_ARCH_5__)
 #			define M_CPU_VERSION 5
 #		elif defined(__ARM_ARCH_4T__) || defined(__ARM_ARCH_4__)
 #			define M_CPU_VERSION 4
@@ -132,7 +134,7 @@ SOFTWARE.
 #	if defined(_M_IX86)
 #		define M_CPU M_CPU_X86
 #		define M_CPU_BITS 32
-		
+
 #		if _M_IX86 == 600
 #			define M_CPU_VERSION 6
 #		elif _M_IX86 == 500
@@ -142,12 +144,12 @@ SOFTWARE.
 #		else
 #			define M_CPU_VERSION 3
 #		endif
-		
+
 #	elif defined(_M_AMD64) || defined(_M_X64)
 #		define M_CPU M_CPU_X86_64
 #		define M_CPU_BITS 64
 #		define M_CPU_VERSION 0
-		
+
 #	else
 #		define M_CPU M_CPU_UNKNOWN
 #		define M_CPU_BITS 0
@@ -164,18 +166,18 @@ SOFTWARE.
 //                                      |
 
 // OS family
-#define M_OS_UNKNOWN                    0
-#define M_OS_LINUX                      1
-#define M_OS_WINDOWS                    2
-#define M_OS_MACOSX                     3
-#define M_OS_UNIX                       4
+#define M_OS_UNKNOWN 0
+#define M_OS_LINUX 1
+#define M_OS_WINDOWS 2
+#define M_OS_MACOSX 3
+#define M_OS_UNIX 4
 
 // OS name
-#define M_OS_NAME_UNKNOWN               0
-#define M_OS_NAME_MACOSX                1
-#define M_OS_NAME_IOS                   2
-#define M_OS_NAME_ANDROID               3
-#define M_OS_NAME_SOLARIS               4
+#define M_OS_NAME_UNKNOWN 0
+#define M_OS_NAME_MACOSX 1
+#define M_OS_NAME_IOS 2
+#define M_OS_NAME_ANDROID 3
+#define M_OS_NAME_SOLARIS 4
 
 #if defined(__linux__)
 #	define M_OS M_OS_LINUX
@@ -185,20 +187,21 @@ SOFTWARE.
 #		define M_OS_NAME M_OS_NAME_UNKNOWN
 #	endif
 
-// _WIN32 macro is defined for both win32 and win64. _WIN32 is the correct one, WIN32 not always defined.
+// _WIN32 macro is defined for both win32 and win64. _WIN32 is the correct one, WIN32 is not always defined.
 #elif defined(_WIN32) || defined(WIN32)
 #	define M_OS M_OS_WINDOWS
 #	define M_OS_NAME M_OS_NAME_UNKNOWN
 #elif defined(__APPLE__)
 #	define M_OS M_OS_MACOSX
 #	include <TargetConditionals.h>
-#	if TARGET_OS_IPHONE == 1 || TARGET_IPHONE_SIMULATOR == 1 // iOS
+#	if TARGET_OS_IPHONE == 1 || TARGET_IPHONE_SIMULATOR == 1
 #		define M_OS_NAME M_OS_NAME_IOS
 #	else
 #		define M_OS_NAME M_OS_NAME_MACOSX
 #	endif
 
-#elif defined(__unix) || defined(__unix__) // check for UNIX should go after check for Linux, because on Linux the __unix macro is also defined
+// check for UNIX should go after check for Linux, because on Linux the __unix macro is also defined
+#elif defined(__unix) || defined(__unix__)
 #	define M_OS M_OS_UNIX
 #	if defined(sun) || defined(__sun)
 #		define M_OS_NAME M_OS_NAME_SOLARIS
