@@ -31,7 +31,7 @@ SOFTWARE.
 
 #include <memory>
 
-namespace utki{
+namespace utki {
 
 /**
  * @brief Intrusive singleton base class.
@@ -60,11 +60,11 @@ namespace utki{
  *	}
  * @endcode
  */
-template <class T, class T_InstanceOwner = T> class intrusive_singleton{
-
+template <class T, class T_InstanceOwner = T>
+class intrusive_singleton {
 protected: // use only as a base class
-	intrusive_singleton(){
-		if(T_InstanceOwner::instance){
+	intrusive_singleton() {
+		if (T_InstanceOwner::instance) {
 			throw std::logic_error("singleton::singleton(): instance is already created");
 		}
 
@@ -72,15 +72,14 @@ protected: // use only as a base class
 	}
 
 	typedef intrusive_singleton<T> T_Singleton;
-	
+
 	// use unique_ptr because it is automatically initialized to nullptr. Automatic object destruction is not used.
 	typedef std::unique_ptr<T> T_Instance;
-	
-public:
 
+public:
 	intrusive_singleton(const intrusive_singleton&) = delete;
 	intrusive_singleton& operator=(const intrusive_singleton&) = delete;
-	
+
 public:
 	/**
 	 * @brief tells if singleton object is created or not.
@@ -88,7 +87,7 @@ public:
 	 * @return true if object is created.
 	 * @return false otherwise.
 	 */
-	static bool is_created(){
+	static bool is_created() {
 		return T_InstanceOwner::instance != nullptr;
 	}
 
@@ -96,12 +95,12 @@ public:
 	 * @brief get singleton instance.
 	 * @return reference to singleton object instance.
 	 */
-	static T& inst(){
-		ASSERT(is_created(), [](auto&o){o << "intrusive_singleton::inst(): singleton object is not created";})
+	static T& inst() {
+		ASSERT(is_created(), [](auto& o) { o << "intrusive_singleton::inst(): singleton object is not created"; })
 		return *T_InstanceOwner::instance;
 	}
 
-	virtual ~intrusive_singleton()noexcept{
+	virtual ~intrusive_singleton() noexcept {
 		ASSERT(T_InstanceOwner::instance.get() == static_cast<T*>(this))
 		T_InstanceOwner::instance.release();
 	}
@@ -131,31 +130,33 @@ public:
  *	}
  * @endcode
  */
-template <class T> class singleton : public intrusive_singleton<T, singleton<T> >{
-	friend class intrusive_singleton<T, singleton<T> >;
+template <class T>
+class singleton : public intrusive_singleton<T, singleton<T>> {
+	friend class intrusive_singleton<T, singleton<T>>;
+
 protected:
-	singleton(){}
-	
+	singleton() {}
+
 public:
 	singleton(const singleton&) = delete;
 	singleton& operator=(const singleton&) = delete;
 
 private:
-	
-	static typename intrusive_singleton<T, singleton<T> >::T_Instance instance;
+	static typename intrusive_singleton<T, singleton<T>>::T_Instance instance;
 };
 
-template <class T> typename utki::intrusive_singleton<T, singleton<T> >::T_Instance utki::singleton<T>::instance;
+template <class T>
+typename utki::intrusive_singleton<T, singleton<T>>::T_Instance utki::singleton<T>::instance;
 
 #else
 
-template <class T> class singleton{
+template <class T>
+class singleton {
 	static_assert(
 			std::is_same<T, T&>::value, // always false
-			"non-intrusive singleton is not supported under MSVC compiler, use utki::intrusive_singleton"
-		);
+			"non-intrusive singleton is not supported under MSVC compiler, use utki::intrusive_singleton");
 };
 
 #endif
 
-}
+} // namespace utki
