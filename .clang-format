@@ -1,5 +1,6 @@
 ﻿---
-AlignAfterOpenBracket: AlwaysBreak # change to BlockIndent when latest clang-format version is available
+AccessModifierOffset: '-1' # unindent class members access modifiers, like 'public:', 'private:', 'protected:'
+AlignAfterOpenBracket: AlwaysBreak # TODO: change to BlockIndent when latest clang-format version is available
 AlignConsecutiveMacros: 'false'
 AlignConsecutiveAssignments: 'false'
 AlignConsecutiveDeclarations: 'false'
@@ -55,7 +56,7 @@ SpaceBeforeAssignmentOperators: 'true'
 SpaceBeforeCpp11BracedList: 'false'
 SpaceBeforeCtorInitializerColon: 'true'
 SpaceBeforeInheritanceColon: 'true'
-SpaceBeforeParens: Never
+SpaceBeforeParens: ControlStatements
 SpaceBeforeRangeBasedForLoopColon: 'true'
 SpaceInEmptyParentheses: 'false'
 SpacesBeforeTrailingComments: '1'
