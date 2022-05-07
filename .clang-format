@@ -35,6 +35,8 @@ ConstructorInitializerIndentWidth: '2'
 ContinuationIndentWidth: '2'
 DeriveLineEnding: 'false'
 DerivePointerAlignment: 'false'
+# EmptyLineAfterAccessModifier: Never # TODO: uncomment for clang-format 13+
+# EmptyLineBeforeAccessModifier: Always # TODO: uncomment for clang-format 12+
 FixNamespaceComments: 'true'
 IncludeBlocks: Regroup
 IndentCaseLabels: 'true'

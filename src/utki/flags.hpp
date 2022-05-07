@@ -31,7 +31,7 @@ SOFTWARE.
 #include <ostream>
 #include <bitset>
 
-namespace utki{
+namespace utki {
 
 /**
  * @brief class representing a set of flags.
@@ -68,23 +68,25 @@ namespace utki{
  * 
  * @endcode
  */
-template <class enumeration_type> class flags{
+template <class enumeration_type>
+class flags {
 public:
 	typedef enumeration_type enum_type;
+
 private:
 	static_assert(int(enum_type::enum_size) >= 0, "enumeration must define enum_size item");
 	static_assert(unsigned(enum_type::enum_size) > 0, "enumeration must define at least one item");
 
 	std::bitset<size_t(enum_type::enum_size)> bitset;
-public:
 
+public:
 	/**
 	 * @brief Constructor.
 	 * All flags are initialized to the same given value.
 	 * @param initial_value - value which initializes all flags.
 	 */
-	flags(bool initial_value = false){
-		if(initial_value){
+	flags(bool initial_value = false) {
+		if (initial_value) {
 			this->bitset.set();
 		}
 	}
@@ -93,8 +95,8 @@ public:
 	 * @brief Constructor.
 	 * @param initially_set_flags - list of flags which will be set initially.
 	 */
-	flags(std::initializer_list<enum_type> initially_set_flags){
-		for(auto v : initially_set_flags){
+	flags(std::initializer_list<enum_type> initially_set_flags) {
+		for (auto v : initially_set_flags) {
 			this->bitset.set(size_t(v));
 		}
 	}
@@ -104,19 +106,17 @@ public:
 	 * Constructs a flags instance with only one flag set initially.
 	 * @param e - flag to set.
 	 */
-	flags(enum_type e) :
-			flags({e})
-	{}
+	flags(enum_type e) : flags({e}) {}
 
-	constexpr size_t size()const noexcept{
+	constexpr size_t size() const noexcept {
 		return this->bitset.size();
 	}
 
-	constexpr bool operator[](enum_type flag)const{
+	constexpr bool operator[](enum_type flag) const {
 		return this->bitset[size_t(flag)];
 	}
 
-	typename std::bitset<size_t(enum_type::enum_size)>::reference operator[](enum_type flag){
+	typename std::bitset<size_t(enum_type::enum_size)>::reference operator[](enum_type flag) {
 		return this->bitset[size_t(flag)];
 	}
 
@@ -126,7 +126,7 @@ public:
 	 * @return true if the flag is set.
 	 * @return false otherwise.
 	 */
-	bool get(enum_type flag)const noexcept{
+	bool get(enum_type flag) const noexcept {
 		ASSERT(flag < enum_type::enum_size)
 		return this->bitset[size_t(flag)];
 	}
@@ -137,7 +137,7 @@ public:
 	 * @param value - value to set.
 	 * @return Reference to this Flags.
 	 */
-	flags& set(enum_type flag, bool value = true)noexcept{
+	flags& set(enum_type flag, bool value = true) noexcept {
 		ASSERT(flag < enum_type::enum_size)
 		this->bitset.set(size_t(flag), value);
 		return *this;
@@ -148,10 +148,10 @@ public:
 	 * @param value - value to set all flags to.
 	 * @return Reference to this Flags.
 	 */
-	flags& set(bool value = true)noexcept{
-		if(value){
+	flags& set(bool value = true) noexcept {
+		if (value) {
 			this->bitset.set();
-		}else{
+		} else {
 			this->bitset.reset();
 		}
 		return *this;
@@ -162,7 +162,7 @@ public:
 	 * @param flag - flag to clear.
 	 * @return Reference to this Flags.
 	 */
-	flags& clear(enum_type flag)noexcept{
+	flags& clear(enum_type flag) noexcept {
 		this->bitset.reset(size_t(flag));
 		return *this;
 	}
@@ -171,7 +171,7 @@ public:
 	 * @brief Clear all flags.
 	 * @return Reference to this Flags.
 	 */
-	flags& clear()noexcept{
+	flags& clear() noexcept {
 		this->bitset.reset();
 		return *this;
 	}
@@ -181,7 +181,7 @@ public:
 	 * @return true if all flags are cleared.
 	 * @return false otherwise.
 	 */
-	bool is_clear()const noexcept{
+	bool is_clear() const noexcept {
 		return this->bitset.none();
 	}
 
@@ -190,7 +190,7 @@ public:
 	 * @return true if all flags are set.
 	 * @return false otherwise.
 	 */
-	bool is_set()const noexcept{
+	bool is_set() const noexcept {
 		return this->bitset.all();
 	}
 
@@ -198,7 +198,7 @@ public:
 	 * @brief Inverts all the flags.
 	 * @return Reference to this Flags.
 	 */
-	flags& invert()noexcept{
+	flags& invert() noexcept {
 		this->bitset.flip();
 		return *this;
 	}
@@ -209,7 +209,7 @@ public:
 	 * @return false if flags set/unset are matching.
 	 * @return true otherwise.
 	 */
-	bool operator!=(const flags& f)const{
+	bool operator!=(const flags& f) const {
 		return this->bitset != f.bitset;
 	}
 
@@ -219,7 +219,7 @@ public:
 	 * @return true if flags set/unset are matching.
 	 * @return false otherwise.
 	 */
-	bool operator==(const flags& f)const{
+	bool operator==(const flags& f) const {
 		return this->bitset == f.bitset;
 	}
 
@@ -227,7 +227,7 @@ public:
 	 * @brief Operator NOT.
 	 * @return Inverted instance of Flags.
 	 */
-	flags operator~()const noexcept{
+	flags operator~() const noexcept {
 		return flags(*this).invert();
 	}
 
@@ -236,40 +236,40 @@ public:
 	 * @param f - flags to perform AND operation with.
 	 * @return Reference to this Flags.
 	 */
-	flags& operator&=(const flags& f)noexcept{
+	flags& operator&=(const flags& f) noexcept {
 		this->bitset &= f.bitset;
 		return *this;
 	}
-	
+
 	/**
 	 * @brief Operator AND.
 	 * @param f - flags to perform AND operation with.
 	 * @return Instance of Flags resulting from AND operation.
 	 */
-	flags operator&(const flags& f)const noexcept{
+	flags operator&(const flags& f) const noexcept {
 		return flags(*this).operator&=(f);
 	}
-	
+
 	/**
 	 * @brief Operator assignment OR.
 	 * @param f - flags to perform OR operation with.
 	 * @return Reference to this Flags.
 	 */
-	flags& operator|=(const flags& f)noexcept{
+	flags& operator|=(const flags& f) noexcept {
 		this->bitset |= f.bitset;
 		return *this;
 	}
-	
+
 	/**
 	 * @brief Operator OR.
 	 * @param f - flags to perform OR operation with.
 	 * @return Instance of Flags resulting from OR operation.
 	 */
-	flags operator|(const flags& f)const noexcept{
+	flags operator|(const flags& f) const noexcept {
 		return flags(*this).operator|=(f);
 	}
-	
-	flags operator|(enum_type e)const noexcept{
+
+	flags operator|(enum_type e) const noexcept {
 		return flags(*this).set(e);
 	}
 
@@ -278,21 +278,21 @@ public:
 	 * @param f - flags to perform XOR operation with.
 	 * @return Reference to this Flags.
 	 */
-	flags& operator^=(const flags& f)noexcept{
+	flags& operator^=(const flags& f) noexcept {
 		this->bitset ^= f.bitset;
 		return *this;
 	}
-	
+
 	/**
 	 * @brief Operator OR.
 	 * @param f - flags to perform OR operation with.
 	 * @return Instance of Flags resulting from OR operation.
 	 */
-	flags operator^(const flags& f)const noexcept{
+	flags operator^(const flags& f) const noexcept {
 		return flags(*this).operator^=(f);
 	}
 
-	friend std::ostream& operator<<(std::ostream& o, const flags& f){
+	friend std::ostream& operator<<(std::ostream& o, const flags& f) {
 		return o << f.bitset;
 	}
 };
@@ -302,22 +302,24 @@ public:
  * @param initially_set_flags - list of flags which will be set initially.
  * @return newly created flags object.
  */
-template <class T> flags<T> make_flags(std::initializer_list<T> initially_set_flags){
+template <class T>
+flags<T> make_flags(std::initializer_list<T> initially_set_flags) {
 	return flags<T>(initially_set_flags);
 }
 
 template <class enum_type>
-struct is_flaggable : public std::false_type{};
+struct is_flaggable : public std::false_type {};
 
-}
+} // namespace utki
 
 template <class enum_type>
-typename std::enable_if<
+typename std::enable_if< //
 		std::is_enum<enum_type>::value
 				// TODO: add std::is_scoped_enum check when C++'23 is widely available
-				&& enum_type::enum_size == enum_type::enum_size, // check that enum has enum_size item. Note, that this is the only way to do it for MSVC compiler.
-		utki::flags<enum_type>
-	>::type
-operator|(enum_type e1, enum_type e2){
+				// check that enum has enum_size item. Note, that this is the only way to do it for MSVC compiler.
+				&& enum_type::enum_size == enum_type::enum_size, //
+		utki::flags<enum_type> //
+		>::type
+operator|(enum_type e1, enum_type e2) {
 	return {e1, e2};
 }
