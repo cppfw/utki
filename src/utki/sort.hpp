@@ -33,73 +33,68 @@ SOFTWARE.
 
 #include <iterator>
 
-namespace utki{
+namespace utki {
 
-namespace sort_internal{
-template <typename RAIt>
-constexpr RAIt next(RAIt it,
-                    typename std::iterator_traits<RAIt>::difference_type n = 1)
-{
-    return it + n;
-}
+namespace sort_internal {
 
 template <typename RAIt>
-constexpr auto distance(RAIt first, RAIt last)
-{
-    return last - first;
+constexpr RAIt next(RAIt it, typename std::iterator_traits<RAIt>::difference_type n = 1) {
+	return it + n;
 }
 
-template<class ForwardIt1, class ForwardIt2>
-constexpr void iter_swap(ForwardIt1 a, ForwardIt2 b)
-{
-    auto temp = std::move(*a);
-    *a = std::move(*b);
-    *b = std::move(temp);
+template <typename RAIt>
+constexpr auto distance(RAIt first, RAIt last) {
+	return last - first;
 }
 
-template<class InputIt, class UnaryPredicate>
-constexpr InputIt find_if_not(InputIt first, InputIt last, UnaryPredicate q)
-{
-    for (; first != last; ++first) {
-        if (!q(*first)) {
-            return first;
-        }
-    }
-    return last;
+template <class ForwardIt1, class ForwardIt2>
+constexpr void iter_swap(ForwardIt1 a, ForwardIt2 b) {
+	auto temp = std::move(*a);
+	*a = std::move(*b);
+	*b = std::move(temp);
 }
 
-template<class ForwardIt, class UnaryPredicate>
-constexpr ForwardIt partition(ForwardIt first, ForwardIt last, UnaryPredicate p)
-{
-    first = utki::sort_internal::find_if_not(first, last, p);
-    if (first == last) return first;
-
-    for(ForwardIt i = utki::sort_internal::next(first); i != last; ++i){
-        if(p(*i)){
-            utki::sort_internal::iter_swap(i, first);
-            ++first;
-        }
-    }
-    return first;
+template <class InputIt, class UnaryPredicate>
+constexpr InputIt find_if_not(InputIt first, InputIt last, UnaryPredicate q) {
+	for (; first != last; ++first) {
+		if (!q(*first)) {
+			return first;
+		}
+	}
+	return last;
 }
 
-template<class RAIt, class Compare = std::less<>>
-constexpr void quick_sort(RAIt first, RAIt last, Compare cmp = Compare{})
-{
-    auto const N = utki::sort_internal::distance(first, last);
-    if (N <= 1) return;
-    auto const pivot = *utki::sort_internal::next(first, N / 2);
-    auto const middle1 = utki::sort_internal::partition(first, last, [=](auto const& elem){
-        return cmp(elem, pivot);
-    });
-    auto const middle2 = utki::sort_internal::partition(middle1, last, [=](auto const& elem){
-        return !cmp(pivot, elem);
-    });
-    quick_sort(first, middle1, cmp); // assert(std::is_sorted(first, middle1, cmp));
-    quick_sort(middle2, last, cmp);  // assert(std::is_sorted(middle2, last, cmp));
+template <class ForwardIt, class UnaryPredicate>
+constexpr ForwardIt partition(ForwardIt first, ForwardIt last, UnaryPredicate p) {
+	first = utki::sort_internal::find_if_not(first, last, p);
+	if (first == last) {
+		return first;
+	}
+
+	for (ForwardIt i = utki::sort_internal::next(first); i != last; ++i) {
+		if (p(*i)) {
+			utki::sort_internal::iter_swap(i, first);
+			++first;
+		}
+	}
+	return first;
 }
 
-} // ~namespace sort_internal
+template <class RAIt, class Compare = std::less<>>
+constexpr void quick_sort(RAIt first, RAIt last, Compare cmp = Compare{}) {
+	auto const N = utki::sort_internal::distance(first, last);
+	if (N <= 1) {
+		return;
+	}
+	auto const pivot = *utki::sort_internal::next(first, N / 2);
+	auto const middle1 = utki::sort_internal::partition(first, last, [=](auto const& elem) { return cmp(elem, pivot); });
+	auto const middle2 =
+			utki::sort_internal::partition(middle1, last, [=](auto const& elem) { return !cmp(pivot, elem); });
+	quick_sort(first, middle1, cmp); // assert(std::is_sorted(first, middle1, cmp));
+	quick_sort(middle2, last, cmp); // assert(std::is_sorted(middle2, last, cmp));
+}
+
+} // namespace sort_internal
 
 /**
  * @brief sort algorithm.
@@ -112,8 +107,8 @@ constexpr void quick_sort(RAIt first, RAIt last, Compare cmp = Compare{})
  * @param comp - comparator functor.
  */
 template <class RandomIt, class Compare = std::less<>>
-constexpr void sort(RandomIt first, RandomIt last, Compare comp = Compare{}){
+constexpr void sort(RandomIt first, RandomIt last, Compare comp = Compare{}) {
 	utki::sort_internal::quick_sort(first, last, comp);
 }
 
-}
+} // namespace utki
