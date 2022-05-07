@@ -30,7 +30,7 @@ SOFTWARE.
 
 #include "util.hpp"
 
-namespace utki{
+namespace utki {
 
 /**
  * @brief Get sign of a number.
@@ -45,7 +45,8 @@ namespace utki{
  * @return -1 if the argument is negative.
  * @return 1 if the number is positive.
  */
-template <typename T> constexpr T sign(T n)noexcept{
+template <typename T>
+constexpr T sign(T n) noexcept {
 	return n < 0 ? T(-1) : T(1);
 }
 
@@ -54,7 +55,7 @@ template <typename T> constexpr T sign(T n)noexcept{
  * @return number Pi.
  */
 template <typename T>
-constexpr T pi()noexcept{
+constexpr T pi() noexcept {
 	return T(3.14159265358979323846264338327950288);
 }
 
@@ -62,7 +63,8 @@ constexpr T pi()noexcept{
  * @brief Get 2 * Pi.
  * @return 2 * Pi.
  */
-template <typename T> constexpr T two_pi()noexcept{
+template <typename T>
+constexpr T two_pi() noexcept {
 	return T(2) * pi<T>();
 }
 
@@ -71,7 +73,8 @@ template <typename T> constexpr T two_pi()noexcept{
  * @param deg - angle in degrees.
  * @return Angle in radians.
  */
-template <typename T> constexpr T deg_to_rad(T deg)noexcept{
+template <typename T>
+constexpr T deg_to_rad(T deg) noexcept {
 	return pi<T>() * deg / T(180);
 }
 
@@ -80,7 +83,8 @@ template <typename T> constexpr T deg_to_rad(T deg)noexcept{
  * @param rad - angle in radians.
  * @return Angle in degrees.
  */
-template <typename T> constexpr T rad_to_deg(T rad)noexcept{
+template <typename T>
+constexpr T rad_to_deg(T rad) noexcept {
 	return T(180) * rad / pi<T>();
 }
 
@@ -88,7 +92,8 @@ template <typename T> constexpr T rad_to_deg(T rad)noexcept{
  * @brief Get natural logarithm of 2, i.e. ln(2).
  * @return natural logarithm of 2.
  */
-template <typename T> constexpr T log_2()noexcept{
+template <typename T>
+constexpr T log_2() noexcept {
 	return T(0.693147181);
 }
 
@@ -97,36 +102,41 @@ template <typename T> constexpr T log_2()noexcept{
  * @param x - value.
  * @return x * x.
  */
-template <typename T> constexpr T pow2(T x)noexcept{
+template <typename T>
+constexpr T pow2(T x) noexcept {
 	return x * x;
 }
 
 /**
  * @brief Calculate x^3.
  */
-template <typename T> constexpr T pow3(T x)noexcept{
+template <typename T>
+constexpr T pow3(T x) noexcept {
 	return pow2(x) * x;
 }
 
 /**
  * @brief Calculate x^4.
  */
-template <typename T> constexpr T pow4(T x)noexcept{
+template <typename T>
+constexpr T pow4(T x) noexcept {
 	return pow2(pow2(x));
 }
 
 /**
  * @brief Calculate x^5.
  */
-template <typename T> constexpr T pow5(T x)noexcept{
+template <typename T>
+constexpr T pow5(T x) noexcept {
 	return pow4(x) * x;
 }
 
 /**
  * @brief Calculate x^6.
  */
-template <typename T> constexpr T pow6(T x)noexcept{
+template <typename T>
+constexpr T pow6(T x) noexcept {
 	return pow2(pow3(x));
 }
 
-}
+} // namespace utki
