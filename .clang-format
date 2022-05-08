@@ -1,6 +1,7 @@
 ﻿---
 AccessModifierOffset: '-1' # unindent class members access modifiers, like 'public:', 'private:', 'protected:'
 AlignAfterOpenBracket: BlockIndent
+AlignArrayOfStructures: Right
 AlignConsecutiveMacros: 'false'
 AlignConsecutiveAssignments: 'false'
 AlignConsecutiveDeclarations: 'false'
