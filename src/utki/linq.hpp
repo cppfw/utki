@@ -42,7 +42,8 @@ SOFTWARE.
 namespace utki {
 
 template <typename C>
-class linq_collection_aggregator {
+class linq_collection_aggregator
+{
 	template <typename CC>
 	friend class linq_collection_aggregator;
 
@@ -56,10 +57,9 @@ class linq_collection_aggregator {
 	friend linq_collection_aggregator<CC&&> linq(CC&&);
 
 	typename std::conditional< //
-			std::is_rvalue_reference<C>::value, //
-			typename std::remove_reference<C>::type, //
-			C //
-			>::type collection;
+			std::is_rvalue_reference<C>::value,
+			typename std::remove_reference<C>::type,
+			C>::type collection;
 
 	typedef typename std::remove_reference<decltype(collection)>::type::value_type value_type;
 
@@ -68,28 +68,32 @@ class linq_collection_aggregator {
 		noncopyable_value_type& operator=(const noncopyable_value_type&) = delete;
 	};
 
-	linq_collection_aggregator(C collection) : collection(std::move(collection)) {}
+	linq_collection_aggregator(C collection) :
+			collection(std::move(collection))
+	{}
 
 public:
-	decltype(collection) get() {
+	decltype(collection) get()
+	{
 		return std::move(this->collection);
 	}
 
 	template <typename F>
-	auto select(F func) {
+	auto select(F func)
+	{
 		typedef typename std::add_rvalue_reference<value_type>::type func_arg_type;
 
 		static constexpr bool func_one_arg = std::is_invocable_v<F, func_arg_type>;
 
 		static_assert(
 				func_one_arg || std::is_invocable_v<F, func_arg_type, size_t>,
-				"passed in function must have one argument or two arguments with the second argument of type size_t");
+				"passed in function must have one argument or two arguments with the second argument of type size_t"
+		);
 
-		typedef typename std::conditional< //
-				func_one_arg, //
-				typename type_or_void<std::invoke_result<F, func_arg_type>>::type, //
-				typename type_or_void<std::invoke_result<F, func_arg_type, size_t>>::type //
-				>::type func_return_type;
+		typedef typename std::conditional<
+				func_one_arg,
+				typename type_or_void<std::invoke_result<F, func_arg_type>>::type,
+				typename type_or_void<std::invoke_result<F, func_arg_type, size_t>>::type>::type func_return_type;
 
 		std::vector<func_return_type> ret;
 		ret.reserve(this->collection.size());
@@ -110,19 +114,20 @@ public:
 	}
 
 	template <typename F>
-	auto group_by(F func) {
+	auto group_by(F func)
+	{
 		static_assert(
 				// non-const lvalue reference cannot bind to temproray objects,
 				// thus F(auto&) will fail the assert, but F(const auto&) succeeds
 				std::is_invocable_v<F, noncopyable_value_type>,
-				"functor must have const reference argument");
+				"functor must have const reference argument"
+		);
 
 		static_assert(!std::is_same_v<void, std::invoke_result_t<F, const value_type&>>, "functor must return non-void");
 
 		typedef typename std::add_lvalue_reference<value_type>::type func_arg_type;
 		typedef typename std::remove_reference< //
-				typename std::invoke_result<F, func_arg_type>::type //
-				>::type func_return_type;
+				typename std::invoke_result<F, func_arg_type>::type>::type func_return_type;
 
 		std::map<func_return_type, std::vector<value_type>> ret;
 
@@ -134,12 +139,14 @@ public:
 	}
 
 	template <typename F>
-	auto where(F func) {
+	auto where(F func)
+	{
 		static_assert(
 				// non-const lvalue reference cannot bind to temproray objects,
 				// thus F(auto&) will fail the assert, but F(const auto&) succeeds
 				std::is_invocable_v<F, noncopyable_value_type>,
-				"functor must have const reference argument");
+				"functor must have const reference argument"
+		);
 
 		static_assert(std::is_same<bool, std::invoke_result_t<F, const value_type&>>::value, "functor must return bool");
 
@@ -149,25 +156,29 @@ public:
 				std::make_move_iterator(this->collection.begin()),
 				std::make_move_iterator(this->collection.end()),
 				std::inserter(ret, ret.end()),
-				func);
+				func
+		);
 
 		return linq_collection_aggregator<decltype(ret)&&>(std::move(ret));
 	}
 
 	template <typename F>
-	auto order_by(F func) {
+	auto order_by(F func)
+	{
 		static_assert(
 				// non-const lvalue reference cannot bind to temproray objects,
 				// thus F(auto&) will fail the assert, but F(const auto&) succeeds
 				std::is_invocable_v<F, noncopyable_value_type>,
-				"functor must have const reference argument");
+				"functor must have const reference argument"
+		);
 
 		typedef std::invoke_result_t<F, const value_type&> invoke_result;
 
 		static_assert(
 				std::is_reference<invoke_result>::value
 						&& std::is_const<typename std::remove_reference<invoke_result>::type>::value,
-				"functor must return const reference");
+				"functor must return const reference"
+		);
 
 		auto comparer = [&func](const value_type& a, const value_type& b) {
 			return func(a) < func(b);
@@ -187,17 +198,20 @@ public:
 };
 
 template <typename C>
-linq_collection_aggregator<const C&> linq(const C& collection) {
+linq_collection_aggregator<const C&> linq(const C& collection)
+{
 	return linq_collection_aggregator<const C&>(collection);
 }
 
 template <typename C>
-linq_collection_aggregator<const C&> linq(C& collection) {
+linq_collection_aggregator<const C&> linq(C& collection)
+{
 	return linq_collection_aggregator<const C&>(collection);
 }
 
 template <typename C>
-linq_collection_aggregator<C&&> linq(C&& collection) {
+linq_collection_aggregator<C&&> linq(C&& collection)
+{
 	return linq_collection_aggregator<C&&>(std::move(collection));
 }
 
