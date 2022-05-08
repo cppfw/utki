@@ -13,6 +13,7 @@ AllowAllConstructorInitializersOnNextLine: 'false'
 AllowAllParametersOfDeclarationOnNextLine: 'false'
 AllowShortBlocksOnASingleLine: 'false'
 AllowShortCaseLabelsOnASingleLine: 'false'
+AllowShortEnumsOnASingleLine: 'false'
 AllowShortFunctionsOnASingleLine: Empty
 AllowShortIfStatementsOnASingleLine: Never
 AllowShortLambdasOnASingleLine: Inline
@@ -23,10 +24,11 @@ AlwaysBreakBeforeMultilineStrings: 'true'
 AlwaysBreakTemplateDeclarations: 'Yes'
 BinPackArguments: 'false'
 BinPackParameters: 'false'
+BitFieldColonSpacing: Both
 BraceWrapping:
   AfterCaseLabel: 'false'
   AfterClass: 'true'
-  AfterControlStatement: 'false'
+  AfterControlStatement: MultiLine
   AfterEnum: 'false'
   AfterFunction: 'true'
   AfterNamespace: 'false'
@@ -36,12 +38,14 @@ BraceWrapping:
   AfterExternBlock: 'false'
   BeforeCatch: 'false'
   BeforeElse: 'false'
+  BeforeLambdaBody: 'false'
   IndentBraces: 'false'
   SplitEmptyFunction: 'false'
   SplitEmptyRecord: 'false'
   SplitEmptyNamespace: 'false'
 BreakBeforeBinaryOperators: NonAssignment
 BreakBeforeBraces: Custom
+# BreakBeforeConceptDeclarations: Always # clang-format 15
 BreakBeforeTernaryOperators: 'true'
 BreakConstructorInitializers: AfterColon
 BreakInheritanceList: AfterColon
@@ -57,35 +61,67 @@ EmptyLineAfterAccessModifier: Never
 EmptyLineBeforeAccessModifier: Always
 FixNamespaceComments: 'true'
 IncludeBlocks: Regroup
+IncludeCategories:
+# TODO: make regexs
+#   - Regex:           '^"(llvm|llvm-c|clang|clang-c)/'
+#     Priority:        2
+#     SortPriority:    2
+#     CaseSensitive:   true
+#   - Regex:           '^((<|")(gtest|gmock|isl|json)/)'
+#     Priority:        3
+#   - Regex:           '<[[:alnum:].]+>'
+#     Priority:        4
+#   - Regex:           '.*'
+#     Priority:        1
+#     SortPriority:    0
+IndentAccessModifiers: 'false'
+IndentCaseBlocks: 'true'
 IndentCaseLabels: 'true'
+IndentExternBlock: NoIndent
+IndentGotoLabels: 'false'
 IndentPPDirectives: AfterHash
+# IndentRequiresClause: 'false' # clang-format 15
 IndentWidth: '1'
 IndentWrappedFunctionNames: 'false'
+# InsertBraces: 'false' # clang-format 15. The feature is fuzzy, so disable it.
+InsertTrailingCommas: None # only for JavaScript as of clang-format 15. The feature seems fuzzy, so disable it.
 KeepEmptyLinesAtTheStartOfBlocks: 'false'
+LambdaBodyIndentation: Signature
 Language: Cpp
 MaxEmptyLinesToKeep: '1'
 NamespaceIndentation: None
 PackConstructorInitializers: Never
 PointerAlignment: Left
+# QualifierAlignment: Left # TODO: for some reason it increases clang-format run time significantly
 ReferenceAlignment: Left
 ReflowComments: 'false'
+RemoveBracesLLVM: 'false'
+# RequiresClausePosition: OwnLine # clang-format 15
 SeparateDefinitionBlocks: Always
-SortIncludes: 'false'
+ShortNamespaceLines: 0
+SortIncludes: CaseSensitive
 SortUsingDeclarations: 'false'
 SpaceAfterCStyleCast: 'false'
 SpaceAfterLogicalNot: 'false'
 SpaceAfterTemplateKeyword: 'true'
+SpaceAroundPointerQualifiers: Before
 SpaceBeforeAssignmentOperators: 'true'
+SpaceBeforeCaseColon: 'false'
 SpaceBeforeCpp11BracedList: 'false'
 SpaceBeforeCtorInitializerColon: 'true'
 SpaceBeforeInheritanceColon: 'true'
 SpaceBeforeParens: ControlStatements
 SpaceBeforeRangeBasedForLoopColon: 'true'
+SpaceInEmptyBlock: 'false'
 SpaceInEmptyParentheses: 'false'
 SpacesBeforeTrailingComments: '1'
 SpacesInAngles: 'false'
+SpacesInConditionalStatement: 'false'
 SpacesInCStyleCastParentheses: 'false'
 SpacesInContainerLiterals: 'false'
+SpacesInLineCommentPrefix:
+  Minimum: 1
+  Maximum: -1
 SpacesInParentheses: 'false'
 SpacesInSquareBrackets: 'false'
 Standard: Latest
