@@ -1,6 +1,6 @@
 ﻿---
 AccessModifierOffset: '-1' # unindent class members access modifiers, like 'public:', 'private:', 'protected:'
-AlignAfterOpenBracket: AlwaysBreak # TODO: change to BlockIndent when latest clang-format version is available
+AlignAfterOpenBracket: BlockIndent
 AlignConsecutiveMacros: 'false'
 AlignConsecutiveAssignments: 'false'
 AlignConsecutiveDeclarations: 'false'
@@ -35,8 +35,8 @@ ConstructorInitializerIndentWidth: '2'
 ContinuationIndentWidth: '2'
 DeriveLineEnding: 'false'
 DerivePointerAlignment: 'false'
-# EmptyLineAfterAccessModifier: Never # TODO: uncomment for clang-format 13+
-# EmptyLineBeforeAccessModifier: Always # TODO: uncomment for clang-format 12+
+EmptyLineAfterAccessModifier: Never
+EmptyLineBeforeAccessModifier: Always
 FixNamespaceComments: 'true'
 IncludeBlocks: Regroup
 IndentCaseLabels: 'true'
@@ -47,6 +47,7 @@ KeepEmptyLinesAtTheStartOfBlocks: 'false'
 Language: Cpp
 MaxEmptyLinesToKeep: '1'
 NamespaceIndentation: None
+PackConstructorInitializers: Never
 PointerAlignment: Left
 ReflowComments: 'false'
 SortIncludes: 'false'
@@ -67,7 +68,7 @@ SpacesInCStyleCastParentheses: 'false'
 SpacesInContainerLiterals: 'false'
 SpacesInParentheses: 'false'
 SpacesInSquareBrackets: 'false'
-Standard: Cpp11
+Standard: Latest
 TabWidth: '1'
 UseCRLF: 'false'
 UseTab: ForContinuationAndIndentation
