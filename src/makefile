@@ -26,11 +26,11 @@ define this_rules
 
     test::
 $(.RECIPEPREFIX)@echo "check format"
-$(.RECIPEPREFIX)$(a)(cd $(d) && clang-format-14 --dry-run --Werror $(prorab_private_format_srcs))
+$(.RECIPEPREFIX)$(a)(cd $(d) && clang-format --dry-run --Werror $(prorab_private_format_srcs))
 
     apply-format:
 $(.RECIPEPREFIX)@echo "apply format"
-$(.RECIPEPREFIX)$(a)(cd $(d) && clang-format-14 -i --Werror $(prorab_private_format_srcs))
+$(.RECIPEPREFIX)$(a)(cd $(d) && clang-format -i --Werror $(prorab_private_format_srcs))
 
 endef
 $(eval $(this_rules))
