@@ -45,7 +45,7 @@ BraceWrapping:
   SplitEmptyNamespace: 'false'
 BreakBeforeBinaryOperators: NonAssignment
 BreakBeforeBraces: Custom
-# BreakBeforeConceptDeclarations: Always # clang-format 15
+BreakBeforeConceptDeclarations: Always # clang-format 15
 BreakBeforeTernaryOperators: 'true'
 BreakConstructorInitializers: AfterColon
 BreakInheritanceList: AfterColon
@@ -80,7 +80,7 @@ IndentCaseLabels: 'true'
 IndentExternBlock: NoIndent
 IndentGotoLabels: 'false'
 IndentPPDirectives: AfterHash
-# IndentRequiresClause: 'false' # clang-format 15
+IndentRequiresClause: 'false' # clang-format 15
 IndentWidth: '1'
 IndentWrappedFunctionNames: 'false'
 # InsertBraces: 'false' # clang-format 15. The feature is fuzzy, so disable it.
@@ -92,11 +92,12 @@ MaxEmptyLinesToKeep: '1'
 NamespaceIndentation: None
 PackConstructorInitializers: Never
 PointerAlignment: Left
-# QualifierAlignment: Left # TODO: for some reason it increases clang-format run time significantly
+# QualifierAlignment: Custom # for some reason it increases clang-format run time significantly
+# QualifierOrder: ['inline', 'static', 'const', 'type'] # doesn't work without QualifierAlignment: Custom
 ReferenceAlignment: Left
 ReflowComments: 'false'
 RemoveBracesLLVM: 'false'
-# RequiresClausePosition: OwnLine # clang-format 15
+RequiresClausePosition: OwnLine # clang-format 15
 SeparateDefinitionBlocks: Always
 ShortNamespaceLines: 0
 SortIncludes: CaseSensitive
