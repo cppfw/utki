@@ -20,8 +20,10 @@ this_src_suffixes := c h cpp hpp cxx hxx
 
 define this_rules
 
-    $(eval prorab_private_format_find_patterns := -name *.$(firstword $(this_src_suffixes)) \
-            $(foreach s,$(wordlist 2,$(words $(this_src_suffixes)),$(this_src_suffixes)),-or -name *.$(s)))
+    $(eval prorab_private_src_suffixes := $(if $(this_src_suffixes),$(this_src_suffixes),c h cpp hpp cxx hxx))
+
+    $(eval prorab_private_format_find_patterns := -name *.$(firstword $(prorab_private_src_suffixes)) \
+            $(foreach s,$(wordlist 2,$(words $(prorab_private_src_suffixes)),$(prorab_private_src_suffixes)),-or -name *.$(s)))
     $(eval prorab_private_format_srcs := $(shell cd $(d) && find . -type f $(prorab_private_format_find_patterns)))
 
     test::
