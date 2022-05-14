@@ -35,7 +35,7 @@ jobs:
       - name: add llvm repo (for clang-format)
         uses: myci-actions/add-deb-repo@master
         with:
-          repo: deb http://apt.llvm.org/${{ matrix.codename }} llvm-toolchain-${{ matrix.codename }} main
+          repo: deb http://apt.llvm.org/${{ env.linux_release }} llvm-toolchain-${{ env.linux_release }} main
           repo-name: llvm
           keys-asc: https://apt.llvm.org/llvm-snapshot.gpg.key
       - name: install ci tools
