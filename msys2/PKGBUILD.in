@@ -29,9 +29,15 @@ groups=()
 
 depends=()
 
-# 'clang-tools-extra' for clang-tidy
-makedepends=('myci' 'prorab' 'prorab-extra' 'doxygen' "${pkgPrefix}clang-tools-extra")
-checkdepends=('myci')
+makedepends=(
+		'myci'
+		'prorab'
+		'prorab-extra'
+		'doxygen'
+		"${pkgPrefix}clang" # for clang-format
+		"${pkgPrefix}clang-tools-extra" # for clang-tidy
+	)
+checkdepends=()
 optdepends=()
 provides=()
 conflicts=()

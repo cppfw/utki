@@ -16,7 +16,7 @@ this_src_dir := $(this_name)
 this_license_file := ../LICENSE
 $(eval $(prorab-license))
 
-this_src_suffixes := c h cpp hpp cxx hxx
+# this_src_suffixes := c h cpp hpp cxx hxx
 
 define this_rules
 
