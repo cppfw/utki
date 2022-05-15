@@ -53,8 +53,8 @@ BreakStringLiterals: 'false'
 ColumnLimit: '120'
 CompactNamespaces: 'false'
 # ConstructorInitializerAllOnOneLineOrOnePerLine: 'true' # DEPRECATED
-ConstructorInitializerIndentWidth: '2'
-ContinuationIndentWidth: '2'
+ConstructorInitializerIndentWidth: '1'
+ContinuationIndentWidth: '1'
 DeriveLineEnding: 'false'
 DerivePointerAlignment: 'false'
 EmptyLineAfterAccessModifier: Never
