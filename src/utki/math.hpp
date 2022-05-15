@@ -26,9 +26,9 @@ SOFTWARE.
 
 #pragma once
 
-#include "util.hpp"
-
 #include <cmath>
+
+#include "util.hpp"
 
 namespace utki {
 

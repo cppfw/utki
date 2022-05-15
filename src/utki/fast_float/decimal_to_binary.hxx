@@ -27,9 +27,6 @@ SOFTWARE.
 #ifndef FASTFLOAT_DECIMAL_TO_BINARY_H
 #define FASTFLOAT_DECIMAL_TO_BINARY_H
 
-#include "fast_table.hxx"
-#include "float_common.hxx"
-
 #include <cfloat>
 #include <cinttypes>
 #include <cmath>
@@ -37,6 +34,9 @@ SOFTWARE.
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+
+#include "fast_table.hxx"
+#include "float_common.hxx"
 
 namespace fast_float {
 

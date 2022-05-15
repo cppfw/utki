@@ -26,11 +26,11 @@ SOFTWARE.
 
 #pragma once
 
-#include "span.hpp"
-
 #include <array>
 #include <string>
 #include <vector>
+
+#include "span.hpp"
 
 namespace utki {
 

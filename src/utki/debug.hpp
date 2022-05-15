@@ -26,12 +26,12 @@ SOFTWARE.
 
 #pragma once
 
-#include "config.hpp"
-#include "macros.hpp"
-
 #include <functional>
 #include <memory>
 #include <sstream>
+
+#include "config.hpp"
+#include "macros.hpp"
 
 #if M_CPP >= 20
 #	if __has_include(<source_location>)

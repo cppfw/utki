@@ -62,18 +62,18 @@ EmptyLineBeforeAccessModifier: Always
 FixNamespaceComments: 'true'
 IncludeBlocks: Regroup
 IncludeCategories:
-# TODO: make regexs
-#   - Regex:           '^"(llvm|llvm-c|clang|clang-c)/'
-#     Priority:        2
-#     SortPriority:    2
-#     CaseSensitive:   true
-#   - Regex:           '^((<|")(gtest|gmock|isl|json)/)'
-#     Priority:        3
-#   - Regex:           '<[[:alnum:].]+>'
-#     Priority:        4
-#   - Regex:           '.*'
-#     Priority:        1
-#     SortPriority:    0
+  - Regex:           '^<[^/\.]*>$' # headers without suffix and directory
+    Priority:        1
+    CaseSensitive:   true
+  - Regex:           '^<.*>$' # all other angle brackets includes
+    Priority:        2
+    CaseSensitive:   true
+  - Regex:           '^".*"$' # double quotes includes
+    Priority:        3
+    CaseSensitive:   true
+  - Regex:           '.*' # rest of the includes
+    CaseSensitive:   true
+    Priority:        4
 IndentAccessModifiers: 'false'
 IndentCaseBlocks: 'true'
 IndentCaseLabels: 'true'

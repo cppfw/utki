@@ -26,12 +26,12 @@ SOFTWARE.
 
 #pragma once
 
-#include "config.hpp"
-
 #include <cstddef>
 #include <cstdint>
 #include <memory>
 #include <variant>
+
+#include "config.hpp"
 
 namespace utki {
 

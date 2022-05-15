@@ -26,10 +26,10 @@ SOFTWARE.
 
 #pragma once
 
-#include "debug.hpp"
-
 #include <bitset>
 #include <ostream>
+
+#include "debug.hpp"
 
 namespace utki {
 

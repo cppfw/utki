@@ -27,12 +27,12 @@ SOFTWARE.
 #ifndef FASTFLOAT_ASCII_NUMBER_H
 #define FASTFLOAT_ASCII_NUMBER_H
 
-#include "float_common.hxx"
-
 #include <cctype>
 #include <cstdint>
 #include <cstdio>
 #include <cstring>
+
+#include "float_common.hxx"
 
 namespace fast_float {
 

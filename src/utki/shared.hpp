@@ -26,10 +26,10 @@ SOFTWARE.
 
 #pragma once
 
+#include <memory>
+
 #include "config.hpp"
 #include "debug.hpp"
-
-#include <memory>
 
 namespace utki {
 

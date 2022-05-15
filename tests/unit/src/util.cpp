@@ -1,9 +1,10 @@
 #include <array>
+#include <variant>
+
 #include <tst/check.hpp>
 #include <tst/set.hpp>
 #include <utki/types.hpp>
 #include <utki/util.hpp>
-#include <variant>
 
 namespace {
 tst::set set("util", [](tst::suite& suite) {

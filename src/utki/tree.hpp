@@ -26,11 +26,11 @@ SOFTWARE.
 
 #pragma once
 
-#include "debug.hpp"
-#include "span.hpp"
-
 #include <cstddef>
 #include <vector>
+
+#include "debug.hpp"
+#include "span.hpp"
 
 namespace utki {
 

@@ -26,13 +26,13 @@ SOFTWARE.
 
 #pragma once
 
-#include "config.hpp"
-#include "span.hpp"
-
 #include <array>
 #include <charconv>
 #include <string>
 #include <vector>
+
+#include "config.hpp"
+#include "span.hpp"
 
 namespace utki {
 

@@ -39,10 +39,10 @@ SOFTWARE.
  * It is probably not very fast but it is a fallback that should almost never
  * be used in real life. Though it is not fast, it is "easily" understood and debugged.
  **/
+#include <cstdint>
+
 #include "ascii_number.hxx"
 #include "decimal_to_binary.hxx"
-
-#include <cstdint>
 
 namespace fast_float {
 
