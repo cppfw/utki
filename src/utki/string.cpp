@@ -30,8 +30,9 @@ SOFTWARE.
 #include <cctype> // for std::isspace()
 #include <cstdarg> // for varargs
 
-#include "debug.hpp"
 #include "fast_float/fast_float.hxx"
+
+#include "debug.hpp"
 #include "util.hpp"
 
 using namespace utki;

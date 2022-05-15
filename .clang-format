@@ -68,12 +68,18 @@ IncludeCategories:
   - Regex:           '^<.*>$' # all other angle brackets includes
     Priority:        2
     CaseSensitive:   true
-  - Regex:           '^".*"$' # double quotes includes
+  - Regex:           '^"\.\./.*"$' # double quotes includes from outer folders
     Priority:        3
+    CaseSensitive:   true
+  - Regex:           '^".*/.*"$' # double quotes includes from subfolders
+    Priority:        4
+    CaseSensitive:   true
+  - Regex:           '^".*"$' # double quotes includes
+    Priority:        5
     CaseSensitive:   true
   - Regex:           '.*' # rest of the includes
     CaseSensitive:   true
-    Priority:        4
+    Priority:        6
 IndentAccessModifiers: 'false'
 IndentCaseBlocks: 'true'
 IndentCaseLabels: 'true'
