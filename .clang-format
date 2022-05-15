@@ -62,24 +62,27 @@ EmptyLineBeforeAccessModifier: Always
 FixNamespaceComments: 'true'
 IncludeBlocks: Regroup
 IncludeCategories:
-  - Regex:           '^<[^/\.]*>$' # headers without suffix and directory
+  - Regex:           '^<[^/\.]*>$' # angle brackets includes without suffix and directory
     Priority:        1
     CaseSensitive:   true
-  - Regex:           '^<.*>$' # all other angle brackets includes
+  - Regex:           '^<[^/].*\.[^/\.]*>$' # angle brackets includes without directory, but with suffix
     Priority:        2
-    CaseSensitive:   true
-  - Regex:           '^"\.\./.*"$' # double quotes includes from outer folders
+    CaseSensitive:   true	
+  - Regex:           '^<.*>$' # all other angle brackets includes
     Priority:        3
     CaseSensitive:   true
-  - Regex:           '^".*/.*"$' # double quotes includes from subfolders
+  - Regex:           '^"\.\./.*"$' # double quotes includes from outer folders
     Priority:        4
     CaseSensitive:   true
-  - Regex:           '^".*"$' # double quotes includes
+  - Regex:           '^".*/.*"$' # double quotes includes from subfolders
     Priority:        5
+    CaseSensitive:   true
+  - Regex:           '^".*"$' # double quotes includes
+    Priority:        6
     CaseSensitive:   true
   - Regex:           '.*' # rest of the includes
     CaseSensitive:   true
-    Priority:        6
+    Priority:        7
 IndentAccessModifiers: 'false'
 IndentCaseBlocks: 'true'
 IndentCaseLabels: 'true'
