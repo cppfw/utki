@@ -17,7 +17,9 @@ tst::set set("tree", [](tst::suite& suite) {
 		tst::check_eq(
 			t.value,
 			1,
-			[&](auto& o) { o << "t.value = " << t.value; },
+			[&](auto& o) {
+				o << "t.value = " << t.value;
+			},
 			SL
 		);
 	});
@@ -105,7 +107,9 @@ tst::set set("tree", [](tst::suite& suite) {
 		tst::check_eq(
 			t.children[0].children[0].value,
 			34,
-			[&](auto& o) { o << "value = " << t.children[0].value; },
+			[&](auto& o) {
+				o << "value = " << t.children[0].value;
+			},
 			SL
 		);
 
@@ -179,19 +183,25 @@ tst::set set("tree", [](tst::suite& suite) {
 		tst::check_eq(
 			t.children.size(),
 			size_t(2),
-			[&](auto& o) { o << "t.children.size() = " << t.children.size(); },
+			[&](auto& o) {
+				o << "t.children.size() = " << t.children.size();
+			},
 			SL
 		);
 		tst::check_eq(
 			t.children[0].value,
 			10,
-			[&](auto& o) { o << "t.children[0].value = " << t.children[0].value; },
+			[&](auto& o) {
+				o << "t.children[0].value = " << t.children[0].value;
+			},
 			SL
 		);
 		tst::check_eq(
 			t.children[1].value,
 			20,
-			[&](auto& o) { o << "t.children[1].value = " << t.children[1].value; },
+			[&](auto& o) {
+				o << "t.children[1].value = " << t.children[1].value;
+			},
 			SL
 		);
 	});
@@ -208,19 +218,25 @@ tst::set set("tree", [](tst::suite& suite) {
 		tst::check_eq(
 			t.children.size(),
 			size_t(2),
-			[&](auto& o) { o << "t.children.size() = " << t.children.size(); },
+			[&](auto& o) {
+				o << "t.children.size() = " << t.children.size();
+			},
 			SL
 		);
 		tst::check_eq(
 			t.children[0].value,
 			10,
-			[&](auto& o) { o << "t.children[0].value = " << t.children[0].value; },
+			[&](auto& o) {
+				o << "t.children[0].value = " << t.children[0].value;
+			},
 			SL
 		);
 		tst::check_eq(
 			t.children[1].value,
 			20,
-			[&](auto& o) { o << "t.children[1].value = " << t.children[1].value; },
+			[&](auto& o) {
+				o << "t.children[1].value = " << t.children[1].value;
+			},
 			SL
 		);
 	});
@@ -243,19 +259,25 @@ tst::set set("tree", [](tst::suite& suite) {
 		tst::check_eq(
 			t.children.size(),
 			size_t(2),
-			[&](auto& o) { o << "t.children.size() = " << t.children.size(); },
+			[&](auto& o) {
+				o << "t.children.size() = " << t.children.size();
+			},
 			SL
 		);
 		tst::check_eq(
 			t.children[0].value,
 			"10"s,
-			[&](auto& o) { o << "t.children[0].value = " << t.children[0].value; },
+			[&](auto& o) {
+				o << "t.children[0].value = " << t.children[0].value;
+			},
 			SL
 		);
 		tst::check_eq(
 			t.children[1].value,
 			"20"s,
-			[&](auto& o) { o << "t.children[1].value = " << t.children[1].value; },
+			[&](auto& o) {
+				o << "t.children[1].value = " << t.children[1].value;
+			},
 			SL
 		);
 	});
@@ -279,14 +301,18 @@ tst::set set("tree", [](tst::suite& suite) {
 		tst::check_eq(
 			roots.begin()->value,
 			1,
-			[&](auto& o) { o << "roots.begin()->value = " << roots.begin()->value; },
+			[&](auto& o) {
+				o << "roots.begin()->value = " << roots.begin()->value;
+			},
 			SL
 		);
 
 		tst::check_eq(
 			traversal.begin()->value,
 			1,
-			[&](auto& o) { o << "traversal.begin()->value = " << traversal.begin()->value; },
+			[&](auto& o) {
+				o << "traversal.begin()->value = " << traversal.begin()->value;
+			},
 			SL
 		);
 
@@ -297,14 +323,22 @@ tst::set set("tree", [](tst::suite& suite) {
 		std::vector<int> expected = {1, 34, 45, 2, 3, 78, 89, 96, 4, 32, 64, 128, 42, 98, 99, 100};
 
 		if (encountered != expected) {
-			utki::log([&](auto& o) { o << "encountered = "; });
+			utki::log([&](auto& o) {
+				o << "encountered = ";
+			});
 			for (auto& i : encountered) {
-				utki::log([&](auto& o) { o << i << ", "; });
+				utki::log([&](auto& o) {
+					o << i << ", ";
+				});
 			}
-			utki::log([&](auto& o) { o << std::endl; });
+			utki::log([&](auto& o) {
+				o << std::endl;
+			});
 			tst::check(
 				false,
-				[&](auto& o) { o << "traversed tree is not as expected"; },
+				[&](auto& o) {
+					o << "traversed tree is not as expected";
+				},
 				SL
 			);
 		}
@@ -331,11 +365,17 @@ tst::set set("tree", [](tst::suite& suite) {
 		std::vector<int> expected{1, 34, 45, 2, 3, 78, 89, 96, 4, 32, 64, 128, 42, 98, 99, 100};
 
 		if (encountered != expected) {
-			utki::log([&](auto& o) { o << "encountered = "; });
+			utki::log([&](auto& o) {
+				o << "encountered = ";
+			});
 			for (auto& i : encountered) {
-				utki::log([&](auto& o) { o << i << ", "; });
+				utki::log([&](auto& o) {
+					o << i << ", ";
+				});
 			}
-			utki::log([&](auto& o) { o << std::endl; });
+			utki::log([&](auto& o) {
+				o << std::endl;
+			});
 			tst::check(false, SL);
 		}
 	});
@@ -359,13 +399,17 @@ tst::set set("tree", [](tst::suite& suite) {
 		tst::check_eq(
 			roots.begin()->value,
 			1,
-			[&](auto& o) { o << "roots.begin()->value = " << roots.begin()->value; },
+			[&](auto& o) {
+				o << "roots.begin()->value = " << roots.begin()->value;
+			},
 			SL
 		);
 		tst::check_eq(
 			traversal.begin()->value,
 			1,
-			[&](auto& o) { o << "traversal.begin()->value = " << traversal.begin()->value; },
+			[&](auto& o) {
+				o << "traversal.begin()->value = " << traversal.begin()->value;
+			},
 			SL
 		);
 
@@ -376,14 +420,22 @@ tst::set set("tree", [](tst::suite& suite) {
 		std::vector<int> expected = {1, 34, 45, 2, 3, 78, 89, 96, 4, 32, 64, 128, 42, 98, 99, 100};
 
 		if (encountered != expected) {
-			utki::log([&](auto& o) { o << "encountered = "; });
+			utki::log([&](auto& o) {
+				o << "encountered = ";
+			});
 			for (auto& i : encountered) {
-				utki::log([&](auto& o) { o << i << ", "; });
+				utki::log([&](auto& o) {
+					o << i << ", ";
+				});
 			}
-			utki::log([&](auto& o) { o << std::endl; });
+			utki::log([&](auto& o) {
+				o << std::endl;
+			});
 			tst::check(
 				false,
-				[&](auto& o) { o << "traversed tree is not as expected"; },
+				[&](auto& o) {
+					o << "traversed tree is not as expected";
+				},
 				SL
 			);
 		}
@@ -408,13 +460,17 @@ tst::set set("tree", [](tst::suite& suite) {
 		tst::check_eq(
 			roots.begin()->value,
 			1,
-			[&](auto& o) { o << "roots.begin()->value = " << roots.begin()->value; },
+			[&](auto& o) {
+				o << "roots.begin()->value = " << roots.begin()->value;
+			},
 			SL
 		);
 		tst::check_eq(
 			traversal.begin()->value,
 			1,
-			[&](auto& o) { o << "traversal.begin()->value = " << traversal.begin()->value; },
+			[&](auto& o) {
+				o << "traversal.begin()->value = " << traversal.begin()->value;
+			},
 			SL
 		);
 
@@ -425,14 +481,22 @@ tst::set set("tree", [](tst::suite& suite) {
 		std::vector<int> expected = {1, 34, 45, 2, 3, 78, 89, 96, 4, 32, 64, 128, 42, 98, 99, 100};
 
 		if (encountered != expected) {
-			utki::log([&](auto& o) { o << "encountered = "; });
+			utki::log([&](auto& o) {
+				o << "encountered = ";
+			});
 			for (auto& i : encountered) {
-				utki::log([&](auto& o) { o << i << ", "; });
+				utki::log([&](auto& o) {
+					o << i << ", ";
+				});
 			}
-			utki::log([&](auto& o) { o << std::endl; });
+			utki::log([&](auto& o) {
+				o << std::endl;
+			});
 			tst::check(
 				false,
-				[&](auto& o) { o << "traversed tree is not as expected"; },
+				[&](auto& o) {
+					o << "traversed tree is not as expected";
+				},
 				SL
 			);
 		}
@@ -457,13 +521,17 @@ tst::set set("tree", [](tst::suite& suite) {
 		tst::check_eq(
 			roots.begin()->value,
 			1,
-			[&](auto& o) { o << "roots.begin()->value = " << roots.begin()->value; },
+			[&](auto& o) {
+				o << "roots.begin()->value = " << roots.begin()->value;
+			},
 			SL
 		);
 		tst::check_eq(
 			traversal.begin()->value,
 			1,
-			[&](auto& o) { o << "traversal.begin()->value = " << traversal.begin()->value; },
+			[&](auto& o) {
+				o << "traversal.begin()->value = " << traversal.begin()->value;
+			},
 			SL
 		);
 
@@ -474,14 +542,22 @@ tst::set set("tree", [](tst::suite& suite) {
 		std::vector<int> expected = {100, 99, 98, 42, 128, 64, 32, 4, 96, 89, 78, 3, 2, 45, 34, 1};
 
 		if (encountered != expected) {
-			utki::log([&](auto& o) { o << "encountered = "; });
+			utki::log([&](auto& o) {
+				o << "encountered = ";
+			});
 			for (auto& i : encountered) {
-				utki::log([&](auto& o) { o << i << ", "; });
+				utki::log([&](auto& o) {
+					o << i << ", ";
+				});
 			}
-			utki::log([&](auto& o) { o << std::endl; });
+			utki::log([&](auto& o) {
+				o << std::endl;
+			});
 			tst::check(
 				false,
-				[&](auto& o) { o << "traversed tree is not as expected"; },
+				[&](auto& o) {
+					o << "traversed tree is not as expected";
+				},
 				SL
 			);
 		}
@@ -506,13 +582,17 @@ tst::set set("tree", [](tst::suite& suite) {
 		tst::check_eq(
 			roots.begin()->value,
 			1,
-			[&](auto& o) { o << "roots.begin()->value = " << roots.begin()->value; },
+			[&](auto& o) {
+				o << "roots.begin()->value = " << roots.begin()->value;
+			},
 			SL
 		);
 		tst::check_eq(
 			traversal.begin()->value,
 			1,
-			[&](auto& o) { o << "traversal.begin()->value = " << traversal.begin()->value; },
+			[&](auto& o) {
+				o << "traversal.begin()->value = " << traversal.begin()->value;
+			},
 			SL
 		);
 
@@ -523,14 +603,22 @@ tst::set set("tree", [](tst::suite& suite) {
 		std::vector<int> expected = {100, 99, 98, 42, 128, 64, 32, 4, 96, 89, 78, 3, 2, 45, 34, 1};
 
 		if (encountered != expected) {
-			utki::log([&](auto& o) { o << "encountered = "; });
+			utki::log([&](auto& o) {
+				o << "encountered = ";
+			});
 			for (auto& i : encountered) {
-				utki::log([&](auto& o) { o << i << ", "; });
+				utki::log([&](auto& o) {
+					o << i << ", ";
+				});
 			}
-			utki::log([&](auto& o) { o << std::endl; });
+			utki::log([&](auto& o) {
+				o << std::endl;
+			});
 			tst::check(
 				false,
-				[&](auto& o) { o << "traversed tree is not as expected"; },
+				[&](auto& o) {
+					o << "traversed tree is not as expected";
+				},
 				SL
 			);
 		}
@@ -555,13 +643,17 @@ tst::set set("tree", [](tst::suite& suite) {
 		tst::check_eq(
 			roots.begin()->value,
 			1,
-			[&](auto& o) { o << "roots.begin()->value = " << roots.begin()->value; },
+			[&](auto& o) {
+				o << "roots.begin()->value = " << roots.begin()->value;
+			},
 			SL
 		);
 		tst::check_eq(
 			traversal.begin()->value,
 			1,
-			[&](auto& o) { o << "traversal.begin()->value = " << traversal.begin()->value; },
+			[&](auto& o) {
+				o << "traversal.begin()->value = " << traversal.begin()->value;
+			},
 			SL
 		);
 
@@ -572,14 +664,22 @@ tst::set set("tree", [](tst::suite& suite) {
 		std::vector<int> expected = {100, 99, 98, 42, 128, 64, 32, 4, 96, 89, 78, 3, 2, 45, 34, 1};
 
 		if (encountered != expected) {
-			utki::log([&](auto& o) { o << "encountered = "; });
+			utki::log([&](auto& o) {
+				o << "encountered = ";
+			});
 			for (auto& i : encountered) {
-				utki::log([&](auto& o) { o << i << ", "; });
+				utki::log([&](auto& o) {
+					o << i << ", ";
+				});
 			}
-			utki::log([&](auto& o) { o << std::endl; });
+			utki::log([&](auto& o) {
+				o << std::endl;
+			});
 			tst::check(
 				false,
-				[&](auto& o) { o << "traversed tree is not as expected"; },
+				[&](auto& o) {
+					o << "traversed tree is not as expected";
+				},
 				SL
 			);
 		}
@@ -604,13 +704,17 @@ tst::set set("tree", [](tst::suite& suite) {
 		tst::check_eq(
 			roots.begin()->value,
 			1,
-			[&](auto& o) { o << "roots.begin()->value = " << roots.begin()->value; },
+			[&](auto& o) {
+				o << "roots.begin()->value = " << roots.begin()->value;
+			},
 			SL
 		);
 		tst::check_eq(
 			traversal.begin()->value,
 			1,
-			[&](auto& o) { o << "traversal.begin()->value = " << traversal.begin()->value; },
+			[&](auto& o) {
+				o << "traversal.begin()->value = " << traversal.begin()->value;
+			},
 			SL
 		);
 
@@ -621,14 +725,22 @@ tst::set set("tree", [](tst::suite& suite) {
 		std::vector<int> expected = {100, 99, 98, 42, 128, 64, 32, 4, 96, 89, 78, 3, 2, 45, 34, 1};
 
 		if (encountered != expected) {
-			utki::log([&](auto& o) { o << "encountered = "; });
+			utki::log([&](auto& o) {
+				o << "encountered = ";
+			});
 			for (auto& i : encountered) {
-				utki::log([&](auto& o) { o << i << ", "; });
+				utki::log([&](auto& o) {
+					o << i << ", ";
+				});
 			}
-			utki::log([&](auto& o) { o << std::endl; });
+			utki::log([&](auto& o) {
+				o << std::endl;
+			});
 			tst::check(
 				false,
-				[&](auto& o) { o << "traversed tree is not as expected"; },
+				[&](auto& o) {
+					o << "traversed tree is not as expected";
+				},
 				SL
 			);
 		}
@@ -653,13 +765,17 @@ tst::set set("tree", [](tst::suite& suite) {
 		tst::check_eq(
 			roots.begin()->value,
 			1,
-			[&](auto& o) { o << "roots.begin()->value = " << roots.begin()->value; },
+			[&](auto& o) {
+				o << "roots.begin()->value = " << roots.begin()->value;
+			},
 			SL
 		);
 		tst::check_eq(
 			traversal.begin()->value,
 			1,
-			[&](auto& o) { o << "traversal.begin()->value = " << traversal.begin()->value; },
+			[&](auto& o) {
+				o << "traversal.begin()->value = " << traversal.begin()->value;
+			},
 			SL
 		);
 
@@ -677,14 +793,22 @@ tst::set set("tree", [](tst::suite& suite) {
 		std::vector<size_t> expected = {1, 0, 1};
 
 		if (index != expected) {
-			utki::log([&](auto& o) { o << "index = "; });
+			utki::log([&](auto& o) {
+				o << "index = ";
+			});
 			for (auto& i : index) {
-				utki::log([&](auto& o) { o << i << ", "; });
+				utki::log([&](auto& o) {
+					o << i << ", ";
+				});
 			}
-			utki::log([&](auto& o) { o << std::endl; });
+			utki::log([&](auto& o) {
+				o << std::endl;
+			});
 			tst::check(
 				false,
-				[&](auto& o) { o << "index is not as expected"; },
+				[&](auto& o) {
+					o << "index is not as expected";
+				},
 				SL
 			);
 		}
@@ -696,14 +820,22 @@ tst::set set("tree", [](tst::suite& suite) {
 		auto index_2 = iter.index();
 
 		if (index_2 != expected) {
-			utki::log([&](auto& o) { o << "index_2 = "; });
+			utki::log([&](auto& o) {
+				o << "index_2 = ";
+			});
 			for (auto& i : index_2) {
-				utki::log([&](auto& o) { o << i << ", "; });
+				utki::log([&](auto& o) {
+					o << i << ", ";
+				});
 			}
-			utki::log([&](auto& o) { o << std::endl; });
+			utki::log([&](auto& o) {
+				o << std::endl;
+			});
 			tst::check(
 				false,
-				[&](auto& o) { o << "index_2 is not as expected"; },
+				[&](auto& o) {
+					o << "index_2 is not as expected";
+				},
 				SL
 			);
 		}
@@ -728,13 +860,17 @@ tst::set set("tree", [](tst::suite& suite) {
 		tst::check_eq(
 			roots.begin()->value,
 			1,
-			[&](auto& o) { o << "roots.begin()->value = " << roots.begin()->value; },
+			[&](auto& o) {
+				o << "roots.begin()->value = " << roots.begin()->value;
+			},
 			SL
 		);
 		tst::check_eq(
 			traversal.cbegin()->value,
 			1,
-			[&](auto& o) { o << "traversal.begin()->value = " << traversal.cbegin()->value; },
+			[&](auto& o) {
+				o << "traversal.begin()->value = " << traversal.cbegin()->value;
+			},
 			SL
 		);
 
@@ -752,14 +888,22 @@ tst::set set("tree", [](tst::suite& suite) {
 		std::vector<size_t> expected = {1, 0, 1};
 
 		if (index != expected) {
-			utki::log([&](auto& o) { o << "index = "; });
+			utki::log([&](auto& o) {
+				o << "index = ";
+			});
 			for (auto& i : index) {
-				utki::log([&](auto& o) { o << i << ", "; });
+				utki::log([&](auto& o) {
+					o << i << ", ";
+				});
 			}
-			utki::log([&](auto& o) { o << std::endl; });
+			utki::log([&](auto& o) {
+				o << std::endl;
+			});
 			tst::check(
 				false,
-				[&](auto& o) { o << "index is not as expected"; },
+				[&](auto& o) {
+					o << "index is not as expected";
+				},
 				SL
 			);
 		}
@@ -771,14 +915,22 @@ tst::set set("tree", [](tst::suite& suite) {
 		auto index_2 = iter.index();
 
 		if (index_2 != expected) {
-			utki::log([&](auto& o) { o << "index_2 = "; });
+			utki::log([&](auto& o) {
+				o << "index_2 = ";
+			});
 			for (auto& i : index_2) {
-				utki::log([&](auto& o) { o << i << ", "; });
+				utki::log([&](auto& o) {
+					o << i << ", ";
+				});
 			}
-			utki::log([&](auto& o) { o << std::endl; });
+			utki::log([&](auto& o) {
+				o << std::endl;
+			});
 			tst::check(
 				false,
-				[&](auto& o) { o << "index_2 is not as expected"; },
+				[&](auto& o) {
+					o << "index_2 is not as expected";
+				},
 				SL
 			);
 		}

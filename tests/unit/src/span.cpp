@@ -195,7 +195,9 @@ tst::set set("span", [](tst::suite& suite) {
 		tst::check_eq(
 			ss.size(),
 			size_t(0),
-			[&](auto& o) { o << "ss.size() = " << ss.size(); },
+			[&](auto& o) {
+				o << "ss.size() = " << ss.size();
+			},
 			SL
 		);
 	});
@@ -208,7 +210,9 @@ tst::set set("span", [](tst::suite& suite) {
 		tst::check_eq(
 			ss.size(),
 			size_t(0),
-			[&](auto& o) { o << "ss.size() = " << ss.size(); },
+			[&](auto& o) {
+				o << "ss.size() = " << ss.size();
+			},
 			SL
 		);
 	});
@@ -221,7 +225,9 @@ tst::set set("span", [](tst::suite& suite) {
 		tst::check_eq(
 			ss.size(),
 			size_t(4),
-			[&](auto& o) { o << "ss.size() = " << ss.size(); },
+			[&](auto& o) {
+				o << "ss.size() = " << ss.size();
+			},
 			SL
 		);
 		tst::check_eq(ss.data(), f.str.data() + 3, SL);

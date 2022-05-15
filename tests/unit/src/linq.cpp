@@ -62,7 +62,9 @@ tst::set set("linq", [](tst::suite& suite) {
 
 		tst::check(
 			out == expected,
-			[&](auto& o) { o << "out.size() = " << out.size() << std::endl; },
+			[&](auto& o) {
+				o << "out.size() = " << out.size() << std::endl;
+			},
 			SL
 		);
 		tst::check(!in.empty(), SL);
@@ -205,22 +207,30 @@ tst::set set("linq", [](tst::suite& suite) {
 
 		tst::check(
 			out.size() == 2,
-			[&](auto& o) { o << "out.size() = " << out.size(); },
+			[&](auto& o) {
+				o << "out.size() = " << out.size();
+			},
 			SL
 		);
 		tst::check(
 			out.begin()->first == 3,
-			[&](auto& o) { o << "out.begin()->first = " << out.begin()->first; },
+			[&](auto& o) {
+				o << "out.begin()->first = " << out.begin()->first;
+			},
 			SL
 		);
 		tst::check(
 			std::next(out.begin())->first == 13,
-			[&](auto& o) { o << "std::next(out.begin())->first = " << std::next(out.begin())->first; },
+			[&](auto& o) {
+				o << "std::next(out.begin())->first = " << std::next(out.begin())->first;
+			},
 			SL
 		);
 		tst::check(
 			out.begin()->second.size() == 2,
-			[&](auto& o) { o << "out.begin()->second.size() = " << out.begin()->second.size(); },
+			[&](auto& o) {
+				o << "out.begin()->second.size() = " << out.begin()->second.size();
+			},
 			SL
 		);
 	});

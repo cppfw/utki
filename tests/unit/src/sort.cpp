@@ -87,7 +87,13 @@ tst::set set("sort", [](tst::suite& suite) {
 			{{"hello", 13}, {"bye", 15}, {"how", 33}, {"are", 4}, {"you", 9}}
   };
 
-		utki::sort(arr.begin(), arr.end(), [](const auto& a, const auto& b) { return a.first < b.first; });
+		utki::sort( //
+			arr.begin(),
+			arr.end(),
+			[](const auto& a, const auto& b) {
+				return a.first < b.first;
+			}
+		);
 
 		decltype(arr) expected = {
 			{{"are", 4}, {"bye", 15}, {"hello", 13}, {"how", 33}, {"you", 9}}

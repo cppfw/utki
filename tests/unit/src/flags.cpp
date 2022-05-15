@@ -69,7 +69,9 @@ tst::set set("flags", [](tst::suite& suite) {
 			o << "enum_size = " << size_t(TestEnum::enum_size) << " sizeof(fs) = " << sizeof(fs) << std::endl;
 		})
 
-		LOG([&](auto& o) { o << "fs = " << fs << std::endl; })
+		LOG([&](auto& o) {
+			o << "fs = " << fs << std::endl;
+		})
 
 		{
 			utki::flags<TestEnum> fs;
