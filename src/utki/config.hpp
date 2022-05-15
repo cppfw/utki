@@ -62,8 +62,10 @@ SOFTWARE.
 #		define M_COMPILER_MSVC_TOOLS_V 140
 #	elif _MSC_VER < 1929
 #		define M_COMPILER_MSVC_TOOLS_V 141
-#	else
+#	elif _MSC_VER < 1930
 #		define M_COMPILER_MSVC_TOOLS_V 142
+#	else
+#		define M_COMPILER_MSVC_TOOLS_V 143
 #	endif
 #elif defined(__clang__)
 #	define M_COMPILER M_COMPILER_CLANG

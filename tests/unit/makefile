@@ -1,5 +1,6 @@
 include prorab.mk
 include prorab-test.mk
+include prorab-clang-format.mk
 
 $(eval $(call prorab-include, ../../src/makefile))
 $(eval $(call prorab-include, ../harness/makefile))
@@ -28,3 +29,6 @@ this_test_cmd := $(prorab_this_name) --junit-out=$(dir $(prorab_this_name))/juni
 this_test_deps := $(prorab_this_name)
 this_test_ld_path := $(dir $(this_libutki)) $(this_harness_ld_paths)
 $(eval $(prorab-test))
+
+this_src_dir := src
+$(eval $(prorab-clang-format))

@@ -27,7 +27,6 @@ SOFTWARE.
 #include "debug.hpp"
 
 #include "config.hpp"
-
 #include "util.hpp"
 
 #if M_OS_NAME == M_OS_NAME_ANDROID
@@ -46,7 +45,9 @@ std::string_view uncolored_error_string = "error";
 void utki::assert(
 		bool condition,
 		const std::function<void(std::ostream&)>& print,
-		utki::source_location&& source_location) {
+		utki::source_location&& source_location
+)
+{
 	if (condition) {
 		return;
 	}
@@ -55,9 +56,15 @@ void utki::assert(
 	ss << source_location.file_name() << ":" << source_location.line() << ": ";
 
 	if (is_cerr_terminal()) {
+#if M_COMPILER == M_COMPILER_MSVC && M_COMPILER_MSVC_TOOLS_V <= 141
+		ss << std::string(colored_error_string);
+	} else {
+		ss << std::string(uncolored_error_string);
+#else
 		ss << colored_error_string;
 	} else {
 		ss << uncolored_error_string;
+#endif
 	}
 
 	ss << ": assertion failed";
@@ -80,7 +87,8 @@ void utki::assert(
 	abort();
 }
 
-void utki::log(const std::function<void(std::ostream&)>& print) {
+void utki::log(const std::function<void(std::ostream&)>& print)
+{
 	if (!print) {
 		return;
 	}
