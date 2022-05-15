@@ -3,8 +3,7 @@
 #include "TestSingleton.hpp_"
 #include "testso.hpp_"
 
-
-
+// NOLINTNEXTLINE(bugprone-exception-escape): global exceptions are not caught
 int main(int argc, char *argv[]){
 	TestSingleton ts;
 

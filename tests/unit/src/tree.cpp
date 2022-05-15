@@ -250,10 +250,10 @@ tst::set set("tree", [](tst::suite& suite) {
 		std::string str("13");
 		tree_str t(std::move(str), std::move(children));
 		tst::check_eq(
-			str.size(),
+			str.size(), // NOLINT(clang-analyzer-cplusplus.Move): intentional check that the string was moved
 			size_t(0),
 			SL
-		); // NOLINT(clang-analyzer-cplusplus.Move): intentional check that the string was moved
+		);
 
 		tst::check_eq(t.value, "13"s, SL);
 		tst::check_eq(

@@ -10,6 +10,7 @@ tst::set set("debug", [](tst::suite& suite) {
 		ASSERT(sizeof(int) == 4)
 		ASSERT(sizeof(a) == 4 && sizeof(a) == sizeof(int))
 		a += 4;
+		utki::assert(a == 17, SL);
 	});
 
 	suite.add("assert_macro_with_message", []() {
@@ -19,6 +20,7 @@ tst::set set("debug", [](tst::suite& suite) {
 		})
 		ASSERT_INFO(a == 13, "a is not 13, a is " << a)
 		a += 4;
+		utki::assert(a == 17, SL);
 	});
 
 	suite.add("assert", []() {

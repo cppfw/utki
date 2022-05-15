@@ -51,7 +51,7 @@ std::string utki::make_string_va_list(const char* format, va_list args)
 		va_end(cur_args);
 	});
 
-	for (unsigned i = 0;; ++i) {
+	for (;;) {
 		int size = vsnprintf( //
 			buf_ptr,
 			buf_size,
@@ -83,7 +83,7 @@ std::string utki::make_string_va_list(const char* format, va_list args)
 	}
 
 	return ret;
-}
+} // NOLINT(clang-analyzer-valist.Unterminated): the cur_args is freed by cur_args_scope_exit
 
 std::string utki::make_string(const char* format, ...)
 {
