@@ -51,7 +51,14 @@ std::string utki::make_string_va_list(const char* format, va_list args)
 		va_end(cur_args);
 	});
 
-	for (;;) {
+	for (
+#ifdef DEBUG
+		size_t i = 0;; ++i
+#else
+		;;
+#endif
+	)
+	{
 		int size = vsnprintf( //
 			buf_ptr,
 			buf_size,
