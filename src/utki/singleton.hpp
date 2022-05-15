@@ -26,8 +26,8 @@ SOFTWARE.
 
 #pragma once
 
-#include "debug.hpp"
 #include "config.hpp"
+#include "debug.hpp"
 
 #include <memory>
 
@@ -61,9 +61,11 @@ namespace utki {
  * @endcode
  */
 template <class T, class T_InstanceOwner = T>
-class intrusive_singleton {
+class intrusive_singleton
+{
 protected: // use only as a base class
-	intrusive_singleton() {
+	intrusive_singleton()
+	{
 		if (T_InstanceOwner::instance) {
 			throw std::logic_error("singleton::singleton(): instance is already created");
 		}
@@ -87,7 +89,8 @@ public:
 	 * @return true if object is created.
 	 * @return false otherwise.
 	 */
-	static bool is_created() {
+	static bool is_created()
+	{
 		return T_InstanceOwner::instance != nullptr;
 	}
 
@@ -95,12 +98,16 @@ public:
 	 * @brief get singleton instance.
 	 * @return reference to singleton object instance.
 	 */
-	static T& inst() {
-		ASSERT(is_created(), [](auto& o) { o << "intrusive_singleton::inst(): singleton object is not created"; })
+	static T& inst()
+	{
+		ASSERT(is_created(), [](auto& o) {
+			o << "intrusive_singleton::inst(): singleton object is not created";
+		})
 		return *T_InstanceOwner::instance;
 	}
 
-	virtual ~intrusive_singleton() noexcept {
+	virtual ~intrusive_singleton() noexcept
+	{
 		ASSERT(T_InstanceOwner::instance.get() == static_cast<T*>(this))
 		T_InstanceOwner::instance.release();
 	}
@@ -131,7 +138,8 @@ public:
  * @endcode
  */
 template <class T>
-class singleton : public intrusive_singleton<T, singleton<T>> {
+class singleton : public intrusive_singleton<T, singleton<T>>
+{
 	friend class intrusive_singleton<T, singleton<T>>;
 
 protected:
@@ -151,10 +159,12 @@ typename utki::intrusive_singleton<T, singleton<T>>::T_Instance utki::singleton<
 #else
 
 template <class T>
-class singleton {
+class singleton
+{
 	static_assert(
-			std::is_same<T, T&>::value, // always false
-			"non-intrusive singleton is not supported under MSVC compiler, use utki::intrusive_singleton");
+		std::is_same<T, T&>::value, // always false
+		"non-intrusive singleton is not supported under MSVC compiler, use utki::intrusive_singleton"
+	);
 };
 
 #endif

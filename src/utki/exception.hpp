@@ -37,7 +37,8 @@ namespace utki {
  * This class allows throwing an std::exception-derived exception with text message.
  * This class is for the cases when none of the std::logic_error nor the std::runtime_error suits.
  */
-class exception : public std::exception {
+class exception : public std::exception
+{
 	std::string message;
 
 public:
@@ -46,9 +47,12 @@ public:
 	 * 
 	 * @param message - text message to be stored in the exception object.
 	 */
-	exception(std::string&& message) : message(message) {}
+	exception(std::string&& message) :
+		message(message)
+	{}
 
-	const char* what() const noexcept override {
+	const char* what() const noexcept override
+	{
 		return this->message.c_str();
 	}
 };

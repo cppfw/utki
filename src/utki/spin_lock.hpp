@@ -28,27 +28,32 @@ SOFTWARE.
 
 #include <atomic>
 
-namespace utki{
+namespace utki {
 
 /**
  * @brief Spin lock.
  */
-class spin_lock{
-    std::atomic_flag flag = ATOMIC_FLAG_INIT ;
+class spin_lock
+{
+	std::atomic_flag flag = ATOMIC_FLAG_INIT;
+
 public:
 	/**
 	 * @brief Acquire spin lock.
      */
-    void lock(){
-        while(this->flag.test_and_set(std::memory_order_acquire)){}
-    }
-	
+	void lock()
+	{
+		while (this->flag.test_and_set(std::memory_order_acquire)) {
+		}
+	}
+
 	/**
 	 * @brief Release spin lock.
      */
-    void unlock(){
-        this->flag.clear(std::memory_order_release);
-    }
+	void unlock()
+	{
+		this->flag.clear(std::memory_order_release);
+	}
 };
 
-}
+} // namespace utki

@@ -44,7 +44,6 @@ SOFTWARE.
 
 #	include <windows.h>
 
-
 #	if (_WINSOCKAPI_ + 0) // if defined and is not empty
 #		if _WINSOCKAPI_ == 1234567890
 #			undef _WINSOCKAPI_

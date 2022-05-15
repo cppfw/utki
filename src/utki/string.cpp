@@ -26,18 +26,18 @@ SOFTWARE.
 
 #include "string.hpp"
 
-#include <cstdarg> // for varargs
-#include <array>
-#include <cctype> // for std::isspace()
-
 #include "debug.hpp"
+#include "fast_float/fast_float.hxx"
 #include "util.hpp"
 
-#include "fast_float/fast_float.hxx"
+#include <array>
+#include <cctype> // for std::isspace()
+#include <cstdarg> // for varargs
 
 using namespace utki;
 
-std::string utki::make_string_va_list(const char* format, va_list args) {
+std::string utki::make_string_va_list(const char* format, va_list args)
+{
 	std::array<char, 0x400> buf; // first guess is that the resulting string will take less than 1k
 
 	std::string ret;
@@ -53,10 +53,10 @@ std::string utki::make_string_va_list(const char* format, va_list args) {
 
 	for (unsigned i = 0;; ++i) {
 		int size = vsnprintf( //
-				buf_ptr,
-				buf_size,
-				format,
-				cur_args
+			buf_ptr,
+			buf_size,
+			format,
+			cur_args
 		);
 
 		if (size < 0) {
@@ -85,7 +85,8 @@ std::string utki::make_string_va_list(const char* format, va_list args) {
 	return ret;
 }
 
-std::string utki::make_string(const char* format, ...) {
+std::string utki::make_string(const char* format, ...)
+{
 	va_list args;
 	va_start(args, format);
 	auto ret = make_string_va_list(format, args);
@@ -93,7 +94,8 @@ std::string utki::make_string(const char* format, ...) {
 	return ret;
 }
 
-std::vector<std::string> utki::split(std::string_view str) {
+std::vector<std::string> utki::split(std::string_view str)
+{
 	std::vector<std::string> ret;
 
 	std::vector<char> buf;
@@ -118,7 +120,8 @@ std::vector<std::string> utki::split(std::string_view str) {
 	return ret;
 }
 
-std::vector<std::string> utki::word_wrap(std::string_view str, unsigned width) {
+std::vector<std::string> utki::word_wrap(std::string_view str, unsigned width)
+{
 	std::vector<std::string> ret;
 
 	if (width == 0) {
@@ -135,8 +138,8 @@ std::vector<std::string> utki::word_wrap(std::string_view str, unsigned width) {
 			if (*span_begin == ' ') { // span of spaces
 				if (word_ended) {
 					ret.emplace_back(str.substr( //
-							std::distance(str.begin(), line_begin),
-							std::distance(line_begin, span_begin)
+						std::distance(str.begin(), line_begin),
+						std::distance(line_begin, span_begin)
 					));
 					line_begin = std::next(span_begin);
 				} else {
@@ -146,14 +149,14 @@ std::vector<std::string> utki::word_wrap(std::string_view str, unsigned width) {
 			} else if (word_ended) { // short word span
 				ASSERT(std::distance(line_begin, span_begin) >= 1)
 				ret.emplace_back(str.substr( //
-						std::distance(str.begin(), line_begin),
-						std::distance(line_begin, std::prev(span_begin, 1))
+					std::distance(str.begin(), line_begin),
+					std::distance(line_begin, std::prev(span_begin, 1))
 				));
 				line_begin = span_begin;
 			} else { // long word span (word longer than width)
 				ret.emplace_back(str.substr( //
-						std::distance(str.begin(), line_begin),
-						std::distance(line_begin, i)
+					std::distance(str.begin(), line_begin),
+					std::distance(line_begin, i)
 				));
 				line_begin = i;
 				span_begin = line_begin;
@@ -185,14 +188,14 @@ std::vector<std::string> utki::word_wrap(std::string_view str, unsigned width) {
 	if (span_begin != str.end() && *span_begin == ' ') {
 		if (word_ended) {
 			ret.emplace_back(str.substr( //
-					std::distance(str.begin(), line_begin),
-					std::distance(line_begin, span_begin)
+				std::distance(str.begin(), line_begin),
+				std::distance(line_begin, span_begin)
 			));
 		}
 	} else {
 		ret.emplace_back(str.substr( //
-				std::distance(str.begin(), line_begin),
-				std::distance(line_begin, str.end())
+			std::distance(str.begin(), line_begin),
+			std::distance(line_begin, str.end())
 		));
 	}
 
@@ -200,7 +203,8 @@ std::vector<std::string> utki::word_wrap(std::string_view str, unsigned width) {
 }
 
 namespace {
-fast_float::chars_format to_fast_float_format(utki::chars_format f) {
+fast_float::chars_format to_fast_float_format(utki::chars_format f)
+{
 	switch (f) {
 		case utki::chars_format::scientific:
 			return fast_float::scientific;
@@ -216,11 +220,12 @@ fast_float::chars_format to_fast_float_format(utki::chars_format f) {
 } // namespace
 
 std::from_chars_result utki::from_chars( //
-		const char* first,
-		const char* last,
-		float& value,
-		chars_format fmt
-) noexcept {
+	const char* first,
+	const char* last,
+	float& value,
+	chars_format fmt
+) noexcept
+{
 	std::from_chars_result ret;
 
 	auto res = fast_float::from_chars(first, last, value, to_fast_float_format(fmt));
@@ -232,11 +237,12 @@ std::from_chars_result utki::from_chars( //
 }
 
 std::from_chars_result utki::from_chars( //
-		const char* first,
-		const char* last,
-		double& value,
-		chars_format fmt
-) noexcept {
+	const char* first,
+	const char* last,
+	double& value,
+	chars_format fmt
+) noexcept
+{
 	std::from_chars_result ret;
 
 	auto res = fast_float::from_chars(first, last, value, to_fast_float_format(fmt));
@@ -247,18 +253,20 @@ std::from_chars_result utki::from_chars( //
 	return ret;
 }
 
-bool string_parser::is_space(char c) {
+bool string_parser::is_space(char c)
+{
 	// space characters of the default locale
 	return //
-			c == ' ' || //
-			c == '\n' || //
-			c == '\t' || //
-			c == '\r' || //
-			c == '\v' || // vertical tab
-			c == '\f'; // form feed
+		c == ' ' || //
+		c == '\n' || //
+		c == '\t' || //
+		c == '\r' || //
+		c == '\v' || // vertical tab
+		c == '\f'; // form feed
 }
 
-void string_parser::skip_whitespaces() {
+void string_parser::skip_whitespaces()
+{
 	size_t pos = 0;
 	for (char c : this->view) {
 		if (!string_parser::is_space(c)) {
@@ -269,7 +277,8 @@ void string_parser::skip_whitespaces() {
 	this->view = this->view.substr(pos);
 }
 
-void string_parser::skip_whitespaces_and_comma() {
+void string_parser::skip_whitespaces_and_comma()
+{
 	size_t pos = 0;
 
 	bool comma_skipped = false;
@@ -289,7 +298,8 @@ void string_parser::skip_whitespaces_and_comma() {
 	this->view = this->view.substr(pos);
 }
 
-void string_parser::skip_inclusive_until(char c) {
+void string_parser::skip_inclusive_until(char c)
+{
 	for (; !this->view.empty(); this->view = this->view.substr(1)) {
 		if (this->view.front() == c) {
 			this->view = this->view.substr(1);
@@ -298,7 +308,8 @@ void string_parser::skip_inclusive_until(char c) {
 	}
 }
 
-std::string_view string_parser::read_word() {
+std::string_view string_parser::read_word()
+{
 	for (auto i = this->view.begin(); i != this->view.end(); ++i) {
 		if (string_parser::is_space(*i)) {
 			auto dist = std::distance(this->view.begin(), i);
@@ -315,7 +326,8 @@ std::string_view string_parser::read_word() {
 	return ret;
 }
 
-std::string_view string_parser::read_word_until(char until_char) {
+std::string_view string_parser::read_word_until(char until_char)
+{
 	for (auto i = this->view.begin(); i != this->view.end(); ++i) {
 		if (string_parser::is_space(*i) || *i == until_char) {
 			auto dist = std::distance(this->view.begin(), i);
@@ -332,13 +344,15 @@ std::string_view string_parser::read_word_until(char until_char) {
 	return ret;
 }
 
-void string_parser::throw_if_empty() {
+void string_parser::throw_if_empty()
+{
 	if (this->view.empty()) {
 		throw std::invalid_argument("string_parser string is empty");
 	}
 }
 
-char string_parser::read_char() {
+char string_parser::read_char()
+{
 	this->throw_if_empty();
 
 	char ret = this->view.front();
@@ -348,13 +362,15 @@ char string_parser::read_char() {
 	return ret;
 }
 
-char string_parser::peek_char() {
+char string_parser::peek_char()
+{
 	this->throw_if_empty();
 
 	return this->view.front();
 }
 
-char string_parser::peek_char(size_t n) {
+char string_parser::peek_char(size_t n)
+{
 	if (this->view.size() <= n) {
 		std::stringstream ss;
 		ss << "string_parser string is to short (" << this->view.size() << " chars), requested char index = " << n;
@@ -364,7 +380,8 @@ char string_parser::peek_char(size_t n) {
 	return this->view[n];
 }
 
-std::string_view string_parser::read_chars(size_t n) {
+std::string_view string_parser::read_chars(size_t n)
+{
 	using std::min;
 	n = min(n, this->view.size());
 	auto ret = std::string_view(this->view.data(), n);
@@ -374,7 +391,8 @@ std::string_view string_parser::read_chars(size_t n) {
 	return ret;
 }
 
-std::string_view string_parser::read_chars_until(char until_char) {
+std::string_view string_parser::read_chars_until(char until_char)
+{
 	for (auto i = this->view.begin(); i != this->view.end(); ++i) {
 		if (*i == until_char) {
 			auto dist = std::distance(this->view.begin(), i);

@@ -28,7 +28,7 @@ SOFTWARE.
 
 #include <cstdint>
 
-namespace utki{
+namespace utki {
 
 /**
  * @brief Get system ticks in milliseconds.
@@ -36,4 +36,4 @@ namespace utki{
  */
 uint32_t get_ticks_ms();
 
-}
+} // namespace utki

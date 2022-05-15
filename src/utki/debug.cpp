@@ -43,9 +43,9 @@ std::string_view uncolored_error_string = "error";
 } // namespace
 
 void utki::assert(
-		bool condition,
-		const std::function<void(std::ostream&)>& print,
-		utki::source_location&& source_location
+	bool condition,
+	const std::function<void(std::ostream&)>& print,
+	utki::source_location&& source_location
 )
 {
 	if (condition) {

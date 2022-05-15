@@ -31,16 +31,15 @@ SOFTWARE.
 
 namespace fast_float {
 enum chars_format {
-    scientific = 1<<0,
-    fixed = 1<<2,
-    hex = 1<<3,
-    general = fixed | scientific
+	scientific = 1 << 0,
+	fixed = 1 << 2,
+	hex = 1 << 3,
+	general = fixed | scientific
 };
 
-
 struct from_chars_result {
-  const char *ptr;
-  std::errc ec;
+	const char* ptr;
+	std::errc ec;
 };
 
 /**
@@ -62,10 +61,11 @@ struct from_chars_result {
  * to determine whether we allowe the fixed point and scientific notation respectively.
  * The default is  `fast_float::chars_format::general` which allows both `fixed` and `scientific`.
  */
-template<typename T>
-from_chars_result from_chars(const char *first, const char *last,
-                             T &value, chars_format fmt = chars_format::general)  noexcept;
+template <typename T>
+from_chars_result
+from_chars(const char* first, const char* last, T& value, chars_format fmt = chars_format::general) noexcept;
 
-}
+} // namespace fast_float
+
 #include "parse_number.hxx"
 #endif // FASTFLOAT_FAST_FLOAT_H

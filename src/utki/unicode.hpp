@@ -26,18 +26,19 @@ SOFTWARE.
 
 #pragma once
 
-#include <string>
-#include <vector>
-#include <array>
-
 #include "span.hpp"
 
-namespace utki{
+#include <array>
+#include <string>
+#include <vector>
+
+namespace utki {
 
 /**
  * @brief Iterator to iterate through utf-8 encoded unicode characters.
  */
-class utf8_iterator{
+class utf8_iterator
+{
 	char32_t c = 0;
 	const uint8_t* p = nullptr;
 	const uint8_t* end = nullptr;
@@ -46,7 +47,7 @@ public:
 	/**
 	 * @brief Create undefined iterator.
      */
-	utf8_iterator(){}
+	utf8_iterator() {}
 
 	utf8_iterator(utki::span<const uint8_t> str);
 
@@ -60,19 +61,20 @@ public:
 	 * @brief Get current unicode character.
      * @return unicode value of the character this interator is currently pointing to.
      */
-	char32_t character()const noexcept{
+	char32_t character() const noexcept
+	{
 		return this->c;
 	}
 
 	// no operator*() because it usually returns reference, don't want to break this contract.
-	
+
 	/**
 	 * @brief Prefix increment.
 	 * Move iterator to the next character in the string.
 	 * If iterator points to the end of the string before this operation then the result of this operation is undefined.
      * @return reference to this iterator object.
      */
-	utf8_iterator& operator++()noexcept;
+	utf8_iterator& operator++() noexcept;
 
 	// no postfix ++ operator, there is no need in it.
 
@@ -81,7 +83,8 @@ public:
      * @return true if iterator points to the end of the string.
 	 * @return false otherwise.
      */
-	bool is_end()const noexcept{
+	bool is_end() const noexcept
+	{
 		return this->c == 0;
 	}
 };
@@ -98,7 +101,8 @@ std::u32string to_utf32(utf8_iterator str);
  * @param str - string to convert.
  * @return UTF-32 string.
  */
-inline std::u32string to_utf32(const char* str){
+inline std::u32string to_utf32(const char* str)
+{
 	return to_utf32(utf8_iterator(str));
 }
 
@@ -107,7 +111,8 @@ inline std::u32string to_utf32(const char* str){
  * @param str - string to convert.
  * @return UTF-32 string.
  */
-inline std::u32string to_utf32(const std::string& str){
+inline std::u32string to_utf32(const std::string& str)
+{
 	return to_utf32(str.c_str());
 }
 
@@ -123,12 +128,13 @@ std::u32string to_utf32(utki::span<const uint8_t> str);
  * @param str - string to convert.
  * @return UTF-32 string.
  */
-inline std::u32string to_utf32(utki::span<const char> str){
+inline std::u32string to_utf32(utki::span<const char> str)
+{
 	static_assert(sizeof(char) == sizeof(uint8_t), "unexpected char size");
-	return to_utf32(utki::make_span(
-			reinterpret_cast<const uint8_t*>(str.data()),
-			str.size()
-		));
+	return to_utf32(utki::make_span( //
+		reinterpret_cast<const uint8_t*>(str.data()),
+		str.size()
+	));
 }
 
 /**
@@ -136,7 +142,8 @@ inline std::u32string to_utf32(utki::span<const char> str){
  * @param str - string to convert.
  * @return UTF-32 string.
  */
-inline std::u32string to_utf32(std::string_view str){
+inline std::u32string to_utf32(std::string_view str)
+{
 	return to_utf32(utki::make_span(str));
 }
 
@@ -161,8 +168,9 @@ std::string to_utf8(utki::span<const char32_t> str);
  * @param str - UTF-32 string to convert.
  * @return UTF-8 string.
  */
-inline std::string to_utf8(const std::u32string& str){
+inline std::string to_utf8(const std::u32string& str)
+{
 	return to_utf8(utki::make_span(str));
 }
 
-}
+} // namespace utki
