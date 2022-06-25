@@ -46,21 +46,21 @@ class utf8_iterator
 public:
 	/**
 	 * @brief Create undefined iterator.
-     */
+	 */
 	utf8_iterator() {}
 
 	utf8_iterator(utki::span<const uint8_t> str);
 
 	/**
 	 * @brief Create iterator pointing to the begin of the given utf-8 encoded string.
-     * @param str - pointer to the null-terminated utf-8 encoded string.
-     */
+	 * @param str - pointer to the null-terminated utf-8 encoded string.
+	 */
 	utf8_iterator(const char* str);
 
 	/**
 	 * @brief Get current unicode character.
-     * @return unicode value of the character this interator is currently pointing to.
-     */
+	 * @return unicode value of the character this interator is currently pointing to.
+	 */
 	char32_t character() const noexcept
 	{
 		return this->c;
@@ -72,17 +72,17 @@ public:
 	 * @brief Prefix increment.
 	 * Move iterator to the next character in the string.
 	 * If iterator points to the end of the string before this operation then the result of this operation is undefined.
-     * @return reference to this iterator object.
-     */
+	 * @return reference to this iterator object.
+	 */
 	utf8_iterator& operator++() noexcept;
 
 	// no postfix ++ operator, there is no need in it.
 
 	/**
 	 * @brief Check if iterator points to the end of the string.
-     * @return true if iterator points to the end of the string.
+	 * @return true if iterator points to the end of the string.
 	 * @return false otherwise.
-     */
+	 */
 	bool is_end() const noexcept
 	{
 		return this->c == 0;

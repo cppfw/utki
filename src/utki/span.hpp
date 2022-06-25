@@ -49,9 +49,8 @@ namespace utki {
 
 /**
  * @brief span template class.
- * This class is a wrapper of continuous memory span, it encapsulates pointer to memory block and size of that memory block.
- * It does not own the memory.
- * This is a replacement of std::span when C++'20 is not available.
+ * This class is a wrapper of continuous memory span, it encapsulates pointer to memory block and size of that memory
+ * block. It does not own the memory. This is a replacement of std::span when C++'20 is not available.
  */
 template <class T>
 class span final

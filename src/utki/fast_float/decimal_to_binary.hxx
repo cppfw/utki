@@ -56,7 +56,8 @@ fastfloat_really_inline value128 compute_product_approximation(int64_t q, uint64
 	constexpr uint64_t precision_mask =
 		(bit_precision < 64) ? (uint64_t(0xFFFFFFFFFFFFFFFF) >> bit_precision) : uint64_t(0xFFFFFFFFFFFFFFFF);
 	if ((firstproduct.high & precision_mask) == precision_mask) { // could further guard with  (lower + w < lower)
-		// regarding the second product, we only need secondproduct.high, but our expectation is that the compiler will optimize this extra work away if needed.
+		// regarding the second product, we only need secondproduct.high, but our expectation is that the compiler will
+		// optimize this extra work away if needed.
 		value128 secondproduct = full_multiplication(w, powers::power_of_five_128[index + 1]);
 		firstproduct.low += secondproduct.high;
 		if (secondproduct.high > firstproduct.low) {
@@ -75,9 +76,9 @@ namespace detail {
  * where
  *   p = log(5**q)/log(2) = q * log(5)/log(2)
  *
- * For negative values of q in (-400,0), we have that 
+ * For negative values of q in (-400,0), we have that
  *  f = (((152170 + 65536) * q ) >> 16);
- * is equal to 
+ * is equal to
  *   -ceil(p) + q
  * where
  *   p = log(5**-q)/log(2) = -q * log(5)/log(2)
@@ -143,7 +144,8 @@ fastfloat_really_inline adjusted_mantissa compute_float(int64_t q, uint64_t w) n
 	answer.power2 = int(detail::power(int(q)) + upperbit - lz - binary::minimum_exponent());
 	if (answer.power2 <= 0) { // we have a subnormal?
 		// Here have that answer.power2 <= 0 so -answer.power2 >= 0
-		if (-answer.power2 + 1 >= 64) { // if we have more than 64 bits below the minimum exponent, you have a zero for sure.
+		if (-answer.power2 + 1 >= 64)
+		{ // if we have more than 64 bits below the minimum exponent, you have a zero for sure.
 			answer.power2 = 0;
 			answer.mantissa = 0;
 			// result should be zero
@@ -169,8 +171,8 @@ fastfloat_really_inline adjusted_mantissa compute_float(int64_t q, uint64_t w) n
 	// usually, we round *up*, but if we fall right in between and and we have an
 	// even basis, we need to round down
 	// We are only concerned with the cases where 5**q fits in single 64-bit word.
-	if ((product.low <= 1) &&  (q >= binary::min_exponent_round_to_even()) && (q <= binary::max_exponent_round_to_even()) &&
-      ((answer.mantissa & 3) == 1) )
+	if ((product.low <= 1) && (q >= binary::min_exponent_round_to_even()) && (q <= binary::max_exponent_round_to_even())
+		&& ((answer.mantissa & 3) == 1))
 	{ // we may fall between two floats!
 		// To be in-between two floats we need that in doing
 		//   answer.mantissa = product.high >> (upperbit + 64 - binary::mantissa_explicit_bits() - 3);

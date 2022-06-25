@@ -1,12 +1,15 @@
 ﻿---
-AccessModifierOffset: '-1' # unindent class members access modifiers, like 'public:', 'private:', 'protected:'
+# cppfw code format config
+# version: 1
+
+AccessModifierOffset: '-4' # unindent class members access modifiers, like 'public:', 'private:', 'protected:'
 AlignAfterOpenBracket: BlockIndent
 AlignArrayOfStructures: Right
 AlignConsecutiveMacros: 'false'
 AlignConsecutiveAssignments: 'false'
 AlignConsecutiveDeclarations: 'false'
 AlignEscapedNewlines: DontAlign
-AlignOperands: 'false'
+AlignOperands: DontAlign
 AlignTrailingComments: 'false'
 AllowAllArgumentsOnNextLine: 'false'
 # AllowAllConstructorInitializersOnNextLine: 'false' # DEPRECATED
@@ -53,8 +56,8 @@ BreakStringLiterals: 'false'
 ColumnLimit: '120'
 CompactNamespaces: 'false'
 # ConstructorInitializerAllOnOneLineOrOnePerLine: 'true' # DEPRECATED
-ConstructorInitializerIndentWidth: '1'
-ContinuationIndentWidth: '1'
+ConstructorInitializerIndentWidth: '4'
+ContinuationIndentWidth: '4'
 DeriveLineEnding: 'false'
 DerivePointerAlignment: 'false'
 EmptyLineAfterAccessModifier: Never
@@ -90,7 +93,7 @@ IndentExternBlock: NoIndent
 IndentGotoLabels: 'false'
 IndentPPDirectives: AfterHash
 IndentRequiresClause: 'false' # clang-format 15
-IndentWidth: '1'
+IndentWidth: '4'
 IndentWrappedFunctionNames: 'false'
 # InsertBraces: 'false' # clang-format 15. The feature is fuzzy, so disable it.
 InsertTrailingCommas: None # only for JavaScript as of clang-format 15. The feature seems fuzzy, so disable it.
@@ -100,11 +103,12 @@ Language: Cpp
 MaxEmptyLinesToKeep: '1'
 NamespaceIndentation: None
 PackConstructorInitializers: Never
+PenaltyReturnTypeOnItsOwnLine: '1000' # do not break after return type if possible
 PointerAlignment: Left
 # QualifierAlignment: Custom # for some reason it increases clang-format run time significantly
 # QualifierOrder: ['inline', 'static', 'const', 'type'] # doesn't work without QualifierAlignment: Custom
 ReferenceAlignment: Left
-ReflowComments: 'false'
+ReflowComments: 'true'
 RemoveBracesLLVM: 'false'
 RequiresClausePosition: OwnLine # clang-format 15
 SeparateDefinitionBlocks: Always
@@ -135,8 +139,9 @@ SpacesInLineCommentPrefix:
 SpacesInParentheses: 'false'
 SpacesInSquareBrackets: 'false'
 Standard: Latest
-TabWidth: '1'
+TabWidth: '4'
 UseCRLF: 'false'
 UseTab: ForContinuationAndIndentation
+# UseTab: Never
 
 ...

@@ -43,13 +43,13 @@ namespace utki {
  *	class my_singleton : public utki::intrusive_singleton<my_singleton, my_singleton>{
  *		friend class utki::intrusive_singleton<my_singleton, my_singleton>;
  *		static utki::intrusive_singleton<my_singleton, my_singleton>::T_Instance instance;
- * 
+ *
  *	public:
  *		void do_something(){
  *			//...
  *		}
  *  };
- * 
+ *
  *	// define the static variable somewhere in .cpp file.
  *  utki::intrusive_singleton<my_singleton, my_singleton>::T_Instance my_singleton::instance;
  *

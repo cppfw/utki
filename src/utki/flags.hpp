@@ -39,7 +39,7 @@ namespace utki {
  * - enumeration is a 'enum class'.
  * - there is no direct assignment of values to enumeration items, i.e. values are in strict ascending order
  * - the very last item is enum_size
- * 
+ *
  * For example:
  * @code
  * enum class my_enum{
@@ -50,22 +50,22 @@ namespace utki {
  *     ...
  *     enum_size
  * };
- * 
+ *
  * @endcode
  * Then, the 'flags' can be used as follows:
  * @code
  * utki::flags<my_enum> fs;
- * 
+ *
  * fs.set(my_enum::first_item, true).set(my_enum::third_item, true);
- * 
+ *
  * if(fs.get(my_enum::first_item)){
  *     //first_item flag is set
  * }
- * 
+ *
  * if(fs.get(my_enum::zeroth_item)){
  *     //Will not get here, since zeroth_item flag is not set
  * }
- * 
+ *
  * @endcode
  */
 template <class enumeration_type>

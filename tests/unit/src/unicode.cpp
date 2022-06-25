@@ -70,7 +70,7 @@ tst::set set("unicode", [](tst::suite& suite) {
 	});
 
 	suite.add("utf32_to_utf8_one_byte", []() {
-		auto ret = utki::to_utf8(0x73); //s
+		auto ret = utki::to_utf8(0x73); // s
 		tst::check_eq(ret[0], char(0x73), SL);
 		tst::check_eq(ret[1], char(0), SL);
 	});

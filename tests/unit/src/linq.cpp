@@ -14,15 +14,15 @@ tst::set set("linq", [](tst::suite& suite) {
 			{13, "13"},
 			{14, "14"},
 			{ 1,  "1"}
-  };
+        };
 
 		auto out = utki::linq(std::move(in))
-														.select([](auto v) {
-															auto r = std::make_pair(std::move(v.second), 13.4f);
-															tst::check(v.second.empty(), SL);
-															return r;
-														})
-														.get();
+					   .select([](auto v) {
+						   auto r = std::make_pair(std::move(v.second), 13.4f);
+						   tst::check(v.second.empty(), SL);
+						   return r;
+					   })
+					   .get();
 
 		static_assert( //
 			std::is_same<decltype(out), std::vector<std::pair<std::string, float>>>::value,
@@ -33,7 +33,7 @@ tst::set set("linq", [](tst::suite& suite) {
 			{"13", 13.4f},
 			{"14", 13.4f},
 			{ "1", 13.4f}
-  };
+        };
 
 		tst::check(out == expected, SL);
 		tst::check(in.empty(), SL);
@@ -44,22 +44,22 @@ tst::set set("linq", [](tst::suite& suite) {
 			{13, "13"},
 			{14, "14"},
 			{ 1,  "1"}
-  };
+        };
 
 		auto out = utki::linq(in)
-														.select([](auto v, auto i) {
-															auto r = std::make_pair(std::move(v.second), i);
-															tst::check(!v.second.empty(), SL);
-															return r;
-														})
-														.get();
+					   .select([](auto v, auto i) {
+						   auto r = std::make_pair(std::move(v.second), i);
+						   tst::check(!v.second.empty(), SL);
+						   return r;
+					   })
+					   .get();
 
 		// since original container is a map, the order of elements is sorted by map key
 		decltype(out) expected = {
 			{ "1", 0},
 			{"13", 1},
 			{"14", 2}
-  };
+        };
 
 		tst::check(
 			out == expected,
@@ -77,21 +77,21 @@ tst::set set("linq", [](tst::suite& suite) {
 			{13, "13"},
 			{14, "14"},
 			{ 1,  "1"}
-  };
+        };
 
 		auto out = utki::linq(in)
-														.select([](auto v) {
-															auto r = std::make_pair(std::move(v.second), 13.4f);
-															tst::check(!v.second.empty(), SL);
-															return r;
-														})
-														.get();
+					   .select([](auto v) {
+						   auto r = std::make_pair(std::move(v.second), 13.4f);
+						   tst::check(!v.second.empty(), SL);
+						   return r;
+					   })
+					   .get();
 
 		decltype(out) expected = {
 			{"13", 13.4f},
 			{"14", 13.4f},
 			{ "1", 13.4f}
-  };
+        };
 
 		tst::check(out == expected, SL);
 		tst::check(!in.empty(), SL);
@@ -107,18 +107,18 @@ tst::set set("linq", [](tst::suite& suite) {
 			{ 15, "15"},
 			{133, "13"},
 			{ 11,  "1"}
-  };
+        };
 
 		auto out = utki::linq(std::move(in))
-														.select([](auto v, auto i) {
-															auto r = std::make_tuple(std::move(v.second), v.first, i);
-															tst::check(v.second.empty(), SL);
-															return r;
-														})
-														.group_by([](const auto& v) -> const std::string& { //
-															return std::get<0>(v);
-														})
-														.get();
+					   .select([](auto v, auto i) {
+						   auto r = std::make_tuple(std::move(v.second), v.first, i);
+						   tst::check(v.second.empty(), SL);
+						   return r;
+					   })
+					   .group_by([](const auto& v) -> const std::string& { //
+						   return std::get<0>(v);
+					   })
+					   .get();
 
 		// clang-format off
 		decltype(out) expected = {
@@ -165,19 +165,19 @@ tst::set set("linq", [](tst::suite& suite) {
 			{13, "13_2"},
 			{ 3,    "3"},
 			{13, "13_3"}
-  };
+        };
 
 		auto out = utki::linq(in) //
-														.where([](const decltype(in)::value_type& v) { //
-															return v.first == 13;
-														})
-														.get();
+					   .where([](const decltype(in)::value_type& v) { //
+						   return v.first == 13;
+					   })
+					   .get();
 
 		decltype(out) expected = {
 			{13,   "13"},
 			{13, "13_2"},
 			{13, "13_3"}
-  };
+        };
 
 		tst::check(out == expected, SL);
 		tst::check(!in.empty(), SL);
@@ -192,16 +192,16 @@ tst::set set("linq", [](tst::suite& suite) {
 			{13, "13_2"},
 			{ 3,    "3"},
 			{ 3,  "3_2"}
-  };
+        };
 
 		auto out = utki::linq(in) //
-														.group_by([](const auto& v) { //
-															return v.first;
-														})
-														.where([](const auto& v) { //
-															return v.second.size() == 2;
-														})
-														.get();
+					   .group_by([](const auto& v) { //
+						   return v.first;
+					   })
+					   .where([](const auto& v) { //
+						   return v.second.size() == 2;
+					   })
+					   .get();
 
 		tst::check(!in.empty(), SL);
 		tst::check(!in.front().second.empty(), SL);
@@ -243,13 +243,13 @@ tst::set set("linq", [](tst::suite& suite) {
 			{14, "asdh"},
 			{ 5,  "asd"},
 			{ 1,    "1"}
-  };
+        };
 
 		auto out = utki::linq(std::move(in)) //
-														.order_by([](const auto& v) -> const int& { //
-															return v.first;
-														})
-														.get();
+					   .order_by([](const auto& v) -> const int& { //
+						   return v.first;
+					   })
+					   .get();
 
 		static_assert( //
 			std::is_same<decltype(out), decltype(in)>::value,
@@ -262,7 +262,7 @@ tst::set set("linq", [](tst::suite& suite) {
 			{13,   "13"},
 			{14,  "hgb"},
 			{14, "asdh"}
-  };
+        };
 
 #	ifdef DEBUG
 		for (auto& e : out) {
@@ -283,13 +283,13 @@ tst::set set("linq", [](tst::suite& suite) {
 			{14, "asdh"},
 			{ 5,  "asd"},
 			{ 1,    "1"}
-  };
+        };
 
 		auto out = utki::linq(in) //
-														.order_by([](const auto& v) -> const int& { //
-															return v.first;
-														})
-														.get();
+					   .order_by([](const auto& v) -> const int& { //
+						   return v.first;
+					   })
+					   .get();
 
 		static_assert( //
 			std::is_same<decltype(out), decltype(in)>::value,
@@ -302,7 +302,7 @@ tst::set set("linq", [](tst::suite& suite) {
 			{13,   "13"},
 			{14,  "hgb"},
 			{14, "asdh"}
-  };
+        };
 
 #	ifdef DEBUG
 		for (auto& e : out) {
@@ -324,13 +324,13 @@ tst::set set("linq", [](tst::suite& suite) {
 			{14, "asdh"},
 			{ 5,  "asd"},
 			{ 1,    "1"}
-  };
+        };
 
 		auto out = utki::linq(in) //
-														.order_by([](const auto& v) -> const int& { //
-															return v.first;
-														})
-														.get();
+					   .order_by([](const auto& v) -> const int& { //
+						   return v.first;
+					   })
+					   .get();
 
 		static_assert( //
 			std::is_same<decltype(out), std::remove_const<decltype(in)>::type>::value,
@@ -343,7 +343,7 @@ tst::set set("linq", [](tst::suite& suite) {
 			{13,   "13"},
 			{14,  "hgb"},
 			{14, "asdh"}
-  };
+        };
 
 #	ifdef DEBUG
 		for (auto& e : out) {
@@ -389,13 +389,13 @@ tst::set set("linq", [](tst::suite& suite) {
 			std::vector<wrapper> vec{
 				{std::make_shared<test_struct>(destroyed), 10},
 				{std::make_shared<test_struct>(destroyed), 13}
-   };
+            };
 
 			auto res = utki::linq(vec) //
-															.select([](const auto& i) -> std::shared_ptr<const test_struct> { //
-																return i.get_ts();
-															})
-															.get();
+						   .select([](const auto& i) -> std::shared_ptr<const test_struct> { //
+							   return i.get_ts();
+						   })
+						   .get();
 
 			vec.clear();
 
@@ -404,7 +404,8 @@ tst::set set("linq", [](tst::suite& suite) {
 			res.clear();
 
 			tst::check(destroyed, SL);
-		} // NOLINT(clang-analyzer-cplusplus.NewDeleteLeaks): clang-tidy sees potential memory leak here, for some reason...
+		} // NOLINT(clang-analyzer-cplusplus.NewDeleteLeaks): clang-tidy sees potential memory leak here, for some
+		  // reason...
 	);
 });
 } // namespace

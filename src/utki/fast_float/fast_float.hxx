@@ -62,8 +62,12 @@ struct from_chars_result {
  * The default is  `fast_float::chars_format::general` which allows both `fixed` and `scientific`.
  */
 template <typename T>
-from_chars_result
-from_chars(const char* first, const char* last, T& value, chars_format fmt = chars_format::general) noexcept;
+from_chars_result from_chars(
+	const char* first,
+	const char* last,
+	T& value,
+	chars_format fmt = chars_format::general
+) noexcept;
 
 } // namespace fast_float
 

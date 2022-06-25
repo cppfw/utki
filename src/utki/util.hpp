@@ -63,7 +63,7 @@ std::map<B, A> flip_map(const std::map<A, B>& m)
  * @brief Execute a function on scope exit.
  * This class can be used to perform some function when the object of this class
  * is destroyed due to leave of the scope where it was created.
- * 
+ *
  * Example:
  * @code
  * {

@@ -24,7 +24,7 @@ constexpr auto arr = []() constexpr
 {
 	std::array<str_num_pair, 5> arr = {
 		{{"hello"sv, 13}, {"bye"sv, 15}, {"how"sv, 33}, {"are"sv, 4}, {"you"sv, 9}}
- };
+    };
 
 	utki::sort( //
 		arr.begin(),
@@ -66,19 +66,19 @@ tst::set set("sort", [](tst::suite& suite) {
 	suite.add("sort_strings_with_default_comparator", [] {
 		std::array<std::string, 5> arr = {
 			{
-				"hello", "bye",
-				"how", "are",
-				"you", }
-  };
+             "hello", "bye",
+             "how", "are",
+             "you", }
+        };
 
 		utki::sort(arr.begin(), arr.end());
 
 		decltype(arr) expected = {
 			{
-				"are", "bye",
-				"hello", "how",
-				"you", }
-  };
+             "are", "bye",
+             "hello", "how",
+             "you", }
+        };
 
 		tst::check(arr == expected, SL);
 	});
@@ -86,7 +86,7 @@ tst::set set("sort", [](tst::suite& suite) {
 	suite.add("sort_strings_with_custom_comparator", [] {
 		std::array<std::pair<std::string, int>, 5> arr = {
 			{{"hello", 13}, {"bye", 15}, {"how", 33}, {"are", 4}, {"you", 9}}
-  };
+        };
 
 		utki::sort( //
 			arr.begin(),
@@ -98,7 +98,7 @@ tst::set set("sort", [](tst::suite& suite) {
 
 		decltype(arr) expected = {
 			{{"are", 4}, {"bye", 15}, {"hello", 13}, {"how", 33}, {"you", 9}}
-  };
+        };
 
 		tst::check(arr == expected, SL);
 	});
@@ -106,13 +106,13 @@ tst::set set("sort", [](tst::suite& suite) {
 	suite.add("sort_integers_with_custom_comparator", [] {
 		std::array<std::pair<std::string, int>, 5> arr = {
 			{
-				{"hello", 13},
-				{"bye", 15},
-				{"how", 33},
-				{"are", 4},
-				{"you", 9},
-				}
-  };
+             {"hello", 13},
+             {"bye", 15},
+             {"how", 33},
+             {"are", 4},
+             {"you", 9},
+			 }
+        };
 
 		utki::sort( //
 			arr.begin(),
@@ -124,13 +124,13 @@ tst::set set("sort", [](tst::suite& suite) {
 
 		decltype(arr) expected = {
 			{
-				{"are", 4},
-				{"you", 9},
-				{"hello", 13},
-				{"bye", 15},
-				{"how", 33},
-				}
-  };
+             {"are", 4},
+             {"you", 9},
+             {"hello", 13},
+             {"bye", 15},
+             {"how", 33},
+			 }
+        };
 
 		tst::check(arr == expected, SL);
 	});

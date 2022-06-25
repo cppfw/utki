@@ -263,7 +263,8 @@ private:
 	{
 		typedef typename std::conditional<Is_const, const C, C>::type list_type;
 		std::vector<list_type*> list_stack;
-		typedef typename std::conditional<Is_const, typename C::const_iterator, typename C::iterator>::type iterator_type;
+		typedef
+			typename std::conditional<Is_const, typename C::const_iterator, typename C::iterator>::type iterator_type;
 		std::vector<iterator_type> iter_stack;
 
 		template <class>
@@ -432,7 +433,8 @@ private:
 		 * @brief Dereference the tree node.
 		 * @return Reference to the tree node this iterator points to.
 		 */
-		typename std::conditional<Is_const, const typename C::value_type, typename C::value_type>::type& operator*() noexcept
+		typename std::conditional<Is_const, const typename C::value_type, typename C::value_type>::type& operator*(
+		) noexcept
 		{
 			return *this->iter_stack.back();
 		}
@@ -451,7 +453,8 @@ private:
 		 * @brief Dereference the tree node.
 		 * @return Pointer to the tree node this iterator points to.
 		 */
-		typename std::conditional<Is_const, const typename C::value_type, typename C::value_type>::type* operator->() noexcept
+		typename std::conditional<Is_const, const typename C::value_type, typename C::value_type>::type* operator->(
+		) noexcept
 		{
 			return this->iter_stack.back().operator->();
 		}

@@ -123,7 +123,10 @@ public:
 			"functor must have const reference argument"
 		);
 
-		static_assert(!std::is_same_v<void, std::invoke_result_t<F, const value_type&>>, "functor must return non-void");
+		static_assert(
+			!std::is_same_v<void, std::invoke_result_t<F, const value_type&>>,
+			"functor must return non-void"
+		);
 
 		typedef typename std::add_lvalue_reference<value_type>::type func_arg_type;
 		typedef typename std::remove_reference< //
@@ -148,7 +151,10 @@ public:
 			"functor must have const reference argument"
 		);
 
-		static_assert(std::is_same<bool, std::invoke_result_t<F, const value_type&>>::value, "functor must return bool");
+		static_assert(
+			std::is_same<bool, std::invoke_result_t<F, const value_type&>>::value,
+			"functor must return bool"
+		);
 
 		typename utki::remove_const_reference<decltype(this->collection)>::type ret;
 
@@ -175,7 +181,8 @@ public:
 		typedef std::invoke_result_t<F, const value_type&> invoke_result;
 
 		static_assert(
-			std::is_reference<invoke_result>::value && std::is_const<typename std::remove_reference<invoke_result>::type>::value,
+			std::is_reference<invoke_result>::value
+				&& std::is_const<typename std::remove_reference<invoke_result>::type>::value,
 			"functor must return const reference"
 		);
 

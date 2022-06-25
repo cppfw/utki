@@ -15,7 +15,7 @@ tst::set set("span", [](tst::suite& suite) {
 	suite.add("output_to_stream_operator", []() {
 		std::array<char, 12> buf = {
 			{'H', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', '!'}
-  };
+        };
 
 		std::stringstream ss;
 

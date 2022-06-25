@@ -70,8 +70,8 @@ utf8_iterator& utf8_iterator::operator++() noexcept
 
 	unsigned i = 2;
 	for (; //
-						(uint8_t(b << i) >> 7);
-						++i, ++this->p)
+		 (uint8_t(b << i) >> 7);
+		 ++i, ++this->p)
 	{
 		if (this->p == this->end) {
 			this->c = 0;
