@@ -2,6 +2,13 @@
     "version": "2.0.0",
     "tasks": [
 		{
+			"label": "format",
+			"type": "shell",
+			"command": "make apply-format",
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
 			"label": "test_",
 			"type": "shell",
 			"command": "make test",
