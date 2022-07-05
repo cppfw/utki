@@ -25,10 +25,16 @@ tst::set set("tree", [](tst::suite& suite) {
 	});
 
 	suite.add("tree_structure_construction", []() {
+		// clang-format off
 		const utki::tree<int> t{
 			{34, 45},
-			{{78, 89, 96}, {32, 64, 128}, decltype(t)(42, {98, 99, 100})}
-        };
+			{
+				{78, 89, 96},
+				{32, 64, 128},
+				decltype(t)(42, {98, 99, 100})
+			}
+		};
+		// clang-format on
 
 		tst::check_eq(t.children.size(), size_t(2), SL);
 
