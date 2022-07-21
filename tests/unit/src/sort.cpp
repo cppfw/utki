@@ -20,8 +20,7 @@ struct str_num_pair {
 	}
 };
 
-constexpr auto arr = []() constexpr
-{
+constexpr auto arr = []() constexpr {
 	std::array<str_num_pair, 5> arr = {
 		{{"hello"sv, 13}, {"bye"sv, 15}, {"how"sv, 33}, {"are"sv, 4}, {"you"sv, 9}}
     };
@@ -34,8 +33,7 @@ constexpr auto arr = []() constexpr
 		}
 	);
 	return arr;
-}
-();
+}();
 
 constexpr decltype(arr) expected = {
 	{{"are", 4}, {"bye", 15}, {"hello", 13}, {"how", 33}, {"you", 9}}
