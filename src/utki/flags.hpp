@@ -69,6 +69,7 @@ namespace utki{
  * @endcode
  */
 template <class enumeration_type> class flags{
+	static_assert(std::is_enum<enumeration_type>::value, "template parameter must be an enumaration type");
 public:
 	typedef enumeration_type enum_type;
 private:
