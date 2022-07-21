@@ -41,7 +41,7 @@ namespace utki {
  * @param format - printf-like string format.
  * @return formatted string.
  */
-#if M_COMPILER != M_COMPILER_MSVC
+#if CFG_COMPILER != CFG_COMPILER_MSVC
 __attribute__((format(printf, 1, 2)))
 #endif
 std::string

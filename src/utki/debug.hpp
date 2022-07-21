@@ -33,7 +33,7 @@ SOFTWARE.
 #include "config.hpp"
 #include "macros.hpp"
 
-#if M_CPP >= 20
+#if CFG_CPP >= 20
 #	if __has_include(<source_location>)
 #		include <source_location>
 
@@ -49,7 +49,7 @@ typedef std::experimental::source_location std_source_location;
 #	endif
 #endif
 
-#if M_OS_NAME == M_OS_NAME_ANDROID
+#if CFG_OS_NAME == CFG_OS_NAME_ANDROID
 #	include <android/log.h>
 
 #else
@@ -71,7 +71,7 @@ void log(const std::function<void(std::ostream&)>& print);
 
 } // namespace utki
 
-#if M_OS_NAME == M_OS_NAME_ANDROID
+#if CFG_OS_NAME == CFG_OS_NAME_ANDROID
 
 // TODO: deprecated, remove.
 #	define TRACE_ALWAYS(x) \
@@ -139,7 +139,7 @@ struct source_location {
 		function_name_{fnn}
 	{}
 
-#if M_CPP >= 20
+#if CFG_CPP >= 20
 	constexpr source_location(const std_source_location& sl) :
 		source_location(sl.line(), sl.column(), sl.file_name(), sl.function_name())
 	{}
@@ -177,7 +177,7 @@ private:
  * @brief Source location macro.
  * Constructs an object which holds current filename and current line number.
  */
-#if M_CPP >= 20
+#if CFG_CPP >= 20
 #	define SL utki::std_source_location::current()
 #else
 #	define SL utki::source_location(__LINE__, 0, __FILE__, __func__)
@@ -189,7 +189,7 @@ void assert(
 	bool condition,
 	const std::function<void(std::ostream&)>& print,
 	utki::source_location&& source_location
-#if M_CPP >= 20
+#if CFG_CPP >= 20
 	= std_source_location::current()
 #endif
 );
@@ -197,7 +197,7 @@ void assert(
 inline void assert(
 	bool condition,
 	utki::source_location&& source_location
-#if M_CPP >= 20
+#if CFG_CPP >= 20
 	= std_source_location::current()
 #endif
 )
@@ -213,7 +213,7 @@ void assert(
 	type* p,
 	const std::function<void(std::ostream&)>& print,
 	utki::source_location&& source_location
-#if M_CPP >= 20
+#if CFG_CPP >= 20
 	= std_source_location::current()
 #endif
 )
@@ -225,7 +225,7 @@ template <class type>
 void assert(
 	type* p,
 	utki::source_location&& source_location
-#if M_CPP >= 20
+#if CFG_CPP >= 20
 	= std_source_location::current()
 #endif
 )
@@ -241,7 +241,7 @@ void assert(
 	const std::shared_ptr<type>& p,
 	const std::function<void(std::ostream&)>& print,
 	utki::source_location&& source_location
-#if M_CPP >= 20
+#if CFG_CPP >= 20
 	= std_source_location::current()
 #endif
 )
@@ -253,7 +253,7 @@ template <class type>
 void assert(
 	const std::shared_ptr<type>& p,
 	utki::source_location&& source_location
-#if M_CPP >= 20
+#if CFG_CPP >= 20
 	= std_source_location::current()
 #endif
 )
@@ -266,7 +266,7 @@ void assert(
 	const std::unique_ptr<type>& p,
 	const std::function<void(std::ostream&)>& print,
 	utki::source_location&& source_location
-#if M_CPP >= 20
+#if CFG_CPP >= 20
 	= std_source_location::current()
 #endif
 )
@@ -278,7 +278,7 @@ template <class type>
 void assert(
 	const std::unique_ptr<type>& p,
 	utki::source_location&& source_location
-#if M_CPP >= 20
+#if CFG_CPP >= 20
 	= std_source_location::current()
 #endif
 )
@@ -294,7 +294,7 @@ void assert(
 	const std::function<type>& p,
 	const std::function<void(std::ostream&)>& print,
 	utki::source_location&& source_location
-#if M_CPP >= 20
+#if CFG_CPP >= 20
 	= std_source_location::current()
 #endif
 )
@@ -306,7 +306,7 @@ template <class type>
 void assert(
 	const std::function<type>& p,
 	utki::source_location&& source_location
-#if M_CPP >= 20
+#if CFG_CPP >= 20
 	= std_source_location::current()
 #endif
 )

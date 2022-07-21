@@ -28,7 +28,7 @@ SOFTWARE.
 
 #include "config.hpp"
 
-#if M_OS == M_OS_WINDOWS
+#if CFG_OS == CFG_OS_WINDOWS
 
 // if _WINSOCKAPI_ macro is not defined then it means that the winsock header file
 // has not been included. Here we temporarily define the macro in order to prevent

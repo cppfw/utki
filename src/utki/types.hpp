@@ -172,7 +172,7 @@ template <typename T, typename V>
 struct get_index;
 
 // MSVC compiler prior to tools v142 doesn't compile this
-#if M_COMPILER != M_COMPILER_MSVC || M_COMPILER_MSVC_TOOLS_V >= 142
+#if CFG_COMPILER != CFG_COMPILER_MSVC || CFG_COMPILER_MSVC_TOOLS_V >= 142
 /**
  * @brief Get variant's alternative index by its type in compile time.
  */

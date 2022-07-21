@@ -92,7 +92,7 @@ tst::set set("util", [](tst::suite& suite) {
 		tst::check_eq(fm["42"], 42, SL);
 	});
 
-#if M_COMPILER != M_COMPILER_MSVC || M_COMPILER_MSVC_TOOLS_V >= 142
+#if CFG_COMPILER != CFG_COMPILER_MSVC || CFG_COMPILER_MSVC_TOOLS_V >= 142
 	suite.add("variant_get_index", []() {
 		typedef std::variant<int, const char*, std::string, std::pair<bool, int>> variant_type;
 

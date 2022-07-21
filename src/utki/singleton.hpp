@@ -114,7 +114,7 @@ public:
 };
 
 // non-intrusive singleton is not supported in MSVC
-#if M_COMPILER != M_COMPILER_MSVC
+#if CFG_COMPILER != CFG_COMPILER_MSVC
 
 /**
  * @brief Singleton base class.

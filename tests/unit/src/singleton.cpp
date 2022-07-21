@@ -3,7 +3,7 @@
 #include <utki/config.hpp>
 #include <utki/singleton.hpp>
 
-#if M_COMPILER != M_COMPILER_MSVC
+#if CFG_COMPILER != CFG_COMPILER_MSVC
 
 namespace {
 class test_singleton : public utki::singleton<test_singleton>

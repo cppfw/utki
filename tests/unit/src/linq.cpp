@@ -5,7 +5,7 @@
 #include <utki/config.hpp>
 #include <utki/linq.hpp>
 
-#if M_COMPILER != M_COMPILER_MSVC || M_COMPILER_MSVC_TOOLS_V >= 142
+#if CFG_COMPILER != CFG_COMPILER_MSVC || CFG_COMPILER_MSVC_TOOLS_V >= 142
 
 namespace {
 tst::set set("linq", [](tst::suite& suite) {

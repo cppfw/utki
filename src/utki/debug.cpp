@@ -29,7 +29,7 @@ SOFTWARE.
 #include "config.hpp"
 #include "util.hpp"
 
-#if M_OS_NAME == M_OS_NAME_ANDROID
+#if CFG_OS_NAME == CFG_OS_NAME_ANDROID
 #	include <android/log.h>
 #else
 #	include <iostream>
@@ -56,7 +56,7 @@ void utki::assert(
 	ss << source_location.file_name() << ":" << source_location.line() << ": ";
 
 	if (is_cerr_terminal()) {
-#if M_COMPILER == M_COMPILER_MSVC && M_COMPILER_MSVC_TOOLS_V <= 141
+#if CFG_COMPILER == CFG_COMPILER_MSVC && CFG_COMPILER_MSVC_TOOLS_V <= 141
 		ss << std::string(colored_error_string);
 	} else {
 		ss << std::string(uncolored_error_string);
@@ -74,7 +74,7 @@ void utki::assert(
 		print(ss);
 	}
 
-#if M_OS_NAME == M_OS_NAME_ANDROID
+#if CFG_OS_NAME == CFG_OS_NAME_ANDROID
 	// TODO: remove commented code after __android_log_assert() is tested to be working
 	// __android_log_write(ANDROID_LOG_INFO, "utki", ss.str().c_str());
 
@@ -93,7 +93,7 @@ void utki::log(const std::function<void(std::ostream&)>& print)
 		return;
 	}
 
-#if M_OS_NAME == M_OS_NAME_ANDROID
+#if CFG_OS_NAME == CFG_OS_NAME_ANDROID
 	std::stringstream ss;
 	print(ss);
 	__android_log_write(ANDROID_LOG_INFO, "utki", ss.str().c_str());

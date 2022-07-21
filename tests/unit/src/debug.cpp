@@ -26,7 +26,7 @@ tst::set set("debug", [](tst::suite& suite) {
 	suite.add("assert", []() {
 		int b = 13;
 		utki::assert(b == 13, SL);
-#if M_CPP >= 20
+#if CFG_CPP >= 20
 		utki::assert(b == 13);
 #endif
 	});
@@ -40,7 +40,7 @@ tst::set set("debug", [](tst::suite& suite) {
 			},
 			SL
 		);
-#if M_CPP >= 20
+#if CFG_CPP >= 20
 		utki::assert(b == 13, [&](auto& o) {
 			o << "b = " << b;
 		});
