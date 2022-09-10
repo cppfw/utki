@@ -85,10 +85,16 @@ tst::set set("tree", [](tst::suite& suite) {
 	});
 
 	suite.add("assignment", []() {
+		// clang-format off
 		utki::tree<int> t{
 			{34, 45},
-			{{78, 89, 96}, {32, 64, 128}, decltype(t)(42, {98, 99, 100})}
+			{
+				{78, 89, 96},
+				{32, 64, 128},
+				decltype(t)(42, {98, 99, 100})
+			}
         };
+		// clang-format on
 
 		t.children[0].children = t.children[1].children;
 
