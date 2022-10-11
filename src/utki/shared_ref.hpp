@@ -131,6 +131,4 @@ shared_ref<T> make_shared_ref(Args&&... args)
 	return shared_ref<T>(std::make_shared<T>(std::forward<Args>(args)...));
 }
 
-// TODO: weak_ref
-
 } // namespace utki
