@@ -104,7 +104,7 @@ public:
 	template < //
 		typename TT,
 		typename std::enable_if_t< //
-			std::is_convertible_v< //
+			std::is_convertible_v< // note pointers to array, this is because span points to an array of objects
 				TT (*)[],
 				T (*)[]>,
 			bool> = true>
