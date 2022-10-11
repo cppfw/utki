@@ -68,29 +68,8 @@ jobs:
         run: lcov --extract lcov_all.info "$(pwd)/src/*" -o lcov.info
       - name: generate cobertura report
         run: lcov_cobertura lcov.info --output cobertura.xml
-      - name: generate coverage summary in markdown format
-        uses: irongut/CodeCoverageSummary@v1.2.0
-        with:
-          filename: cobertura.xml
-          badge: true
-          fail_below_min: true
-          format: markdown
-          hide_branch_rate: false
-          hide_complexity: false
-          indicators: true
-          output: both
-          thresholds: '10 20'
-      - name: publish coverage summary
-        if: always() # even if previous steps fail, this one needs to be run
-        uses: LouisBrunner/checks-action@v1.2.0
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          name: coverage - report
-          conclusion: ${{ job.status }}
-          output: "{\"summary\":\"code coverage brief report\"}"
-          output_text_description_file: code-coverage-results.md
       - name: upload coverage data to codecov.io
-        uses: codecov/codecov-action@v2
+        uses: codecov/codecov-action@v3
         if: always() # even if previous steps fail, this one needs to be run
         with:
           # token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
