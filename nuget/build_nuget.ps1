@@ -83,14 +83,14 @@ Write-Host "running tests..."
 ../msvs_solution/x64/v142_Debug_MT/unit_tests.exe   --jobs=2 --junit-out=junit_x64_v142_debug_mt.xml; If(!$?){exit 1}
 
 # run release tests first
-# ../msvs_solution/v143_Release_MD/unit_tests.exe     --jobs=2 --junit-out=junit_x86_v143_release_md.xml; If(!$?){exit 1}
-# ../msvs_solution/v143_Release_MT/unit_tests.exe     --jobs=2 --junit-out=junit_x86_v143_release_mt.xml; If(!$?){exit 1}
-# ../msvs_solution/x64/v143_Release_MD/unit_tests.exe --jobs=2 --junit-out=junit_x64_v143_release_md.xml; If(!$?){exit 1}
-# ../msvs_solution/x64/v143_Release_MT/unit_tests.exe --jobs=2 --junit-out=junit_x64_v143_release_mt.xml; If(!$?){exit 1}
-# ../msvs_solution/v143_Debug_MD/unit_tests.exe       --jobs=2 --junit-out=junit_x86_v143_debug_md.xml; If(!$?){exit 1}
-# ../msvs_solution/v143_Debug_MT/unit_tests.exe       --jobs=2 --junit-out=junit_x86_v143_debug_mt.xml; If(!$?){exit 1}
-# ../msvs_solution/x64/v143_Debug_MD/unit_tests.exe   --jobs=2 --junit-out=junit_x64_v143_debug_md.xml; If(!$?){exit 1}
-# ../msvs_solution/x64/v143_Debug_MT/unit_tests.exe   --jobs=2 --junit-out=junit_x64_v143_debug_mt.xml; If(!$?){exit 1}
+../msvs_solution/v143_Release_MD/unit_tests.exe     --jobs=2 --junit-out=junit_x86_v143_release_md.xml; If(!$?){exit 1}
+../msvs_solution/v143_Release_MT/unit_tests.exe     --jobs=2 --junit-out=junit_x86_v143_release_mt.xml; If(!$?){exit 1}
+../msvs_solution/x64/v143_Release_MD/unit_tests.exe --jobs=2 --junit-out=junit_x64_v143_release_md.xml; If(!$?){exit 1}
+../msvs_solution/x64/v143_Release_MT/unit_tests.exe --jobs=2 --junit-out=junit_x64_v143_release_mt.xml; If(!$?){exit 1}
+../msvs_solution/v143_Debug_MD/unit_tests.exe       --jobs=2 --junit-out=junit_x86_v143_debug_md.xml; If(!$?){exit 1}
+../msvs_solution/v143_Debug_MT/unit_tests.exe       --jobs=2 --junit-out=junit_x86_v143_debug_mt.xml; If(!$?){exit 1}
+../msvs_solution/x64/v143_Debug_MD/unit_tests.exe   --jobs=2 --junit-out=junit_x64_v143_debug_md.xml; If(!$?){exit 1}
+../msvs_solution/x64/v143_Debug_MT/unit_tests.exe   --jobs=2 --junit-out=junit_x64_v143_debug_mt.xml; If(!$?){exit 1}
 
 Write-NuGetPackage nuget.autopkg
 If(!$?){exit 1}
