@@ -137,19 +137,9 @@ public:
 	/**
 	 * @brief Get reference to the pointed type.
 	 *
-	 * @return Reference to the pointed type.
-	 */
-	T& get() noexcept
-	{
-		return *this->p;
-	}
-
-	/**
-	 * @brief Get const reference to the pointed type.
-	 *
 	 * @return Const reference to the pointed type.
 	 */
-	const T& get() const noexcept
+	T& get() const noexcept
 	{
 		return *this->p;
 	}
@@ -159,17 +149,7 @@ public:
 	 *
 	 * @return Pointer to the pointed object. Never nullptr.
 	 */
-	T* operator->() noexcept
-	{
-		return this->p.get();
-	}
-
-	/**
-	 * @brief Const operator arrow.
-	 *
-	 * @return Const pointer to the pointed object. Never nullptr.
-	 */
-	const T* operator->() const noexcept
+	T* operator->() const noexcept
 	{
 		return this->p.get();
 	}
@@ -179,17 +159,7 @@ public:
 	 *
 	 * @return Reference to the pointed object.
 	 */
-	T& operator*() noexcept
-	{
-		return *this->p;
-	}
-
-	/**
-	 * @brief Const dereference operator.
-	 *
-	 * @return Const reference to the pointed object.
-	 */
-	const T& operator*() const noexcept
+	T& operator*() const noexcept
 	{
 		return *this->p;
 	}

@@ -33,6 +33,10 @@ tst::set set("shared_ref", [](tst::suite& suite) {
 		const utki::shared_ref<std::string> sr = utki::make_shared_ref<std::string>(etalon);
 
 		tst::check_eq(sr.get(), etalon, SL);
+
+		sr->append("!");
+
+		tst::check_eq(etalon + "!", sr.get(), SL);
 	});
 
 	suite.add("operator_arrow", []() {
@@ -45,6 +49,10 @@ tst::set set("shared_ref", [](tst::suite& suite) {
 		const utki::shared_ref<std::string> sr = utki::make_shared_ref<std::string>(etalon);
 
 		tst::check_eq(etalon, std::string(sr->c_str()), SL);
+
+		sr->append("!");
+
+		tst::check_eq(etalon + "!", std::string(sr->c_str()), SL);
 	});
 
 	suite.add("operator_asterisk", []() {
@@ -57,6 +65,10 @@ tst::set set("shared_ref", [](tst::suite& suite) {
 		const utki::shared_ref<std::string> sr = utki::make_shared_ref<std::string>(etalon);
 
 		tst::check_eq(*sr, etalon, SL);
+
+		sr->append("!");
+
+		tst::check_eq(etalon + "!", *sr, SL);
 	});
 
 	suite.add("const_autocast", []() {
