@@ -55,7 +55,10 @@ class shared_ref
 public:
 	shared_ref(const shared_ref&) = default;
 	shared_ref& operator=(const shared_ref&) = default;
-	shared_ref(shared_ref&&) = default;
+
+	// moved-from shared_ref cannot remain nullptr, so there should be no move constructor
+	shared_ref(shared_ref&&) = delete;
+
 	~shared_ref() = default;
 
 	/**

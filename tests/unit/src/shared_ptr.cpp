@@ -23,6 +23,26 @@ struct a1 : public a0 {
 };
 
 tst::set set("shared_ref", [](tst::suite& suite) {
+	suite.add("copy_constructor", []() {
+		utki::shared_ref<a1> sr = utki::make_shared_ref<a1>(3);
+
+		utki::shared_ref<a1> mr(sr);
+
+		tst::check(sr.to_shared_ptr(), SL);
+		tst::check(mr.to_shared_ptr(), SL);
+	});
+
+	suite.add("operator_equals", []() {
+		utki::shared_ref<a1> sr1 = utki::make_shared_ref<a1>(3);
+		utki::shared_ref<a1> sr2 = utki::make_shared_ref<a1>(4);
+
+		sr2 = sr1;
+
+		tst::check_eq(sr1->a_0, 3, SL);
+		tst::check_eq(sr2->a_0, 3, SL);
+		tst::check_eq(sr1.to_shared_ptr(), sr2.to_shared_ptr(), SL);
+	});
+
 	suite.add("get", []() {
 		utki::shared_ref<std::string> sr = utki::make_shared_ref<std::string>(etalon);
 
