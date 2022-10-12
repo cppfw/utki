@@ -137,7 +137,7 @@ public:
 	/**
 	 * @brief Get reference to the pointed type.
 	 *
-	 * @return reference to the pointed type.
+	 * @return Reference to the pointed type.
 	 */
 	T& get() noexcept
 	{
@@ -147,28 +147,48 @@ public:
 	/**
 	 * @brief Get const reference to the pointed type.
 	 *
-	 * @return const reference to the pointed type.
+	 * @return Const reference to the pointed type.
 	 */
 	const T& get() const noexcept
 	{
 		return *this->p;
 	}
 
+	/**
+	 * @brief Operator arrow.
+	 *
+	 * @return Pointer to the pointed object. Never nullptr.
+	 */
 	T* operator->() noexcept
 	{
 		return this->p.get();
 	}
 
+	/**
+	 * @brief Const operator arrow.
+	 *
+	 * @return Const pointer to the pointed object. Never nullptr.
+	 */
 	const T* operator->() const noexcept
 	{
 		return this->p.get();
 	}
 
+	/**
+	 * @brief Dereference operator.
+	 *
+	 * @return Reference to the pointed object.
+	 */
 	T& operator*() noexcept
 	{
 		return *this->p;
 	}
 
+	/**
+	 * @brief Const dereference operator.
+	 *
+	 * @return Const reference to the pointed object.
+	 */
 	const T& operator*() const noexcept
 	{
 		return *this->p;
@@ -178,6 +198,14 @@ public:
 	friend shared_ref<TT> make_shared_ref(A&&... args);
 };
 
+/**
+ * @brief Create instance of an object managed by shared_ref.
+ *
+ * @tparam T - object type.
+ * @tparam A - pack of object's constructor argument types.
+ * @param args - object's constructor arguments.
+ * @return shared_ref<T> to the newly created object.
+ */
 template <typename T, typename... A>
 shared_ref<T> make_shared_ref(A&&... args)
 {
