@@ -2,7 +2,7 @@ configurations {
 	UserPlatformToolset {
 		// Needed because autopackage lacks VS2015+ support
 		key = "PlatformToolset";
-		choices: "v140,v141,v142,v143";
+		choices: "v140,v141,v142";
 	};
 
 	RuntimeLibrary {
@@ -26,7 +26,7 @@ nuget{
 
 		description: @"C++ utility library. Stuff missing from std:: namespace";
 		releaseNotes: "initial release";
-		copyright: Copyright 2020 Ivan Gagis;
+		copyright: Copyright 2022 Ivan Gagis;
 		tags: {native};
 	}
 	dependencies {
@@ -98,7 +98,7 @@ nuget{
 		}
 
 		//==== v143 tools ====
-
+/*
 		[x86,v143,release,MultiThreaded] {
 			lib: ..\msvs_solution\v143_Release_MT\libutki.lib;
 		}
@@ -123,5 +123,6 @@ nuget{
 		[x64,v143,debug,MultiThreadedDebugDLL] {
 			lib: ..\msvs_solution\x64\v143_Debug_MD\libutki.lib;
 		}
+*/
 	}
 }
