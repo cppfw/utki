@@ -1,3 +1,9 @@
+libutki (1.1.175) unstable; urgency=medium
+
+  * remove the move constructor from shared_ref
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 13 Oct 2022 01:26:13 +0300
+
 libutki (1.1.174) unstable; urgency=medium
 
   * fix const shared_ref dereferencing
