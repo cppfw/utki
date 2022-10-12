@@ -87,6 +87,18 @@ public:
 		return this->p;
 	}
 
+	template < //
+		typename TT,
+		typename std::enable_if_t< //
+			std::is_convertible_v< //
+				T*,
+				TT*>,
+			bool> = true>
+	operator std::weak_ptr<TT>() const noexcept
+	{
+		return this->p;
+	}
+
 	T& get() noexcept
 	{
 		ASSERT(this->p)
@@ -121,14 +133,14 @@ public:
 		return *this->p;
 	}
 
-	template <typename TT, typename... Args>
-	friend shared_ref<TT> make_shared_ref(Args&&... args);
+	template <typename TT, typename... A>
+	friend shared_ref<TT> make_shared_ref(A&&... args);
 };
 
-template <typename T, typename... Args>
-shared_ref<T> make_shared_ref(Args&&... args)
+template <typename T, typename... A>
+shared_ref<T> make_shared_ref(A&&... args)
 {
-	return shared_ref<T>(std::make_shared<T>(std::forward<Args>(args)...));
+	return shared_ref<T>(std::make_shared<T>(std::forward<A>(args)...));
 }
 
 } // namespace utki

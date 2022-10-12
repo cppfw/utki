@@ -112,6 +112,52 @@ tst::set set("shared_ref", [](tst::suite& suite) {
 
 		tst::check_eq(sp->a_0, 2, SL);
 	});
+
+	suite.add("weak_ptr", []() {
+		auto sr = utki::make_shared_ref<a1>(3);
+
+		std::weak_ptr<a1> wp = sr;
+
+		auto sp = wp.lock();
+		tst::check(sp, SL);
+
+		tst::check_eq(sp->a_0, 3, SL);
+		tst::check_eq(sp->a_1, 3, SL);
+	});
+
+	suite.add("weak_ptr_const_autocast", []() {
+		auto sr = utki::make_shared_ref<a1>(3);
+
+		std::weak_ptr<const a1> wp = sr;
+
+		auto sp = wp.lock();
+		tst::check(sp, SL);
+
+		tst::check_eq(sp->a_0, 3, SL);
+		tst::check_eq(sp->a_1, 3, SL);
+	});
+
+	suite.add("weak_ptr_downcast", []() {
+		auto sr = utki::make_shared_ref<a1>(3);
+
+		std::weak_ptr<a0> wp = sr;
+
+		auto sp = wp.lock();
+		tst::check(sp, SL);
+
+		tst::check_eq(sp->a_0, 3, SL);
+	});
+
+	suite.add("weak_ptr_const_downcast", []() {
+		auto sr = utki::make_shared_ref<a1>(3);
+
+		std::weak_ptr<const a0> wp = sr;
+
+		auto sp = wp.lock();
+		tst::check(sp, SL);
+
+		tst::check_eq(sp->a_0, 3, SL);
+	});
 });
 
 } // namespace
