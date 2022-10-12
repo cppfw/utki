@@ -30,6 +30,7 @@ tst::set set("shared_ref", [](tst::suite& suite) {
 
 		tst::check(sr.to_shared_ptr(), SL);
 		tst::check(mr.to_shared_ptr(), SL);
+		tst::check_eq(sr->a_0, mr->a_0, SL);
 	});
 
 	suite.add("operator_equals", []() {
