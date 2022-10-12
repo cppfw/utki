@@ -33,7 +33,14 @@ SOFTWARE.
 
 namespace utki {
 
-// TODO: doxygen
+/**
+ * @brief Reference counting pointer which cannot be null.
+ * The shared_ref is same as std::shared_ptr except that it is never null.
+ * Objects have to be created with make_shared_ref() in order to be managed by shared_ref.
+ * The shared_ref is implemented as a wrapper around std::shared_ptr.
+ *
+ * @tparam T - type pointed by the pointer.
+ */
 template <class T>
 class shared_ref
 {
@@ -41,12 +48,13 @@ class shared_ref
 
 	explicit shared_ref(std::shared_ptr<T>&& ptr) :
 		p(std::move(ptr))
-	{}
+	{
+		ASSERT(this->p)
+	}
 
 public:
 	shared_ref(const shared_ref&) = default;
 	shared_ref& operator=(const shared_ref&) = default;
-
 	shared_ref(shared_ref&&) = default;
 	~shared_ref() = default;
 
@@ -63,18 +71,37 @@ public:
 			bool> = true>
 	shared_ref(const shared_ref<TT>& sr) noexcept :
 		p(sr.to_shared_ptr())
-	{}
+	{
+		ASSERT(this->p)
+	}
 
+	/**
+	 * @brief Get underlying std::shared_ptr.
+	 *
+	 * @return Underlying std::shared_ptr.
+	 */
 	const std::shared_ptr<T>& to_shared_ptr() const noexcept
 	{
 		return this->p;
 	}
 
+	/**
+	 * @brief Convert to std::shared_ptr.
+	 * This is an equivalent of to_shared_ptr().
+	 *
+	 * @return Underlying std::shared_ptr.
+	 */
 	operator const std::shared_ptr<T>&() const noexcept
 	{
 		return this->p;
 	}
 
+	/**
+	 * @brief Convert to std::shared_ptr of convertible type.
+	 *
+	 * @tparam TT - pointed type to convert to.
+	 * @return std::shared_ptr<TT> pointing to the converted type.
+	 */
 	template < //
 		typename TT,
 		typename std::enable_if_t< //
@@ -87,6 +114,14 @@ public:
 		return this->p;
 	}
 
+	/**
+	 * @brief Convert to std::weak_ptr.
+	 * This operator converts the underlying std::shared_ptr to std::weak_ptr,
+	 * possibly pointing to a convertible type.
+	 *
+	 * @tparam TT - pointed type to convert to.
+	 * @return std::weak_ptr<TT> pointing to the converted type.
+	 */
 	template < //
 		typename TT,
 		typename std::enable_if_t< //
@@ -99,15 +134,23 @@ public:
 		return this->p;
 	}
 
+	/**
+	 * @brief Get reference to the pointed type.
+	 *
+	 * @return reference to the pointed type.
+	 */
 	T& get() noexcept
 	{
-		ASSERT(this->p)
 		return *this->p;
 	}
 
+	/**
+	 * @brief Get const reference to the pointed type.
+	 *
+	 * @return const reference to the pointed type.
+	 */
 	const T& get() const noexcept
 	{
-		ASSERT(this->p)
 		return *this->p;
 	}
 
@@ -123,13 +166,11 @@ public:
 
 	T& operator*() noexcept
 	{
-		ASSERT(this->p)
 		return *this->p;
 	}
 
 	const T& operator*() const noexcept
 	{
-		ASSERT(this->p)
 		return *this->p;
 	}
 
