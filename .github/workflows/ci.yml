@@ -238,7 +238,7 @@ jobs:
     - name: create package
       run: myci-create-zip-package.sh --headers-dir src --file xcode/build/$PACKAGE_NAME.xcframework///lib/ios --file LICENSE $PACKAGE_NAME-$PACKAGE_VERSION.zip
     - name: upload build artifacts to github
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: cocoapods-${{ env.PACKAGE_NAME }}-${{ env.PACKAGE_VERSION }}.zip
         path: ${{ env.PACKAGE_NAME }}-${{ env.PACKAGE_VERSION }}.zip
@@ -335,7 +335,7 @@ jobs:
         shell: powershell
     steps:
     - name: git clone
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with: {submodules: true}
     - name: install CoAPP tools
       uses: myci-actions/install-coapp-tools@master
@@ -344,7 +344,7 @@ jobs:
         nuget restore msvs_solution/msvs_solution.sln
         nuget update msvs_solution/msvs_solution.sln
     - name: add msbuild to PATH
-      uses: microsoft/setup-msbuild@v1.0.2
+      uses: microsoft/setup-msbuild@v1.1
     - name: build
       run: .\nuget\build_nuget.ps1
     - name: deploy
