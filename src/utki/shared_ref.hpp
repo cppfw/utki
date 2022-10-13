@@ -53,9 +53,15 @@ class shared_ref
 	}
 
 public:
+	// there should be no default constructor, as shared_ref cannot be nullptr
+	shared_ref() = delete;
+
+	// moved-from shared_ref cannot remain nullptr, so there should be no move constructor
+	shared_ref(shared_ref&&) = delete;
+
 	shared_ref(const shared_ref&) = default;
 	shared_ref& operator=(const shared_ref&) = default;
-	shared_ref(shared_ref&&) = default;
+
 	~shared_ref() = default;
 
 	/**
@@ -137,19 +143,9 @@ public:
 	/**
 	 * @brief Get reference to the pointed type.
 	 *
-	 * @return Reference to the pointed type.
-	 */
-	T& get() noexcept
-	{
-		return *this->p;
-	}
-
-	/**
-	 * @brief Get const reference to the pointed type.
-	 *
 	 * @return Const reference to the pointed type.
 	 */
-	const T& get() const noexcept
+	T& get() const noexcept
 	{
 		return *this->p;
 	}
@@ -159,17 +155,7 @@ public:
 	 *
 	 * @return Pointer to the pointed object. Never nullptr.
 	 */
-	T* operator->() noexcept
-	{
-		return this->p.get();
-	}
-
-	/**
-	 * @brief Const operator arrow.
-	 *
-	 * @return Const pointer to the pointed object. Never nullptr.
-	 */
-	const T* operator->() const noexcept
+	T* operator->() const noexcept
 	{
 		return this->p.get();
 	}
@@ -179,17 +165,7 @@ public:
 	 *
 	 * @return Reference to the pointed object.
 	 */
-	T& operator*() noexcept
-	{
-		return *this->p;
-	}
-
-	/**
-	 * @brief Const dereference operator.
-	 *
-	 * @return Const reference to the pointed object.
-	 */
-	const T& operator*() const noexcept
+	T& operator*() const noexcept
 	{
 		return *this->p;
 	}

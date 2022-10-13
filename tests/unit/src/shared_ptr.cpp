@@ -23,6 +23,27 @@ struct a1 : public a0 {
 };
 
 tst::set set("shared_ref", [](tst::suite& suite) {
+	suite.add("copy_constructor", []() {
+		utki::shared_ref<a1> sr = utki::make_shared_ref<a1>(3);
+
+		utki::shared_ref<a1> mr(sr);
+
+		tst::check(sr.to_shared_ptr(), SL);
+		tst::check(mr.to_shared_ptr(), SL);
+		tst::check_eq(sr->a_0, mr->a_0, SL);
+	});
+
+	suite.add("operator_equals", []() {
+		utki::shared_ref<a1> sr1 = utki::make_shared_ref<a1>(3);
+		utki::shared_ref<a1> sr2 = utki::make_shared_ref<a1>(4);
+
+		sr2 = sr1;
+
+		tst::check_eq(sr1->a_0, 3, SL);
+		tst::check_eq(sr2->a_0, 3, SL);
+		tst::check_eq(sr1.to_shared_ptr(), sr2.to_shared_ptr(), SL);
+	});
+
 	suite.add("get", []() {
 		utki::shared_ref<std::string> sr = utki::make_shared_ref<std::string>(etalon);
 
@@ -33,6 +54,10 @@ tst::set set("shared_ref", [](tst::suite& suite) {
 		const utki::shared_ref<std::string> sr = utki::make_shared_ref<std::string>(etalon);
 
 		tst::check_eq(sr.get(), etalon, SL);
+
+		sr->append("!");
+
+		tst::check_eq(etalon + "!", sr.get(), SL);
 	});
 
 	suite.add("operator_arrow", []() {
@@ -45,6 +70,10 @@ tst::set set("shared_ref", [](tst::suite& suite) {
 		const utki::shared_ref<std::string> sr = utki::make_shared_ref<std::string>(etalon);
 
 		tst::check_eq(etalon, std::string(sr->c_str()), SL);
+
+		sr->append("!");
+
+		tst::check_eq(etalon + "!", std::string(sr->c_str()), SL);
 	});
 
 	suite.add("operator_asterisk", []() {
@@ -57,6 +86,10 @@ tst::set set("shared_ref", [](tst::suite& suite) {
 		const utki::shared_ref<std::string> sr = utki::make_shared_ref<std::string>(etalon);
 
 		tst::check_eq(*sr, etalon, SL);
+
+		sr->append("!");
+
+		tst::check_eq(etalon + "!", *sr, SL);
 	});
 
 	suite.add("const_autocast", []() {

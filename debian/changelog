@@ -1,3 +1,21 @@
+libutki (1.1.175) unstable; urgency=medium
+
+  * remove the move constructor from shared_ref
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 13 Oct 2022 01:26:13 +0300
+
+libutki (1.1.174) unstable; urgency=medium
+
+  * fix const shared_ref dereferencing
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 13 Oct 2022 00:09:16 +0300
+
+libutki (1.1.173) unstable; urgency=medium
+
+  * add shared_ref
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 12 Oct 2022 17:04:27 +0300
+
 libutki (1.1.172) unstable; urgency=medium
 
   * fix bug in deserealize64xx()
