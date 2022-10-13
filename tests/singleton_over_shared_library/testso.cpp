@@ -1,7 +1,7 @@
-#include "../../src/utki/debug.hpp"
-
 #include "testso.hpp_"
 #include "TestSingleton.hpp_"
+
+#include "../../src/utki/debug.hpp"
 
 int& GetA(){
 	utki::assert(TestSingleton::is_created(), SL);
