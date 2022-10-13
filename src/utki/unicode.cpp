@@ -97,24 +97,24 @@ utki::to_utf8(char32_t c)
 		return ret;
 	}
 
-	unsigned numBytes;
+	unsigned num_bytes;
 
 	if (c <= 0x7ff) {
-		numBytes = 2;
+		num_bytes = 2;
 	} else if (c <= 0xffff) {
-		numBytes = 3;
+		num_bytes = 3;
 	} else if (c <= 0x1fffff) {
-		numBytes = 4;
+		num_bytes = 4;
 	} else if (c <= 0x3ffffff) {
-		numBytes = 5;
+		num_bytes = 5;
 	} else if (c <= 0x7fffffff) {
-		numBytes = 6;
+		num_bytes = 6;
 	} else {
 		ret[0] = 0;
 		return ret;
 	}
 
-	switch (numBytes) {
+	switch (num_bytes) {
 		case 1:
 			ASSERT(false)
 			break;

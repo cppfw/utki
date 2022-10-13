@@ -3,18 +3,18 @@
 #include <utki/shared.hpp>
 
 namespace {
-class TestClass : public utki::shared
+class test_class : public utki::shared
 {
 public:
 	int a = 4;
 
-	TestClass() {}
+	test_class() {}
 
-	TestClass(int i) :
+	test_class(int i) :
 		a(i)
 	{}
 
-	std::shared_ptr<TestClass> getPtr()
+	std::shared_ptr<test_class> get_ptr()
 	{
 		return utki::make_shared_from(*this);
 	}
@@ -24,18 +24,18 @@ public:
 namespace {
 tst::set set("shared", [](tst::suite& suite) {
 	suite.add("basic", []() {
-		std::shared_ptr<TestClass> p1 = std::make_shared<TestClass>();
+		std::shared_ptr<test_class> p1 = std::make_shared<test_class>();
 
-		std::shared_ptr<TestClass> p2 = std::make_shared<TestClass>(21);
+		std::shared_ptr<test_class> p2 = std::make_shared<test_class>(21);
 
 		tst::check_eq(p1->a, 4, SL);
 		tst::check_eq(p2->a, 21, SL);
 
-		tst::check_eq(p2->getPtr().operator->(), p2.operator->(), SL);
+		tst::check_eq(p2->get_ptr().operator->(), p2.operator->(), SL);
 	});
 
 	suite.add("make_shared_from", []() {
-		auto o = std::make_shared<TestClass>();
+		auto o = std::make_shared<test_class>();
 		tst::check(o, SL);
 
 		auto sft = utki::make_shared_from(*o);
@@ -44,7 +44,7 @@ tst::set set("shared", [](tst::suite& suite) {
 	});
 
 	suite.add("make_weak_from", []() {
-		auto o = std::make_shared<TestClass>();
+		auto o = std::make_shared<test_class>();
 		tst::check(o, SL);
 
 		auto sft = utki::make_weak_from(*o);

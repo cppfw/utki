@@ -1,6 +1,6 @@
 #pragma once
 
 
-int& GetA();
-void IncA();
-void PrintA();
+int& get_a();
+void inc_a();
+void print_a();

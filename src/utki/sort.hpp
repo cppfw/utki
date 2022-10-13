@@ -88,11 +88,11 @@ constexpr ForwardIt partition(ForwardIt first, ForwardIt last, UnaryPredicate p)
 template <class RAIt, class Compare = std::less<>>
 constexpr void quick_sort(RAIt first, RAIt last, Compare cmp = Compare{})
 {
-	auto const N = utki::sort_internal::distance(first, last);
-	if (N <= 1) {
+	auto const n = utki::sort_internal::distance(first, last);
+	if (n <= 1) {
 		return;
 	}
-	auto const pivot = *utki::sort_internal::next(first, N / 2);
+	auto const pivot = *utki::sort_internal::next(first, n / 2);
 	auto const middle1 = utki::sort_internal::partition(first, last, [=](auto const& elem) {
 		return cmp(elem, pivot);
 	});

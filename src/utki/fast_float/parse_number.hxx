@@ -49,16 +49,16 @@ from_chars_result parse_infnan(const char* first, const char* last, T& value) no
 	from_chars_result answer;
 	answer.ptr = first;
 	answer.ec = std::errc(); // be optimistic
-	bool minusSign = false;
+	bool minus_sign = false;
 	if (*first == '-')
 	{ // assume first < last, so dereference without checks; C++17 20.19.3.(7.1) explicitly forbids '+' here
-		minusSign = true;
+		minus_sign = true;
 		++first;
 	}
 	if (last - first >= 3) {
 		if (fastfloat_strncasecmp(first, "nan", 3)) {
 			answer.ptr = (first += 3);
-			value = minusSign ? -std::numeric_limits<T>::quiet_NaN() : std::numeric_limits<T>::quiet_NaN();
+			value = minus_sign ? -std::numeric_limits<T>::quiet_NaN() : std::numeric_limits<T>::quiet_NaN();
 			// Check for possible nan(n-char-seq-opt), C++17 20.19.3.7, C11 7.20.1.3.3. At least MSVC produces nan(ind)
 			// and nan(snan).
 			if (first != last && *first == '(') {
@@ -79,7 +79,7 @@ from_chars_result parse_infnan(const char* first, const char* last, T& value) no
 			} else {
 				answer.ptr = first + 3;
 			}
-			value = minusSign ? -std::numeric_limits<T>::infinity() : std::numeric_limits<T>::infinity();
+			value = minus_sign ? -std::numeric_limits<T>::infinity() : std::numeric_limits<T>::infinity();
 			return answer;
 		}
 	}
