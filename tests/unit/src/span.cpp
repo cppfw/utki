@@ -4,6 +4,11 @@
 #include <tst/set.hpp>
 #include <utki/span.hpp>
 
+// undefine possibly defined macro
+#ifdef assert
+#	undef assert
+#endif
+
 using namespace std::string_literals;
 
 // declare templates to instantiate all template methods to include all methods to gcov coverage
