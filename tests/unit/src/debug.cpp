@@ -2,6 +2,11 @@
 #include <tst/set.hpp>
 #include <utki/debug.hpp>
 
+// undefine possibly defined macro
+#ifdef assert
+#	undef assert
+#endif
+
 namespace {
 tst::set set("debug", [](tst::suite& suite) {
 	suite.add("assert_macro", []() {
