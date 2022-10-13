@@ -412,6 +412,7 @@ jobs:
         os:
           # - macos-10.15
           - macos-11
+          - macos-12
     name: conan - ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     steps:
