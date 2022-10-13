@@ -1,7 +1,7 @@
-#include "../../src/utki/debug.hpp"
-
 #include "TestSingleton.hpp_"
 #include "testso.hpp_"
+
+#include "../../src/utki/debug.hpp"
 
 // NOLINTNEXTLINE(bugprone-exception-escape): global exceptions are not caught
 int main(int argc, char *argv[]){
