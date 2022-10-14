@@ -1,3 +1,9 @@
+libutki (1.1.176) unstable; urgency=medium
+
+  * remove deprecated debug macros
+
+ -- Ivan Gagis <igagis@gmail.com>  Sat, 15 Oct 2022 01:44:51 +0300
+
 libutki (1.1.175) unstable; urgency=medium
 
   * remove the move constructor from shared_ref
