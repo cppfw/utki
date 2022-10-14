@@ -316,19 +316,6 @@ void assert(
 
 } // namespace utki
 
-// TODO: deprecated, remove.
-#define ASSERT_INFO_ALWAYS(x, y) \
-	utki::assert( \
-		x, \
-		[&](auto& assert_output_stream) { \
-			assert_output_stream << y; \
-		}, \
-		SL \
-	);
-
-// TODO: deprecated, remove.
-#define ASSERT_ALWAYS(x) ASSERT_INFO_ALWAYS(x, "no additional info")
-
 #ifdef DEBUG
 
 // TODO: deprecated, remove.
