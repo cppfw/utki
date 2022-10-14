@@ -23,6 +23,24 @@ struct a1 : public a0 {
 };
 
 tst::set set("shared_ref", [](tst::suite& suite) {
+	static_assert(
+		!std::is_constructible_v<utki::shared_ref<std::string>>,
+		"shared_ref must not be default constructible"
+		// because shared_ref cannot be nullptr
+	);
+
+	static_assert(
+		!std::is_convertible_v<std::shared_ptr<std::string>, utki::shared_ref<std::string>>,
+		"shared_ptr must not be convertible to shared_ref"
+		// because shared_ptr can be nullptr, but shared_ref cannot
+	);
+
+	static_assert(
+		!std::is_move_constructible_v<utki::shared_ref<std::string>>,
+		"shared_ref must not be move constructible"
+		// because moved-from shared_ref cannot remain nullptr
+	);
+
 	suite.add("copy_constructor", []() {
 		utki::shared_ref<a1> sr = utki::make_shared_ref<a1>(3);
 
