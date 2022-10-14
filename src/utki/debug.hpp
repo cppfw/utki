@@ -318,23 +318,10 @@ void assert(
 
 #ifdef DEBUG
 
-// TODO: deprecated, remove.
-#	define ASSERT_INFO(x, y) \
-		utki::assert( \
-			x, \
-			[&](auto& assert_output_stream) { \
-				assert_output_stream << y; \
-			}, \
-			SL \
-		);
-
 #	define ASSERT1(condition) utki::assert(condition, SL);
 #	define ASSERT2(condition, print) utki::assert(condition, print, SL);
 
 #else // no DEBUG macro defined
-
-// TODO: deprecated, remove.
-#	define ASSERT_INFO(x, y)
 
 #	define ASSERT1(x)
 #	define ASSERT2(x, y)
