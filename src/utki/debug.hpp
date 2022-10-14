@@ -71,49 +71,9 @@ void log(const std::function<void(std::ostream&)>& print);
 
 } // namespace utki
 
-#if CFG_OS_NAME == CFG_OS_NAME_ANDROID
-
-// TODO: deprecated, remove.
-#	define TRACE_ALWAYS(x) \
-		{ \
-			std::stringstream ss; \
-			ss x; \
-			__android_log_write(ANDROID_LOG_INFO, "utki", ss.str().c_str()); \
-		}
-
-// TODO: deprecated, remove.
-#	define LOG_ALWAYS(x) \
-		{ \
-			std::stringstream log_string_stream; \
-			log_string_stream << x; \
-			__android_log_write(ANDROID_LOG_INFO, "utki", log_string_stream.str().c_str()); \
-		}
-
-#else
-
-// TODO: deprecated, remove.
-#	define TRACE_ALWAYS(x) \
-		std::cout x; \
-		std::cout.flush();
-
-// TODO: deprecated, remove.
-#	define LOG_ALWAYS(x) \
-		std::cout << x; \
-		std::cout.flush();
-
-#endif
-
 #ifdef DEBUG
-
-// TODO: deprecated, remove.
-#	define TRACE(x) TRACE_ALWAYS(x)
-
 #	define LOG(print) utki::log(print);
 #else
-
-// TODO: deprecated, remove.
-#	define TRACE(x)
-
 #	define LOG(x)
 #endif
 
