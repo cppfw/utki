@@ -30,6 +30,7 @@ SOFTWARE.
 
 #include "config.hpp"
 #include "debug.hpp"
+#include "shared_ref.hpp"
 
 namespace utki {
 
@@ -61,6 +62,17 @@ std::weak_ptr<T> make_weak(const std::shared_ptr<T>& ptr)
 }
 
 /**
+ * @brief Helper function to make weak_ptr out of shared_ref.
+ * @param ref - shared_ref out of which to make weak_ptr.
+ * @return std::weak_ptr created from given utki::shared_ref.
+ */
+template <class T>
+std::weak_ptr<T> make_weak(const utki::shared_ref<T>& ref)
+{
+	return std::weak_ptr<T>(ref.to_shared_ptr());
+}
+
+/**
  * @brief Helper function to make shared pointer from shared object.
  * This function only works for types which are derived from std::enable_shared_from_this,
  * moreover it requires the type must be derived from utki::shared.
@@ -68,11 +80,11 @@ std::weak_ptr<T> make_weak(const std::shared_ptr<T>& ptr)
  * to the template type. Thus, one does not have to do the dynamic cast manually.
  * @return shared pointer to the given shared object.
  */
-template <class T>
-std::shared_ptr<T> make_shared_from(T& o)
+template <class tt>
+utki::shared_ref<tt> make_shared_from(tt& o)
 {
-	static_assert(std::is_base_of<shared, T>::value, "make_shared_from(): argument must be derived from utki::shared");
-	return std::dynamic_pointer_cast<T>(o.shared_from_this());
+	static_assert(std::is_base_of<shared, tt>::value, "make_shared_from(): argument must be derived from utki::shared");
+	return utki::shared_ref<tt>(std::dynamic_pointer_cast<tt>(o.shared_from_this()));
 }
 
 /**

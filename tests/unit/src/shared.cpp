@@ -34,12 +34,34 @@ tst::set set("shared", [](tst::suite& suite) {
 		tst::check_eq(p2->get_ptr().operator->(), p2.operator->(), SL);
 	});
 
+	suite.add("make_weak_from_shared_ptr", []() {
+		auto o = std::make_shared<test_class>();
+		tst::check(o, SL);
+
+		auto w = utki::make_weak(o);
+
+		auto p = w.lock();
+
+		tst::check(p, SL);
+		tst::check_eq(p->a, 4, SL);
+	});
+
+	suite.add("make_weak_from_shared_ref", []() {
+		auto o = utki::make_shared_ref<test_class>();
+
+		auto w = utki::make_weak(o);
+
+		auto p = w.lock();
+
+		tst::check(p, SL);
+		tst::check_eq(p->a, 4, SL);
+	});
+
 	suite.add("make_shared_from", []() {
 		auto o = std::make_shared<test_class>();
 		tst::check(o, SL);
 
 		auto sft = utki::make_shared_from(*o);
-		tst::check(sft, SL);
 		tst::check_eq(sft->a, 4, SL);
 	});
 

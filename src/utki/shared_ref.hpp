@@ -55,6 +55,9 @@ namespace utki {
 template <class T>
 class shared_ref
 {
+	template <class tt>
+	friend utki::shared_ref<tt> make_shared_from(tt&);
+
 	std::shared_ptr<T> p;
 
 	explicit shared_ref(std::shared_ptr<T>&& ptr) :
