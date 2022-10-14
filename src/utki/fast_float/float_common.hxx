@@ -173,7 +173,7 @@ fastfloat_really_inline uint64_t emulu(uint32_t x, uint32_t y)
 
 // slow emulation routine for 32-bit
 #	if !defined(__MINGW64__)
-fastfloat_really_inline uint64_t _umul128(uint64_t ab, uint64_t cd, uint64_t* hi)
+fastfloat_really_inline uint64_t _umul128(uint64_t ab, uint64_t cd, uint64_t* hi) // NOLINT
 {
 	uint64_t ad = emulu((uint32_t)(ab >> 32), (uint32_t)cd);
 	uint64_t bd = emulu((uint32_t)ab, (uint32_t)cd);
