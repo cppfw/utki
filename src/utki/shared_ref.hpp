@@ -39,6 +39,17 @@ namespace utki {
  * Objects have to be created with make_shared_ref() in order to be managed by shared_ref.
  * The shared_ref is implemented as a wrapper around std::shared_ptr.
  *
+ * The sahred_ref doesn't have a move constructor, because otherwise it would contradict to the
+ * whole idea of the non-null pointer, since moved from pointer would become null then.
+ * Because of this the recommended way to pass shared_ref as an argument to a function is
+ * via the constant reference, like:
+ * 
+ * @code {.cpp}
+ * void func(const shared_ref<some_class>& str);
+ * @endcode
+ * 
+ * this way the copying of the shared_ref will be deferred to the very last moment when it is actually needed.
+ * 
  * @tparam T - type pointed by the pointer.
  */
 template <class T>
