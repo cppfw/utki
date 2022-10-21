@@ -82,26 +82,30 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - image_owner:
+          - os: debian
+            codename: ${{ env.DEBIAN_DISTRO }}
+            image_owner:
             package_type: deb
-          - image_owner: arm32v7/
+          - os: debian
+            codename: ${{ env.DEBIAN_DISTRO }}
+            image_owner: arm32v7/
             package_type: deb
             labels: [arm,docker]
     runs-on: ${{ (matrix.labels == '' && 'ubuntu-latest') || matrix.labels }}
-    container: ${{ matrix.image_owner }}debian:${{ env.DEBIAN_DISTRO }}
-    name: sanitizer - ${{ matrix.image_owner }}debain:${{ env.DEBIAN_DISTRO }}
+    container: ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }}
+    name: sanitizer - ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }}
     steps:
       - name: add cppfw deb repo
         uses: myci-actions/add-deb-repo@master
         with:
-          repo: deb http://gagis.hopto.org/repo/cppfw/debain ${{ env.DEBIAN_DISTRO }} main
+          repo: deb http://gagis.hopto.org/repo/cppfw/${{ matrix.os }} ${{ matrix.codename }} main
           repo-name: cppfw
           keys-asc: http://gagis.hopto.org/repo/cppfw/pubkey.gpg
           install: myci locales git
       - name: add llvm repo (for clang-format)
         uses: myci-actions/add-deb-repo@master
         with:
-          repo: deb http://apt.llvm.org/${{ env.DEBIAN_DISTRO }} llvm-toolchain-${{ env.DEBIAN_DISTRO }} main
+          repo: deb http://apt.llvm.org/${{ matrix.codename }} llvm-toolchain-${{ matrix.codename }} main
           repo-name: llvm
           keys-asc: https://apt.llvm.org/llvm-snapshot.gpg.key
       - name: install ci tools
