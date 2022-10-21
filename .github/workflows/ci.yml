@@ -3,7 +3,6 @@ on:
   push: {branches-ignore: [latest], tags: ['*']}
   pull_request:
 env:
-  DEBIAN_DISTRO: bullseye
   PACKAGE_NAME: ${{ github.event.repository.name }}
   PACKAGE_VERSION: ${{ github.sha }}
   MYCI_NEXUS_USERNAME: cppfw
@@ -24,7 +23,7 @@ jobs:
     name: coverage - measure
     env:
       linux_distro: debian
-      linux_release: ${{ env.DEBIAN_DISTRO }}
+      linux_release: bullseye
     steps:
       - name: add cppfw deb repo
         uses: myci-actions/add-deb-repo@master
@@ -85,8 +84,8 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - {os: debian, codename: ${{ env.DEBIAN_DISTRO }}, image_owner: , package_type: deb}
-          - {os: debian, codename: ${{ env.DEBIAN_DISTRO }}, image_owner: arm32v7/, package_type: deb, labels: [arm,docker]}
+          - {os: debian, codename: bullseye, image_owner: , package_type: deb}
+          - {os: debian, codename: bullseye, image_owner: arm32v7/, package_type: deb, labels: [arm,docker]}
     runs-on: ${{ (matrix.labels == '' && 'ubuntu-latest') || matrix.labels }}
     container: ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }}
     name: sanitizer - ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }}
@@ -136,7 +135,6 @@ jobs:
           - {os: debian, codename: bullseye, image_owner: arm32v7/, package_type: deb, labels: [arm,docker]}
           - {os: debian, codename: bullseye, image_owner: arm64v8/, package_type: deb, labels: [arm64,docker]}
           - {os: ubuntu, codename: focal, image_owner: , package_type: deb}
-          - {os: ubuntu, codename: jammy, image_owner: , package_type: deb}
           # - {os: raspbian, codename: buster, image_owner: igagis/, package_type: deb, labels: [arm,docker]}
           - {os: raspbian, codename: bullseye, image_owner: igagis/, package_type: deb, labels: [arm,docker]}
     runs-on: ${{ (matrix.labels == '' && 'ubuntu-latest') || matrix.labels }}
