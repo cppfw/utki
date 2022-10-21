@@ -85,15 +85,8 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: debian
-            codename: ${{ env.DEBIAN_DISTRO }}
-            image_owner:
-            package_type: deb
-          - os: debian
-            codename: ${{ env.DEBIAN_DISTRO }}
-            image_owner: arm32v7/
-            package_type: deb
-            labels: [arm,docker]
+          - {os: debian, codename: ${{ env.DEBIAN_DISTRO }}, image_owner: , package_type: deb}
+          - {os: debian, codename: ${{ env.DEBIAN_DISTRO }}, image_owner: arm32v7/, package_type: deb, labels: [arm,docker]}
     runs-on: ${{ (matrix.labels == '' && 'ubuntu-latest') || matrix.labels }}
     container: ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }}
     name: sanitizer - ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }}
