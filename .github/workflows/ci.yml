@@ -22,21 +22,18 @@ jobs:
     runs-on: ubuntu-latest
     container: debian:bullseye
     name: coverage - measure
-    env:
-      linux_distro: debian
-      linux_release: ${{ env.DEBIAN_DISTRO }}
     steps:
       - name: add cppfw deb repo
         uses: myci-actions/add-deb-repo@master
         with:
-          repo: deb http://gagis.hopto.org/repo/cppfw/${{ env.linux_distro }} ${{ env.linux_release }} main
+          repo: deb http://gagis.hopto.org/repo/cppfw/debian ${{ env.DEBIAN_DISTRO }} main
           repo-name: cppfw
           keys-asc: http://gagis.hopto.org/repo/cppfw/pubkey.gpg
           install: myci locales git
       - name: add llvm repo (for clang-format)
         uses: myci-actions/add-deb-repo@master
         with:
-          repo: deb http://apt.llvm.org/${{ env.linux_release }} llvm-toolchain-${{ env.linux_release }} main
+          repo: deb http://apt.llvm.org/${{ env.DEBIAN_DISTRO }} llvm-toolchain-${{ env.DEBIAN_DISTRO }} main
           repo-name: llvm
           keys-asc: https://apt.llvm.org/llvm-snapshot.gpg.key
       - name: install ci tools
