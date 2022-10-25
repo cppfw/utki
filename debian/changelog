@@ -1,3 +1,9 @@
+libutki (1.1.178) unstable; urgency=medium
+
+  * implement dynamic_reference_cast()
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 26 Oct 2022 01:57:00 +0300
+
 libutki (1.1.177) unstable; urgency=medium
 
   * build for ubuntu jammy
