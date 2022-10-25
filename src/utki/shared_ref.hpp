@@ -30,6 +30,7 @@ SOFTWARE.
 #include <stdexcept>
 
 #include "debug.hpp"
+#include "util.hpp"
 
 namespace utki {
 
@@ -205,13 +206,23 @@ shared_ref<T> make_shared_ref(A&&... args)
 	return shared_ref<T>(std::make_shared<T>(std::forward<A>(args)...));
 }
 
+/**
+ * @brief Perform dynamic cast of shared_ref.
+ *
+ * @tparam dst_type - cast target type.
+ * @tparam src_type - source type.
+ * @param r - shared_ref to cast.
+ * @return shared_ref to cast target type.
+ * @throw std::bad_cast in case src_type cannot be casted to dst_type.
+ */
 template <typename dst_type, typename src_type>
 shared_ref<dst_type> dynamic_reference_cast(const shared_ref<src_type>& r)
 {
 	auto p = std::dynamic_pointer_cast<dst_type>(r.to_shared_ptr());
 	if (!p) {
 		// this cast will throw std::bad_cast for us
-		dynamic_cast<dst_type&>(r.get());
+		const auto& res = dynamic_cast<dst_type&>(r.get());
+		touch(res);
 	}
 	return shared_ref<dst_type>(std::move(p));
 }
