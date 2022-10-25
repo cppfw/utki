@@ -36,20 +36,6 @@ SOFTWARE.
 namespace utki {
 
 /**
- * @brief Touch variable.
- *
- * This inline template function does nothing.
- * Its purpose is to intentionally silence compiler warnings about unused variables.
- *
- * @tparam t - type of the variable to touch.
- *
- * @param v - variable to touch.
- */
-template <typename t>
-void touch(const t& v)
-{}
-
-/**
  * @brief Construct std::pair with swapped components.
  * @param p - initial std::pair.
  * @return a new std::pair with swapped component.

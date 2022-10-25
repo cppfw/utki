@@ -30,7 +30,6 @@ SOFTWARE.
 #include <stdexcept>
 
 #include "debug.hpp"
-#include "util.hpp"
 
 namespace utki {
 
@@ -221,8 +220,7 @@ shared_ref<dst_type> dynamic_reference_cast(const shared_ref<src_type>& r)
 	auto p = std::dynamic_pointer_cast<dst_type>(r.to_shared_ptr());
 	if (!p) {
 		// this cast will throw std::bad_cast for us
-		const auto& res = dynamic_cast<dst_type&>(r.get());
-		touch(res);
+		[[maybe_unused]] const auto& res = dynamic_cast<dst_type&>(r.get());
 	}
 	return shared_ref<dst_type>(std::move(p));
 }
