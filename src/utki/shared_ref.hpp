@@ -55,6 +55,12 @@ namespace utki {
 template <class T>
 class shared_ref
 {
+	template <typename TT, typename... A>
+	friend shared_ref<TT> make_shared_ref(A&&... args);
+
+	template <typename dst_type, typename src_type>
+	friend shared_ref<dst_type> dynamic_reference_cast(const shared_ref<src_type>& r);
+
 	template <class tt>
 	friend utki::shared_ref<tt> make_shared_from(tt&);
 
@@ -183,9 +189,6 @@ public:
 	{
 		return *this->p;
 	}
-
-	template <typename TT, typename... A>
-	friend shared_ref<TT> make_shared_ref(A&&... args);
 };
 
 /**
@@ -200,6 +203,17 @@ template <typename T, typename... A>
 shared_ref<T> make_shared_ref(A&&... args)
 {
 	return shared_ref<T>(std::make_shared<T>(std::forward<A>(args)...));
+}
+
+template <typename dst_type, typename src_type>
+shared_ref<dst_type> dynamic_reference_cast(const shared_ref<src_type>& r)
+{
+	auto p = std::dynamic_pointer_cast<dst_type>(r.to_shared_ptr());
+	if (!p) {
+		// this cast will throw std::bad_cast for us
+		dynamic_cast<dst_type&>(r.get());
+	}
+	return shared_ref<dst_type>(std::move(p));
 }
 
 } // namespace utki
