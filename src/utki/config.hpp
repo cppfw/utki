@@ -58,10 +58,12 @@ SOFTWARE.
 #define CFG_COMPILER_MSVC 2
 #define CFG_COMPILER_CLANG 3
 
+// NOLINTBEGIN(modernize-macro-to-enum)
 #define M_COMPILER_UNKNOWN 0
 #define M_COMPILER_GCC 1
 #define M_COMPILER_MSVC 2
 #define M_COMPILER_CLANG 3
+// NOLINTEND
 
 #if defined(__GNUC__) || defined(__GNUG__)
 #	define CFG_COMPILER CFG_COMPILER_GCC

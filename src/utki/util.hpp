@@ -401,21 +401,6 @@ inline uint64_t deserialize64be(const uint8_t* buf) noexcept
 }
 
 /**
- * @brief Construct an object and store it in unique pointer.
- * This is a replacement of std::make_unique() when C++14 is not available.
- * @param args - object constructor arguments.
- * @return std::unique_ptr to a newly created object.
- */
-// TODO: remove
-template <class T, class... Args>
-[[deprecated("use std::make_unique()")]] //
-std::unique_ptr<T>
-make_unique(Args&&... args)
-{
-	return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
-}
-
-/**
  * @brief Check if stderr is terminal or file/pipe.
  * @return true in case stderr outputs to terminal.
  * @return false in case stderr outputs to file or pipe.
