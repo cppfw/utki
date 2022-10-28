@@ -1,12 +1,1 @@
-Checks: "bugprone-exception-escape,readability-identifier-naming"
-WarningsAsErrors: '*'
-HeaderFilterRegex: '.*'
-InheritParentConfig: false
-CheckOptions:
-  - { key: readability-identifier-naming.AbstractClassCase, value: lower_case }
-  - { key: readability-identifier-naming.NamespaceCase, value: lower_case }
-  - { key: readability-identifier-naming.ClassCase, value: lower_case }
-  - { key: readability-identifier-naming.StructCase, value: lower_case }
-  - { key: readability-identifier-naming.FunctionCase, value: lower_case }
-  - { key: readability-identifier-naming.VariableCase, value: lower_case }
-  - { key: readability-identifier-naming.GlobalConstantCase, value: lower_case }
+tool-configs/clang-tidy/.clang-tidy
