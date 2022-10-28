@@ -12,7 +12,7 @@ struct a0 {
 		a_0(a)
 	{}
 
-	virtual ~a0() {}
+	virtual ~a0() = default;
 };
 
 struct a1 : public a0 {

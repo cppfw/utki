@@ -47,7 +47,7 @@ class shared : public std::enable_shared_from_this<shared>
 	}
 
 public:
-	virtual ~shared() noexcept {}
+	virtual ~shared() noexcept = default;
 };
 
 /**

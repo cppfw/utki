@@ -134,7 +134,7 @@ inline uint64_t round(decimal& h)
 		return UINT64_MAX;
 	}
 	// at this point, we know that h.decimal_point >= 0
-	uint32_t dp = uint32_t(h.decimal_point);
+	auto dp = uint32_t(h.decimal_point);
 	uint64_t n = 0;
 	for (uint32_t i = 0; i < dp; i++) {
 		n = (10 * n) + ((i < h.num_digits) ? h.digits[i] : 0);
@@ -160,7 +160,7 @@ inline void decimal_left_shift(decimal& h, uint32_t shift)
 		return;
 	}
 	uint32_t num_new_digits = number_of_digits_decimal_left_shift(h, shift);
-	int32_t read_index = int32_t(h.num_digits - 1);
+	auto read_index = int32_t(h.num_digits - 1);
 	uint32_t write_index = h.num_digits - 1 + num_new_digits;
 	uint64_t n = 0;
 
@@ -227,12 +227,12 @@ inline void decimal_right_shift(decimal& h, uint32_t shift)
 	}
 	uint64_t mask = (uint64_t(1) << shift) - 1;
 	while (read_index < h.num_digits) {
-		uint8_t new_digit = uint8_t(n >> shift);
+		auto new_digit = uint8_t(n >> shift);
 		n = (10 * (n & mask)) + h.digits[read_index++];
 		h.digits[write_index++] = new_digit;
 	}
 	while (n > 0) {
-		uint8_t new_digit = uint8_t(n >> shift);
+		auto new_digit = uint8_t(n >> shift);
 		n = 10 * (n & mask);
 		if (write_index < max_digits) {
 			h.digits[write_index++] = new_digit;
@@ -286,7 +286,7 @@ adjusted_mantissa compute_float(decimal& d)
 	};
 	int32_t exp2 = 0;
 	while (d.decimal_point > 0) {
-		uint32_t n = uint32_t(d.decimal_point);
+		auto n = uint32_t(d.decimal_point);
 		uint32_t shift = (n < num_powers) ? decimal_powers[n] : max_shift;
 		detail::decimal_right_shift(d, shift);
 		if (d.decimal_point < -decimal_point_range) {
@@ -306,7 +306,7 @@ adjusted_mantissa compute_float(decimal& d)
 			}
 			shift = (d.digits[0] < 2) ? 2 : 1;
 		} else {
-			uint32_t n = uint32_t(-d.decimal_point);
+			auto n = uint32_t(-d.decimal_point);
 			shift = (n < num_powers) ? decimal_powers[n] : max_shift;
 		}
 		detail::decimal_left_shift(d, shift);
@@ -322,7 +322,7 @@ adjusted_mantissa compute_float(decimal& d)
 	exp2--;
 	constexpr int32_t minimum_exponent = binary::minimum_exponent();
 	while ((minimum_exponent + 1) > exp2) {
-		uint32_t n = uint32_t((minimum_exponent + 1) - exp2);
+		auto n = uint32_t((minimum_exponent + 1) - exp2);
 		if (n > max_shift) {
 			n = max_shift;
 		}

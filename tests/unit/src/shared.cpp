@@ -8,7 +8,7 @@ class test_class : public utki::shared
 public:
 	int a = 4;
 
-	test_class() {}
+	test_class() = default;
 
 	test_class(int i) :
 		a(i)

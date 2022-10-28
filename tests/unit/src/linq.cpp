@@ -380,8 +380,7 @@ tst::set set("linq", [](tst::suite& suite) {
 
 				~wrapper() = default;
 
-				[[nodiscard]]
-				std::shared_ptr<test_struct> get_ts() const
+				[[nodiscard]] std::shared_ptr<test_struct> get_ts() const
 				{
 					return this->ts;
 				}

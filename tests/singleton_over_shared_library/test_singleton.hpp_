@@ -4,12 +4,8 @@
 
 class test_singleton : public utki::singleton<test_singleton>{
 public:
-	int a;
+	int a{32};
 
-	test_singleton() :
-			a(32)
-	{
-	}
-	~test_singleton()noexcept{
-	}
+	test_singleton() = default;
+	~test_singleton()noexcept override = default;
 };

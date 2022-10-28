@@ -87,15 +87,12 @@ public:
 		buf_size(s)
 	{}
 
-	span() noexcept {}
+	span() noexcept = default;
 
 	/**
 	 * @brief Constructor for automatic conversion from nullptr.
 	 */
-	span(std::nullptr_t) noexcept :
-		buf(nullptr),
-		buf_size(0)
-	{}
+	span(std::nullptr_t) noexcept {}
 
 	/**
 	 * @brief Constructor for automatic conversion to span<const T> or other convertible type.
