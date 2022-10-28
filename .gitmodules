@@ -8,7 +8,3 @@
 	url = ../../cppfw/tst
 	branch = master
 #	ignore = dirty
-[submodule "tool-configs"]
-	path = tool-configs
-	url = ../../cppfw/tool-configs
-	branch = master

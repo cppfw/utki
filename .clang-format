@@ -1,1 +1,150 @@
-tool-configs/clang-format/.clang-format
+﻿---
+# cppfw code format config
+# version: 1
+
+AccessModifierOffset: '-4' # unindent class members access modifiers, like 'public:', 'private:', 'protected:'
+AlignAfterOpenBracket: BlockIndent
+AlignArrayOfStructures: Right
+AlignConsecutiveMacros: 'false'
+AlignConsecutiveAssignments: 'false'
+AlignConsecutiveDeclarations: 'false'
+AlignEscapedNewlines: DontAlign
+AlignOperands: DontAlign
+AlignTrailingComments: 'false'
+AllowAllArgumentsOnNextLine: 'false'
+# AllowAllConstructorInitializersOnNextLine: 'false' # DEPRECATED
+AllowAllParametersOfDeclarationOnNextLine: 'false'
+AllowShortBlocksOnASingleLine: 'false'
+AllowShortCaseLabelsOnASingleLine: 'false'
+AllowShortEnumsOnASingleLine: 'false'
+AllowShortFunctionsOnASingleLine: Empty
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLambdasOnASingleLine: Empty
+AllowShortLoopsOnASingleLine: 'false'
+# AlwaysBreakAfterDefinitionReturnType: None # DEPRECATED
+AlwaysBreakAfterReturnType: None
+AlwaysBreakBeforeMultilineStrings: 'true'
+AlwaysBreakTemplateDeclarations: 'Yes'
+BinPackArguments: 'false'
+BinPackParameters: 'false'
+BitFieldColonSpacing: Both
+BraceWrapping:
+  AfterCaseLabel: 'false'
+  AfterClass: 'true'
+  AfterControlStatement: MultiLine
+  AfterEnum: 'false'
+  AfterFunction: 'true'
+  AfterNamespace: 'false'
+  AfterObjCDeclaration: 'false'
+  AfterStruct: 'false'
+  AfterUnion: 'false'
+  AfterExternBlock: 'false'
+  BeforeCatch: 'false'
+  BeforeElse: 'false'
+  BeforeLambdaBody: 'false'
+  IndentBraces: 'false'
+  SplitEmptyFunction: 'false'
+  SplitEmptyRecord: 'false'
+  SplitEmptyNamespace: 'false'
+BreakBeforeBinaryOperators: NonAssignment
+BreakBeforeBraces: Custom
+BreakBeforeConceptDeclarations: Always # clang-format 15
+BreakBeforeTernaryOperators: 'true'
+BreakConstructorInitializers: AfterColon
+BreakInheritanceList: AfterColon
+BreakStringLiterals: 'false'
+ColumnLimit: '120'
+CompactNamespaces: 'false'
+# ConstructorInitializerAllOnOneLineOrOnePerLine: 'true' # DEPRECATED
+ConstructorInitializerIndentWidth: '4'
+ContinuationIndentWidth: '4'
+DeriveLineEnding: 'false'
+DerivePointerAlignment: 'false'
+EmptyLineAfterAccessModifier: Never
+EmptyLineBeforeAccessModifier: Always
+FixNamespaceComments: 'true'
+IncludeBlocks: Regroup
+IncludeCategories:
+  - Regex:           '^<[^/\.]*>$' # angle brackets includes without suffix and directory
+    Priority:        1
+    CaseSensitive:   true
+  - Regex:           '^<[^/].*\.[^/\.]*>$' # angle brackets includes without directory, but with suffix
+    Priority:        2
+    CaseSensitive:   true	
+  - Regex:           '^<.*>$' # all other angle brackets includes
+    Priority:        3
+    CaseSensitive:   true
+  - Regex:           '^"\.\./.*"$' # double quotes includes from outer folders
+    Priority:        4
+    CaseSensitive:   true
+  - Regex:           '^".*/.*"$' # double quotes includes from subfolders
+    Priority:        5
+    CaseSensitive:   true
+  - Regex:           '^".*"$' # double quotes includes
+    Priority:        6
+    CaseSensitive:   true
+  - Regex:           '.*' # rest of the includes
+    CaseSensitive:   true
+    Priority:        7
+IndentAccessModifiers: 'false'
+IndentCaseBlocks: 'true'
+IndentCaseLabels: 'true'
+IndentExternBlock: NoIndent
+IndentGotoLabels: 'false'
+IndentPPDirectives: AfterHash
+IndentRequiresClause: 'false' # clang-format 15
+IndentWidth: '4'
+IndentWrappedFunctionNames: 'false'
+# InsertBraces: 'false' # clang-format 15. The feature is fuzzy, so disable it.
+InsertTrailingCommas: None # only for JavaScript as of clang-format 15. The feature seems fuzzy, so disable it.
+KeepEmptyLinesAtTheStartOfBlocks: 'false'
+LambdaBodyIndentation: Signature
+Language: Cpp
+MaxEmptyLinesToKeep: '1'
+NamespaceIndentation: None
+PackConstructorInitializers: Never
+PenaltyReturnTypeOnItsOwnLine: '1000' # do not break after return type if possible
+# PenaltyBreakBeforeFirstCallParameter: '2000'
+# PenaltyBreakOpenParenthesis: '1000'
+# PenaltyExcessCharacter: '1000'
+PointerAlignment: Left
+# QualifierAlignment: Custom # for some reason it increases clang-format run time significantly
+# QualifierOrder: ['inline', 'static', 'const', 'type'] # doesn't work without QualifierAlignment: Custom
+ReferenceAlignment: Left
+ReflowComments: 'true'
+RemoveBracesLLVM: 'false'
+RequiresClausePosition: OwnLine # clang-format 15
+SeparateDefinitionBlocks: Always
+ShortNamespaceLines: 0
+SortIncludes: CaseSensitive
+SortUsingDeclarations: 'false'
+SpaceAfterCStyleCast: 'false'
+SpaceAfterLogicalNot: 'false'
+SpaceAfterTemplateKeyword: 'true'
+SpaceAroundPointerQualifiers: Before
+SpaceBeforeAssignmentOperators: 'true'
+SpaceBeforeCaseColon: 'false'
+SpaceBeforeCpp11BracedList: 'false'
+SpaceBeforeCtorInitializerColon: 'true'
+SpaceBeforeInheritanceColon: 'true'
+SpaceBeforeParens: ControlStatements
+SpaceBeforeRangeBasedForLoopColon: 'true'
+SpaceInEmptyBlock: 'false'
+SpaceInEmptyParentheses: 'false'
+SpacesBeforeTrailingComments: '1'
+SpacesInAngles: 'false'
+SpacesInConditionalStatement: 'false'
+SpacesInCStyleCastParentheses: 'false'
+SpacesInContainerLiterals: 'false'
+SpacesInLineCommentPrefix:
+  Minimum: 1
+  Maximum: -1
+SpacesInParentheses: 'false'
+SpacesInSquareBrackets: 'false'
+Standard: Latest
+TabWidth: '4'
+UseCRLF: 'false'
+UseTab: ForContinuationAndIndentation
+# UseTab: Never
+
+...
