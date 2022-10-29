@@ -54,6 +54,7 @@ namespace fast_float {
  * infinite in binary64 so we never need to worry about powers
  * of 5 greater than 308.
  */
+// NOLINTNEXTLINE(readability-identifier-naming)
 template <class unused = void>
 struct powers_template {
 	constexpr static int smallest_power_of_five = binary_format<double>::smallest_power_of_ten();
@@ -63,6 +64,7 @@ struct powers_template {
 	static const uint64_t power_of_five_128[number_of_entries]; // NOLINT(modernize-avoid-c-arrays)
 };
 
+// NOLINTNEXTLINE(readability-identifier-naming)
 template <class unused>
 // NOLINTNEXTLINE(modernize-avoid-c-arrays)
 const uint64_t powers_template<unused>::power_of_five_128[number_of_entries] = {

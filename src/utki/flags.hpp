@@ -331,10 +331,10 @@ public:
  * @param initially_set_flags - list of flags which will be set initially.
  * @return newly created flags object.
  */
-template <class T>
-flags<T> make_flags(std::initializer_list<T> initially_set_flags)
+template <class enum_type>
+flags<enum_type> make_flags(std::initializer_list<enum_type> initially_set_flags)
 {
-	return flags<T>(initially_set_flags);
+	return flags<enum_type>(initially_set_flags);
 }
 
 template <class enum_type>

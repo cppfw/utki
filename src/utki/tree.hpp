@@ -38,32 +38,32 @@ namespace utki {
  * @brief N-ary tree data structure.
  * This class represents a tree node.
  * Each instance of tree node contains some value and a list of children tree nodes.
- * @tparam T - the tree node data type.
- * @tparam C - the container type the tree is based on.
- * @tparam A - memory allocator.
+ * @tparam element_type - the tree node data type.
+ * @tparam container_templ - container template the tree is based on.
+ * @tparam allocator_templ - memory allocator template.
  */
 template < //
-	class T,
-	template <class, class> class C = std::vector,
-	template <class> class A = std::allocator>
+	class element_type,
+	template <class, class> class container_templ = std::vector,
+	template <class> class allocator_templ = std::allocator>
 class tree
 {
 public:
 	/**
 	 * @brief Type of the tree node value.
 	 */
-	typedef T value_type;
+	typedef element_type value_type;
 
 	/**
 	 * @brief Type of the child tree nodes container.
 	 * The container type the tree is based on.
 	 */
-	typedef C<tree, A<tree>> container_type;
+	typedef container_templ<tree, allocator_templ<tree>> container_type;
 
 	/**
 	 * @brief Value of the tree node.
 	 */
-	T value;
+	element_type value;
 
 	/**
 	 * @brief List of child tree nodes.
@@ -81,7 +81,7 @@ public:
 	 * Children list of the created node is empty.
 	 * @param value - initializer of the tree node value.
 	 */
-	tree(const T& value) :
+	tree(const element_type& value) :
 		value(value)
 	{}
 
@@ -91,7 +91,7 @@ public:
 	 * Children list of the created node is empty.
 	 * @param value - initializer of the tree node value.
 	 */
-	tree(T&& value) :
+	tree(element_type&& value) :
 		value(std::move(value))
 	{}
 
@@ -127,7 +127,7 @@ public:
 	 * @param value - initializer of the tree node value.
 	 * @param children - initializer of the tree node children.
 	 */
-	tree(const T& value, std::initializer_list<tree> children) :
+	tree(const element_type& value, std::initializer_list<tree> children) :
 		value(value),
 		children(children)
 	{}
@@ -137,7 +137,7 @@ public:
 	 * @param value - initializer of the tree node value.
 	 * @param children - initializer of the tree node children.
 	 */
-	tree(T&& value, std::initializer_list<tree> children) :
+	tree(element_type&& value, std::initializer_list<tree> children) :
 		value(std::move(value)),
 		children(children)
 	{}
@@ -147,7 +147,7 @@ public:
 	 * @param value - initializer of the tree node value.
 	 * @param children - initializer of the tree node children.
 	 */
-	tree(const T& value, const container_type& children) :
+	tree(const element_type& value, const container_type& children) :
 		value(value),
 		children(children)
 	{}
@@ -157,7 +157,7 @@ public:
 	 * @param value - initializer of the tree node value.
 	 * @param children - initializer of the tree node children.
 	 */
-	tree(const T& value, container_type&& children) :
+	tree(const element_type& value, container_type&& children) :
 		value(value),
 		children(std::move(children))
 	{}
@@ -167,7 +167,7 @@ public:
 	 * @param value - initializer of the tree node value.
 	 * @param children - initializer of the tree node children.
 	 */
-	tree(T&& value, container_type&& children) :
+	tree(element_type&& value, container_type&& children) :
 		value(std::move(value)),
 		children(std::move(children))
 	{}
@@ -194,19 +194,19 @@ public:
  * This class is a wrapper class which provides STL-like container interface which
  * allows traversal of the tree data structure.
  * The traversal is done in pre-order, i.e. first the parent node is visited, then its child nodes are visited.
- * @tparam C - container type the tree is based on.
+ * @tparam collection_type - container type the tree is based on.
  */
-template <class C>
+template <class collection_type>
 class traversal
 {
 	static_assert(
 		std::is_same< //
-			decltype(C::value_type::children),
-			typename std::remove_const<C>::type>::value,
-		"C::value_type must have 'children' member of type C"
+			decltype(collection_type::value_type::children),
+			typename std::remove_const<collection_type>::type>::value,
+		"collection_type::value_type must have 'children' member of type collection_type"
 	);
 
-	C& roots;
+	collection_type& roots;
 
 public:
 	/**
@@ -215,7 +215,7 @@ public:
 	 * So, the given list of trees must remain alive during the whole life-span of the traversal object.
 	 * @param trees - list of trees through which the traversal will be performed.
 	 */
-	traversal(C& trees) :
+	traversal(collection_type& trees) :
 		roots(trees)
 	{}
 
@@ -223,9 +223,9 @@ public:
 	 * @brief Tree node type.
 	 */
 	typedef typename std::conditional< //
-		std::is_const<C>::value,
-		const typename C::value_type,
-		typename C::value_type>::type value_type;
+		std::is_const<collection_type>::value,
+		const typename collection_type::value_type,
+		typename collection_type::value_type>::type value_type;
 
 	/**
 	 * @brief Pointer to tree node type.
@@ -250,27 +250,27 @@ public:
 	/**
 	 * @brief List size type.
 	 */
-	typedef typename C::size_type size_type;
+	typedef typename collection_type::size_type size_type;
 
 	/**
 	 * @brief List index difference type.
 	 */
-	typedef typename C::difference_type difference_type;
+	typedef typename collection_type::difference_type difference_type;
 
 private:
-	template <bool Is_const>
+	template <bool is_const>
 	class iterator_internal
 	{
-		typedef typename std::conditional<Is_const, const C, C>::type list_type;
+		typedef typename std::conditional<is_const, const collection_type, collection_type>::type list_type;
 		std::vector<list_type*> list_stack;
 		typedef
-			typename std::conditional<Is_const, typename C::const_iterator, typename C::iterator>::type iterator_type;
+			typename std::conditional<is_const, typename collection_type::const_iterator, typename collection_type::iterator>::type iterator_type;
 		std::vector<iterator_type> iter_stack;
 
 		template <class>
 		friend class traversal;
 
-		iterator_internal(C& roots, iterator_type i)
+		iterator_internal(collection_type& roots, iterator_type i)
 		{
 			this->list_stack.push_back(&roots);
 			this->iter_stack.push_back(i);
@@ -283,7 +283,7 @@ private:
 		 * @brief Tree node type.
 		 */
 		typedef typename std::conditional< //
-			Is_const,
+			is_const,
 			const typename traversal::value_type,
 			typename traversal::value_type>::type value_type;
 
@@ -292,7 +292,7 @@ private:
 		typedef value_type& reference;
 		typedef const value_type& const_reference;
 		typedef std::bidirectional_iterator_tag iterator_category;
-		typedef typename C::difference_type difference_type;
+		typedef typename collection_type::difference_type difference_type;
 
 		/**
 		 * @brief Move iterator to the next tree node.
@@ -433,7 +433,7 @@ private:
 		 * @brief Dereference the tree node.
 		 * @return Reference to the tree node this iterator points to.
 		 */
-		typename std::conditional<Is_const, const typename C::value_type, typename C::value_type>::type& operator*(
+		typename std::conditional<is_const, const typename collection_type::value_type, typename collection_type::value_type>::type& operator*(
 		) noexcept
 		{
 			return *this->iter_stack.back();
@@ -444,7 +444,7 @@ private:
 		 * Constant version of operator*().
 		 * @return Reference to the tree node this iterator points to.
 		 */
-		const typename C::value_type& operator*() const noexcept
+		const typename collection_type::value_type& operator*() const noexcept
 		{
 			return *this->iter_stack.back();
 		}
@@ -453,7 +453,7 @@ private:
 		 * @brief Dereference the tree node.
 		 * @return Pointer to the tree node this iterator points to.
 		 */
-		typename std::conditional<Is_const, const typename C::value_type, typename C::value_type>::type* operator->(
+		typename std::conditional<is_const, const typename collection_type::value_type, typename collection_type::value_type>::type* operator->(
 		) noexcept
 		{
 			return this->iter_stack.back().operator->();
@@ -464,7 +464,7 @@ private:
 		 * Constant version of operator->().
 		 * @return Pointer to the tree node this iterator points to.
 		 */
-		const typename C::value_type* operator->() const noexcept
+		const typename collection_type::value_type* operator->() const noexcept
 		{
 			return this->iter_stack.back().operator->();
 		}
@@ -504,9 +504,9 @@ private:
 		 * @throw std::out_of_range - in case the requested tree level is higher than the iterator depth.
 		 */
 		typename std::conditional< //
-			Is_const,
-			const typename C::value_type,
-			typename C::value_type>::type&
+			is_const,
+			const typename collection_type::value_type,
+			typename collection_type::value_type>::type&
 		at_level(size_t d) noexcept
 		{
 			return *this->iter_stack.at(d);
@@ -518,7 +518,7 @@ private:
 		 * @return Reference to the tree node this iterator points to on the requested tree level.
 		 * @throw std::out_of_range - in case the requested tree level is higher than the iterator depth.
 		 */
-		const typename C::value_type& at_level(size_t d) const noexcept
+		const typename collection_type::value_type& at_level(size_t d) const noexcept
 		{
 			return *this->iter_stack.at(d);
 		}
@@ -543,7 +543,7 @@ public:
 	 * @brief Iterator type.
 	 * The iterator performs the traversal of the tree.
 	 */
-	typedef iterator_internal<std::is_const<C>::value> iterator;
+	typedef iterator_internal<std::is_const<collection_type>::value> iterator;
 
 	/**
 	 * @brief Constant iterator type.
@@ -564,10 +564,10 @@ public:
 	typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
 
 private:
-	template <bool Is_const>
-	iterator_internal<Is_const> make_iterator_internal(utki::span<const size_type> index) const
+	template <bool is_const>
+	iterator_internal<is_const> make_iterator_internal(utki::span<const size_type> index) const
 	{
-		iterator_internal<Is_const> ret;
+		iterator_internal<is_const> ret;
 
 		auto* list = &this->roots;
 		auto iter = this->roots.begin();
@@ -593,7 +593,7 @@ public:
 	 */
 	iterator make_iterator(utki::span<const size_type> index)
 	{
-		return this->make_iterator_internal<std::is_const<C>::value>(index);
+		return this->make_iterator_internal<std::is_const<collection_type>::value>(index);
 	}
 
 	/**
@@ -701,7 +701,7 @@ public:
 	 * @param index - index of the tree element.
 	 * @return reference to the tree elemenet referred by index.
 	 */
-	typename C::value_type& operator[](utki::span<const size_type> index)
+	typename collection_type::value_type& operator[](utki::span<const size_type> index)
 	{
 		ASSERT(this->is_valid(index))
 		// TODO: rewrite without creating iterator, for more performance
@@ -713,7 +713,7 @@ public:
 	 * @param index - index of the tree element.
 	 * @return reference to the tree elemenet referred by index.
 	 */
-	const typename C::value_type& operator[](utki::span<const size_type> index) const
+	const typename collection_type::value_type& operator[](utki::span<const size_type> index) const
 	{
 		ASSERT(this->is_valid(index))
 		// TODO: rewrite without creating iterator, for more performance
@@ -725,7 +725,7 @@ public:
 	 * @param index - index of the tree element.
 	 * @return reference to the tree elemenet referred by index.
 	 */
-	typename C::value_type& operator[](const std::vector<size_t>& index)
+	typename collection_type::value_type& operator[](const std::vector<size_t>& index)
 	{
 		return this->operator[](utki::make_span(index));
 	}
@@ -735,7 +735,7 @@ public:
 	 * @param index - index of the tree element.
 	 * @return reference to the tree elemenet referred by index.
 	 */
-	const typename C::value_type& operator[](const std::vector<size_t>& index) const
+	const typename collection_type::value_type& operator[](const std::vector<size_t>& index) const
 	{
 		return this->operator[](utki::make_span(index));
 	}
@@ -745,7 +745,7 @@ public:
 	 * @param index - index of the tree element.
 	 * @return reference to the tree elemenet referred by index.
 	 */
-	typename C::value_type& operator[](std::initializer_list<size_t> index)
+	typename collection_type::value_type& operator[](std::initializer_list<size_t> index)
 	{
 		return this->operator[](std::vector<size_t>(index));
 	}
@@ -755,7 +755,7 @@ public:
 	 * @param index - index of the tree element.
 	 * @return reference to the tree elemenet referred by index.
 	 */
-	const typename C::value_type& operator[](std::initializer_list<size_t> index) const
+	const typename collection_type::value_type& operator[](std::initializer_list<size_t> index) const
 	{
 		return this->operator[](std::vector<size_t>(index));
 	}
@@ -913,10 +913,10 @@ public:
  * @param trees - list of tree nodes to make traversal object around.
  * @return Traversal object.
  */
-template <class C>
-traversal<C> make_traversal(C& trees)
+template <class container_type>
+traversal<container_type> make_traversal(container_type& trees)
 {
-	return traversal<C>(trees);
+	return traversal<container_type>(trees);
 }
 
 } // namespace utki

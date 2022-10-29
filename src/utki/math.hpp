@@ -37,7 +37,7 @@ namespace utki {
  * Template function which returns the sign of a number.
  * General implementation of this template is as easy as:
  * @code
- * template <typename T> inline T Sign(T n){
+ * template <typename number_type> inline number_type sign(number_type n){
  *     return n > 0 ? (1) : (-1);
  * }
  * @endcode
@@ -45,30 +45,30 @@ namespace utki {
  * @return -1 if the argument is negative.
  * @return 1 if the number is positive.
  */
-template <typename T>
-constexpr T sign(T n) noexcept
+template <typename number_type>
+constexpr number_type sign(number_type n) noexcept
 {
-	return n < 0 ? T(-1) : T(1);
+	return n < 0 ? number_type(-1) : number_type(1);
 }
 
 /**
  * @brief Get number Pi.
  * @return number Pi.
  */
-template <typename T>
-constexpr T pi() noexcept
+template <typename number_type>
+constexpr number_type pi() noexcept
 {
-	return T(3.14159265358979323846264338327950288);
+	return number_type(3.14159265358979323846264338327950288);
 }
 
 /**
  * @brief Get 2 * Pi.
  * @return 2 * Pi.
  */
-template <typename T>
-constexpr T two_pi() noexcept
+template <typename number_type>
+constexpr number_type two_pi() noexcept
 {
-	return T(2) * pi<T>();
+	return number_type(2) * pi<number_type>();
 }
 
 /**
@@ -76,10 +76,10 @@ constexpr T two_pi() noexcept
  * @param deg - angle in degrees.
  * @return Angle in radians.
  */
-template <typename T>
-constexpr T deg_to_rad(T deg) noexcept
+template <typename number_type>
+constexpr number_type deg_to_rad(number_type deg) noexcept
 {
-	return pi<T>() * deg / T(180);
+	return pi<number_type>() * deg / number_type(180);
 }
 
 /**
@@ -87,20 +87,20 @@ constexpr T deg_to_rad(T deg) noexcept
  * @param rad - angle in radians.
  * @return Angle in degrees.
  */
-template <typename T>
-constexpr T rad_to_deg(T rad) noexcept
+template <typename number_type>
+constexpr number_type rad_to_deg(number_type rad) noexcept
 {
-	return T(180) * rad / pi<T>();
+	return number_type(180) * rad / pi<number_type>();
 }
 
 /**
  * @brief Get natural logarithm of 2, i.e. ln(2).
  * @return natural logarithm of 2.
  */
-template <typename T>
-constexpr T log_2() noexcept
+template <typename number_type>
+constexpr number_type log_2() noexcept
 {
-	return T(0.693147181);
+	return number_type(0.693147181);
 }
 
 /**
@@ -108,8 +108,8 @@ constexpr T log_2() noexcept
  * @param x - value.
  * @return x * x.
  */
-template <typename T>
-constexpr T pow2(T x) noexcept
+template <typename number_type>
+constexpr number_type pow2(number_type x) noexcept
 {
 	return x * x;
 }
@@ -117,8 +117,8 @@ constexpr T pow2(T x) noexcept
 /**
  * @brief Calculate x^3.
  */
-template <typename T>
-constexpr T pow3(T x) noexcept
+template <typename number_type>
+constexpr number_type pow3(number_type x) noexcept
 {
 	return pow2(x) * x;
 }
@@ -126,8 +126,8 @@ constexpr T pow3(T x) noexcept
 /**
  * @brief Calculate x^4.
  */
-template <typename T>
-constexpr T pow4(T x) noexcept
+template <typename number_type>
+constexpr number_type pow4(number_type x) noexcept
 {
 	return pow2(pow2(x));
 }
@@ -135,8 +135,8 @@ constexpr T pow4(T x) noexcept
 /**
  * @brief Calculate x^5.
  */
-template <typename T>
-constexpr T pow5(T x) noexcept
+template <typename number_type>
+constexpr number_type pow5(number_type x) noexcept
 {
 	return pow4(x) * x;
 }
@@ -144,8 +144,8 @@ constexpr T pow5(T x) noexcept
 /**
  * @brief Calculate x^6.
  */
-template <typename T>
-constexpr T pow6(T x) noexcept
+template <typename number_type>
+constexpr number_type pow6(number_type x) noexcept
 {
 	return pow2(pow3(x));
 }

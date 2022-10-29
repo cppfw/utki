@@ -101,8 +101,8 @@ inline std::string make_string(utki::span<const uint8_t> buf)
  * @param buf - char buffer to make the string from.
  * @return string representing the contents of the char buffer.
  */
-template <size_t S>
-inline std::string make_string(const std::array<char, S>& buf)
+template <size_t array_size>
+inline std::string make_string(const std::array<char, array_size>& buf)
 {
 	return utki::make_string(utki::make_span(buf));
 }
@@ -112,8 +112,8 @@ inline std::string make_string(const std::array<char, S>& buf)
  * @param buf - uint8_t buffer to make the string from.
  * @return string representing the contents of the uint8_t buffer.
  */
-template <size_t S>
-inline std::string make_string(const std::array<uint8_t, S>& buf)
+template <size_t array_size>
+inline std::string make_string(const std::array<uint8_t, array_size>& buf)
 {
 	return utki::make_string(utki::make_span(buf));
 }
@@ -144,10 +144,10 @@ inline std::string make_string(const std::vector<uint8_t>& buf)
  * @param delimiter - delimiter character to use as a splitter.
  * @return vector of splitted strings.
  */
-template <typename T>
-std::vector<std::basic_string<T>> split(std::basic_string_view<T> str, T delimiter)
+template <typename element_type>
+std::vector<std::basic_string<element_type>> split(std::basic_string_view<element_type> str, element_type delimiter)
 {
-	std::vector<std::basic_string<T>> ret;
+	std::vector<std::basic_string<element_type>> ret;
 	size_t pos = 0;
 
 	for (;;) {
@@ -187,10 +187,10 @@ std::vector<std::basic_string<char_type>> split( //
  * @param delimiter - delimiter character to use as a splitter.
  * @return vector of splitted strings.
  */
-template <typename T>
-std::vector<std::basic_string<T>> split(const T* str, T delimiter)
+template <typename element_type>
+std::vector<std::basic_string<element_type>> split(const element_type* str, element_type delimiter)
 {
-	return split(std::basic_string_view<T>(str), delimiter);
+	return split(std::basic_string_view<element_type>(str), delimiter);
 }
 
 /**

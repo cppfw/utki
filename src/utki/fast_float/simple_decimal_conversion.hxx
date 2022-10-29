@@ -248,6 +248,7 @@ inline void decimal_right_shift(decimal& h, uint32_t shift)
 
 } // namespace detail
 
+// NOLINTNEXTLINE(readability-identifier-naming)
 template <typename binary>
 adjusted_mantissa compute_float(decimal& d)
 {
@@ -362,6 +363,7 @@ adjusted_mantissa compute_float(decimal& d)
 	return answer;
 }
 
+// NOLINTNEXTLINE(readability-identifier-naming)
 template <typename binary>
 adjusted_mantissa parse_long_mantissa(const char* first, const char* last)
 {

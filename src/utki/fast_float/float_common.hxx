@@ -120,9 +120,9 @@ struct value128 {
 	uint64_t low{0};
 	uint64_t high{0};
 
-	value128(uint64_t _low, uint64_t _high) :
-		low(_low),
-		high(_high)
+	value128(uint64_t low, uint64_t high) :
+		low(low),
+		high(high)
 	{}
 
 	value128() = default;
@@ -252,6 +252,7 @@ constexpr static float powers_of_ten_float[] = { // NOLINT(modernize-avoid-c-arr
 	1e9,
 	1e10};
 
+// NOLINTNEXTLINE(readability-identifier-naming)
 template <typename T>
 struct binary_format {
 	static inline constexpr int mantissa_explicit_bits();
@@ -423,6 +424,7 @@ inline constexpr int binary_format<float>::smallest_power_of_ten()
 } // namespace fast_float
 
 // for convenience:
+// NOLINTNEXTLINE(readability-identifier-naming)
 template <class OStream>
 inline OStream& operator<<(OStream& out, const fast_float::decimal& d)
 {
