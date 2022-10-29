@@ -56,15 +56,15 @@ template <class element_type>
 class span final
 {
 public:
-	typedef element_type value_type;
-	typedef value_type* pointer;
-	typedef const value_type* const_pointer;
-	typedef value_type& reference;
-	typedef const value_type& const_reference;
-	typedef value_type* iterator;
-	typedef std::size_t size_type;
-	typedef std::ptrdiff_t difference_type;
-	typedef std::reverse_iterator<iterator> reverse_iterator;
+	using value_type = element_type;
+	using pointer = value_type*;
+	using const_pointer = const value_type*;
+	using reference = value_type&;
+	using const_reference = const value_type&;
+	using iterator = value_type*;
+	using size_type = std::size_t;
+	using difference_type = std::ptrdiff_t;
+	using reverse_iterator = std::reverse_iterator<iterator>;
 
 private:
 	pointer buf = nullptr;

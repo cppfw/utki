@@ -61,7 +61,7 @@ class linq_collection_aggregator
 		typename std::remove_reference<collection_type>::type,
 		collection_type>::type collection;
 
-	typedef typename std::remove_reference<decltype(collection)>::type::value_type value_type;
+	using value_type = typename std::remove_reference<decltype(collection)>::type::value_type;
 
 	struct noncopyable_value_type : public value_type {
 		noncopyable_value_type(const noncopyable_value_type&) = delete;

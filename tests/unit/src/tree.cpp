@@ -1145,7 +1145,7 @@ tst::set set("tree", [](tst::suite& suite) {
 	});
 
 	suite.add("traversal_erase_very_last", []() {
-		typedef utki::tree<int> tree;
+		using tree = utki::tree<int>;
 		tree::container_type roots{
 			tree(1, {34, 45}),
 			tree( //
@@ -1168,7 +1168,7 @@ tst::set set("tree", [](tst::suite& suite) {
 	});
 
 	struct traversal_iterator_depth_fixture {
-		typedef utki::tree<int> tree;
+		using tree = utki::tree<int>;
 		tree::container_type roots{
 			tree(1, {34, 45}),
 			tree( //

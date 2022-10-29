@@ -83,7 +83,10 @@ std::weak_ptr<object_type> make_weak(const utki::shared_ref<object_type>& ref)
 template <class object_type>
 utki::shared_ref<object_type> make_shared_from(object_type& o)
 {
-	static_assert(std::is_base_of<shared, object_type>::value, "make_shared_from(): argument must be derived from utki::shared");
+	static_assert(
+		std::is_base_of<shared, object_type>::value,
+		"make_shared_from(): argument must be derived from utki::shared"
+	);
 	return utki::shared_ref<object_type>(std::dynamic_pointer_cast<object_type>(o.shared_from_this()));
 }
 
@@ -98,7 +101,10 @@ utki::shared_ref<object_type> make_shared_from(object_type& o)
 template <class object_type>
 std::weak_ptr<object_type> make_weak_from(object_type& o)
 {
-	static_assert(std::is_base_of<shared, object_type>::value, "make_shared_from(): argument must be derived from utki::shared");
+	static_assert(
+		std::is_base_of<shared, object_type>::value,
+		"make_shared_from(): argument must be derived from utki::shared"
+	);
 	return utki::make_weak(utki::make_shared_from(o));
 }
 

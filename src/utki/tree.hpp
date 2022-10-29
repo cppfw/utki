@@ -52,13 +52,13 @@ public:
 	/**
 	 * @brief Type of the tree node value.
 	 */
-	typedef element_type value_type;
+	using value_type = element_type;
 
 	/**
 	 * @brief Type of the child tree nodes container.
 	 * The container type the tree is based on.
 	 */
-	typedef container_templ<tree, allocator_templ<tree>> container_type;
+	using container_type = container_templ<tree, allocator_templ<tree>>;
 
 	/**
 	 * @brief Value of the tree node.
@@ -222,49 +222,57 @@ public:
 	/**
 	 * @brief Tree node type.
 	 */
-	typedef typename std::conditional< //
+	using value_type = typename std::conditional< //
 		std::is_const<collection_type>::value,
 		const typename collection_type::value_type,
-		typename collection_type::value_type>::type value_type;
+		typename collection_type::value_type>::type;
 
 	/**
 	 * @brief Pointer to tree node type.
 	 */
-	typedef value_type* pointer;
+	using pointer = value_type*;
 
 	/**
 	 * @brief Constant pointer to tree node type.
 	 */
-	typedef const value_type* const_pointer;
+	using const_pointer = const value_type*;
 
 	/**
 	 * @brief Reference to tree node type.
 	 */
-	typedef value_type& reference;
+	using reference = value_type&;
 
 	/**
 	 * @brief Constant reference to tree node type.
 	 */
-	typedef const value_type& const_reference;
+	using const_reference = const value_type&;
 
 	/**
 	 * @brief List size type.
 	 */
-	typedef typename collection_type::size_type size_type;
+	using size_type = typename collection_type::size_type;
 
 	/**
 	 * @brief List index difference type.
 	 */
-	typedef typename collection_type::difference_type difference_type;
+	using difference_type = typename collection_type::difference_type;
 
 private:
 	template <bool is_const>
 	class iterator_internal
 	{
-		typedef typename std::conditional<is_const, const collection_type, collection_type>::type list_type;
+		using list_type = typename std::conditional< //
+			is_const,
+			const collection_type,
+			collection_type>::type;
+
 		std::vector<list_type*> list_stack;
-		typedef
-			typename std::conditional<is_const, typename collection_type::const_iterator, typename collection_type::iterator>::type iterator_type;
+
+		using iterator_type = typename std::conditional< //
+			is_const,
+			typename collection_type::const_iterator,
+			typename collection_type::iterator>::type;
+
 		std::vector<iterator_type> iter_stack;
 
 		template <class>
@@ -282,17 +290,17 @@ private:
 		/**
 		 * @brief Tree node type.
 		 */
-		typedef typename std::conditional< //
+		using value_type = typename std::conditional< //
 			is_const,
 			const typename traversal::value_type,
-			typename traversal::value_type>::type value_type;
+			typename traversal::value_type>::type;
 
-		typedef value_type* pointer;
-		typedef const value_type* const_pointer;
-		typedef value_type& reference;
-		typedef const value_type& const_reference;
-		typedef std::bidirectional_iterator_tag iterator_category;
-		typedef typename collection_type::difference_type difference_type;
+		using pointer = value_type*;
+		using const_pointer = const value_type*;
+		using reference = value_type&;
+		using const_reference = const value_type&;
+		using iterator_category = std::bidirectional_iterator_tag;
+		using difference_type = typename collection_type::difference_type;
 
 		/**
 		 * @brief Move iterator to the next tree node.
@@ -433,8 +441,11 @@ private:
 		 * @brief Dereference the tree node.
 		 * @return Reference to the tree node this iterator points to.
 		 */
-		typename std::conditional<is_const, const typename collection_type::value_type, typename collection_type::value_type>::type& operator*(
-		) noexcept
+		typename std::conditional<
+			is_const,
+			const typename collection_type::value_type,
+			typename collection_type::value_type>::type&
+		operator*() noexcept
 		{
 			return *this->iter_stack.back();
 		}
@@ -453,8 +464,11 @@ private:
 		 * @brief Dereference the tree node.
 		 * @return Pointer to the tree node this iterator points to.
 		 */
-		typename std::conditional<is_const, const typename collection_type::value_type, typename collection_type::value_type>::type* operator->(
-		) noexcept
+		typename std::conditional<
+			is_const,
+			const typename collection_type::value_type,
+			typename collection_type::value_type>::type*
+		operator->() noexcept
 		{
 			return this->iter_stack.back().operator->();
 		}
@@ -543,25 +557,25 @@ public:
 	 * @brief Iterator type.
 	 * The iterator performs the traversal of the tree.
 	 */
-	typedef iterator_internal<std::is_const<collection_type>::value> iterator;
+	using iterator = iterator_internal<std::is_const<collection_type>::value>;
 
 	/**
 	 * @brief Constant iterator type.
 	 * The iterator performs the traversal of the tree.
 	 */
-	typedef iterator_internal<true> const_iterator;
+	using const_iterator = iterator_internal<true>;
 
 	/**
 	 * @brief Reverse iterator type.
 	 * The iterator performs the traversal of the tree.
 	 */
-	typedef std::reverse_iterator<iterator> reverse_iterator;
+	using reverse_iterator = std::reverse_iterator<iterator>;
 
 	/**
 	 * @brief Constant reverse iterator type.
 	 * The iterator performs the traversal of the tree.
 	 */
-	typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
+	using const_reverse_iterator = std::reverse_iterator<const_iterator>;
 
 private:
 	template <bool is_const>

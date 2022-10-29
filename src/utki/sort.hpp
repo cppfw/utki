@@ -38,7 +38,10 @@ namespace utki {
 namespace sort_internal {
 
 template <typename random_iter_type>
-constexpr random_iter_type next(random_iter_type it, typename std::iterator_traits<random_iter_type>::difference_type n = 1)
+constexpr random_iter_type next(
+	random_iter_type it,
+	typename std::iterator_traits<random_iter_type>::difference_type n = 1
+)
 {
 	return it + n;
 }

@@ -39,7 +39,7 @@ namespace utki {
  * @tparam object_type - your singletone class type.
  * @tparam instance_owner_type - class which owns the static 'instance' variable.
  *                               In most cases instance_owner_type is the same as object_type.
- * 
+ *
  * Usage as follows:
  * @code
  *	class my_singleton : public utki::intrusive_singleton<my_singleton, my_singleton>{
@@ -75,10 +75,10 @@ protected: // use only as a base class
 		instance_owner_type::instance.reset(static_cast<object_type*>(this));
 	}
 
-	typedef intrusive_singleton<object_type> singleton_type;
+	using singleton_type = intrusive_singleton<object_type>;
 
 	// use unique_ptr because it is automatically initialized to nullptr. Automatic object destruction is not used.
-	typedef std::unique_ptr<object_type> instance_type;
+	using instance_type = std::unique_ptr<object_type>;
 
 public:
 	intrusive_singleton(const intrusive_singleton&) = delete;
@@ -156,7 +156,8 @@ private:
 };
 
 template <class object_type>
-typename utki::intrusive_singleton<object_type, singleton<object_type>>::instance_type utki::singleton<object_type>::instance;
+typename utki::intrusive_singleton<object_type, singleton<object_type>>::instance_type
+	utki::singleton<object_type>::instance;
 
 #else
 

@@ -74,7 +74,7 @@ class flags
 	static_assert(std::is_enum<enumeration_type>::value, "template parameter must be an enumaration type");
 
 public:
-	typedef enumeration_type enum_type;
+	using enum_type = enumeration_type;
 
 private:
 	static_assert(int(enum_type::enum_size) >= 0, "enumeration must define enum_size item");
