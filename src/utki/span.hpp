@@ -102,8 +102,8 @@ public:
 		typename TT,
 		typename std::enable_if_t< //
 			std::is_convertible_v< // note pointers to array, this is because span points to an array of objects
-				TT (*)[],
-				T (*)[]>,
+				TT (*)[], // NOLINT(modernize-avoid-c-arrays)
+				T (*)[]>, // NOLINT(modernize-avoid-c-arrays)
 			bool> = true>
 	constexpr span(const span<TT>& sp) noexcept :
 		buf(sp.data()),
@@ -128,8 +128,8 @@ public:
 		typename TT,
 		typename std::enable_if_t< //
 			std::is_convertible_v< //
-				TT (*)[],
-				const T (*)[]>,
+				TT (*)[], // NOLINT(modernize-avoid-c-arrays)
+				const T (*)[]>, // NOLINT(modernize-avoid-c-arrays)
 			bool> = true>
 	span(const std::vector<TT>& v) :
 		span(v.data(), v.size())
@@ -143,8 +143,8 @@ public:
 		typename TT,
 		typename std::enable_if_t< //
 			std::is_convertible_v< //
-				TT (*)[],
-				const T (*)[]>,
+				TT (*)[], // NOLINT(modernize-avoid-c-arrays)
+				const T (*)[]>, // NOLINT(modernize-avoid-c-arrays)
 			bool> = true>
 	span(const std::basic_string<TT>& v) :
 		span(v.data(), v.size())
@@ -154,8 +154,8 @@ public:
 		typename TT,
 		typename std::enable_if_t< //
 			std::is_convertible_v< //
-				TT (*)[],
-				const T (*)[]>,
+				TT (*)[], // NOLINT(modernize-avoid-c-arrays)
+				const T (*)[]>, // NOLINT(modernize-avoid-c-arrays)
 			bool> = true>
 	span(std::basic_string_view<TT> v) :
 		span(v.data(), v.size())
@@ -165,8 +165,8 @@ public:
 		typename TT,
 		typename std::enable_if_t< //
 			std::is_convertible_v< //
-				TT (*)[],
-				const char (*)[]>,
+				TT (*)[], // NOLINT(modernize-avoid-c-arrays)
+				const char (*)[]>, // NOLINT(modernize-avoid-c-arrays)
 			bool> = true>
 	span(TT* v) :
 		span(v, strlen(v))

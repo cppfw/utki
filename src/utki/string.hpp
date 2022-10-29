@@ -63,7 +63,7 @@ std::string make_string_va_list(const char* format, va_list args);
  */
 inline std::string make_string(utki::span<const char> buf)
 {
-	return std::string(buf.data(), buf.size());
+	return std::string{buf.data(), buf.size()};
 }
 
 /**
@@ -73,7 +73,7 @@ inline std::string make_string(utki::span<const char> buf)
  */
 inline std::string_view make_string_view(utki::span<const char> buf)
 {
-	return std::string_view(buf.data(), buf.size());
+	return std::string_view{buf.data(), buf.size()};
 }
 
 /**
@@ -83,7 +83,7 @@ inline std::string_view make_string_view(utki::span<const char> buf)
  */
 inline std::string_view make_string_view(utki::span<const uint8_t> buf)
 {
-	return std::string_view(reinterpret_cast<const char*>(buf.data()), buf.size());
+	return std::string_view{reinterpret_cast<const char*>(buf.data()), buf.size()};
 }
 
 /**

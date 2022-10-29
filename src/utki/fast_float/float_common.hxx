@@ -225,7 +225,7 @@ struct decimal {
 	int32_t decimal_point{0};
 	bool negative{false};
 	bool truncated{false};
-	uint8_t digits[max_digits];
+	uint8_t digits[max_digits]; // NOLINT(modernize-avoid-c-arrays)
 	decimal() = default;
 	// Copies are not allowed since this is a fat object.
 	decimal(const decimal&) = delete;
@@ -236,10 +236,21 @@ struct decimal {
 	decimal& operator=(decimal&& other) = default;
 };
 
-constexpr static double powers_of_ten_double[] = {1e0,  1e1,  1e2,  1e3,  1e4,  1e5,  1e6,  1e7,
-												  1e8,  1e9,  1e10, 1e11, 1e12, 1e13, 1e14, 1e15,
-												  1e16, 1e17, 1e18, 1e19, 1e20, 1e21, 1e22};
-constexpr static float powers_of_ten_float[] = {1e0, 1e1, 1e2, 1e3, 1e4, 1e5, 1e6, 1e7, 1e8, 1e9, 1e10};
+constexpr static double powers_of_ten_double[] = { // NOLINT(modernize-avoid-c-arrays)
+	1e0,  1e1,  1e2,  1e3,  1e4,  1e5,  1e6,  1e7,  1e8,  1e9,  1e10, 1e11,
+	1e12, 1e13, 1e14, 1e15, 1e16, 1e17, 1e18, 1e19, 1e20, 1e21, 1e22};
+constexpr static float powers_of_ten_float[] = { // NOLINT(modernize-avoid-c-arrays)
+	1e0,
+	1e1,
+	1e2,
+	1e3,
+	1e4,
+	1e5,
+	1e6,
+	1e7,
+	1e8,
+	1e9,
+	1e10};
 
 template <typename T>
 struct binary_format {

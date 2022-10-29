@@ -16,7 +16,7 @@ public:
 
 	std::shared_ptr<test_class> get_ptr()
 	{
-		return utki::make_shared_from(*this);
+		return utki::make_shared_from(*this).to_shared_ptr();
 	}
 };
 } // namespace

@@ -8,7 +8,7 @@ namespace {
 tst::set set("tree", [](tst::suite& suite) {
 	suite.add("tree_node_default_constructor", []() {
 		utki::tree<int> t;
-		t.children.push_back(35);
+		t.children.emplace_back(35);
 		tst::check_eq(t.children.size(), size_t(1), SL);
 	});
 

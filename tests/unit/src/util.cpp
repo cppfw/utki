@@ -107,16 +107,16 @@ tst::set set("util", [](tst::suite& suite) {
 		for (auto& v : variants) {
 			switch (v.index()) {
 				case utki::get_index<int, decltype(variants)::value_type>::value:
-					res.push_back("int");
+					res.emplace_back("int");
 					break;
 				case utki::get_index<std::pair<bool, int>, decltype(variants)::value_type>::value:
-					res.push_back("pair");
+					res.emplace_back("pair");
 					break;
 				case utki::get_index<std::string, decltype(variants)::value_type>::value:
-					res.push_back("string");
+					res.emplace_back("string");
 					break;
 				case utki::get_index<const char*, decltype(variants)::value_type>::value:
-					res.push_back("const char*");
+					res.emplace_back("const char*");
 					break;
 				default:
 					break;
