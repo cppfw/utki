@@ -117,18 +117,15 @@ constexpr int32_t decimal_point_range = 2047;
 } // namespace
 
 struct value128 {
-	uint64_t low;
-	uint64_t high;
+	uint64_t low{0};
+	uint64_t high{0};
 
 	value128(uint64_t _low, uint64_t _high) :
 		low(_low),
 		high(_high)
 	{}
 
-	value128() :
-		low(0),
-		high(0)
-	{}
+	value128() = default;
 };
 
 /* result might be undefined when input_num is zero */

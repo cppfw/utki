@@ -143,7 +143,7 @@ class singleton : public intrusive_singleton<T, singleton<T>>
 	friend class intrusive_singleton<T, singleton<T>>;
 
 protected:
-	singleton() {}
+	singleton() = default;
 
 public:
 	singleton(const singleton&) = delete;
