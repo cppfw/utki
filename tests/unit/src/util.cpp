@@ -94,7 +94,7 @@ tst::set set("util", [](tst::suite& suite) {
 
 #if CFG_COMPILER != CFG_COMPILER_MSVC || CFG_COMPILER_MSVC_TOOLS_V >= 142
 	suite.add("variant_get_index", []() {
-		typedef std::variant<int, const char*, std::string, std::pair<bool, int>> variant_type;
+		using variant_type = std::variant<int, const char*, std::string, std::pair<bool, int>>;
 
 		std::array<variant_type, std::variant_size<variant_type>::value> variants = {
 			{std::string("hello world!"), int(123), "const char*", std::make_pair(true, 45)}

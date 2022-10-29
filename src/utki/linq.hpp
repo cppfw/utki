@@ -81,7 +81,7 @@ public:
 	template <typename func_type>
 	auto select(func_type func)
 	{
-		typedef typename std::add_rvalue_reference<value_type>::type func_arg_type;
+		using func_arg_type = typename std::add_rvalue_reference<value_type>::type;
 
 		static constexpr bool func_one_arg = std::is_invocable_v<func_type, func_arg_type>;
 
@@ -90,10 +90,10 @@ public:
 			"passed in function must have one argument or two arguments with the second argument of type size_t"
 		);
 
-		typedef typename std::conditional<
+		using func_return_type = typename std::conditional<
 			func_one_arg,
 			typename type_or_void<std::invoke_result<func_type, func_arg_type>>::type,
-			typename type_or_void<std::invoke_result<func_type, func_arg_type, size_t>>::type>::type func_return_type;
+			typename type_or_void<std::invoke_result<func_type, func_arg_type, size_t>>::type>::type;
 
 		std::vector<func_return_type> ret;
 		ret.reserve(this->collection.size());
@@ -128,9 +128,9 @@ public:
 			"functor must return non-void"
 		);
 
-		typedef typename std::add_lvalue_reference<value_type>::type func_arg_type;
-		typedef typename std::remove_reference< //
-			typename std::invoke_result<func_type, func_arg_type>::type>::type func_return_type;
+		using func_arg_type = typename std::add_lvalue_reference<value_type>::type;
+		using func_return_type = typename std::remove_reference< //
+			typename std::invoke_result<func_type, func_arg_type>::type>::type;
 
 		std::map<func_return_type, std::vector<value_type>> ret;
 
@@ -178,7 +178,7 @@ public:
 			"functor must have const reference argument"
 		);
 
-		typedef std::invoke_result_t<func_type, const value_type&> invoke_result;
+		using invoke_result = std::invoke_result_t<func_type, const value_type&>;
 
 		static_assert(
 			std::is_reference<invoke_result>::value

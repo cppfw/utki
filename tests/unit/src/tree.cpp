@@ -194,7 +194,7 @@ tst::set set("tree", [](tst::suite& suite) {
 	});
 
 	suite.add("constructor_from_container_lvalue_lvalue", []() {
-		typedef utki::tree<int> tree_int;
+		using tree_int = utki::tree<int>;
 		tree_int::container_type children = { //
 			tree_int(10),
 			tree_int(20)};
@@ -229,7 +229,7 @@ tst::set set("tree", [](tst::suite& suite) {
 	});
 
 	suite.add("constructor_from_container_lvalue_rvalue", []() {
-		typedef utki::tree<int> tree_int;
+		using tree_int = utki::tree<int>;
 		tree_int::container_type children = { //
 			tree_int(10),
 			tree_int(20)};
@@ -264,7 +264,7 @@ tst::set set("tree", [](tst::suite& suite) {
 	});
 
 	suite.add("constructor_from_container_rvalue_rvalue", []() {
-		typedef utki::tree<std::string> tree_str;
+		using tree_str = utki::tree<std::string>;
 		tree_str::container_type children = { //
 			tree_str("10"),
 			tree_str("20")};
@@ -305,7 +305,7 @@ tst::set set("tree", [](tst::suite& suite) {
 	});
 
 	suite.add("traversal_non_const_container", []() {
-		typedef utki::tree<int> tree;
+		using tree = utki::tree<int>;
 		tree::container_type roots{
 			tree(1, {34, 45}),
 			tree( //
@@ -367,7 +367,7 @@ tst::set set("tree", [](tst::suite& suite) {
 	});
 
 	suite.add("traversal_const_container", []() {
-		typedef utki::tree<int> tree;
+		using tree = utki::tree<int>;
 		const tree::container_type roots{
 			tree(1, {34, 45}),
 			tree( //
@@ -403,7 +403,7 @@ tst::set set("tree", [](tst::suite& suite) {
 	});
 
 	suite.add("traversal_non_const_container_const_iterator", []() {
-		typedef utki::tree<int> tree;
+		using tree = utki::tree<int>;
 		tree::container_type roots{
 			tree(1, {34, 45}),
 			tree( //
@@ -464,7 +464,7 @@ tst::set set("tree", [](tst::suite& suite) {
 	});
 
 	suite.add("traversal_const_container_const_iterator", []() {
-		typedef utki::tree<int> tree;
+		using tree = utki::tree<int>;
 		const tree::container_type roots{
 			tree(1, {34, 45}),
 			tree( //
@@ -525,7 +525,7 @@ tst::set set("tree", [](tst::suite& suite) {
 	});
 
 	suite.add("traversal_non_const_container_reverse_iterator", []() {
-		typedef utki::tree<int> tree;
+		using tree = utki::tree<int>;
 		tree::container_type roots{
 			tree(1, {34, 45}),
 			tree( //
@@ -586,7 +586,7 @@ tst::set set("tree", [](tst::suite& suite) {
 	});
 
 	suite.add("traversal_const_container_reverse_iterator", []() {
-		typedef utki::tree<int> tree;
+		using tree = utki::tree<int>;
 		const tree::container_type roots{
 			tree(1, {34, 45}),
 			tree( //
@@ -647,7 +647,7 @@ tst::set set("tree", [](tst::suite& suite) {
 	});
 
 	suite.add("traversal_non_const_container_const_reverse_iterator", []() {
-		typedef utki::tree<int> tree;
+		using tree = utki::tree<int>;
 		tree::container_type roots{
 			tree(1, {34, 45}),
 			tree( //
@@ -708,7 +708,7 @@ tst::set set("tree", [](tst::suite& suite) {
 	});
 
 	suite.add("traversal_const_container_const_reverse_iterator", []() {
-		typedef utki::tree<int> tree;
+		using tree = utki::tree<int>;
 		const tree::container_type roots{
 			tree(1, {34, 45}),
 			tree( //
@@ -769,7 +769,7 @@ tst::set set("tree", [](tst::suite& suite) {
 	});
 
 	suite.add("traversal_non_const_container_index", []() {
-		typedef utki::tree<int> tree;
+		using tree = utki::tree<int>;
 		tree::container_type roots{
 			tree(1, {34, 45}),
 			tree( //
@@ -864,7 +864,7 @@ tst::set set("tree", [](tst::suite& suite) {
 	});
 
 	suite.add("traversal_const_container_index", []() {
-		typedef utki::tree<int> tree;
+		using tree = utki::tree<int>;
 		const tree::container_type roots{
 			tree(1, {34, 45}),
 			tree( //
@@ -959,7 +959,7 @@ tst::set set("tree", [](tst::suite& suite) {
 	});
 
 	suite.add("traversal_check_index_is_valid", []() {
-		typedef utki::tree<int> tree;
+		using tree = utki::tree<int>;
 		const tree::container_type roots{
 			tree(1, {34, 45}),
 			tree( //
@@ -989,7 +989,7 @@ tst::set set("tree", [](tst::suite& suite) {
 	});
 
 	suite.add("traversal_operator_square_brackets", []() {
-		typedef utki::tree<int> tree;
+		using tree = utki::tree<int>;
 		const tree::container_type roots{
 			tree(1, {34, 45}),
 			tree( //
@@ -1015,7 +1015,7 @@ tst::set set("tree", [](tst::suite& suite) {
 	});
 
 	suite.add("traversal_iterator_comparison", []() {
-		typedef utki::tree<int> tree;
+		using tree = utki::tree<int>;
 		const tree::container_type roots{
 			tree(1, {34, 45}),
 			tree( //
@@ -1043,7 +1043,7 @@ tst::set set("tree", [](tst::suite& suite) {
 	});
 
 	suite.add("traversal_insertion", []() {
-		typedef utki::tree<int> tree;
+		using tree = utki::tree<int>;
 		tree::container_type roots{
 			tree(1, {34, 45}),
 			tree( //
@@ -1069,7 +1069,7 @@ tst::set set("tree", [](tst::suite& suite) {
 	});
 
 	suite.add("traversal_insert_after", []() {
-		typedef utki::tree<int> tree;
+		using tree = utki::tree<int>;
 		tree::container_type roots{
 			tree(1, {34, 45}),
 			tree( //
@@ -1099,7 +1099,7 @@ tst::set set("tree", [](tst::suite& suite) {
 	});
 
 	suite.add("traversal_erase_non_last", []() {
-		typedef utki::tree<int> tree;
+		using tree = utki::tree<int>;
 		tree::container_type roots{
 			tree(1, {34, 45}),
 			tree( //
@@ -1122,7 +1122,7 @@ tst::set set("tree", [](tst::suite& suite) {
 	});
 
 	suite.add("traversal_erase_last_child", []() {
-		typedef utki::tree<int> tree;
+		using tree = utki::tree<int>;
 		tree::container_type roots{
 			tree(1, {34, 45}),
 			tree( //
@@ -1198,7 +1198,7 @@ tst::set set("tree", [](tst::suite& suite) {
 	);
 
 	suite.add("traversal_iterator_at_level", []() {
-		typedef utki::tree<int> tree;
+		using tree = utki::tree<int>;
 		tree::container_type roots{
 			tree(1, {34, 45}),
 			tree( //
