@@ -1,3 +1,9 @@
+libutki (1.1.179) unstable; urgency=medium
+
+  * fix lint issues
+
+ -- Ivan Gagis <igagis@gmail.com>  Sun, 30 Oct 2022 14:41:41 +0200
+
 libutki (1.1.178) unstable; urgency=medium
 
   * implement dynamic_reference_cast()
