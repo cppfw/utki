@@ -52,19 +52,19 @@ namespace utki {
  * This class is a wrapper of continuous memory span, it encapsulates pointer to memory block and size of that memory
  * block. It does not own the memory. This is a replacement of std::span when C++'20 is not available.
  */
-template <class T>
+template <class element_type>
 class span final
 {
 public:
-	typedef T value_type;
-	typedef value_type* pointer;
-	typedef const value_type* const_pointer;
-	typedef value_type& reference;
-	typedef const value_type& const_reference;
-	typedef value_type* iterator;
-	typedef std::size_t size_type;
-	typedef std::ptrdiff_t difference_type;
-	typedef std::reverse_iterator<iterator> reverse_iterator;
+	using value_type = element_type;
+	using pointer = value_type*;
+	using const_pointer = const value_type*;
+	using reference = value_type&;
+	using const_reference = const value_type&;
+	using iterator = value_type*;
+	using size_type = std::size_t;
+	using difference_type = std::ptrdiff_t;
+	using reverse_iterator = std::reverse_iterator<iterator>;
 
 private:
 	pointer buf = nullptr;
@@ -87,91 +87,88 @@ public:
 		buf_size(s)
 	{}
 
-	span() noexcept {}
+	span() noexcept = default;
 
 	/**
 	 * @brief Constructor for automatic conversion from nullptr.
 	 */
-	span(std::nullptr_t) noexcept :
-		buf(nullptr),
-		buf_size(0)
-	{}
+	span(std::nullptr_t) noexcept {}
 
 	/**
-	 * @brief Constructor for automatic conversion to span<const T> or other convertible type.
+	 * @brief Constructor for automatic conversion to span<const element_type> or other convertible type.
 	 * @param sp - span to convert.
 	 */
 	template < //
-		typename TT,
+		typename other_element_type,
 		typename std::enable_if_t< //
 			std::is_convertible_v< // note pointers to array, this is because span points to an array of objects
-				TT (*)[],
-				T (*)[]>,
+				other_element_type (*)[], // NOLINT(modernize-avoid-c-arrays)
+				element_type (*)[]>, // NOLINT(modernize-avoid-c-arrays)
 			bool> = true>
-	constexpr span(const span<TT>& sp) noexcept :
+	constexpr span(const span<other_element_type>& sp) noexcept :
 		buf(sp.data()),
 		buf_size(sp.size())
 	{}
 
 	template <size_t array_size>
-	span(std::array<typename std::remove_const<T>::type, array_size>& a) :
+	span(std::array<typename std::remove_const<element_type>::type, array_size>& a) :
 		span(a.data(), a.size())
 	{}
 
 	template <size_t array_size>
-	span(const std::array<typename std::remove_const<T>::type, array_size>& a) :
+	span(const std::array<typename std::remove_const<element_type>::type, array_size>& a) :
 		span(a.data(), a.size())
 	{}
 
-	span(std::vector<typename std::remove_const<T>::type>& v) :
+	span(std::vector<typename std::remove_const<element_type>::type>& v) :
 		span(v.data(), v.size())
 	{}
 
 	template < //
-		typename TT,
+		typename other_element_type,
 		typename std::enable_if_t< //
 			std::is_convertible_v< //
-				TT (*)[],
-				const T (*)[]>,
+				other_element_type (*)[], // NOLINT(modernize-avoid-c-arrays)
+				const element_type (*)[]>, // NOLINT(modernize-avoid-c-arrays)
 			bool> = true>
-	span(const std::vector<TT>& v) :
+	span(const std::vector<other_element_type>& v) :
 		span(v.data(), v.size())
 	{}
 
-	span(std::basic_string<typename std::remove_const<T>::type>& v) :
-		span(v.data(), v.size())
-	{}
-
-	template < //
-		typename TT,
-		typename std::enable_if_t< //
-			std::is_convertible_v< //
-				TT (*)[],
-				const T (*)[]>,
-			bool> = true>
-	span(const std::basic_string<TT>& v) :
+	span(std::basic_string<typename std::remove_const<element_type>::type>& v) :
 		span(v.data(), v.size())
 	{}
 
 	template < //
-		typename TT,
+		typename other_element_type,
 		typename std::enable_if_t< //
 			std::is_convertible_v< //
-				TT (*)[],
-				const T (*)[]>,
+				other_element_type (*)[], // NOLINT(modernize-avoid-c-arrays)
+				const element_type (*)[]>, // NOLINT(modernize-avoid-c-arrays)
 			bool> = true>
-	span(std::basic_string_view<TT> v) :
+	span(const std::basic_string<other_element_type>& v) :
 		span(v.data(), v.size())
 	{}
 
 	template < //
-		typename TT,
+		typename other_element_type,
 		typename std::enable_if_t< //
 			std::is_convertible_v< //
-				TT (*)[],
-				const char (*)[]>,
+				other_element_type (*)[], // NOLINT(modernize-avoid-c-arrays)
+				const element_type (*)[]>, // NOLINT(modernize-avoid-c-arrays)
 			bool> = true>
-	span(TT* v) :
+	span(std::basic_string_view<other_element_type> v) :
+		span(v.data(), v.size())
+	{}
+
+	template < //
+		typename other_element_type,
+		typename std::enable_if_t< //
+			std::is_convertible_v< //
+				other_element_type (*)[], // NOLINT(modernize-avoid-c-arrays)
+				const char (*)[]>, // NOLINT(modernize-avoid-c-arrays)
+			bool> = true>
+	span(other_element_type* v) :
 		span(v, strlen(v))
 	{}
 
@@ -342,7 +339,7 @@ public:
 		return this->begin() <= p && p <= (this->end() - 1);
 	}
 
-	friend std::ostream& operator<<(std::ostream& s, const span<T>& buf)
+	friend std::ostream& operator<<(std::ostream& s, const span<element_type>& buf)
 	{
 		for (auto& e : buf) {
 			s << e;
@@ -350,69 +347,69 @@ public:
 		return s;
 	}
 
-	constexpr bool operator==(const span<const T>& s) const noexcept
+	constexpr bool operator==(const span<const element_type>& s) const noexcept
 	{
 		return std::equal(this->begin(), this->end(), s.begin(), s.end());
 	}
 
-	constexpr bool operator!=(const span<const T>& s) const noexcept
+	constexpr bool operator!=(const span<const element_type>& s) const noexcept
 	{
 		return !this->operator==(s);
 	}
 
-	constexpr bool operator<(const span<const T>& s) const noexcept
+	constexpr bool operator<(const span<const element_type>& s) const noexcept
 	{
 		return std::lexicographical_compare(this->begin(), this->end(), s.begin(), s.end());
 	}
 
-	constexpr bool operator>=(const span<const T>& s) const noexcept
+	constexpr bool operator>=(const span<const element_type>& s) const noexcept
 	{
 		return !this->operator<(s);
 	}
 
-	constexpr bool operator>(const span<const T>& s) const noexcept
+	constexpr bool operator>(const span<const element_type>& s) const noexcept
 	{
 		return s.operator<(*this);
 	}
 
-	constexpr bool operator<=(const span<const T>& s) const noexcept
+	constexpr bool operator<=(const span<const element_type>& s) const noexcept
 	{
 		return !this->operator>(s);
 	}
 };
 
-template <class T>
-inline utki::span<T> make_span(std::nullptr_t)
+template <class element_type>
+inline utki::span<element_type> make_span(std::nullptr_t)
 {
-	return utki::span<T>(nullptr);
+	return utki::span<element_type>(nullptr);
 }
 
-template <class T>
-inline utki::span<T> make_span(T* buf, size_t size)
+template <class element_type>
+inline utki::span<element_type> make_span(element_type* buf, size_t size)
 {
-	return utki::span<T>(buf, size);
+	return utki::span<element_type>(buf, size);
 }
 
-template <class T, std::size_t array_size>
-inline utki::span<T> make_span(std::array<T, array_size>& a)
-{
-	return make_span(a.size() == 0 ? nullptr : a.data(), a.size());
-}
-
-template <class T, std::size_t array_size>
-inline utki::span<const T> make_span(const std::array<T, array_size>& a)
+template <class element_type, std::size_t array_size>
+inline utki::span<element_type> make_span(std::array<element_type, array_size>& a)
 {
 	return make_span(a.size() == 0 ? nullptr : a.data(), a.size());
 }
 
-template <class T>
-inline utki::span<T> make_span(std::vector<T>& v)
+template <class element_type, std::size_t array_size>
+inline utki::span<const element_type> make_span(const std::array<element_type, array_size>& a)
+{
+	return make_span(a.size() == 0 ? nullptr : a.data(), a.size());
+}
+
+template <class element_type>
+inline utki::span<element_type> make_span(std::vector<element_type>& v)
 {
 	return make_span(v.size() == 0 ? nullptr : v.data(), v.size());
 }
 
-template <class T>
-inline utki::span<const T> make_span(const std::vector<T>& v)
+template <class element_type>
+inline utki::span<const element_type> make_span(const std::vector<element_type>& v)
 {
 	return make_span(v.size() == 0 ? nullptr : v.data(), v.size());
 }
@@ -422,20 +419,20 @@ inline utki::span<const T> make_span(const std::vector<T>& v)
  * @param s - string to make the span from.
  * @return span of the string contents.
  */
-template <class T>
-inline utki::span<const T> make_span(const std::basic_string<T>& s)
+template <class element_type>
+inline utki::span<const element_type> make_span(const std::basic_string<element_type>& s)
 {
 	return make_span(s.size() == 0 ? nullptr : s.data(), s.size());
 }
 
-template <class T>
-inline utki::span<T> make_span(std::basic_string<T>& s)
+template <class element_type>
+inline utki::span<element_type> make_span(std::basic_string<element_type>& s)
 {
 	return make_span(s.size() == 0 ? nullptr : s.data(), s.size());
 }
 
-template <class T>
-inline utki::span<const T> make_span(std::basic_string_view<T> s)
+template <class element_type>
+inline utki::span<const element_type> make_span(std::basic_string_view<element_type> s)
 {
 	return make_span(s.size() == 0 ? nullptr : s.data(), s.size());
 }

@@ -168,9 +168,9 @@ inline void assert(
 // MSVC compiler gives warning about implicit conversion of pointer to bool,
 // so define template overloads of the assert for that
 
-template <class type>
+template <class object_type>
 void assert(
-	type* p,
+	object_type* p,
 	const std::function<void(std::ostream&)>& print,
 	utki::source_location&& source_location
 #if CFG_CPP >= 20
@@ -181,9 +181,9 @@ void assert(
 	assert(p != nullptr, print, std::move(source_location));
 }
 
-template <class type>
+template <class object_type>
 void assert(
-	type* p,
+	object_type* p,
 	utki::source_location&& source_location
 #if CFG_CPP >= 20
 	= std_source_location::current()
@@ -196,9 +196,9 @@ void assert(
 // smart pointers do not have implicit conversion to bool, so we need to define
 // template overloads of the assert function for those
 
-template <class type>
+template <class object_type>
 void assert(
-	const std::shared_ptr<type>& p,
+	const std::shared_ptr<object_type>& p,
 	const std::function<void(std::ostream&)>& print,
 	utki::source_location&& source_location
 #if CFG_CPP >= 20
@@ -209,9 +209,9 @@ void assert(
 	assert(p != nullptr, print, std::move(source_location));
 }
 
-template <class type>
+template <class object_type>
 void assert(
-	const std::shared_ptr<type>& p,
+	const std::shared_ptr<object_type>& p,
 	utki::source_location&& source_location
 #if CFG_CPP >= 20
 	= std_source_location::current()
@@ -221,9 +221,9 @@ void assert(
 	assert(p != nullptr, nullptr, std::move(source_location));
 }
 
-template <class type>
+template <class object_type>
 void assert(
-	const std::unique_ptr<type>& p,
+	const std::unique_ptr<object_type>& p,
 	const std::function<void(std::ostream&)>& print,
 	utki::source_location&& source_location
 #if CFG_CPP >= 20
@@ -234,9 +234,9 @@ void assert(
 	assert(p != nullptr, print, std::move(source_location));
 }
 
-template <class type>
+template <class object_type>
 void assert(
-	const std::unique_ptr<type>& p,
+	const std::unique_ptr<object_type>& p,
 	utki::source_location&& source_location
 #if CFG_CPP >= 20
 	= std_source_location::current()
@@ -249,9 +249,9 @@ void assert(
 // std::function does not have implicit conversion to bool, so we need to define
 // template overloads of the assert function for it
 
-template <class type>
+template <class func_type>
 void assert(
-	const std::function<type>& p,
+	const std::function<func_type>& p,
 	const std::function<void(std::ostream&)>& print,
 	utki::source_location&& source_location
 #if CFG_CPP >= 20
@@ -262,9 +262,9 @@ void assert(
 	assert(p != nullptr, print, std::move(source_location));
 }
 
-template <class type>
+template <class func_type>
 void assert(
-	const std::function<type>& p,
+	const std::function<func_type>& p,
 	utki::source_location&& source_location
 #if CFG_CPP >= 20
 	= std_source_location::current()

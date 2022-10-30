@@ -2,46 +2,46 @@
 #include <tst/set.hpp>
 
 namespace {
-enum class TestEnum {
-	ZEROTH,
-	FIRST,
-	SECOND,
-	THIRD,
-	FOURTH,
-	FIFTH,
-	SIXTH,
-	SENENTH,
-	EIGHTH,
-	NINETH,
-	TENTH,
-	ELEVENTH,
-	TWELVETH,
-	THIRTEENTH,
-	FOURTEENTH,
-	FIFTEENTH,
-	SIXTEENTH,
-	SEVENTEENTH,
-	NINETEENTH,
-	TWENTYTH,
-	TWENTY_FIRST,
-	TWENTY_SECOND,
-	TWENTY_THIRD,
-	TWENTY_FOURTH,
-	TWENTY_FIFTH,
-	TWENTY_SIXTH,
-	TWENTY_SEVENTH,
-	TWENTY_EIGHTH,
-	TWENTY_NINETH,
-	THIRTYTH,
-	THIRTY_FIRST,
-	THIRTY_SECOND,
-	THIRTY_THIRD,
-	THIRTY_FOURTH,
-	THIRTY_FIFTH,
-	THIRTY_SIXTH,
-	THIRTY_SENENTH,
-	THIRTY_EIGHTH,
-	THIRTY_NINETH,
+enum class test_enum {
+	zeroth,
+	first,
+	second,
+	third,
+	fourth,
+	fifth,
+	sixth,
+	seventh,
+	eighth,
+	nineth,
+	tenth,
+	eleventh,
+	twelveth,
+	thirteenth,
+	fourteenth,
+	fifteenth,
+	sixteenth,
+	seventeenth,
+	nineteenth,
+	twentyth,
+	twenty_first,
+	twenty_second,
+	twenty_third,
+	twenty_fourth,
+	twenty_fifth,
+	twenty_sixth,
+	twenty_seventh,
+	twenty_eighth,
+	twenty_nineth,
+	thirtyth,
+	thirty_first,
+	thirty_second,
+	thirty_third,
+	thirty_fourth,
+	thirty_fifth,
+	thirty_sixth,
+	thirty_senenth,
+	thirty_eighth,
+	thirty_nineth,
 
 	enum_size
 };
@@ -59,14 +59,14 @@ enum non_flag_enum {
 namespace {
 tst::set set("flags", [](tst::suite& suite) {
 	suite.add("basic", []() {
-		utki::flags<TestEnum> fs;
+		utki::flags<test_enum> fs;
 
-		fs.set(TestEnum::EIGHTH, true).set(TestEnum::SECOND, true).set(TestEnum::EIGHTH, false);
-		tst::check(!fs.get(TestEnum::EIGHTH), SL);
-		tst::check(fs.get(TestEnum::SECOND), SL);
+		fs.set(test_enum::eighth, true).set(test_enum::second, true).set(test_enum::eighth, false);
+		tst::check(!fs.get(test_enum::eighth), SL);
+		tst::check(fs.get(test_enum::second), SL);
 
 		LOG([&](auto& o) {
-			o << "enum_size = " << size_t(TestEnum::enum_size) << " sizeof(fs) = " << sizeof(fs) << std::endl;
+			o << "enum_size = " << size_t(test_enum::enum_size) << " sizeof(fs) = " << sizeof(fs) << std::endl;
 		})
 
 		LOG([&](auto& o) {
@@ -74,129 +74,129 @@ tst::set set("flags", [](tst::suite& suite) {
 		})
 
 		{
-			utki::flags<TestEnum> fs;
+			utki::flags<test_enum> fs;
 			tst::check(fs.is_clear(), SL);
 			tst::check(!fs.is_set(), SL);
 
-			fs.set(TestEnum::EIGHTH, true);
+			fs.set(test_enum::eighth, true);
 			tst::check(!fs.is_clear(), SL);
 			tst::check(!fs.is_set(), SL);
 		}
 		{
-			utki::flags<TestEnum> fs(true);
+			utki::flags<test_enum> fs(true);
 			tst::check(!fs.is_clear(), SL);
 			tst::check(fs.is_set(), SL);
 
 			fs.set();
 
-			fs.set(TestEnum::EIGHTH, false);
+			fs.set(test_enum::eighth, false);
 			tst::check(!fs.is_clear(), SL);
 			tst::check(!fs.is_set(), SL);
 		}
 	});
 
 	suite.add("enum_type_is_typedefed", []() {
-		utki::flags<TestEnum> flags;
+		utki::flags<test_enum> flags;
 
-		decltype(flags)::enum_type t = TestEnum::EIGHTH;
+		decltype(flags)::enum_type t = test_enum::eighth;
 
-		tst::check(t == TestEnum::EIGHTH, SL);
+		tst::check(t == test_enum::eighth, SL);
 	});
 
 	suite.add("empty_initializer_list", []() {
-		auto flags = utki::flags<TestEnum>({});
+		auto flags = utki::flags<test_enum>({});
 
 		tst::check(flags.is_clear(), SL);
 	});
 
 	suite.add("initializer_list", []() {
-		auto flags = utki::flags<TestEnum>({TestEnum::TWENTY_SEVENTH, TestEnum::NINETEENTH});
+		auto flags = utki::flags<test_enum>({test_enum::twenty_seventh, test_enum::nineteenth});
 
 		tst::check(!flags.is_clear(), SL);
-		tst::check(flags.get(TestEnum::TWENTY_SEVENTH), SL);
-		tst::check(flags[TestEnum::TWENTY_SEVENTH], SL);
-		tst::check(flags.get(TestEnum::NINETEENTH), SL);
-		tst::check(flags[TestEnum::NINETEENTH], SL);
+		tst::check(flags.get(test_enum::twenty_seventh), SL);
+		tst::check(flags[test_enum::twenty_seventh], SL);
+		tst::check(flags.get(test_enum::nineteenth), SL);
+		tst::check(flags[test_enum::nineteenth], SL);
 
-		flags.clear(TestEnum::TWENTY_SEVENTH);
+		flags.clear(test_enum::twenty_seventh);
 		tst::check(!flags.is_clear(), SL);
-		tst::check(!flags.get(TestEnum::TWENTY_SEVENTH), SL);
-		tst::check(!flags[TestEnum::TWENTY_SEVENTH], SL);
-		tst::check(flags.get(TestEnum::NINETEENTH), SL);
-		tst::check(flags[TestEnum::NINETEENTH], SL);
+		tst::check(!flags.get(test_enum::twenty_seventh), SL);
+		tst::check(!flags[test_enum::twenty_seventh], SL);
+		tst::check(flags.get(test_enum::nineteenth), SL);
+		tst::check(flags[test_enum::nineteenth], SL);
 
-		flags.clear(TestEnum::NINETEENTH);
+		flags.clear(test_enum::nineteenth);
 		tst::check(flags.is_clear(), SL);
-		tst::check(!flags.get(TestEnum::TWENTY_SEVENTH), SL);
-		tst::check(!flags[TestEnum::TWENTY_SEVENTH], SL);
-		tst::check(!flags.get(TestEnum::NINETEENTH), SL);
-		tst::check(!flags[TestEnum::NINETEENTH], SL);
+		tst::check(!flags.get(test_enum::twenty_seventh), SL);
+		tst::check(!flags[test_enum::twenty_seventh], SL);
+		tst::check(!flags.get(test_enum::nineteenth), SL);
+		tst::check(!flags[test_enum::nineteenth], SL);
 	});
 
 	suite.add("make_flags", []() {
-		auto flags = utki::make_flags({TestEnum::TWENTY_SEVENTH, TestEnum::NINETEENTH});
+		auto flags = utki::make_flags({test_enum::twenty_seventh, test_enum::nineteenth});
 
 		tst::check(!flags.is_clear(), SL);
-		tst::check(flags.get(TestEnum::TWENTY_SEVENTH), SL);
-		tst::check(flags.get(TestEnum::NINETEENTH), SL);
+		tst::check(flags.get(test_enum::twenty_seventh), SL);
+		tst::check(flags.get(test_enum::nineteenth), SL);
 
-		flags.clear(TestEnum::TWENTY_SEVENTH);
+		flags.clear(test_enum::twenty_seventh);
 		tst::check(!flags.is_clear(), SL);
-		tst::check(!flags.get(TestEnum::TWENTY_SEVENTH), SL);
-		tst::check(flags.get(TestEnum::NINETEENTH), SL);
+		tst::check(!flags.get(test_enum::twenty_seventh), SL);
+		tst::check(flags.get(test_enum::nineteenth), SL);
 
-		flags[TestEnum::NINETEENTH] = false;
+		flags[test_enum::nineteenth] = false;
 		tst::check(flags.is_clear(), SL);
-		tst::check(!flags.get(TestEnum::TWENTY_SEVENTH), SL);
-		tst::check(!flags.get(TestEnum::NINETEENTH), SL);
+		tst::check(!flags.get(test_enum::twenty_seventh), SL);
+		tst::check(!flags.get(test_enum::nineteenth), SL);
 	});
 
 	suite.add("twice_initialized_flag", []() {
-		auto flags = utki::make_flags({TestEnum::NINETEENTH, TestEnum::TWENTY_SEVENTH, TestEnum::NINETEENTH});
+		auto flags = utki::make_flags({test_enum::nineteenth, test_enum::twenty_seventh, test_enum::nineteenth});
 
 		tst::check(!flags.is_clear(), SL);
-		tst::check(flags.get(TestEnum::TWENTY_SEVENTH), SL);
-		tst::check(flags.get(TestEnum::NINETEENTH), SL);
+		tst::check(flags.get(test_enum::twenty_seventh), SL);
+		tst::check(flags.get(test_enum::nineteenth), SL);
 
-		flags.clear(TestEnum::TWENTY_SEVENTH);
+		flags.clear(test_enum::twenty_seventh);
 		tst::check(!flags.is_clear(), SL);
-		tst::check(!flags.get(TestEnum::TWENTY_SEVENTH), SL);
-		tst::check(flags.get(TestEnum::NINETEENTH), SL);
+		tst::check(!flags.get(test_enum::twenty_seventh), SL);
+		tst::check(flags.get(test_enum::nineteenth), SL);
 
-		flags.clear(TestEnum::NINETEENTH);
+		flags.clear(test_enum::nineteenth);
 		tst::check(flags.is_clear(), SL);
-		tst::check(!flags.get(TestEnum::TWENTY_SEVENTH), SL);
-		tst::check(!flags.get(TestEnum::NINETEENTH), SL);
+		tst::check(!flags.get(test_enum::twenty_seventh), SL);
+		tst::check(!flags.get(test_enum::nineteenth), SL);
 	});
 
 	suite.add("operator_or_on_enum", []() {
-		auto flags = utki::make_flags({TestEnum::NINETEENTH, TestEnum::TWENTY_SEVENTH, TestEnum::NINETEENTH});
+		auto flags = utki::make_flags({test_enum::nineteenth, test_enum::twenty_seventh, test_enum::nineteenth});
 
-		tst::check(!flags.get(TestEnum::EIGHTH), SL);
+		tst::check(!flags.get(test_enum::eighth), SL);
 
-		flags = flags | TestEnum::EIGHTH;
+		flags = flags | test_enum::eighth;
 
-		tst::check(flags.get(TestEnum::EIGHTH), SL);
+		tst::check(flags.get(test_enum::eighth), SL);
 	});
 
 	suite.add("constructor_from_enum", []() {
-		utki::flags<TestEnum> flags(TestEnum::ELEVENTH);
+		utki::flags<test_enum> flags(test_enum::eleventh);
 
-		tst::check(flags.get(TestEnum::ELEVENTH), SL);
+		tst::check(flags.get(test_enum::eleventh), SL);
 
-		flags.clear(TestEnum::ELEVENTH);
+		flags.clear(test_enum::eleventh);
 
 		tst::check(flags.is_clear(), SL);
 	});
 
 	suite.add("free_operator_or_on_enum", []() {
-		auto flags = TestEnum::EIGHTH | TestEnum::ELEVENTH;
+		auto flags = test_enum::eighth | test_enum::eleventh;
 
-		tst::check(flags.get(TestEnum::EIGHTH), SL);
-		tst::check(flags.get(TestEnum::ELEVENTH), SL);
+		tst::check(flags.get(test_enum::eighth), SL);
+		tst::check(flags.get(test_enum::eleventh), SL);
 
-		flags.clear(TestEnum::EIGHTH);
-		flags.clear(TestEnum::ELEVENTH);
+		flags.clear(test_enum::eighth);
+		flags.clear(test_enum::eleventh);
 
 		tst::check(flags.is_clear(), SL);
 	});
@@ -208,41 +208,41 @@ tst::set set("flags", [](tst::suite& suite) {
 	});
 
 	suite.add("operator_not_equals", []() {
-		utki::flags<TestEnum> flags1{TestEnum::EIGHTH, TestEnum::ELEVENTH};
+		utki::flags<test_enum> flags1{test_enum::eighth, test_enum::eleventh};
 		tst::check(!flags1.is_clear(), SL);
 		tst::check(!flags1.is_set(), SL);
 
-		utki::flags<TestEnum> flags2;
+		utki::flags<test_enum> flags2;
 		tst::check(flags2.is_clear(), SL);
 		tst::check(!flags2.is_set(), SL);
 
 		tst::check_ne(flags1, flags2, SL);
 
-		tst::check_ne(flags1, {TestEnum::EIGHTH}, SL);
-		tst::check_ne(flags1, {TestEnum::EIGHTH, TestEnum::TWELVETH}, SL);
-		tst::check_ne(flags1, {TestEnum::EIGHTH, TestEnum::TWELVETH, TestEnum::THIRTY_FIFTH}, SL);
+		tst::check_ne(flags1, {test_enum::eighth}, SL);
+		tst::check_ne(flags1, {test_enum::eighth, test_enum::twelveth}, SL);
+		tst::check_ne(flags1, {test_enum::eighth, test_enum::twelveth, test_enum::twenty_fifth}, SL);
 
-		tst::check_ne(flags1, TestEnum::EIGHTH | TestEnum::TWELVETH, SL);
-		tst::check_ne(flags1, TestEnum::EIGHTH | TestEnum::TWELVETH | TestEnum::THIRTY_FIFTH, SL);
+		tst::check_ne(flags1, test_enum::eighth | test_enum::twelveth, SL);
+		tst::check_ne(flags1, test_enum::eighth | test_enum::twelveth | test_enum::twenty_fifth, SL);
 	});
 
 	suite.add("operator_equals_equals", []() {
-		utki::flags<TestEnum> flags1{TestEnum::EIGHTH, TestEnum::ELEVENTH};
+		utki::flags<test_enum> flags1{test_enum::eighth, test_enum::eleventh};
 		tst::check(!flags1.is_clear(), SL);
 		tst::check(!flags1.is_set(), SL);
 
-		utki::flags<TestEnum> flags2;
+		utki::flags<test_enum> flags2;
 		tst::check(flags2.is_clear(), SL);
 		tst::check(!flags2.is_set(), SL);
 
-		flags2.set(TestEnum::EIGHTH);
-		flags2.set(TestEnum::ELEVENTH);
+		flags2.set(test_enum::eighth);
+		flags2.set(test_enum::eleventh);
 
 		tst::check_eq(flags1, flags2, SL);
 
-		tst::check_eq(flags1, {TestEnum::EIGHTH, TestEnum::ELEVENTH}, SL);
+		tst::check_eq(flags1, {test_enum::eighth, test_enum::eleventh}, SL);
 
-		tst::check_eq(flags1, TestEnum::EIGHTH | TestEnum::ELEVENTH, SL);
+		tst::check_eq(flags1, test_enum::eighth | test_enum::eleventh, SL);
 	});
 });
 } // namespace

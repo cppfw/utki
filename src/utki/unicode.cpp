@@ -176,7 +176,7 @@ std::u32string utki::to_utf32(utf8_iterator str)
 	for (; !str.is_end(); ++str) {
 		buf.push_back(str.character());
 	}
-	return std::u32string(buf.begin(), buf.end());
+	return std::u32string{buf.begin(), buf.end()};
 }
 
 std::u32string utki::to_utf32(utki::span<const uint8_t> str)
@@ -189,5 +189,5 @@ std::u32string utki::to_utf32(utki::span<const uint8_t> str)
 		buf.push_back(iter.character());
 	}
 
-	return std::u32string(buf.begin(), buf.end());
+	return std::u32string{buf.begin(), buf.end()};
 }

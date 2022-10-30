@@ -8,7 +8,7 @@ class test_class : public utki::shared
 public:
 	int a = 4;
 
-	test_class() {}
+	test_class() = default;
 
 	test_class(int i) :
 		a(i)
@@ -16,7 +16,7 @@ public:
 
 	std::shared_ptr<test_class> get_ptr()
 	{
-		return utki::make_shared_from(*this);
+		return utki::make_shared_from(*this).to_shared_ptr();
 	}
 };
 } // namespace

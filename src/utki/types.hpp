@@ -40,42 +40,42 @@ struct uint_size;
 
 template <>
 struct uint_size<1> {
-	typedef uint8_t type;
+	using type = uint8_t;
 };
 
 template <>
 struct uint_size<2> {
-	typedef uint16_t type;
+	using type = uint16_t;
 };
 
 template <>
 struct uint_size<3> {
-	typedef uint32_t type;
+	using type = uint32_t;
 };
 
 template <>
 struct uint_size<4> {
-	typedef uint32_t type;
+	using type = uint32_t;
 };
 
 template <>
 struct uint_size<5> {
-	typedef uint64_t type;
+	using type = uint64_t;
 };
 
 template <>
 struct uint_size<6> {
-	typedef uint64_t type;
+	using type = uint64_t;
 };
 
 template <>
 struct uint_size<7> {
-	typedef uint64_t type;
+	using type = uint64_t;
 };
 
 template <>
 struct uint_size<8> {
-	typedef uint64_t type;
+	using type = uint64_t;
 };
 
 template <size_t type_size>
@@ -83,66 +83,52 @@ struct int_size;
 
 template <>
 struct int_size<1> {
-	typedef std::int8_t type;
+	using type = std::int8_t;
 };
 
 template <>
 struct int_size<2> {
-	typedef std::int16_t type;
+	using type = std::int16_t;
 };
 
 template <>
 struct int_size<3> {
-	typedef std::int32_t type;
+	using type = std::int32_t;
 };
 
 template <>
 struct int_size<4> {
-	typedef std::int32_t type;
+	using type = std::int32_t;
 };
 
 template <>
 struct int_size<5> {
-	typedef std::int64_t type;
+	using type = std::int64_t;
 };
 
 template <>
 struct int_size<6> {
-	typedef std::int64_t type;
+	using type = std::int64_t;
 };
 
 template <>
 struct int_size<7> {
-	typedef std::int64_t type;
+	using type = std::int64_t;
 };
 
 template <>
 struct int_size<8> {
-	typedef std::int64_t type;
+	using type = std::int64_t;
 };
 
-// TODO: deprecated, remove
-template <typename T>
-struct remove_constptr {
-	[[deprecated("use utki::remove_const_pointer")]] //
-	typedef typename std::remove_const<typename std::remove_pointer<T>::type>::type type;
-};
-
-template <typename T>
+template <typename in_type>
 struct remove_const_pointer {
-	typedef typename std::remove_const<typename std::remove_pointer<T>::type>::type type;
+	using type = typename std::remove_const<typename std::remove_pointer<in_type>::type>::type;
 };
 
-// TODO: deprecated, remove
-template <typename T>
-struct remove_constref {
-	[[deprecated("use utki::remove_const_reference")]] //
-	typedef typename std::remove_const<typename std::remove_reference<T>::type>::type type;
-};
-
-template <typename T>
+template <typename in_type>
 struct remove_const_reference {
-	typedef typename std::remove_const<typename std::remove_reference<T>::type>::type type;
+	using type = typename std::remove_const<typename std::remove_reference<in_type>::type>::type;
 };
 
 /**
@@ -150,10 +136,10 @@ struct remove_const_reference {
  * @param p - pointer to cast.
  * @return Pointer to const.
  */
-template <class T>
-inline const T* make_pointer_to_const(T* p)
+template <class object_type>
+inline const object_type* make_pointer_to_const(object_type* p)
 {
-	return const_cast<const T*>(p);
+	return const_cast<const object_type*>(p);
 }
 
 /**
@@ -168,7 +154,7 @@ class dummy_class
 template <typename>
 struct tag {};
 
-template <typename T, typename V>
+template <typename, typename>
 struct get_index;
 
 // MSVC compiler prior to tools v142 doesn't compile this
@@ -176,34 +162,34 @@ struct get_index;
 /**
  * @brief Get variant's alternative index by its type in compile time.
  */
-template <typename T, typename... Ts>
-struct get_index<T, std::variant<Ts...>> :
-	std::integral_constant<size_t, std::variant<tag<Ts>...>(tag<T>()).index()> {};
+template <typename index_type, typename... variant_type>
+struct get_index<index_type, std::variant<variant_type...>> :
+	std::integral_constant<size_t, std::variant<tag<variant_type>...>(tag<index_type>()).index()> {};
 #endif
 
-template <class T, class = void>
+template <class, class = void>
 struct is_type_defined : std::false_type {};
 
 /**
- * @brief Check if T::type is defined.
- * Defines bool 'value' which is true if T::type is defined and false otherwise.
+ * @brief Check if owner_type::type is defined.
+ * Defines bool 'value' which is true if owner_type::type is defined and false otherwise.
  */
-template <class T>
-struct is_type_defined<T, std::void_t<typename T::type>> : std::true_type {};
+template <class owner_type>
+struct is_type_defined<owner_type, std::void_t<typename owner_type::type>> : std::true_type {};
 
-template <class T, class = void>
+template <class, class = void>
 struct type_or_void {
 	using type = void;
 };
 
 /**
  * @brief Get type or void.
- * @tparam T - type to get T::type from.
- * Defines 'type' member which is same as T::type in case T::type is defined, or void type otherwise.
+ * @tparam owner_type - type to get owner_type::type from.
+ * Defines 'type' member which is same as owner_type::type in case owner_type::type is defined, or void type otherwise.
  */
-template <class T>
-struct type_or_void<T, std::void_t<typename T::type>> {
-	using type = typename T::type;
+template <class owner_type>
+struct type_or_void<owner_type, std::void_t<typename owner_type::type>> {
+	using type = typename owner_type::type;
 };
 
 } // namespace utki

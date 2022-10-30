@@ -43,6 +43,8 @@ namespace detail {
  * The case comparisons could be made much faster given that we know that the
  * strings a null-free and fixed.
  **/
+
+// NOLINTNEXTLINE(readability-identifier-naming)
 template <typename T>
 from_chars_result parse_infnan(const char* first, const char* last, T& value) noexcept
 {
@@ -87,6 +89,7 @@ from_chars_result parse_infnan(const char* first, const char* last, T& value) no
 	return answer;
 }
 
+// NOLINTNEXTLINE(readability-identifier-naming)
 template <typename T>
 fastfloat_really_inline void to_float(bool negative, adjusted_mantissa am, T& value)
 {
@@ -107,6 +110,7 @@ fastfloat_really_inline void to_float(bool negative, adjusted_mantissa am, T& va
 
 } // namespace detail
 
+// NOLINTNEXTLINE(readability-identifier-naming)
 template <typename T>
 from_chars_result
 from_chars(const char* first, const char* last, T& value, chars_format fmt /*= chars_format::general*/) noexcept

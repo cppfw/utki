@@ -53,6 +53,7 @@ SOFTWARE.
 //            Compiler definitions                    |
 //                                                    |
 
+// NOLINTBEGIN(modernize-macro-to-enum)
 #define CFG_COMPILER_UNKNOWN 0
 #define CFG_COMPILER_GCC 1
 #define CFG_COMPILER_MSVC 2
@@ -62,6 +63,7 @@ SOFTWARE.
 #define M_COMPILER_GCC 1
 #define M_COMPILER_MSVC 2
 #define M_COMPILER_CLANG 3
+// NOLINTEND(modernize-macro-to-enum)
 
 #if defined(__GNUC__) || defined(__GNUG__)
 #	define CFG_COMPILER CFG_COMPILER_GCC
@@ -100,6 +102,8 @@ SOFTWARE.
 //====================================================|
 //            CPU architecture definitions            |
 //                                                    |
+
+// NOLINTBEGIN(modernize-macro-to-enum)
 #define CFG_CPU_UNKNOWN 0
 #define CFG_CPU_X86 1
 #define CFG_CPU_X86_64 2
@@ -109,6 +113,7 @@ SOFTWARE.
 #define M_CPU_X86 1
 #define M_CPU_X86_64 2
 #define M_CPU_ARM 3
+// NOLINTEND(modernize-macro-to-enum)
 
 #if CFG_COMPILER == CFG_COMPILER_GCC
 #	if defined(__i386__) // __i386__ is defined for any x86 processor
@@ -241,6 +246,8 @@ SOFTWARE.
 //            OS definitions            |
 //                                      |
 
+// NOLINTBEGIN(modernize-macro-to-enum)
+
 // OS family
 #define CFG_OS_UNKNOWN 0
 #define CFG_OS_LINUX 1
@@ -266,6 +273,8 @@ SOFTWARE.
 #define M_OS_NAME_IOS 2
 #define M_OS_NAME_ANDROID 3
 #define M_OS_NAME_SOLARIS 4
+
+// NOLINTEND(modernize-macro-to-enum)
 
 #if defined(__linux__)
 #	define CFG_OS CFG_OS_LINUX

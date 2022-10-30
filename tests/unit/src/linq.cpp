@@ -378,7 +378,7 @@ tst::set set("linq", [](tst::suite& suite) {
 				std::shared_ptr<test_struct> ts;
 				int dummy;
 
-				~wrapper() {}
+				~wrapper() = default;
 
 				std::shared_ptr<test_struct> get_ts() const
 				{

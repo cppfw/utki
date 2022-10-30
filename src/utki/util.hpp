@@ -40,10 +40,10 @@ namespace utki {
  * @param p - initial std::pair.
  * @return a new std::pair with swapped component.
  */
-template <typename T_A, typename T_B>
-std::pair<T_B, T_A> flip_pair(const std::pair<T_A, T_B>& p)
+template <typename first_type, typename second_type>
+std::pair<second_type, first_type> flip_pair(const std::pair<first_type, second_type>& p)
 {
-	return std::pair<T_B, T_A>(p.second, p.first);
+	return std::pair<second_type, first_type>(p.second, p.first);
 }
 
 /**
@@ -51,11 +51,11 @@ std::pair<T_B, T_A> flip_pair(const std::pair<T_A, T_B>& p)
  * @param m - initial map to flip.
  * @return a new map with flipped keys and values in each element.
  */
-template <typename A, typename B>
-std::map<B, A> flip_map(const std::map<A, B>& m)
+template <typename key_type, typename value_type>
+std::map<value_type, key_type> flip_map(const std::map<key_type, value_type>& m)
 {
-	std::map<B, A> ret;
-	std::transform(m.begin(), m.end(), std::inserter(ret, ret.begin()), flip_pair<A, B>);
+	std::map<value_type, key_type> ret;
+	std::transform(m.begin(), m.end(), std::inserter(ret, ret.begin()), flip_pair<key_type, value_type>);
 	return ret;
 }
 
@@ -398,21 +398,6 @@ inline uint64_t deserialize64be(const uint8_t* buf) noexcept
 	ret |= uint64_t(*buf);
 
 	return ret;
-}
-
-/**
- * @brief Construct an object and store it in unique pointer.
- * This is a replacement of std::make_unique() when C++14 is not available.
- * @param args - object constructor arguments.
- * @return std::unique_ptr to a newly created object.
- */
-// TODO: remove
-template <class T, class... Args>
-[[deprecated("use std::make_unique()")]] //
-std::unique_ptr<T>
-make_unique(Args&&... args)
-{
-	return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
 }
 
 /**

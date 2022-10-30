@@ -74,7 +74,7 @@ class flags
 	static_assert(std::is_enum<enumeration_type>::value, "template parameter must be an enumaration type");
 
 public:
-	typedef enumeration_type enum_type;
+	using enum_type = enumeration_type;
 
 private:
 	static_assert(int(enum_type::enum_size) >= 0, "enumeration must define enum_size item");
@@ -331,10 +331,10 @@ public:
  * @param initially_set_flags - list of flags which will be set initially.
  * @return newly created flags object.
  */
-template <class T>
-flags<T> make_flags(std::initializer_list<T> initially_set_flags)
+template <class enum_type>
+flags<enum_type> make_flags(std::initializer_list<enum_type> initially_set_flags)
 {
-	return flags<T>(initially_set_flags);
+	return flags<enum_type>(initially_set_flags);
 }
 
 template <class enum_type>

@@ -37,28 +37,31 @@ namespace utki {
 
 namespace sort_internal {
 
-template <typename RAIt>
-constexpr RAIt next(RAIt it, typename std::iterator_traits<RAIt>::difference_type n = 1)
+template <typename random_iter_type>
+constexpr random_iter_type next(
+	random_iter_type it,
+	typename std::iterator_traits<random_iter_type>::difference_type n = 1
+)
 {
 	return it + n;
 }
 
-template <typename RAIt>
-constexpr auto distance(RAIt first, RAIt last)
+template <typename random_iter_type>
+constexpr auto distance(random_iter_type first, random_iter_type last)
 {
 	return last - first;
 }
 
-template <class ForwardIt1, class ForwardIt2>
-constexpr void iter_swap(ForwardIt1 a, ForwardIt2 b)
+template <class forward_iter_1_type, class forward_iter_2_type>
+constexpr void iter_swap(forward_iter_1_type a, forward_iter_2_type b)
 {
 	auto temp = std::move(*a);
 	*a = std::move(*b);
 	*b = std::move(temp);
 }
 
-template <class InputIt, class UnaryPredicate>
-constexpr InputIt find_if_not(InputIt first, InputIt last, UnaryPredicate q)
+template <class input_iter_type, class unary_predicate_type>
+constexpr input_iter_type find_if_not(input_iter_type first, input_iter_type last, unary_predicate_type q)
 {
 	for (; first != last; ++first) {
 		if (!q(*first)) {
@@ -68,15 +71,15 @@ constexpr InputIt find_if_not(InputIt first, InputIt last, UnaryPredicate q)
 	return last;
 }
 
-template <class ForwardIt, class UnaryPredicate>
-constexpr ForwardIt partition(ForwardIt first, ForwardIt last, UnaryPredicate p)
+template <class forward_iter_type, class unary_predicate_type>
+constexpr forward_iter_type partition(forward_iter_type first, forward_iter_type last, unary_predicate_type p)
 {
 	first = utki::sort_internal::find_if_not(first, last, p);
 	if (first == last) {
 		return first;
 	}
 
-	for (ForwardIt i = utki::sort_internal::next(first); i != last; ++i) {
+	for (forward_iter_type i = utki::sort_internal::next(first); i != last; ++i) {
 		if (p(*i)) {
 			utki::sort_internal::iter_swap(i, first);
 			++first;
@@ -85,8 +88,8 @@ constexpr ForwardIt partition(ForwardIt first, ForwardIt last, UnaryPredicate p)
 	return first;
 }
 
-template <class RAIt, class Compare = std::less<>>
-constexpr void quick_sort(RAIt first, RAIt last, Compare cmp = Compare{})
+template <class random_iter_type, class comparator_type = std::less<>>
+constexpr void quick_sort(random_iter_type first, random_iter_type last, comparator_type cmp = comparator_type{})
 {
 	auto const n = utki::sort_internal::distance(first, last);
 	if (n <= 1) {
@@ -115,8 +118,8 @@ constexpr void quick_sort(RAIt first, RAIt last, Compare cmp = Compare{})
  * @param last - range end iterator.
  * @param comp - comparator functor.
  */
-template <class RandomIt, class Compare = std::less<>>
-constexpr void sort(RandomIt first, RandomIt last, Compare comp = Compare{})
+template <class random_iter_type, class comparator_type = std::less<>>
+constexpr void sort(random_iter_type first, random_iter_type last, comparator_type comp = comparator_type{})
 {
 	utki::sort_internal::quick_sort(first, last, comp);
 }

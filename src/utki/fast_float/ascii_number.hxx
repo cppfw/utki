@@ -136,7 +136,7 @@ parse_number_string(const char* p, const char* pend, chars_format fmt) noexcept
 		++p;
 	}
 	const char* const end_of_integer_part = p;
-	int64_t digit_count = int64_t(end_of_integer_part - start_digits);
+	auto digit_count = int64_t(end_of_integer_part - start_digits);
 	int64_t exponent = 0;
 	if ((p != pend) && (*p == '.')) {
 		++p;
@@ -150,7 +150,7 @@ parse_number_string(const char* p, const char* pend, chars_format fmt) noexcept
 			}
 		}
 		while ((p != pend) && is_integer(*p)) {
-			uint8_t digit = uint8_t(*p - '0');
+			auto digit = uint8_t(*p - '0');
 			++p;
 			i = i * 10 + digit; // in rare cases, this will overflow, but that's ok
 		}
@@ -181,7 +181,7 @@ parse_number_string(const char* p, const char* pend, chars_format fmt) noexcept
 			p = location_of_e;
 		} else {
 			while ((p != pend) && is_integer(*p)) {
-				uint8_t digit = uint8_t(*p - '0');
+				auto digit = uint8_t(*p - '0');
 				if (exp_number < 0x10000) {
 					exp_number = 10 * exp_number + digit;
 				}
@@ -337,7 +337,7 @@ fastfloat_really_inline decimal parse_decimal(const char* p, const char* pend) n
 		}
 		int32_t exp_number = 0; // exponential part
 		while ((p != pend) && is_integer(*p)) {
-			uint8_t digit = uint8_t(*p - '0');
+			auto digit = uint8_t(*p - '0');
 			if (exp_number < 0x10000) {
 				exp_number = 10 * exp_number + digit;
 			}

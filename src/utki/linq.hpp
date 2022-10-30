@@ -41,34 +41,34 @@ SOFTWARE.
 
 namespace utki {
 
-template <typename C>
+template <typename collection_type>
 class linq_collection_aggregator
 {
-	template <typename CC>
+	template <typename other_collection_type>
 	friend class linq_collection_aggregator;
 
-	template <typename CC>
-	friend linq_collection_aggregator<const CC&> linq(const CC&);
+	template <typename other_collection_type>
+	friend linq_collection_aggregator<const other_collection_type&> linq(const other_collection_type&);
 
-	template <typename CC>
-	friend linq_collection_aggregator<const CC&> linq(CC&);
+	template <typename other_collection_type>
+	friend linq_collection_aggregator<const other_collection_type&> linq(other_collection_type&);
 
-	template <typename CC>
-	friend linq_collection_aggregator<CC&&> linq(CC&&);
+	template <typename other_collection_type>
+	friend linq_collection_aggregator<other_collection_type&&> linq(other_collection_type&&);
 
 	typename std::conditional< //
-		std::is_rvalue_reference<C>::value,
-		typename std::remove_reference<C>::type,
-		C>::type collection;
+		std::is_rvalue_reference<collection_type>::value,
+		typename std::remove_reference<collection_type>::type,
+		collection_type>::type collection;
 
-	typedef typename std::remove_reference<decltype(collection)>::type::value_type value_type;
+	using value_type = typename std::remove_reference<decltype(collection)>::type::value_type;
 
 	struct noncopyable_value_type : public value_type {
 		noncopyable_value_type(const noncopyable_value_type&) = delete;
 		noncopyable_value_type& operator=(const noncopyable_value_type&) = delete;
 	};
 
-	linq_collection_aggregator(C collection) :
+	linq_collection_aggregator(collection_type collection) :
 		collection(std::move(collection))
 	{}
 
@@ -78,22 +78,22 @@ public:
 		return std::move(this->collection);
 	}
 
-	template <typename F>
-	auto select(F func)
+	template <typename func_type>
+	auto select(func_type func)
 	{
-		typedef typename std::add_rvalue_reference<value_type>::type func_arg_type;
+		using func_arg_type = typename std::add_rvalue_reference<value_type>::type;
 
-		static constexpr bool func_one_arg = std::is_invocable_v<F, func_arg_type>;
+		static constexpr bool func_one_arg = std::is_invocable_v<func_type, func_arg_type>;
 
 		static_assert(
-			func_one_arg || std::is_invocable_v<F, func_arg_type, size_t>,
+			func_one_arg || std::is_invocable_v<func_type, func_arg_type, size_t>,
 			"passed in function must have one argument or two arguments with the second argument of type size_t"
 		);
 
-		typedef typename std::conditional<
+		using func_return_type = typename std::conditional<
 			func_one_arg,
-			typename type_or_void<std::invoke_result<F, func_arg_type>>::type,
-			typename type_or_void<std::invoke_result<F, func_arg_type, size_t>>::type>::type func_return_type;
+			typename type_or_void<std::invoke_result<func_type, func_arg_type>>::type,
+			typename type_or_void<std::invoke_result<func_type, func_arg_type, size_t>>::type>::type;
 
 		std::vector<func_return_type> ret;
 		ret.reserve(this->collection.size());
@@ -113,24 +113,24 @@ public:
 		return linq_collection_aggregator<decltype(ret)&&>(std::move(ret));
 	}
 
-	template <typename F>
-	auto group_by(F func)
+	template <typename func_type>
+	auto group_by(func_type func)
 	{
 		static_assert(
 			// non-const lvalue reference cannot bind to temproray objects,
-			// thus F(auto&) will fail the assert, but F(const auto&) succeeds
-			std::is_invocable_v<F, noncopyable_value_type>,
+			// thus func_type(auto&) will fail the assert, but func_type(const auto&) succeeds
+			std::is_invocable_v<func_type, noncopyable_value_type>,
 			"functor must have const reference argument"
 		);
 
 		static_assert(
-			!std::is_same_v<void, std::invoke_result_t<F, const value_type&>>,
+			!std::is_same_v<void, std::invoke_result_t<func_type, const value_type&>>,
 			"functor must return non-void"
 		);
 
-		typedef typename std::add_lvalue_reference<value_type>::type func_arg_type;
-		typedef typename std::remove_reference< //
-			typename std::invoke_result<F, func_arg_type>::type>::type func_return_type;
+		using func_arg_type = typename std::add_lvalue_reference<value_type>::type;
+		using func_return_type = typename std::remove_reference< //
+			typename std::invoke_result<func_type, func_arg_type>::type>::type;
 
 		std::map<func_return_type, std::vector<value_type>> ret;
 
@@ -141,18 +141,18 @@ public:
 		return linq_collection_aggregator<decltype(ret)&&>(std::move(ret));
 	}
 
-	template <typename F>
-	auto where(F func)
+	template <typename func_type>
+	auto where(func_type func)
 	{
 		static_assert(
 			// non-const lvalue reference cannot bind to temproray objects,
-			// thus F(auto&) will fail the assert, but F(const auto&) succeeds
-			std::is_invocable_v<F, noncopyable_value_type>,
+			// thus func_type(auto&) will fail the assert, but func_type(const auto&) succeeds
+			std::is_invocable_v<func_type, noncopyable_value_type>,
 			"functor must have const reference argument"
 		);
 
 		static_assert(
-			std::is_same<bool, std::invoke_result_t<F, const value_type&>>::value,
+			std::is_same<bool, std::invoke_result_t<func_type, const value_type&>>::value,
 			"functor must return bool"
 		);
 
@@ -168,17 +168,17 @@ public:
 		return linq_collection_aggregator<decltype(ret)&&>(std::move(ret));
 	}
 
-	template <typename F>
-	auto order_by(F func)
+	template <typename func_type>
+	auto order_by(func_type func)
 	{
 		static_assert(
 			// non-const lvalue reference cannot bind to temproray objects,
-			// thus F(auto&) will fail the assert, but F(const auto&) succeeds
-			std::is_invocable_v<F, noncopyable_value_type>,
+			// thus func_type(auto&) will fail the assert, but func_type(const auto&) succeeds
+			std::is_invocable_v<func_type, noncopyable_value_type>,
 			"functor must have const reference argument"
 		);
 
-		typedef std::invoke_result_t<F, const value_type&> invoke_result;
+		using invoke_result = std::invoke_result_t<func_type, const value_type&>;
 
 		static_assert(
 			std::is_reference<invoke_result>::value
@@ -190,7 +190,7 @@ public:
 			return func(a) < func(b);
 		};
 
-		if constexpr (std::is_rvalue_reference<C>::value) {
+		if constexpr (std::is_rvalue_reference<collection_type>::value) {
 			std::sort(this->collection.begin(), this->collection.end(), comparer);
 			return linq_collection_aggregator<decltype(this->collection)&&>(std::move(this->collection));
 		} else {
@@ -203,22 +203,22 @@ public:
 	}
 };
 
-template <typename C>
-linq_collection_aggregator<const C&> linq(const C& collection)
+template <typename collection_type>
+linq_collection_aggregator<const collection_type&> linq(const collection_type& collection)
 {
-	return linq_collection_aggregator<const C&>(collection);
+	return linq_collection_aggregator<const collection_type&>(collection);
 }
 
-template <typename C>
-linq_collection_aggregator<const C&> linq(C& collection)
+template <typename collection_type>
+linq_collection_aggregator<const collection_type&> linq(collection_type& collection)
 {
-	return linq_collection_aggregator<const C&>(collection);
+	return linq_collection_aggregator<const collection_type&>(collection);
 }
 
-template <typename C>
-linq_collection_aggregator<C&&> linq(C&& collection)
+template <typename collection_type>
+linq_collection_aggregator<collection_type&&> linq(collection_type&& collection)
 {
-	return linq_collection_aggregator<C&&>(std::move(collection));
+	return linq_collection_aggregator<collection_type&&>(std::move(collection));
 }
 
 } // namespace utki
