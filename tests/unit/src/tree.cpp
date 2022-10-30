@@ -193,15 +193,59 @@ tst::set set("tree", [](tst::suite& suite) {
 		tst::check(t1 == t1, SL);
 	});
 
-	suite.add("constructor_from_container_lvalue_lvalue", []() {
-		using tree_int = utki::tree<int>;
-		tree_int::container_type children = { //
-			tree_int(10),
-			tree_int(20)};
-		tst::check_eq(children.size(), size_t(2), SL);
-		tree_int t(13, children);
+	suite.add("constructor_from_const_lvalue", []() {
+		using tree_str = utki::tree<std::string>;
 
-		tst::check_eq(t.value, 13, SL);
+		const std::string str("hello");
+
+		tree_str t(str);
+
+		tst::check_eq(str.size(), size_t(5), SL);
+		tst::check_eq(t.value, str, SL);
+	});
+
+	suite.add("constructor_from_lvalue", []() {
+		using tree_str = utki::tree<std::string>;
+
+		std::string str("hello");
+
+		tree_str t(str);
+
+		tst::check_eq(str.size(), size_t(5), SL);
+		tst::check_eq(t.value, str, SL);
+	});
+
+	suite.add("constructor_from_rvalue", []() {
+		using tree_str = utki::tree<std::string>;
+
+		std::string str("hello");
+
+		tree_str t(std::move(str));
+
+		tst::check_eq(
+			str.size(), // NOLINT(clang-analyzer-cplusplus.Move): intentional check that the string was moved
+			size_t(0),
+			SL
+		);
+		tst::check_eq(t.value, "hello"s, SL);
+	});
+
+	suite.add("constructor_from_container_lvalue_lvalue", []() {
+		using tree_str = utki::tree<std::string>;
+		tree_str::container_type children = { //
+			tree_str("hello"),
+			tree_str("world")};
+
+		tst::check_eq(children.size(), size_t(2), SL);
+
+		auto str = "hi"s;
+
+		tree_str t(str, children);
+
+		tst::check_eq(children.size(), size_t(2), SL);
+		tst::check_eq(str, "hi"s, SL);
+
+		tst::check_eq(t.value, str, SL);
 		tst::check_eq(
 			t.children.size(),
 			size_t(2),
@@ -212,7 +256,7 @@ tst::set set("tree", [](tst::suite& suite) {
 		);
 		tst::check_eq(
 			t.children[0].value,
-			10,
+			children[0].value,
 			[&](auto& o) {
 				o << "t.children[0].value = " << t.children[0].value;
 			},
@@ -220,7 +264,7 @@ tst::set set("tree", [](tst::suite& suite) {
 		);
 		tst::check_eq(
 			t.children[1].value,
-			20,
+			children[1].value,
 			[&](auto& o) {
 				o << "t.children[1].value = " << t.children[1].value;
 			},
@@ -229,14 +273,25 @@ tst::set set("tree", [](tst::suite& suite) {
 	});
 
 	suite.add("constructor_from_container_lvalue_rvalue", []() {
-		using tree_int = utki::tree<int>;
-		tree_int::container_type children = { //
-			tree_int(10),
-			tree_int(20)};
-		tst::check_eq(children.size(), size_t(2), SL);
-		tree_int t(13, std::move(children));
+		using tree_str = utki::tree<std::string>;
+		tree_str::container_type children = { //
+			tree_str("hello"),
+			tree_str("world")};
 
-		tst::check_eq(t.value, 13, SL);
+		tst::check_eq(children.size(), size_t(2), SL);
+
+		auto str = "hi"s;
+
+		tree_str t(str, std::move(children));
+
+		tst::check_eq(
+			children.size(), // NOLINT(clang-analyzer-cplusplus.Move): intentional check that the string was moved
+			size_t(0),
+			SL
+		);
+		tst::check_eq(str, "hi"s, SL);
+
+		tst::check_eq(t.value, str, SL);
 		tst::check_eq(
 			t.children.size(),
 			size_t(2),
@@ -247,7 +302,7 @@ tst::set set("tree", [](tst::suite& suite) {
 		);
 		tst::check_eq(
 			t.children[0].value,
-			10,
+			"hello"s,
 			[&](auto& o) {
 				o << "t.children[0].value = " << t.children[0].value;
 			},
@@ -255,7 +310,7 @@ tst::set set("tree", [](tst::suite& suite) {
 		);
 		tst::check_eq(
 			t.children[1].value,
-			20,
+			"world"s,
 			[&](auto& o) {
 				o << "t.children[1].value = " << t.children[1].value;
 			},
@@ -268,11 +323,19 @@ tst::set set("tree", [](tst::suite& suite) {
 		tree_str::container_type children = { //
 			tree_str("10"),
 			tree_str("20")};
+
 		tst::check_eq(children.size(), size_t(2), SL);
+
 		std::string str("13");
+
 		tree_str t(std::move(str), std::move(children));
 		tst::check_eq(
 			str.size(), // NOLINT(clang-analyzer-cplusplus.Move): intentional check that the string was moved
+			size_t(0),
+			SL
+		);
+		tst::check_eq(
+			children.size(), // NOLINT(clang-analyzer-cplusplus.Move): intentional check that the container was moved
 			size_t(0),
 			SL
 		);

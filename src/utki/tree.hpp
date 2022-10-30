@@ -81,17 +81,7 @@ public:
 	 * Children list of the created node is empty.
 	 * @param value - initializer of the tree node value.
 	 */
-	tree(const element_type& value) :
-		value(value)
-	{}
-
-	/**
-	 * @brief Create a tree node with the given value.
-	 * Creates a tree node and initializes its value with the given value.
-	 * Children list of the created node is empty.
-	 * @param value - initializer of the tree node value.
-	 */
-	tree(element_type&& value) :
+	tree(element_type value) :
 		value(std::move(value))
 	{}
 
@@ -100,16 +90,7 @@ public:
 	 * The value of the created node will be contructed with its default constructor.
 	 * @param children - initializer of the tree node children.
 	 */
-	tree(const container_type& children) :
-		children(children)
-	{}
-
-	/**
-	 * @brief Create a tree node with the given list of children.
-	 * The value of the created node will be contructed with its default constructor.
-	 * @param children - initializer of the tree node children.
-	 */
-	tree(container_type&& children) :
+	tree(container_type children) :
 		children(std::move(children))
 	{}
 
@@ -127,17 +108,7 @@ public:
 	 * @param value - initializer of the tree node value.
 	 * @param children - initializer of the tree node children.
 	 */
-	tree(const element_type& value, std::initializer_list<tree> children) :
-		value(value),
-		children(children)
-	{}
-
-	/**
-	 * @brief Create a tree node with the given value and list of children.
-	 * @param value - initializer of the tree node value.
-	 * @param children - initializer of the tree node children.
-	 */
-	tree(element_type&& value, std::initializer_list<tree> children) :
+	tree(element_type value, std::initializer_list<tree> children) :
 		value(std::move(value)),
 		children(children)
 	{}
@@ -147,27 +118,7 @@ public:
 	 * @param value - initializer of the tree node value.
 	 * @param children - initializer of the tree node children.
 	 */
-	tree(const element_type& value, const container_type& children) :
-		value(value),
-		children(children)
-	{}
-
-	/**
-	 * @brief Create a tree node with the given value and list of children.
-	 * @param value - initializer of the tree node value.
-	 * @param children - initializer of the tree node children.
-	 */
-	tree(const element_type& value, container_type&& children) :
-		value(value),
-		children(std::move(children))
-	{}
-
-	/**
-	 * @brief Create a tree node with the given value and list of children.
-	 * @param value - initializer of the tree node value.
-	 * @param children - initializer of the tree node children.
-	 */
-	tree(element_type&& value, container_type&& children) :
+	tree(element_type value, container_type children) :
 		value(std::move(value)),
 		children(std::move(children))
 	{}
