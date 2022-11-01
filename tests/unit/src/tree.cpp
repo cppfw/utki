@@ -223,7 +223,9 @@ tst::set set("tree", [](tst::suite& suite) {
 		tree_str t(std::move(str));
 
 		tst::check_eq(
-			str.size(), // NOLINT(clang-analyzer-cplusplus.Move): intentional check that the string was moved
+			// intentional check that the value was actually moved
+			// NOLINTNEXTLINE(bugprone-use-after-move, clang-analyzer-cplusplus.Move)
+			str.size(),
 			size_t(0),
 			SL
 		);
@@ -285,7 +287,9 @@ tst::set set("tree", [](tst::suite& suite) {
 		tree_str t(str, std::move(children));
 
 		tst::check_eq(
-			children.size(), // NOLINT(clang-analyzer-cplusplus.Move): intentional check that the string was moved
+			// intentional check that the value was actually moved
+			// NOLINTNEXTLINE(bugprone-use-after-move, clang-analyzer-cplusplus.Move)
+			children.size(),
 			size_t(0),
 			SL
 		);
@@ -330,12 +334,16 @@ tst::set set("tree", [](tst::suite& suite) {
 
 		tree_str t(std::move(str), std::move(children));
 		tst::check_eq(
-			str.size(), // NOLINT(clang-analyzer-cplusplus.Move): intentional check that the string was moved
+			// intentional check that the value was actually moved
+			// NOLINTNEXTLINE(bugprone-use-after-move, clang-analyzer-cplusplus.Move)
+			str.size(),
 			size_t(0),
 			SL
 		);
 		tst::check_eq(
-			children.size(), // NOLINT(clang-analyzer-cplusplus.Move): intentional check that the container was moved
+			// intentional check that the value was actually moved
+			// NOLINTNEXTLINE(bugprone-use-after-move, clang-analyzer-cplusplus.Move)
+			children.size(),
 			size_t(0),
 			SL
 		);

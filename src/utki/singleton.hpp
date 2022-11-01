@@ -111,7 +111,7 @@ public:
 	virtual ~intrusive_singleton() noexcept
 	{
 		ASSERT(instance_owner_type::instance.get() == static_cast<object_type*>(this))
-		instance_owner_type::instance.release();
+		[[maybe_unused]] auto ptr = instance_owner_type::instance.release();
 	}
 };
 

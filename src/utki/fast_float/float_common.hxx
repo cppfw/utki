@@ -101,6 +101,7 @@ inline bool fastfloat_strncasecmp(const char* input1, const char* input2, size_t
 {
 	char running_diff{0};
 	for (size_t i = 0; i < length; i++) {
+		// NOLINTNEXTLINE(bugprone-narrowing-conversions)
 		running_diff |= (input1[i] ^ input2[i]);
 	}
 	return (running_diff == 0) || (running_diff == 32);

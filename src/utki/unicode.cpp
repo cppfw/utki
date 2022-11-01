@@ -119,38 +119,38 @@ utki::to_utf8(char32_t c)
 			ASSERT(false)
 			break;
 		case 2:
-			ret[0] = 0xc0 | ((c >> 6) & 0x1f); // 0xc0 = 0b11000000
-			ret[1] = 0x80 | (c & 0x3f);
+			ret[0] = char(0xc0 | ((c >> 6) & 0x1f)); // 0xc0 = 0b11000000
+			ret[1] = char(0x80 | (c & 0x3f));
 			ret[2] = 0;
 			break;
 		case 3:
-			ret[0] = 0xe0 | ((c >> 12) & 0xf); // 0xe0 = 0b11100000
-			ret[1] = 0x80 | ((c >> 6) & 0x3f);
-			ret[2] = 0x80 | (c & 0x3f);
+			ret[0] = char(0xe0 | ((c >> 12) & 0xf)); // 0xe0 = 0b11100000
+			ret[1] = char(0x80 | ((c >> 6) & 0x3f));
+			ret[2] = char(0x80 | (c & 0x3f));
 			ret[3] = 0;
 			break;
 		case 4:
-			ret[0] = 0xf0 | ((c >> 18) & 0x7); // 0xf0 = 0b11110000
-			ret[1] = 0x80 | ((c >> 12) & 0x3f);
-			ret[2] = 0x80 | ((c >> 6) & 0x3f);
-			ret[3] = 0x80 | (c & 0x3f);
+			ret[0] = char(0xf0 | ((c >> 18) & 0x7)); // 0xf0 = 0b11110000
+			ret[1] = char(0x80 | ((c >> 12) & 0x3f));
+			ret[2] = char(0x80 | ((c >> 6) & 0x3f));
+			ret[3] = char(0x80 | (c & 0x3f));
 			ret[4] = 0;
 			break;
 		case 5:
-			ret[0] = 0xf8 | ((c >> 24) & 0x3); // 0xf8 = 0b11111000
-			ret[1] = 0x80 | ((c >> 18) & 0x3f);
-			ret[2] = 0x80 | ((c >> 12) & 0x3f);
-			ret[3] = 0x80 | ((c >> 6) & 0x3f);
-			ret[4] = 0x80 | (c & 0x3f);
+			ret[0] = char(0xf8 | ((c >> 24) & 0x3)); // 0xf8 = 0b11111000
+			ret[1] = char(0x80 | ((c >> 18) & 0x3f));
+			ret[2] = char(0x80 | ((c >> 12) & 0x3f));
+			ret[3] = char(0x80 | ((c >> 6) & 0x3f));
+			ret[4] = char(0x80 | (c & 0x3f));
 			ret[5] = 0;
 			break;
 		case 6:
-			ret[0] = 0xfc | ((c >> 30) & 0x1); // 0xfc = 0b11111100
-			ret[1] = 0x80 | ((c >> 24) & 0x3f);
-			ret[2] = 0x80 | ((c >> 18) & 0x3f);
-			ret[3] = 0x80 | ((c >> 12) & 0x3f);
-			ret[4] = 0x80 | ((c >> 6) & 0x3f);
-			ret[5] = 0x80 | (c & 0x3f);
+			ret[0] = char(0xfc | ((c >> 30) & 0x1)); // 0xfc = 0b11111100
+			ret[1] = char(0x80 | ((c >> 24) & 0x3f));
+			ret[2] = char(0x80 | ((c >> 18) & 0x3f));
+			ret[3] = char(0x80 | ((c >> 12) & 0x3f));
+			ret[4] = char(0x80 | ((c >> 6) & 0x3f));
+			ret[5] = char(0x80 | (c & 0x3f));
 			ret[6] = 0;
 			break;
 	}

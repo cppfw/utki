@@ -218,7 +218,7 @@ linq_collection_aggregator<const collection_type&> linq(collection_type& collect
 template <typename collection_type>
 linq_collection_aggregator<collection_type&&> linq(collection_type&& collection)
 {
-	return linq_collection_aggregator<collection_type&&>(std::move(collection));
+	return linq_collection_aggregator<collection_type&&>(std::forward<collection_type>(collection));
 }
 
 } // namespace utki

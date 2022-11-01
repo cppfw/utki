@@ -115,6 +115,7 @@ inline uint32_t number_of_digits_decimal_left_shift(const decimal& h, uint32_t s
 	uint32_t i = 0;
 	uint32_t n = pow5_b - pow5_a;
 	for (; i < n; i++) {
+		// NOLINTNEXTLINE(bugprone-branch-clone)
 		if (i >= h.num_digits) {
 			return num_new_digits - 1;
 		} else if (h.digits[i] == pow5[i]) {
