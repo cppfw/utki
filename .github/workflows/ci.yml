@@ -40,9 +40,10 @@ jobs:
           keys-asc: https://apt.llvm.org/llvm-snapshot.gpg.key
       - name: install ci tools
         run: |
-          apt --quiet install --assume-yes devscripts equivs lcov python3-pip
+          apt --quiet install --assume-yes devscripts equivs python3-pip
 
-          pip3 install git+https://github.com/eriwen/lcov-to-cobertura-xml.git
+          # install gcovr >5.2
+          pip install git+https://github.com/gcovr/gcovr.git
       - name: git clone
         uses: myci-actions/checkout@master
       - name: prepare debian package
@@ -56,24 +57,16 @@ jobs:
           locale-gen
       - name: build
         run: make config=gcov
-      - name: create lcov baseline
-        run: lcov --no-external --capture --initial --directory . --output-file ./lcov_base.info
       - name: test
         run: make config=gcov test
-      - name: collect lcov coverage data
-        run: lcov --no-external --capture --directory . --output-file lcov_test.info
-      - name: combine lcov coverage data with baseline
-        run: lcov --add-tracefile lcov_base.info --add-tracefile lcov_test.info --output-file lcov_all.info
-      - name: filter coverage data
-        run: lcov --extract lcov_all.info "$(pwd)/src/*" -o lcov.info
-      - name: generate cobertura report
-        run: lcov_cobertura lcov.info --output cobertura.xml
+      - name: generate coverage report
+        run:  gcovr -r src/ --json --json-base src > coverage.json
       - name: upload coverage data to codecov.io
         uses: codecov/codecov-action@v3
         if: always() # even if previous steps fail, this one needs to be run
         with:
           # token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
-          files: cobertura.xml
+          files: coverage.json
           # flags: unittests # optional
           name: codecov-umbrella # optional
           fail_ci_if_error: true # optional (default = false)
