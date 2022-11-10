@@ -60,13 +60,13 @@ jobs:
       - name: test
         run: make config=gcov test
       - name: generate coverage report
-        run:  gcovr -r src/ --json --json-base src > coverage.json
+        run: gcovr --filter src/ --cobertura > cobertura.xml
       - name: upload coverage data to codecov.io
         uses: codecov/codecov-action@v3
         if: always() # even if previous steps fail, this one needs to be run
         with:
           # token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
-          files: coverage.json
+          files: cobertura.xml
           # flags: unittests # optional
           name: codecov-umbrella # optional
           fail_ci_if_error: true # optional (default = false)
