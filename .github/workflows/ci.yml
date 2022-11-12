@@ -68,6 +68,10 @@ jobs:
         run: lcov --extract lcov_all.info "$(pwd)/src/*" -o lcov.info
       - name: generate cobertura report
         run: lcov_cobertura lcov.info --output cobertura.xml
+      - uses: actions/upload-artifact@v3
+        with:
+          name: cobertura.xml
+          path: cobertura.xml
       - name: upload coverage data to codecov.io
         uses: codecov/codecov-action@v3
         if: always() # even if previous steps fail, this one needs to be run
