@@ -68,7 +68,7 @@ jobs:
         run: lcov --extract lcov_all.info "$(pwd)/src/*" -o lcov.info
       - name: generate cobertura report
         run: lcov_cobertura lcov.info --output cobertura.xml
-      - name: upload coverage data to artifacts
+      - name: upload coverage report to artifacts
         uses: actions/upload-artifact@v3
         with:
           name: cobertura.xml
