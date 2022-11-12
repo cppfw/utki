@@ -61,7 +61,8 @@ jobs:
         run: make config=gcov test
       - name: generate coverage report
         run: gcovr --filter src/ --cobertura > cobertura.xml
-      - uses: actions/upload-artifact@v3
+      - name: upload coverage data to artifacts
+        uses: actions/upload-artifact@v3
         with:
           name: cobertura.xml
           path: cobertura.xml
