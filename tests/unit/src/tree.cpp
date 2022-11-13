@@ -192,6 +192,11 @@ tst::set set("tree", [](tst::suite& suite) {
 		tst::check(t1 == t2, SL);
 		tst::check(t1 == t1, SL);
 
+		t1.children[0].value = 17;
+		tst::check(!(t1 == t2), SL);
+		tst::check(t1 == t1, SL);
+
+		t1.children[0].value = 13;
 		t1.value = 20;
 		tst::check(!(t1 == t2), SL);
 		tst::check(t1 == t1, SL);
