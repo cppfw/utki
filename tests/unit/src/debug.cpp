@@ -2,6 +2,11 @@
 #include <tst/set.hpp>
 #include <utki/debug.hpp>
 
+// undefine possibly defined macro
+#ifdef assert
+#	undef assert
+#endif
+
 namespace {
 tst::set set("debug", [](tst::suite& suite) {
 	suite.add("assert_macro", []() {
@@ -18,7 +23,6 @@ tst::set set("debug", [](tst::suite& suite) {
 		ASSERT(a == 13, [&](auto& o) {
 			o << "a is not 13, a is " << a;
 		})
-		ASSERT_INFO(a == 13, "a is not 13, a is " << a)
 		a += 4;
 		utki::assert(a == 17, SL);
 	});

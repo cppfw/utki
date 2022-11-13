@@ -101,6 +101,7 @@ inline bool fastfloat_strncasecmp(const char* input1, const char* input2, size_t
 {
 	char running_diff{0};
 	for (size_t i = 0; i < length; i++) {
+		// NOLINTNEXTLINE(bugprone-narrowing-conversions)
 		running_diff |= (input1[i] ^ input2[i]);
 	}
 	return (running_diff == 0) || (running_diff == 32);
@@ -117,18 +118,15 @@ constexpr int32_t decimal_point_range = 2047;
 } // namespace
 
 struct value128 {
-	uint64_t low;
-	uint64_t high;
+	uint64_t low{0};
+	uint64_t high{0};
 
-	value128(uint64_t _low, uint64_t _high) :
-		low(_low),
-		high(_high)
+	value128(uint64_t low, uint64_t high) :
+		low(low),
+		high(high)
 	{}
 
-	value128() :
-		low(0),
-		high(0)
-	{}
+	value128() = default;
 };
 
 /* result might be undefined when input_num is zero */
@@ -173,7 +171,7 @@ fastfloat_really_inline uint64_t emulu(uint32_t x, uint32_t y)
 
 // slow emulation routine for 32-bit
 #	if !defined(__MINGW64__)
-fastfloat_really_inline uint64_t _umul128(uint64_t ab, uint64_t cd, uint64_t* hi)
+fastfloat_really_inline uint64_t _umul128(uint64_t ab, uint64_t cd, uint64_t* hi) // NOLINT
 {
 	uint64_t ad = emulu((uint32_t)(ab >> 32), (uint32_t)cd);
 	uint64_t bd = emulu((uint32_t)ab, (uint32_t)cd);
@@ -228,7 +226,7 @@ struct decimal {
 	int32_t decimal_point{0};
 	bool negative{false};
 	bool truncated{false};
-	uint8_t digits[max_digits];
+	uint8_t digits[max_digits]; // NOLINT(modernize-avoid-c-arrays)
 	decimal() = default;
 	// Copies are not allowed since this is a fat object.
 	decimal(const decimal&) = delete;
@@ -239,11 +237,23 @@ struct decimal {
 	decimal& operator=(decimal&& other) = default;
 };
 
-constexpr static double powers_of_ten_double[] = {1e0,  1e1,  1e2,  1e3,  1e4,  1e5,  1e6,  1e7,
-												  1e8,  1e9,  1e10, 1e11, 1e12, 1e13, 1e14, 1e15,
-												  1e16, 1e17, 1e18, 1e19, 1e20, 1e21, 1e22};
-constexpr static float powers_of_ten_float[] = {1e0, 1e1, 1e2, 1e3, 1e4, 1e5, 1e6, 1e7, 1e8, 1e9, 1e10};
+constexpr static double powers_of_ten_double[] = { // NOLINT(modernize-avoid-c-arrays)
+	1e0,  1e1,  1e2,  1e3,  1e4,  1e5,  1e6,  1e7,  1e8,  1e9,  1e10, 1e11,
+	1e12, 1e13, 1e14, 1e15, 1e16, 1e17, 1e18, 1e19, 1e20, 1e21, 1e22};
+constexpr static float powers_of_ten_float[] = { // NOLINT(modernize-avoid-c-arrays)
+	1e0,
+	1e1,
+	1e2,
+	1e3,
+	1e4,
+	1e5,
+	1e6,
+	1e7,
+	1e8,
+	1e9,
+	1e10};
 
+// NOLINTNEXTLINE(readability-identifier-naming)
 template <typename T>
 struct binary_format {
 	static inline constexpr int mantissa_explicit_bits();
@@ -415,6 +425,7 @@ inline constexpr int binary_format<float>::smallest_power_of_ten()
 } // namespace fast_float
 
 // for convenience:
+// NOLINTNEXTLINE(readability-identifier-naming)
 template <class OStream>
 inline OStream& operator<<(OStream& out, const fast_float::decimal& d)
 {

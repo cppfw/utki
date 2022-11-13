@@ -68,6 +68,11 @@ jobs:
         run: lcov --extract lcov_all.info "$(pwd)/src/*" -o lcov.info
       - name: generate cobertura report
         run: lcov_cobertura lcov.info --output cobertura.xml
+      - name: upload coverage report to artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: cobertura.xml
+          path: cobertura.xml
       - name: upload coverage data to codecov.io
         uses: codecov/codecov-action@v3
         if: always() # even if previous steps fail, this one needs to be run
@@ -135,6 +140,7 @@ jobs:
           - {os: debian, codename: bullseye, image_owner: arm32v7/, package_type: deb, labels: [arm,docker]}
           - {os: debian, codename: bullseye, image_owner: arm64v8/, package_type: deb, labels: [arm64,docker]}
           - {os: ubuntu, codename: focal, image_owner: , package_type: deb}
+          - {os: ubuntu, codename: jammy, image_owner: , package_type: deb}
           # - {os: raspbian, codename: buster, image_owner: igagis/, package_type: deb, labels: [arm,docker]}
           - {os: raspbian, codename: bullseye, image_owner: igagis/, package_type: deb, labels: [arm,docker]}
     runs-on: ${{ (matrix.labels == '' && 'ubuntu-latest') || matrix.labels }}

@@ -35,6 +35,11 @@ SOFTWARE.
 #	include <iostream>
 #endif
 
+// undefine possibly defined assert macro to avoid macro's name collision
+#ifdef assert
+#	undef assert
+#endif
+
 using namespace utki;
 
 namespace {

@@ -102,6 +102,16 @@
 				"$gcc"
 			],
 			"group": "build"
+		},
+		{
+			"label": "build_asan",
+			"type": "shell",
+			"command": "make config=asan",
+			"args": [],
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": "build"
 		}
 	]
 }

@@ -71,49 +71,9 @@ void log(const std::function<void(std::ostream&)>& print);
 
 } // namespace utki
 
-#if CFG_OS_NAME == CFG_OS_NAME_ANDROID
-
-// TODO: deprecated, remove.
-#	define TRACE_ALWAYS(x) \
-		{ \
-			std::stringstream ss; \
-			ss x; \
-			__android_log_write(ANDROID_LOG_INFO, "utki", ss.str().c_str()); \
-		}
-
-// TODO: deprecated, remove.
-#	define LOG_ALWAYS(x) \
-		{ \
-			std::stringstream log_string_stream; \
-			log_string_stream << x; \
-			__android_log_write(ANDROID_LOG_INFO, "utki", log_string_stream.str().c_str()); \
-		}
-
-#else
-
-// TODO: deprecated, remove.
-#	define TRACE_ALWAYS(x) \
-		std::cout x; \
-		std::cout.flush();
-
-// TODO: deprecated, remove.
-#	define LOG_ALWAYS(x) \
-		std::cout << x; \
-		std::cout.flush();
-
-#endif
-
 #ifdef DEBUG
-
-// TODO: deprecated, remove.
-#	define TRACE(x) TRACE_ALWAYS(x)
-
 #	define LOG(print) utki::log(print);
 #else
-
-// TODO: deprecated, remove.
-#	define TRACE(x)
-
 #	define LOG(x)
 #endif
 
@@ -208,9 +168,9 @@ inline void assert(
 // MSVC compiler gives warning about implicit conversion of pointer to bool,
 // so define template overloads of the assert for that
 
-template <class type>
+template <class object_type>
 void assert(
-	type* p,
+	object_type* p,
 	const std::function<void(std::ostream&)>& print,
 	utki::source_location&& source_location
 #if CFG_CPP >= 20
@@ -221,9 +181,9 @@ void assert(
 	assert(p != nullptr, print, std::move(source_location));
 }
 
-template <class type>
+template <class object_type>
 void assert(
-	type* p,
+	object_type* p,
 	utki::source_location&& source_location
 #if CFG_CPP >= 20
 	= std_source_location::current()
@@ -236,9 +196,9 @@ void assert(
 // smart pointers do not have implicit conversion to bool, so we need to define
 // template overloads of the assert function for those
 
-template <class type>
+template <class object_type>
 void assert(
-	const std::shared_ptr<type>& p,
+	const std::shared_ptr<object_type>& p,
 	const std::function<void(std::ostream&)>& print,
 	utki::source_location&& source_location
 #if CFG_CPP >= 20
@@ -249,9 +209,9 @@ void assert(
 	assert(p != nullptr, print, std::move(source_location));
 }
 
-template <class type>
+template <class object_type>
 void assert(
-	const std::shared_ptr<type>& p,
+	const std::shared_ptr<object_type>& p,
 	utki::source_location&& source_location
 #if CFG_CPP >= 20
 	= std_source_location::current()
@@ -261,9 +221,9 @@ void assert(
 	assert(p != nullptr, nullptr, std::move(source_location));
 }
 
-template <class type>
+template <class object_type>
 void assert(
-	const std::unique_ptr<type>& p,
+	const std::unique_ptr<object_type>& p,
 	const std::function<void(std::ostream&)>& print,
 	utki::source_location&& source_location
 #if CFG_CPP >= 20
@@ -274,9 +234,9 @@ void assert(
 	assert(p != nullptr, print, std::move(source_location));
 }
 
-template <class type>
+template <class object_type>
 void assert(
-	const std::unique_ptr<type>& p,
+	const std::unique_ptr<object_type>& p,
 	utki::source_location&& source_location
 #if CFG_CPP >= 20
 	= std_source_location::current()
@@ -289,9 +249,9 @@ void assert(
 // std::function does not have implicit conversion to bool, so we need to define
 // template overloads of the assert function for it
 
-template <class type>
+template <class func_type>
 void assert(
-	const std::function<type>& p,
+	const std::function<func_type>& p,
 	const std::function<void(std::ostream&)>& print,
 	utki::source_location&& source_location
 #if CFG_CPP >= 20
@@ -302,9 +262,9 @@ void assert(
 	assert(p != nullptr, print, std::move(source_location));
 }
 
-template <class type>
+template <class func_type>
 void assert(
-	const std::function<type>& p,
+	const std::function<func_type>& p,
 	utki::source_location&& source_location
 #if CFG_CPP >= 20
 	= std_source_location::current()
@@ -316,38 +276,12 @@ void assert(
 
 } // namespace utki
 
-// TODO: deprecated, remove.
-#define ASSERT_INFO_ALWAYS(x, y) \
-	utki::assert( \
-		x, \
-		[&](auto& assert_output_stream) { \
-			assert_output_stream << y; \
-		}, \
-		SL \
-	);
-
-// TODO: deprecated, remove.
-#define ASSERT_ALWAYS(x) ASSERT_INFO_ALWAYS(x, "no additional info")
-
 #ifdef DEBUG
-
-// TODO: deprecated, remove.
-#	define ASSERT_INFO(x, y) \
-		utki::assert( \
-			x, \
-			[&](auto& assert_output_stream) { \
-				assert_output_stream << y; \
-			}, \
-			SL \
-		);
 
 #	define ASSERT1(condition) utki::assert(condition, SL);
 #	define ASSERT2(condition, print) utki::assert(condition, print, SL);
 
 #else // no DEBUG macro defined
-
-// TODO: deprecated, remove.
-#	define ASSERT_INFO(x, y)
 
 #	define ASSERT1(x)
 #	define ASSERT2(x, y)

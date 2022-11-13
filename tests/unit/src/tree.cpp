@@ -8,7 +8,7 @@ namespace {
 tst::set set("tree", [](tst::suite& suite) {
 	suite.add("tree_node_default_constructor", []() {
 		utki::tree<int> t;
-		t.children.push_back(35);
+		t.children.emplace_back(35);
 		tst::check_eq(t.children.size(), size_t(1), SL);
 	});
 
@@ -191,17 +191,72 @@ tst::set set("tree", [](tst::suite& suite) {
 		tst::check_eq(t1.children[0].children[1].value, t2.children[0].children[1].value, SL);
 		tst::check(t1 == t2, SL);
 		tst::check(t1 == t1, SL);
+
+		t1.children[0].value = 17;
+		tst::check(!(t1 == t2), SL);
+		tst::check(t1 == t1, SL);
+
+		t1.children[0].value = 13;
+		t1.value = 20;
+		tst::check(!(t1 == t2), SL);
+		tst::check(t1 == t1, SL);
+	});
+
+	suite.add("constructor_from_const_lvalue", []() {
+		using tree_str = utki::tree<std::string>;
+
+		const std::string str("hello");
+
+		tree_str t(str);
+
+		tst::check_eq(str.size(), size_t(5), SL);
+		tst::check_eq(t.value, str, SL);
+	});
+
+	suite.add("constructor_from_lvalue", []() {
+		using tree_str = utki::tree<std::string>;
+
+		std::string str("hello");
+
+		tree_str t(str);
+
+		tst::check_eq(str.size(), size_t(5), SL);
+		tst::check_eq(t.value, str, SL);
+	});
+
+	suite.add("constructor_from_rvalue", []() {
+		using tree_str = utki::tree<std::string>;
+
+		std::string str("hello");
+
+		tree_str t(std::move(str));
+
+		tst::check_eq(
+			// intentional check that the value was actually moved
+			// NOLINTNEXTLINE(bugprone-use-after-move, clang-analyzer-cplusplus.Move)
+			str.size(),
+			size_t(0),
+			SL
+		);
+		tst::check_eq(t.value, "hello"s, SL);
 	});
 
 	suite.add("constructor_from_container_lvalue_lvalue", []() {
-		typedef utki::tree<int> tree_int;
-		tree_int::container_type children = { //
-			tree_int(10),
-			tree_int(20)};
-		tst::check_eq(children.size(), size_t(2), SL);
-		tree_int t(13, children);
+		using tree_str = utki::tree<std::string>;
+		tree_str::container_type children = { //
+			tree_str("hello"),
+			tree_str("world")};
 
-		tst::check_eq(t.value, 13, SL);
+		tst::check_eq(children.size(), size_t(2), SL);
+
+		auto str = "hi"s;
+
+		tree_str t(str, children);
+
+		tst::check_eq(children.size(), size_t(2), SL);
+		tst::check_eq(str, "hi"s, SL);
+
+		tst::check_eq(t.value, str, SL);
 		tst::check_eq(
 			t.children.size(),
 			size_t(2),
@@ -212,7 +267,7 @@ tst::set set("tree", [](tst::suite& suite) {
 		);
 		tst::check_eq(
 			t.children[0].value,
-			10,
+			children[0].value,
 			[&](auto& o) {
 				o << "t.children[0].value = " << t.children[0].value;
 			},
@@ -220,7 +275,7 @@ tst::set set("tree", [](tst::suite& suite) {
 		);
 		tst::check_eq(
 			t.children[1].value,
-			20,
+			children[1].value,
 			[&](auto& o) {
 				o << "t.children[1].value = " << t.children[1].value;
 			},
@@ -229,14 +284,27 @@ tst::set set("tree", [](tst::suite& suite) {
 	});
 
 	suite.add("constructor_from_container_lvalue_rvalue", []() {
-		typedef utki::tree<int> tree_int;
-		tree_int::container_type children = { //
-			tree_int(10),
-			tree_int(20)};
-		tst::check_eq(children.size(), size_t(2), SL);
-		tree_int t(13, std::move(children));
+		using tree_str = utki::tree<std::string>;
+		tree_str::container_type children = { //
+			tree_str("hello"),
+			tree_str("world")};
 
-		tst::check_eq(t.value, 13, SL);
+		tst::check_eq(children.size(), size_t(2), SL);
+
+		auto str = "hi"s;
+
+		tree_str t(str, std::move(children));
+
+		tst::check_eq(
+			// intentional check that the value was actually moved
+			// NOLINTNEXTLINE(bugprone-use-after-move, clang-analyzer-cplusplus.Move)
+			children.size(),
+			size_t(0),
+			SL
+		);
+		tst::check_eq(str, "hi"s, SL);
+
+		tst::check_eq(t.value, str, SL);
 		tst::check_eq(
 			t.children.size(),
 			size_t(2),
@@ -247,7 +315,7 @@ tst::set set("tree", [](tst::suite& suite) {
 		);
 		tst::check_eq(
 			t.children[0].value,
-			10,
+			"hello"s,
 			[&](auto& o) {
 				o << "t.children[0].value = " << t.children[0].value;
 			},
@@ -255,7 +323,7 @@ tst::set set("tree", [](tst::suite& suite) {
 		);
 		tst::check_eq(
 			t.children[1].value,
-			20,
+			"world"s,
 			[&](auto& o) {
 				o << "t.children[1].value = " << t.children[1].value;
 			},
@@ -264,15 +332,27 @@ tst::set set("tree", [](tst::suite& suite) {
 	});
 
 	suite.add("constructor_from_container_rvalue_rvalue", []() {
-		typedef utki::tree<std::string> tree_str;
+		using tree_str = utki::tree<std::string>;
 		tree_str::container_type children = { //
 			tree_str("10"),
 			tree_str("20")};
+
 		tst::check_eq(children.size(), size_t(2), SL);
+
 		std::string str("13");
+
 		tree_str t(std::move(str), std::move(children));
 		tst::check_eq(
-			str.size(), // NOLINT(clang-analyzer-cplusplus.Move): intentional check that the string was moved
+			// intentional check that the value was actually moved
+			// NOLINTNEXTLINE(bugprone-use-after-move, clang-analyzer-cplusplus.Move)
+			str.size(),
+			size_t(0),
+			SL
+		);
+		tst::check_eq(
+			// intentional check that the value was actually moved
+			// NOLINTNEXTLINE(bugprone-use-after-move, clang-analyzer-cplusplus.Move)
+			children.size(),
 			size_t(0),
 			SL
 		);
@@ -305,7 +385,7 @@ tst::set set("tree", [](tst::suite& suite) {
 	});
 
 	suite.add("traversal_non_const_container", []() {
-		typedef utki::tree<int> tree;
+		using tree = utki::tree<int>;
 		tree::container_type roots{
 			tree(1, {34, 45}),
 			tree( //
@@ -367,7 +447,7 @@ tst::set set("tree", [](tst::suite& suite) {
 	});
 
 	suite.add("traversal_const_container", []() {
-		typedef utki::tree<int> tree;
+		using tree = utki::tree<int>;
 		const tree::container_type roots{
 			tree(1, {34, 45}),
 			tree( //
@@ -403,7 +483,7 @@ tst::set set("tree", [](tst::suite& suite) {
 	});
 
 	suite.add("traversal_non_const_container_const_iterator", []() {
-		typedef utki::tree<int> tree;
+		using tree = utki::tree<int>;
 		tree::container_type roots{
 			tree(1, {34, 45}),
 			tree( //
@@ -464,7 +544,7 @@ tst::set set("tree", [](tst::suite& suite) {
 	});
 
 	suite.add("traversal_const_container_const_iterator", []() {
-		typedef utki::tree<int> tree;
+		using tree = utki::tree<int>;
 		const tree::container_type roots{
 			tree(1, {34, 45}),
 			tree( //
@@ -525,7 +605,7 @@ tst::set set("tree", [](tst::suite& suite) {
 	});
 
 	suite.add("traversal_non_const_container_reverse_iterator", []() {
-		typedef utki::tree<int> tree;
+		using tree = utki::tree<int>;
 		tree::container_type roots{
 			tree(1, {34, 45}),
 			tree( //
@@ -586,7 +666,7 @@ tst::set set("tree", [](tst::suite& suite) {
 	});
 
 	suite.add("traversal_const_container_reverse_iterator", []() {
-		typedef utki::tree<int> tree;
+		using tree = utki::tree<int>;
 		const tree::container_type roots{
 			tree(1, {34, 45}),
 			tree( //
@@ -647,7 +727,7 @@ tst::set set("tree", [](tst::suite& suite) {
 	});
 
 	suite.add("traversal_non_const_container_const_reverse_iterator", []() {
-		typedef utki::tree<int> tree;
+		using tree = utki::tree<int>;
 		tree::container_type roots{
 			tree(1, {34, 45}),
 			tree( //
@@ -708,7 +788,7 @@ tst::set set("tree", [](tst::suite& suite) {
 	});
 
 	suite.add("traversal_const_container_const_reverse_iterator", []() {
-		typedef utki::tree<int> tree;
+		using tree = utki::tree<int>;
 		const tree::container_type roots{
 			tree(1, {34, 45}),
 			tree( //
@@ -769,7 +849,7 @@ tst::set set("tree", [](tst::suite& suite) {
 	});
 
 	suite.add("traversal_non_const_container_index", []() {
-		typedef utki::tree<int> tree;
+		using tree = utki::tree<int>;
 		tree::container_type roots{
 			tree(1, {34, 45}),
 			tree( //
@@ -864,7 +944,7 @@ tst::set set("tree", [](tst::suite& suite) {
 	});
 
 	suite.add("traversal_const_container_index", []() {
-		typedef utki::tree<int> tree;
+		using tree = utki::tree<int>;
 		const tree::container_type roots{
 			tree(1, {34, 45}),
 			tree( //
@@ -959,7 +1039,7 @@ tst::set set("tree", [](tst::suite& suite) {
 	});
 
 	suite.add("traversal_check_index_is_valid", []() {
-		typedef utki::tree<int> tree;
+		using tree = utki::tree<int>;
 		const tree::container_type roots{
 			tree(1, {34, 45}),
 			tree( //
@@ -989,7 +1069,7 @@ tst::set set("tree", [](tst::suite& suite) {
 	});
 
 	suite.add("traversal_operator_square_brackets", []() {
-		typedef utki::tree<int> tree;
+		using tree = utki::tree<int>;
 		const tree::container_type roots{
 			tree(1, {34, 45}),
 			tree( //
@@ -1015,7 +1095,7 @@ tst::set set("tree", [](tst::suite& suite) {
 	});
 
 	suite.add("traversal_iterator_comparison", []() {
-		typedef utki::tree<int> tree;
+		using tree = utki::tree<int>;
 		const tree::container_type roots{
 			tree(1, {34, 45}),
 			tree( //
@@ -1043,7 +1123,7 @@ tst::set set("tree", [](tst::suite& suite) {
 	});
 
 	suite.add("traversal_insertion", []() {
-		typedef utki::tree<int> tree;
+		using tree = utki::tree<int>;
 		tree::container_type roots{
 			tree(1, {34, 45}),
 			tree( //
@@ -1069,7 +1149,7 @@ tst::set set("tree", [](tst::suite& suite) {
 	});
 
 	suite.add("traversal_insert_after", []() {
-		typedef utki::tree<int> tree;
+		using tree = utki::tree<int>;
 		tree::container_type roots{
 			tree(1, {34, 45}),
 			tree( //
@@ -1099,7 +1179,7 @@ tst::set set("tree", [](tst::suite& suite) {
 	});
 
 	suite.add("traversal_erase_non_last", []() {
-		typedef utki::tree<int> tree;
+		using tree = utki::tree<int>;
 		tree::container_type roots{
 			tree(1, {34, 45}),
 			tree( //
@@ -1122,7 +1202,7 @@ tst::set set("tree", [](tst::suite& suite) {
 	});
 
 	suite.add("traversal_erase_last_child", []() {
-		typedef utki::tree<int> tree;
+		using tree = utki::tree<int>;
 		tree::container_type roots{
 			tree(1, {34, 45}),
 			tree( //
@@ -1145,7 +1225,7 @@ tst::set set("tree", [](tst::suite& suite) {
 	});
 
 	suite.add("traversal_erase_very_last", []() {
-		typedef utki::tree<int> tree;
+		using tree = utki::tree<int>;
 		tree::container_type roots{
 			tree(1, {34, 45}),
 			tree( //
@@ -1168,7 +1248,7 @@ tst::set set("tree", [](tst::suite& suite) {
 	});
 
 	struct traversal_iterator_depth_fixture {
-		typedef utki::tree<int> tree;
+		using tree = utki::tree<int>;
 		tree::container_type roots{
 			tree(1, {34, 45}),
 			tree( //
@@ -1198,7 +1278,7 @@ tst::set set("tree", [](tst::suite& suite) {
 	);
 
 	suite.add("traversal_iterator_at_level", []() {
-		typedef utki::tree<int> tree;
+		using tree = utki::tree<int>;
 		tree::container_type roots{
 			tree(1, {34, 45}),
 			tree( //

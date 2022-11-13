@@ -1,3 +1,27 @@
+libutki (1.1.179) unstable; urgency=medium
+
+  * fix lint issues
+
+ -- Ivan Gagis <igagis@gmail.com>  Sun, 30 Oct 2022 14:41:41 +0200
+
+libutki (1.1.178) unstable; urgency=medium
+
+  * implement dynamic_reference_cast()
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 26 Oct 2022 01:57:00 +0300
+
+libutki (1.1.177) unstable; urgency=medium
+
+  * build for ubuntu jammy
+
+ -- Ivan Gagis <igagis@gmail.com>  Sat, 22 Oct 2022 01:57:42 +0300
+
+libutki (1.1.176) unstable; urgency=medium
+
+  * remove deprecated debug macros
+
+ -- Ivan Gagis <igagis@gmail.com>  Sat, 15 Oct 2022 01:44:51 +0300
+
 libutki (1.1.175) unstable; urgency=medium
 
   * remove the move constructor from shared_ref

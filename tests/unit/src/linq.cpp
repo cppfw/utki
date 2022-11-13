@@ -36,6 +36,9 @@ tst::set set("linq", [](tst::suite& suite) {
         };
 
 		tst::check(out == expected, SL);
+
+		// intentional check that the value was actually moved
+		// NOLINTNEXTLINE(bugprone-use-after-move, clang-analyzer-cplusplus.Move)
 		tst::check(in.empty(), SL);
 	});
 
@@ -154,6 +157,9 @@ tst::set set("linq", [](tst::suite& suite) {
 
 		tst::check(!out.empty(), SL);
 		tst::check(out == expected, SL);
+
+		// intentional check that the value was actually moved
+		// NOLINTNEXTLINE(bugprone-use-after-move, clang-analyzer-cplusplus.Move)
 		tst::check(in.empty(), SL);
 	});
 
@@ -273,6 +279,9 @@ tst::set set("linq", [](tst::suite& suite) {
 #	endif
 
 		tst::check(out == expected, SL);
+
+		// intentional check that the value was actually moved
+		// NOLINTNEXTLINE(bugprone-use-after-move, clang-analyzer-cplusplus.Move)
 		tst::check(in.empty(), SL);
 	});
 
@@ -378,7 +387,7 @@ tst::set set("linq", [](tst::suite& suite) {
 				std::shared_ptr<test_struct> ts;
 				int dummy;
 
-				~wrapper() {}
+				~wrapper() = default;
 
 				std::shared_ptr<test_struct> get_ts() const
 				{

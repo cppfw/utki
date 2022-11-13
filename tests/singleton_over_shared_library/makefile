@@ -27,7 +27,7 @@ this_name := tests
 
 $(eval $(call prorab-config, ../../config))
 
-this_srcs += Singleton_test.cpp
+this_srcs += singleton_test.cpp
 
 this_ldlibs += $(lib_target_name)
 

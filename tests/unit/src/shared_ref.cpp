@@ -11,6 +11,8 @@ struct a0 {
 	a0(int a) :
 		a_0(a)
 	{}
+
+	virtual ~a0() = default;
 };
 
 struct a1 : public a0 {
@@ -23,6 +25,24 @@ struct a1 : public a0 {
 };
 
 tst::set set("shared_ref", [](tst::suite& suite) {
+	static_assert(
+		!std::is_constructible_v<utki::shared_ref<std::string>>,
+		"shared_ref must not be default constructible"
+		// because shared_ref cannot be nullptr
+	);
+
+	static_assert(
+		!std::is_convertible_v<std::shared_ptr<std::string>, utki::shared_ref<std::string>>,
+		"shared_ptr must not be convertible to shared_ref"
+		// because shared_ptr can be nullptr, but shared_ref cannot
+	);
+
+	static_assert(
+		!std::is_move_constructible_v<utki::shared_ref<std::string>>,
+		"shared_ref must not be move constructible"
+		// because moved-from shared_ref cannot remain nullptr
+	);
+
 	suite.add("copy_constructor", []() {
 		utki::shared_ref<a1> sr = utki::make_shared_ref<a1>(3);
 
@@ -190,6 +210,27 @@ tst::set set("shared_ref", [](tst::suite& suite) {
 		tst::check(sp, SL);
 
 		tst::check_eq(sp->a_0, 3, SL);
+	});
+
+	suite.add("dynamic_reference_cast", []() {
+		utki::shared_ref<a0> sr = utki::make_shared_ref<a1>(3);
+
+		auto sr1 = utki::dynamic_reference_cast<a1>(sr);
+
+		tst::check_eq(sr1->a_0, 3, SL);
+	});
+
+	suite.add("dynamic_reference_cast_bad_cast", []() {
+		utki::shared_ref<a0> sr = utki::make_shared_ref<a1>(3);
+
+		bool bad_cast_thrown = false;
+		try {
+			auto sr1 = utki::dynamic_reference_cast<std::string>(sr);
+			tst::check(false, SL);
+		} catch (std::bad_cast&) {
+			bad_cast_thrown = true;
+		}
+		tst::check(bad_cast_thrown, SL);
 	});
 });
 

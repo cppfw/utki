@@ -94,6 +94,7 @@ fastfloat_really_inline int power(int q) noexcept
 // However, in some very rare cases, the computation will fail. In such cases, we
 // return an adjusted_mantissa with a negative power of 2: the caller should recompute
 // in such cases.
+// NOLINTNEXTLINE(readability-identifier-naming)
 template <typename binary>
 fastfloat_really_inline adjusted_mantissa compute_float(int64_t q, uint64_t w) noexcept
 {

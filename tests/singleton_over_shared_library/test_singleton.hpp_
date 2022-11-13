@@ -1,0 +1,11 @@
+#pragma once
+
+#include "../../src/utki/singleton.hpp"
+
+class test_singleton : public utki::singleton<test_singleton>{
+public:
+	int a{32};
+
+	test_singleton() = default;
+	~test_singleton()noexcept override = default;
+};

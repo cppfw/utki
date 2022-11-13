@@ -39,14 +39,34 @@ namespace utki {
  * Objects have to be created with make_shared_ref() in order to be managed by shared_ref.
  * The shared_ref is implemented as a wrapper around std::shared_ptr.
  *
- * @tparam T - type pointed by the pointer.
+ * The sahred_ref doesn't have a move constructor, because otherwise it would contradict to the
+ * whole idea of the non-null pointer, since moved from pointer would become null then.
+ * Because of this the recommended way to pass shared_ref as an argument to a function is
+ * via the constant reference, like:
+ *
+ * @code {.cpp}
+ * void func(const shared_ref<some_class>& str);
+ * @endcode
+ *
+ * this way the copying of the shared_ref will be deferred to the very last moment when it is actually needed.
+ *
+ * @tparam object_type - type pointed by the pointer.
  */
-template <class T>
+template <class object_type>
 class shared_ref
 {
-	std::shared_ptr<T> p;
+	template <typename other_object_type, typename... arguments_type>
+	friend shared_ref<other_object_type> make_shared_ref(arguments_type&&... args);
 
-	explicit shared_ref(std::shared_ptr<T>&& ptr) :
+	template <typename dst_type, typename src_type>
+	friend shared_ref<dst_type> dynamic_reference_cast(const shared_ref<src_type>& r);
+
+	template <class other_object_type>
+	friend utki::shared_ref<other_object_type> make_shared_from(other_object_type&);
+
+	std::shared_ptr<object_type> p;
+
+	explicit shared_ref(std::shared_ptr<object_type>&& ptr) :
 		p(std::move(ptr))
 	{
 		ASSERT(this->p)
@@ -69,13 +89,13 @@ public:
 	 * @param sr - shared_ref to convert.
 	 */
 	template < //
-		typename TT,
+		typename other_object_type,
 		typename std::enable_if_t< //
 			std::is_convertible_v< //
-				TT*,
-				T*>,
+				other_object_type*,
+				object_type*>,
 			bool> = true>
-	shared_ref(const shared_ref<TT>& sr) noexcept :
+	shared_ref(const shared_ref<other_object_type>& sr) noexcept :
 		p(sr.to_shared_ptr())
 	{
 		ASSERT(this->p)
@@ -86,7 +106,7 @@ public:
 	 *
 	 * @return Underlying std::shared_ptr.
 	 */
-	const std::shared_ptr<T>& to_shared_ptr() const noexcept
+	const std::shared_ptr<object_type>& to_shared_ptr() const noexcept
 	{
 		return this->p;
 	}
@@ -97,7 +117,7 @@ public:
 	 *
 	 * @return Underlying std::shared_ptr.
 	 */
-	operator const std::shared_ptr<T>&() const noexcept
+	operator const std::shared_ptr<object_type>&() const noexcept
 	{
 		return this->p;
 	}
@@ -105,17 +125,17 @@ public:
 	/**
 	 * @brief Convert to std::shared_ptr of convertible type.
 	 *
-	 * @tparam TT - pointed type to convert to.
-	 * @return std::shared_ptr<TT> pointing to the converted type.
+	 * @tparam other_object_type - pointed type to convert to.
+	 * @return std::shared_ptr<other_object_type> pointing to the converted type.
 	 */
 	template < //
-		typename TT,
+		typename other_object_type,
 		typename std::enable_if_t< //
 			std::is_convertible_v< //
-				T*,
-				TT*>,
+				object_type*,
+				other_object_type*>,
 			bool> = true>
-	operator std::shared_ptr<TT>() const noexcept
+	operator std::shared_ptr<other_object_type>() const noexcept
 	{
 		return this->p;
 	}
@@ -125,17 +145,17 @@ public:
 	 * This operator converts the underlying std::shared_ptr to std::weak_ptr,
 	 * possibly pointing to a convertible type.
 	 *
-	 * @tparam TT - pointed type to convert to.
-	 * @return std::weak_ptr<TT> pointing to the converted type.
+	 * @tparam other_object_type - pointed type to convert to.
+	 * @return std::weak_ptr<other_object_type> pointing to the converted type.
 	 */
 	template < //
-		typename TT,
+		typename other_object_type,
 		typename std::enable_if_t< //
 			std::is_convertible_v< //
-				T*,
-				TT*>,
+				object_type*,
+				other_object_type*>,
 			bool> = true>
-	operator std::weak_ptr<TT>() const noexcept
+	operator std::weak_ptr<other_object_type>() const noexcept
 	{
 		return this->p;
 	}
@@ -145,7 +165,7 @@ public:
 	 *
 	 * @return Const reference to the pointed type.
 	 */
-	T& get() const noexcept
+	object_type& get() const noexcept
 	{
 		return *this->p;
 	}
@@ -155,7 +175,7 @@ public:
 	 *
 	 * @return Pointer to the pointed object. Never nullptr.
 	 */
-	T* operator->() const noexcept
+	object_type* operator->() const noexcept
 	{
 		return this->p.get();
 	}
@@ -165,27 +185,44 @@ public:
 	 *
 	 * @return Reference to the pointed object.
 	 */
-	T& operator*() const noexcept
+	object_type& operator*() const noexcept
 	{
 		return *this->p;
 	}
-
-	template <typename TT, typename... A>
-	friend shared_ref<TT> make_shared_ref(A&&... args);
 };
 
 /**
  * @brief Create instance of an object managed by shared_ref.
  *
- * @tparam T - object type.
- * @tparam A - pack of object's constructor argument types.
+ * @tparam object_type - object type.
+ * @tparam arguments_type - pack of object's constructor argument types.
  * @param args - object's constructor arguments.
- * @return shared_ref<T> to the newly created object.
+ * @return shared_ref<object_type> to the newly created object.
  */
-template <typename T, typename... A>
-shared_ref<T> make_shared_ref(A&&... args)
+template <typename object_type, typename... arguments_type>
+shared_ref<object_type> make_shared_ref(arguments_type&&... args)
 {
-	return shared_ref<T>(std::make_shared<T>(std::forward<A>(args)...));
+	return shared_ref<object_type>(std::make_shared<object_type>(std::forward<arguments_type>(args)...));
+}
+
+/**
+ * @brief Perform dynamic cast of shared_ref.
+ *
+ * @tparam dst_type - cast target type.
+ * @tparam src_type - source type.
+ * @param r - shared_ref to cast.
+ * @return shared_ref to cast target type.
+ * @throw std::bad_cast in case src_type cannot be casted to dst_type.
+ */
+template <typename dst_type, typename src_type>
+shared_ref<dst_type> dynamic_reference_cast(const shared_ref<src_type>& r)
+{
+	auto p = std::dynamic_pointer_cast<dst_type>(r.to_shared_ptr());
+	if (!p) {
+		// this cast will throw std::bad_cast for us
+		[[maybe_unused]] const auto& res = dynamic_cast<dst_type&>(r.get());
+	}
+	return shared_ref<dst_type>(std::move(p));
 }
 
 } // namespace utki

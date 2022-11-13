@@ -1,19 +1,19 @@
+#include "testso.hpp_"
+#include "test_singleton.hpp_"
+
 #include "../../src/utki/debug.hpp"
 
-#include "testso.hpp_"
-#include "TestSingleton.hpp_"
-
-int& GetA(){
-	utki::assert(TestSingleton::is_created(), SL);
-	return TestSingleton::inst().a;
+int& get_a(){
+	utki::assert(test_singleton::is_created(), SL);
+	return test_singleton::inst().a;
 }
 
-void IncA(){
-	utki::assert(TestSingleton::is_created(), SL);
-	++(TestSingleton::inst().a);
+void inc_a(){
+	utki::assert(test_singleton::is_created(), SL);
+	++(test_singleton::inst().a);
 }
 
-void PrintA(){
-	utki::assert(TestSingleton::is_created(), SL);
-	utki::log([](auto&o){o << "PrintA(): a = " << TestSingleton::inst().a << std::endl;});
+void print_a(){
+	utki::assert(test_singleton::is_created(), SL);
+	utki::log([](auto&o){o << "PrintA(): a = " << test_singleton::inst().a << std::endl;});
 }

@@ -47,7 +47,7 @@ public:
 	/**
 	 * @brief Create undefined iterator.
 	 */
-	utf8_iterator() {}
+	utf8_iterator() = default;
 
 	utf8_iterator(utki::span<const uint8_t> str);
 

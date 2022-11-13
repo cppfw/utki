@@ -61,6 +61,7 @@ struct from_chars_result {
  * to determine whether we allowe the fixed point and scientific notation respectively.
  * The default is  `fast_float::chars_format::general` which allows both `fixed` and `scientific`.
  */
+// NOLINTNEXTLINE(readability-identifier-naming)
 template <typename T>
 from_chars_result from_chars(
 	const char* first,

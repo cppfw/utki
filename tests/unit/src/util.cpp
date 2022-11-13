@@ -94,7 +94,7 @@ tst::set set("util", [](tst::suite& suite) {
 
 #if CFG_COMPILER != CFG_COMPILER_MSVC || CFG_COMPILER_MSVC_TOOLS_V >= 142
 	suite.add("variant_get_index", []() {
-		typedef std::variant<int, const char*, std::string, std::pair<bool, int>> variant_type;
+		using variant_type = std::variant<int, const char*, std::string, std::pair<bool, int>>;
 
 		std::array<variant_type, std::variant_size<variant_type>::value> variants = {
 			{std::string("hello world!"), int(123), "const char*", std::make_pair(true, 45)}
@@ -107,16 +107,16 @@ tst::set set("util", [](tst::suite& suite) {
 		for (auto& v : variants) {
 			switch (v.index()) {
 				case utki::get_index<int, decltype(variants)::value_type>::value:
-					res.push_back("int");
+					res.emplace_back("int");
 					break;
 				case utki::get_index<std::pair<bool, int>, decltype(variants)::value_type>::value:
-					res.push_back("pair");
+					res.emplace_back("pair");
 					break;
 				case utki::get_index<std::string, decltype(variants)::value_type>::value:
-					res.push_back("string");
+					res.emplace_back("string");
 					break;
 				case utki::get_index<const char*, decltype(variants)::value_type>::value:
-					res.push_back("const char*");
+					res.emplace_back("const char*");
 					break;
 				default:
 					break;
