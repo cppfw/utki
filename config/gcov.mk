@@ -6,5 +6,6 @@ this_cxxflags += -O0
 
 this_cxxflags += -ftest-coverage
 this_cxxflags += -fprofile-arcs
+this_cxxflags += --coverage
 
 this_ldflags += --coverage
