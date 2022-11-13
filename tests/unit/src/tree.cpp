@@ -191,6 +191,10 @@ tst::set set("tree", [](tst::suite& suite) {
 		tst::check_eq(t1.children[0].children[1].value, t2.children[0].children[1].value, SL);
 		tst::check(t1 == t2, SL);
 		tst::check(t1 == t1, SL);
+
+		t1.value = 20;
+		tst::check(!(t1 == t2), SL);
+		tst::check(t1 == t1, SL);
 	});
 
 	suite.add("constructor_from_const_lvalue", []() {
