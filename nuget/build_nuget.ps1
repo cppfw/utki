@@ -54,22 +54,22 @@ If(!$?){exit 1}
 msbuild /m ../msvs_solution/msvs_solution.sln /t:Rebuild /p:Configuration=v142_Release_MT /p:Platform=x64 /v:minimal /nologo
 If(!$?){exit 1}
 
-# msbuild /m ../msvs_solution/msvs_solution.sln /t:Rebuild /p:Configuration=v143_Debug_MD /p:Platform=x86 /v:minimal /nologo
-# If(!$?){exit 1}
-# msbuild /m ../msvs_solution/msvs_solution.sln /t:Rebuild /p:Configuration=v143_Release_MD /p:Platform=x86 /v:minimal /nologo
-# If(!$?){exit 1}
-# msbuild /m ../msvs_solution/msvs_solution.sln /t:Rebuild /p:Configuration=v143_Debug_MD /p:Platform=x64 /v:minimal /nologo
-# If(!$?){exit 1}
-# msbuild /m ../msvs_solution/msvs_solution.sln /t:Rebuild /p:Configuration=v143_Release_MD /p:Platform=x64 /v:minimal /nologo
-# If(!$?){exit 1}
-# msbuild /m ../msvs_solution/msvs_solution.sln /t:Rebuild /p:Configuration=v143_Debug_MT /p:Platform=x86 /v:minimal /nologo
-# If(!$?){exit 1}
-# msbuild /m ../msvs_solution/msvs_solution.sln /t:Rebuild /p:Configuration=v143_Release_MT /p:Platform=x86 /v:minimal /nologo
-# If(!$?){exit 1}
-# msbuild /m ../msvs_solution/msvs_solution.sln /t:Rebuild /p:Configuration=v143_Debug_MT /p:Platform=x64 /v:minimal /nologo
-# If(!$?){exit 1}
-# msbuild /m ../msvs_solution/msvs_solution.sln /t:Rebuild /p:Configuration=v143_Release_MT /p:Platform=x64 /v:minimal /nologo
-# If(!$?){exit 1}
+msbuild /m ../msvs_solution/msvs_solution.sln /t:Rebuild /p:Configuration=v143_Debug_MD /p:Platform=x86 /v:minimal /nologo
+If(!$?){exit 1}
+msbuild /m ../msvs_solution/msvs_solution.sln /t:Rebuild /p:Configuration=v143_Release_MD /p:Platform=x86 /v:minimal /nologo
+If(!$?){exit 1}
+msbuild /m ../msvs_solution/msvs_solution.sln /t:Rebuild /p:Configuration=v143_Debug_MD /p:Platform=x64 /v:minimal /nologo
+If(!$?){exit 1}
+msbuild /m ../msvs_solution/msvs_solution.sln /t:Rebuild /p:Configuration=v143_Release_MD /p:Platform=x64 /v:minimal /nologo
+If(!$?){exit 1}
+msbuild /m ../msvs_solution/msvs_solution.sln /t:Rebuild /p:Configuration=v143_Debug_MT /p:Platform=x86 /v:minimal /nologo
+If(!$?){exit 1}
+msbuild /m ../msvs_solution/msvs_solution.sln /t:Rebuild /p:Configuration=v143_Release_MT /p:Platform=x86 /v:minimal /nologo
+If(!$?){exit 1}
+msbuild /m ../msvs_solution/msvs_solution.sln /t:Rebuild /p:Configuration=v143_Debug_MT /p:Platform=x64 /v:minimal /nologo
+If(!$?){exit 1}
+msbuild /m ../msvs_solution/msvs_solution.sln /t:Rebuild /p:Configuration=v143_Release_MT /p:Platform=x64 /v:minimal /nologo
+If(!$?){exit 1}
 
 Write-Host "running tests..."
 # run release tests first
@@ -83,14 +83,14 @@ Write-Host "running tests..."
 ../msvs_solution/x64/v142_Debug_MT/unit_tests.exe   --jobs=2 --junit-out=junit_x64_v142_debug_mt.xml; If(!$?){exit 1}
 
 # run release tests first
-# ../msvs_solution/v143_Release_MD/unit_tests.exe     --jobs=2 --junit-out=junit_x86_v143_release_md.xml; If(!$?){exit 1}
-# ../msvs_solution/v143_Release_MT/unit_tests.exe     --jobs=2 --junit-out=junit_x86_v143_release_mt.xml; If(!$?){exit 1}
-# ../msvs_solution/x64/v143_Release_MD/unit_tests.exe --jobs=2 --junit-out=junit_x64_v143_release_md.xml; If(!$?){exit 1}
-# ../msvs_solution/x64/v143_Release_MT/unit_tests.exe --jobs=2 --junit-out=junit_x64_v143_release_mt.xml; If(!$?){exit 1}
-# ../msvs_solution/v143_Debug_MD/unit_tests.exe       --jobs=2 --junit-out=junit_x86_v143_debug_md.xml; If(!$?){exit 1}
-# ../msvs_solution/v143_Debug_MT/unit_tests.exe       --jobs=2 --junit-out=junit_x86_v143_debug_mt.xml; If(!$?){exit 1}
-# ../msvs_solution/x64/v143_Debug_MD/unit_tests.exe   --jobs=2 --junit-out=junit_x64_v143_debug_md.xml; If(!$?){exit 1}
-# ../msvs_solution/x64/v143_Debug_MT/unit_tests.exe   --jobs=2 --junit-out=junit_x64_v143_debug_mt.xml; If(!$?){exit 1}
+../msvs_solution/v143_Release_MD/unit_tests.exe     --jobs=2 --junit-out=junit_x86_v143_release_md.xml; If(!$?){exit 1}
+../msvs_solution/v143_Release_MT/unit_tests.exe     --jobs=2 --junit-out=junit_x86_v143_release_mt.xml; If(!$?){exit 1}
+../msvs_solution/x64/v143_Release_MD/unit_tests.exe --jobs=2 --junit-out=junit_x64_v143_release_md.xml; If(!$?){exit 1}
+../msvs_solution/x64/v143_Release_MT/unit_tests.exe --jobs=2 --junit-out=junit_x64_v143_release_mt.xml; If(!$?){exit 1}
+../msvs_solution/v143_Debug_MD/unit_tests.exe       --jobs=2 --junit-out=junit_x86_v143_debug_md.xml; If(!$?){exit 1}
+../msvs_solution/v143_Debug_MT/unit_tests.exe       --jobs=2 --junit-out=junit_x86_v143_debug_mt.xml; If(!$?){exit 1}
+../msvs_solution/x64/v143_Debug_MD/unit_tests.exe   --jobs=2 --junit-out=junit_x64_v143_debug_md.xml; If(!$?){exit 1}
+../msvs_solution/x64/v143_Debug_MT/unit_tests.exe   --jobs=2 --junit-out=junit_x64_v143_debug_mt.xml; If(!$?){exit 1}
 
 Write-NuGetPackage nuget.autopkg
 If(!$?){exit 1}
