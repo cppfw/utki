@@ -1,3 +1,9 @@
+libutki (1.1.180) unstable; urgency=medium
+
+  * build for v143 tools
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 09 Dec 2022 23:38:13 +0200
+
 libutki (1.1.179) unstable; urgency=medium
 
   * fix lint issues
