@@ -234,6 +234,32 @@ tst::set set("shared_ref", [](tst::suite& suite) {
 	});
 
 	suite.add("move_constructor", []() {
+		auto a = utki::make_shared_ref<a1>(13);
+
+		tst::check_eq(a->a_0, 13, SL);
+
+		decltype(a) b(std::move(a));
+
+		tst::check_eq(a->a_0, 13, SL);
+		tst::check_eq(b->a_0, 13, SL);
+	});
+
+	suite.add("move_assignment", []() {
+		auto a = utki::make_shared_ref<a1>(13);
+
+		tst::check_eq(a->a_0, 13, SL);
+
+		auto b = utki::make_shared_ref<a1>(10);
+
+		tst::check_eq(b->a_0, 10, SL);
+
+		b = std::move(a);
+
+		tst::check_eq(a->a_0, 13, SL);
+		tst::check_eq(b->a_0, 13, SL);
+	});
+
+	suite.add("move_constructible_and_move_assignable", []() {
 		std::vector<utki::shared_ref<a0>> vec = {
 			utki::make_shared_ref<a1>(1),
 			utki::make_shared_ref<a1>(2),
