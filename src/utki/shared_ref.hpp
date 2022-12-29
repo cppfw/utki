@@ -76,9 +76,6 @@ public:
 	// there should be no default constructor, as shared_ref cannot be nullptr
 	shared_ref() = delete;
 
-	// moved-from shared_ref cannot remain nullptr, so there should be no move constructor
-	shared_ref(shared_ref&&) = delete;
-
 	shared_ref(const shared_ref&) = default;
 	shared_ref& operator=(const shared_ref&) = default;
 

@@ -38,9 +38,9 @@ tst::set set("shared_ref", [](tst::suite& suite) {
 	);
 
 	static_assert(
-		!std::is_move_constructible_v<utki::shared_ref<std::string>>,
-		"shared_ref must not be move constructible"
-		// because moved-from shared_ref cannot remain nullptr
+		std::is_move_constructible_v<utki::shared_ref<std::string>>,
+		"shared_ref must be move constructible"
+		// moved-from shared_ref remains valid
 	);
 
 	suite.add("copy_constructor", []() {
@@ -231,6 +231,25 @@ tst::set set("shared_ref", [](tst::suite& suite) {
 			bad_cast_thrown = true;
 		}
 		tst::check(bad_cast_thrown, SL);
+	});
+
+	suite.add("move_constructor", []() {
+		std::vector<utki::shared_ref<a0>> vec = {
+			utki::make_shared_ref<a1>(1),
+			utki::make_shared_ref<a1>(2),
+			utki::make_shared_ref<a1>(3)};
+
+		tst::check_eq(vec[0]->a_0, 1, SL);
+		tst::check_eq(vec[1]->a_0, 2, SL);
+		tst::check_eq(vec[2]->a_0, 3, SL);
+
+		// std::rotate requires container element type to be
+		// MoveAssignable and MoveConstructible
+		std::rotate(vec.begin(), std::next(vec.begin()), vec.end());
+
+		tst::check_eq(vec[0]->a_0, 2, SL);
+		tst::check_eq(vec[1]->a_0, 3, SL);
+		tst::check_eq(vec[2]->a_0, 1, SL);
 	});
 });
 
