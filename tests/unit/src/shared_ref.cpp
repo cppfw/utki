@@ -240,7 +240,9 @@ tst::set set("shared_ref", [](tst::suite& suite) {
 
 		decltype(a) b(std::move(a));
 
-		tst::check_eq(a->a_0, 13, SL);
+		// 'a' should remain valid and not lead to crash
+		tst::check_eq(a->a_0, 13, SL); // NOLINT(bugprone-use-after-move)
+
 		tst::check_eq(b->a_0, 13, SL);
 	});
 
@@ -255,7 +257,9 @@ tst::set set("shared_ref", [](tst::suite& suite) {
 
 		b = std::move(a);
 
-		tst::check_eq(a->a_0, 13, SL);
+		// 'a' should remain valid and not lead to crash
+		tst::check_eq(a->a_0, 13, SL); // NOLINT(bugprone-use-after-move)
+
 		tst::check_eq(b->a_0, 13, SL);
 	});
 
