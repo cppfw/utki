@@ -66,6 +66,12 @@ class shared_ref
 
 	std::shared_ptr<object_type> p;
 
+public:
+	/**
+	 * @brief Construct a new shared_ref from non-null std::shared_ptr.
+	 * @param ptr - std::shared_ptr pointer used to initialize the shared_ref.
+	 *              Must not be null, otherwise it is undefined behaviour.
+	 */
 	explicit shared_ref(std::shared_ptr<object_type>&& ptr) :
 		p(std::move(ptr))
 	{
