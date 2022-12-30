@@ -1,3 +1,9 @@
+libutki (1.1.182) unstable; urgency=medium
+
+  * add explicit shared_ref(shared_ptr&&) constructor
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 30 Dec 2022 16:00:21 +0200
+
 libutki (1.1.181) unstable; urgency=medium
 
   * make shared_ref MoveConstructible and MoveAssignable
