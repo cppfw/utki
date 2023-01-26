@@ -1,3 +1,9 @@
+libutki (1.1.183) unstable; urgency=medium
+
+  * add support for enable_shared_from_this to make_shared_from()
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 26 Jan 2023 15:10:43 +0200
+
 libutki (1.1.182) unstable; urgency=medium
 
   * add explicit shared_ref(shared_ptr&&) constructor
