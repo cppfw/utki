@@ -57,7 +57,7 @@ tst::set set("shared", [](tst::suite& suite) {
 		tst::check_eq(p->a, 4, SL);
 	});
 
-	suite.add("make_shared_from", []() {
+	suite.add("make_shared_from__shared", []() {
 		auto o = std::make_shared<test_class>();
 		tst::check(o, SL);
 
@@ -65,7 +65,7 @@ tst::set set("shared", [](tst::suite& suite) {
 		tst::check_eq(sft->a, 4, SL);
 	});
 
-	suite.add("make_weak_from", []() {
+	suite.add("make_weak_from__shared", []() {
 		auto o = std::make_shared<test_class>();
 		tst::check(o, SL);
 

@@ -61,9 +61,6 @@ class shared_ref
 	template <typename dst_type, typename src_type>
 	friend shared_ref<dst_type> dynamic_reference_cast(const shared_ref<src_type>& r);
 
-	template <class other_object_type>
-	friend utki::shared_ref<other_object_type> make_shared_from(other_object_type&);
-
 	std::shared_ptr<object_type> p;
 
 public:
