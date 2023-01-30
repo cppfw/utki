@@ -61,21 +61,11 @@ class shared_ref
 	template <typename dst_type, typename src_type>
 	friend shared_ref<dst_type> dynamic_reference_cast(const shared_ref<src_type>& r);
 
-	template <class other_object_type>
-	friend utki::shared_ref<other_object_type> make_shared_from(other_object_type& o);
-
-	template <typename other_object_type>
-	friend shared_ref<other_object_type> make_shared_ref_from(std::shared_ptr<other_object_type>&& ptr);
-
 	std::shared_ptr<object_type> p;
 
+public:
 	/**
 	 * @brief Construct a new shared_ref from non-null std::shared_ptr.
-	 * The constructor is private because it is only for internal use.
-	 * This constructor does not check if supplied std::shared_ptr is nullptr.
-	 * Passing nullptr as argument will result in undefined behaviour.
-	 * Use utki::make_shared_ref_from() to construct the utki::shared_ref from std::shared_ptr
-	 * in applications.
 	 * @param ptr - std::shared_ptr pointer to initialize the shared_ref.
 	 *              Must not be null, otherwise it causes undefined behaviour.
 	 */
@@ -220,21 +210,6 @@ template <typename object_type, typename... arguments_type>
 shared_ref<object_type> make_shared_ref(arguments_type&&... args)
 {
 	return shared_ref<object_type>(std::make_shared<object_type>(std::forward<arguments_type>(args)...));
-}
-
-/**
- * @brief Construct a new shared_ref from non-null std::shared_ptr.
- * @param ptr - std::shared_ptr pointer to initialize the shared_ref.
- * @throw std::invalid_argument when nullptr is supplied as argument.
- */
-template <typename object_type>
-shared_ref<object_type> make_shared_ref_from(std::shared_ptr<object_type>&& ptr)
-{
-	if (!ptr) {
-		throw std::invalid_argument("utki::make_shared_ref_from(): cannot create shared_ref from nullptr");
-	}
-
-	return shared_ref<object_type>(std::move(ptr));
 }
 
 /**
