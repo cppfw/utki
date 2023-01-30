@@ -102,5 +102,14 @@ tst::set set("shared", [](tst::suite& suite) {
 		tst::check(sft.lock(), SL);
 		tst::check_eq(sft.lock()->a, 4, SL);
 	});
+
+	suite.add("make_shared_ref_from__std_shared_ptr", []() {
+		auto o = std::make_shared<test_class>();
+		tst::check(o, SL);
+
+		auto sr = utki::make_shared_ref_from(std::move(o));
+		tst::check(!o, SL);
+		tst::check_eq(sr->a, 4, SL);
+	});
 });
 } // namespace
