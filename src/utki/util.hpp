@@ -92,7 +92,11 @@ public:
 	~scope_exit() noexcept
 	{
 		if (this->f) {
-			this->f();
+			try {
+				this->f();
+			} catch (...) {
+				// ignore
+			}
 		}
 	}
 

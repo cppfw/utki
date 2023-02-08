@@ -112,6 +112,16 @@
 				"$gcc"
 			],
 			"group": "build"
+		},
+		{
+			"label": "lint",
+			"type": "shell",
+			"command": "make config=tidy",
+			"args": [],
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": "build"
 		}
 	]
 }
