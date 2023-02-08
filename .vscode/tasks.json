@@ -114,7 +114,7 @@
 			"group": "build"
 		},
 		{
-			"label": "lint",
+			"label": "tidy",
 			"type": "shell",
 			"command": "make config=tidy",
 			"args": [],
