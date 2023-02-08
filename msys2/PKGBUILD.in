@@ -34,7 +34,6 @@ makedepends=(
 		'prorab'
 		'prorab-extra'
 		'doxygen'
-		"${pkgPrefix}toolchain"
 		"${pkgPrefix}clang" # for clang-format
 		"${pkgPrefix}clang-tools-extra" # for clang-tidy
 	)

@@ -303,6 +303,7 @@ jobs:
         msystem: MSYS
         install: >-
           msys2-devel
+          mingw-w64-${{ matrix.arch }}-toolchain
     - name: add cppfw pacman msys repo
       uses: myci-actions/add-pacman-repo@master
       with:
