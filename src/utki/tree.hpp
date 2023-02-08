@@ -129,7 +129,7 @@ public:
 	 * This operator is provided for compatibility with STL algorithms.
 	 */
 	template <typename compare_value_type>
-	bool operator==(const compare_value_type& value) const noexcept
+	bool operator==(const compare_value_type& value) const
 	{
 		return this->value == value;
 	}
@@ -259,7 +259,7 @@ private:
 		 * a traversal of the tree. I.e. visiting each tree node.
 		 * @return Reference to this iterator.
 		 */
-		iterator_internal& operator++() noexcept
+		iterator_internal& operator++()
 		{
 			ASSERT(!this->iter_stack.empty())
 			ASSERT(this->iter_stack.size() == this->list_stack.size())
@@ -297,7 +297,7 @@ private:
 		 * a traversal of the tree. I.e. visiting each tree node.
 		 * @return Reference to this iterator.
 		 */
-		iterator_internal& operator--() noexcept
+		iterator_internal& operator--()
 		{
 			ASSERT(!this->iter_stack.empty())
 			ASSERT(!this->list_stack.empty())
@@ -440,7 +440,7 @@ private:
 		 * tree node children lists starting from the root list of tree nodes.
 		 * @return the index into tree hierarchy of the tree node this iterator points to.
 		 */
-		std::vector<size_type> index() const noexcept
+		std::vector<size_type> index() const
 		{
 			ASSERT(this->iter_stack.size() == this->list_stack.size())
 			std::vector<size_type> ret;
@@ -765,7 +765,7 @@ public:
 	 * @brief Get constant reverse iterator pointing to the reverse beginning of the tree hierarchy.
 	 * @return Constant reverse iterator pointing to the reverse beginning of the tree hierarchy.
 	 */
-	const_reverse_iterator crbegin() const noexcept
+	const_reverse_iterator crbegin() const
 	{
 		return const_reverse_iterator(this->cend());
 	}
@@ -774,7 +774,7 @@ public:
 	 * @brief Get constant reverse iterator pointing to the reverse end of the tree hierarchy.
 	 * @return constant reverse iterator pointing to the reverse end of the tree hierarchy.
 	 */
-	const_reverse_iterator crend() const noexcept
+	const_reverse_iterator crend() const
 	{
 		return const_reverse_iterator(this->cbegin());
 	}
@@ -783,7 +783,7 @@ public:
 	 * @brief Get reverse iterator pointing to the reverse beginning of the tree hierarchy.
 	 * @return Reverse iterator pointing to the reverse beginning of the tree hierarchy.
 	 */
-	reverse_iterator rbegin() noexcept
+	reverse_iterator rbegin()
 	{
 		return reverse_iterator(this->end());
 	}
@@ -792,7 +792,7 @@ public:
 	 * @brief Get reverse iterator pointing to the reverse end of the tree hierarchy.
 	 * @return Reverse iterator pointing to the reverse end of the tree hierarchy.
 	 */
-	reverse_iterator rend() noexcept
+	reverse_iterator rend()
 	{
 		return reverse_iterator(this->begin());
 	}
