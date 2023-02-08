@@ -149,6 +149,8 @@ tst::set set("tree", [](tst::suite& suite) {
 		struct wrapper {
 			std::string str;
 
+			wrapper() = default;
+
 			bool operator==(const char* str) const
 			{
 				return this->str == str;
