@@ -34,6 +34,7 @@ makedepends=(
 		'prorab'
 		'prorab-extra'
 		'doxygen'
+		"${pkgPrefix}toolchain"
 		"${pkgPrefix}clang" # for clang-format
 		"${pkgPrefix}clang-tools-extra" # for clang-tidy
 	)
@@ -59,6 +60,10 @@ prepare() {
 
 build() {
 	cd "$rootDir"
+
+	# lint
+	make config=tidy
+
 	make
 }
 

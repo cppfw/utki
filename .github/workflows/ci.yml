@@ -173,6 +173,8 @@ jobs:
         run: |
           echo "de_DE.UTF-8 UTF-8" >> /etc/locale.gen
           locale-gen
+      - name: lint
+        run: make config=tidy
       - name: build
         run: dpkg-buildpackage --unsigned-source --unsigned-changes
       - name: deploy deb packages
@@ -197,6 +199,8 @@ jobs:
       with: {name: PATH, value: "/usr/local/opt/make/libexec/gnubin:$PATH"}
     - name: install deps
       run: myci-brew-install.sh `myci-list-deps-homebrew.sh`
+    - name: lint
+      run: make config=tidy
     - name: build
       run: make
     - name: test
@@ -293,7 +297,6 @@ jobs:
         msystem: MSYS
         install: >-
           msys2-devel
-          mingw-w64-${{ matrix.arch }}-toolchain
     - name: add cppfw pacman msys repo
       uses: myci-actions/add-pacman-repo@master
       with:
