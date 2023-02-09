@@ -59,10 +59,6 @@ prepare() {
 
 build() {
 	cd "$rootDir"
-
-	# lint
-	make config=tidy
-
 	make
 }
 

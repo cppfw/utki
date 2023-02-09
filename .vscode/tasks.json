@@ -17,10 +17,10 @@
 			"group": "build"
 		},
 		{
-			"label": "test_dbg",
+			"label": "test-dbg",
 			"type": "shell",
 			"command": "make test config=dbg",
-			"dependsOn": "build_dbg",
+			"dependsOn": "build-dbg",
 			"problemMatcher": [],
 			"group": "build"
 		},
@@ -28,7 +28,7 @@
 			"label": "test_gcov",
 			"type": "shell",
 			"command": "make test config=gcov",
-			"dependsOn": "build_dbg",
+			"dependsOn": "build-dbg",
 			"problemMatcher": [],
 			"group": "build"
 		},
@@ -67,7 +67,7 @@
 			"group": "build"
 		},
 		{
-			"label": "clean_dbg",
+			"label": "clean-dbg",
 			"type": "shell",
 			"command": "make clean config=dbg",
 			"problemMatcher": [],
@@ -76,7 +76,7 @@
 		{
 			"label": "build",
 			"type": "shell",
-			"command": "make",
+			"command": "make lint=off",
 			"args": [],
 			"problemMatcher": [
 				"$gcc"
@@ -84,9 +84,9 @@
 			"group": "build"
 		},
 		{
-			"label": "build_clang",
+			"label": "build-clang",
 			"type": "shell",
-			"command": "CXX=clang++ make",
+			"command": "CXX=clang++ make lint=off",
 			"args": [],
 			"problemMatcher": [
 				"$gcc"
@@ -94,7 +94,7 @@
 			"group": "build"
 		},
 		{
-			"label": "build_dbg",
+			"label": "build-dbg",
 			"type": "shell",
 			"command": "make config=dbg",
 			"args": [],
@@ -107,16 +107,6 @@
 			"label": "build_asan",
 			"type": "shell",
 			"command": "make config=asan",
-			"args": [],
-			"problemMatcher": [
-				"$gcc"
-			],
-			"group": "build"
-		},
-		{
-			"label": "tidy",
-			"type": "shell",
-			"command": "make config=tidy",
 			"args": [],
 			"problemMatcher": [
 				"$gcc"
