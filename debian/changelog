@@ -1,3 +1,9 @@
+libutki (1.1.185) unstable; urgency=medium
+
+  * add utki::next()
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 10 Feb 2023 13:04:58 +0200
+
 libutki (1.1.184) unstable; urgency=medium
 
   * fix lint issues
