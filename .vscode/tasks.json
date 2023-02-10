@@ -76,7 +76,7 @@
 		{
 			"label": "build",
 			"type": "shell",
-			"command": "make lint=off",
+			"command": "make",
 			"args": [],
 			"problemMatcher": [
 				"$gcc"
@@ -86,7 +86,7 @@
 		{
 			"label": "build-clang",
 			"type": "shell",
-			"command": "CXX=clang++ make lint=off",
+			"command": "CXX=clang++ make",
 			"args": [],
 			"problemMatcher": [
 				"$gcc"

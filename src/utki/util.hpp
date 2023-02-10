@@ -36,6 +36,28 @@ SOFTWARE.
 namespace utki {
 
 /**
+ * @brief Returns the advance of iterator.
+ * Same as std::next() but only moves forward and accepts size_t
+ * as number of steps to advance.
+ * @param iter - iterator to get advance of.
+ * @param n - number of steps to advance.
+ * @return Advance of the iterator.
+ */
+template <typename iterator_type>
+iterator_type next(iterator_type iter, size_t n)
+{
+	const auto max_advance = std::numeric_limits<typename std::iterator_traits<iterator_type>::difference_type>::max();
+	for (size_t num_left = n;;) {
+		if (num_left > size_t(max_advance)) {
+			num_left -= max_advance;
+			iter = std::next(iter, max_advance);
+		} else {
+			return std::next(iter, num_left);
+		}
+	}
+}
+
+/**
  * @brief Construct std::pair with swapped components.
  * @param p - initial std::pair.
  * @return a new std::pair with swapped component.
