@@ -28,9 +28,9 @@ SOFTWARE.
 
 #include <algorithm>
 #include <functional>
+#include <limits>
 #include <map>
 #include <memory>
-#include <limits>
 
 #include "debug.hpp"
 
