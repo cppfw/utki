@@ -833,6 +833,50 @@ tst::set set("string", [](tst::suite& suite) {
 			);
 		}
 	});
+
+	suite.add("string_parser_skip_inclusive_until_one_of", []() {
+		auto str = "Hello _ World!";
+
+		utki::string_parser p(str);
+
+		tst::check_eq(p.peek_char(), 'H', SL);
+
+		{
+			const std::array<char, 2> one_of = {'W', 'o'};
+			auto c = p.skip_inclusive_until_one_of(one_of);
+			tst::check(!p.empty(), SL);
+			tst::check_eq(p.peek_char(), ' ', SL);
+			tst::check_eq(c, 'o', SL);
+		}
+
+		{
+			const std::array<char, 2> one_of = {'W', 'o'};
+			auto c = p.skip_inclusive_until_one_of(one_of);
+			tst::check(!p.empty(), SL);
+			tst::check_eq(p.peek_char(), 'o', SL);
+			tst::check_eq(c, 'W', SL);
+		}
+
+		{
+			auto c = p.skip_inclusive_until_one_of("Wnm");
+			tst::check(p.empty(), SL);
+			tst::check_eq(c, '\0', SL);
+		}
+	});
+
+	suite.add("string_parser_skip_inclusive_until_one_of__empty_char_set", []() {
+		auto str = "Hello _ World!";
+
+		utki::string_parser p(str);
+
+		tst::check_eq(p.peek_char(), 'H', SL);
+
+		{
+			auto c = p.skip_inclusive_until_one_of(nullptr);
+			tst::check(p.empty(), SL);
+			tst::check_eq(c, '\0', SL);
+		}
+	});
 });
 } // namespace
 

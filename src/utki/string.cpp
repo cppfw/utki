@@ -316,6 +316,18 @@ void string_parser::skip_inclusive_until(char c)
 	}
 }
 
+char string_parser::skip_inclusive_until_one_of(utki::span<const char> c)
+{
+	for (; !this->view.empty(); this->view = this->view.substr(1)) {
+		auto i = std::find(c.begin(), c.end(), this->view.front());
+		if (i != c.end()) {
+			this->view = this->view.substr(1);
+			return *i;
+		}
+	}
+	return '\0';
+}
+
 std::string_view string_parser::read_word()
 {
 	for (auto i = this->view.begin(); i != this->view.end(); ++i) {
@@ -352,7 +364,7 @@ std::string_view string_parser::read_word_until(char until_char)
 	return ret;
 }
 
-void string_parser::throw_if_empty()
+void string_parser::throw_if_empty() const
 {
 	if (this->view.empty()) {
 		throw std::invalid_argument("string_parser string is empty");
@@ -370,14 +382,14 @@ char string_parser::read_char()
 	return ret;
 }
 
-char string_parser::peek_char()
+char string_parser::peek_char() const
 {
 	this->throw_if_empty();
 
 	return this->view.front();
 }
 
-char string_parser::peek_char(size_t n)
+char string_parser::peek_char(size_t n) const
 {
 	if (this->view.size() <= n) {
 		std::stringstream ss;

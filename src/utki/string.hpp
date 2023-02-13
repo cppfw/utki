@@ -257,7 +257,7 @@ class string_parser
 {
 	std::string_view view;
 
-	void throw_if_empty();
+	void throw_if_empty() const;
 
 public:
 	static bool is_space(char c);
@@ -266,9 +266,21 @@ public:
 		view(view)
 	{}
 
+	std::string_view get_view() const noexcept
+	{
+		return this->view;
+	}
+
 	void skip_whitespaces();
 	void skip_whitespaces_and_comma();
 	void skip_inclusive_until(char c);
+
+	/**
+	 * @brief Skip until one of given chars inclusively.
+	 * @param c - chars to skip until.
+	 * @return the char which stopped the skipping. Can be '\0' in case of end of string reached.
+	 */
+	char skip_inclusive_until_one_of(utki::span<const char> c);
 
 	std::string_view read_word();
 	std::string_view read_word_until(char c);
@@ -354,8 +366,15 @@ public:
 
 	char read_char();
 
-	char peek_char();
-	char peek_char(size_t n);
+	char peek_char() const;
+
+	/**
+	 * @brief Peek n-th character.
+	 * This method doesn't move the parser position.
+	 * @param n - position of the character to peek.
+	 * @return Character at n-th position from the current parser's position.
+	 */
+	char peek_char(size_t n) const;
 
 	std::string_view read_chars(size_t n);
 	std::string_view read_chars_until(char c);
