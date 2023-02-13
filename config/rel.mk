@@ -14,5 +14,5 @@ ifeq ($(os),macosx)
     # WORKAROUND:
     # clang-tidy on macos doesn't use /usr/local/include as default place to
     # search for header files, so we add it explicitly
-    this_cxxflags += -I /usr/local/include
+    this_cxxflags += -isystem /usr/local/include
 endif

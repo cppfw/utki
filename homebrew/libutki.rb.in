@@ -11,7 +11,7 @@ class Libutki < Formula
   def install
     ENV['PATH'] += ':/usr/local/bin'
     # install from src directory because tests require submodules
-    system "/usr/local/opt/make/libexec/gnubin/make", "--directory", "src", "install", "PREFIX=#{prefix}"
+    system "/usr/local/opt/make/libexec/gnubin/make", "--directory", "src", "install", "PREFIX=#{prefix}", "lint=off"
   end
 
   test do
