@@ -1,3 +1,9 @@
+libutki (1.1.188) unstable; urgency=medium
+
+  * fix lint issue
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 16 Feb 2023 14:04:49 +0200
+
 libutki (1.1.187) unstable; urgency=medium
 
   * add string_parser::skip_inclusive_until_one_of()
