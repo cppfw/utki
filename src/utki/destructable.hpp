@@ -30,13 +30,14 @@ namespace utki {
 
 /**
  * @brief Destructable class.
- * This class is to be used as a base class for the cases when void* is needed, but the ownership of the passed in
- * pointer is transferred, so that the object pointed to by the pointer could be destroyed correctly.
+ * This class is to be used as a base class for the cases when 'void*' is needed, but the ownership of the passed in
+ * pointer is transferred, so that the object pointed to by the pointer could be destroyed correctly using
+ * virtual destructor. So, in this case instead of 'void*' use 'destructable*'.
  */
 class destructable
 {
 public:
-	virtual ~destructable() noexcept {}
+	virtual ~destructable() noexcept = default;
 };
 
 } // namespace utki
