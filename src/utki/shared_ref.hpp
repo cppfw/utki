@@ -29,6 +29,7 @@ SOFTWARE.
 #include <memory>
 #include <stdexcept>
 
+#include "config.hpp"
 #include "debug.hpp"
 
 namespace utki {
@@ -149,7 +150,10 @@ public:
 				object_type*,
 				other_object_type*>,
 			bool> = true>
-	[[deprecated]] operator std::shared_ptr<other_object_type>() const noexcept
+#if CFG_COMPILER != CFG_COMPILER_MSVC
+	[[deprecated]]
+#endif
+	operator std::shared_ptr<other_object_type>() const noexcept
 	{
 		return this->p;
 	}
@@ -169,7 +173,10 @@ public:
 				object_type*,
 				other_object_type*>,
 			bool> = true>
-	[[deprecated]] operator std::weak_ptr<other_object_type>() const noexcept
+#if CFG_COMPILER != CFG_COMPILER_MSVC
+	[[deprecated]]
+#endif
+	operator std::weak_ptr<other_object_type>() const noexcept
 	{
 		return this->p;
 	}
@@ -220,7 +227,11 @@ shared_ref<object_type> make_shared(arguments_type&&... args)
 }
 
 template <typename object_type, typename... arguments_type>
-[[deprecated]] shared_ref<object_type> make_shared_ref(arguments_type&&... args)
+#if CFG_COMPILER != CFG_COMPILER_MSVC
+[[deprecated]]
+#endif
+shared_ref<object_type>
+make_shared_ref(arguments_type&&... args)
 {
 	return shared_ref<object_type>(std::make_shared<object_type>(std::forward<arguments_type>(args)...));
 }
