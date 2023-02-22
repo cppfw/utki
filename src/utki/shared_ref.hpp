@@ -35,12 +35,15 @@ namespace utki {
 
 /**
  * @brief Reference counting pointer which cannot be null.
- * The shared_ref is same as std::shared_ptr except that it is never null.
+ * shared_ref is same as std::shared_ptr except that it is never null.
  * Objects have to be created with make_shared_ref() in order to be managed by shared_ref.
  * The shared_ref is implemented as a wrapper around std::shared_ptr.
  *
- * The sahred_ref doesn't have a move constructor, because otherwise it would contradict to the
- * whole idea of the non-null pointer, since moved from pointer would become null then.
+ * shared_ref mimics the API provided by std::reference_wrapper.
+ *
+ * shared_ref has move constructor, but it works in a same way as copy constructor.
+ * because otherwise it would contradict to the whole idea of the non-null pointer,
+ * since moved from pointer would become null then.
  * Because of this the recommended way to pass shared_ref as an argument to a function is
  * via the constant reference, like:
  *
@@ -55,8 +58,12 @@ namespace utki {
 template <class object_type>
 class shared_ref
 {
+	// TODO: remove friend when deprecaeted make_shared_ref() is removed
 	template <typename other_object_type, typename... arguments_type>
 	friend shared_ref<other_object_type> make_shared_ref(arguments_type&&... args);
+
+	template <typename other_object_type, typename... arguments_type>
+	friend shared_ref<other_object_type> make_shared(arguments_type&&... args);
 
 	template <typename dst_type, typename src_type>
 	friend shared_ref<dst_type> dynamic_reference_cast(const shared_ref<src_type>& r);
@@ -124,7 +131,7 @@ public:
 	 *
 	 * @return Underlying std::shared_ptr.
 	 */
-	operator const std::shared_ptr<object_type>&() const noexcept
+	[[deprecated]] operator const std::shared_ptr<object_type>&() const noexcept
 	{
 		return this->p;
 	}
@@ -142,7 +149,7 @@ public:
 				object_type*,
 				other_object_type*>,
 			bool> = true>
-	operator std::shared_ptr<other_object_type>() const noexcept
+	[[deprecated]] operator std::shared_ptr<other_object_type>() const noexcept
 	{
 		return this->p;
 	}
@@ -162,7 +169,7 @@ public:
 				object_type*,
 				other_object_type*>,
 			bool> = true>
-	operator std::weak_ptr<other_object_type>() const noexcept
+	[[deprecated]] operator std::weak_ptr<other_object_type>() const noexcept
 	{
 		return this->p;
 	}
@@ -182,7 +189,7 @@ public:
 	 *
 	 * @return Pointer to the pointed object. Never nullptr.
 	 */
-	object_type* operator->() const noexcept
+	[[deprecated]] object_type* operator->() const noexcept
 	{
 		return this->p.get();
 	}
@@ -192,7 +199,7 @@ public:
 	 *
 	 * @return Reference to the pointed object.
 	 */
-	object_type& operator*() const noexcept
+	[[deprecated]] object_type& operator*() const noexcept
 	{
 		return *this->p;
 	}
@@ -207,7 +214,13 @@ public:
  * @return shared_ref<object_type> to the newly created object.
  */
 template <typename object_type, typename... arguments_type>
-shared_ref<object_type> make_shared_ref(arguments_type&&... args)
+shared_ref<object_type> make_shared(arguments_type&&... args)
+{
+	return shared_ref<object_type>(std::make_shared<object_type>(std::forward<arguments_type>(args)...));
+}
+
+template <typename object_type, typename... arguments_type>
+[[deprecated]] shared_ref<object_type> make_shared_ref(arguments_type&&... args)
 {
 	return shared_ref<object_type>(std::make_shared<object_type>(std::forward<arguments_type>(args)...));
 }
