@@ -1,3 +1,9 @@
+libutki (1.1.189) unstable; urgency=medium
+
+  * deprecate stuff in shared_ref
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 22 Feb 2023 11:09:34 +0200
+
 libutki (1.1.188) unstable; urgency=medium
 
   * fix lint issue
