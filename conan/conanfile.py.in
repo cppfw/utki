@@ -1,4 +1,8 @@
-from conans import ConanFile, CMake, tools
+import os
+from conan import ConanFile
+from conan.tools.scm import Git
+from conan.tools.files import load, update_conandata, copy
+from conan.tools.layout import basic_layout
 
 class UtkiConan(ConanFile):
 	name = "utki"
@@ -11,40 +15,42 @@ class UtkiConan(ConanFile):
 	settings = "os", "compiler", "build_type", "arch"
 	options = {"shared": [True, False], "fPIC": [True, False]}
 	default_options = {"shared": False, "fPIC": True}
-	generators = "make"
-	scm = {"type": "git", "url": "auto", "revision": "auto"}
-
+	generators = "AutotoolsDeps" # this will set CXXFLAGS etc. env vars
+	
 	def config_options(self):
 		if self.settings.os == "Windows":
 			del self.options.fPIC
 
-	# we use the 'scm' attribute, so the source() method is not needed
-	#def source(self):
-		#self.run("git clone https://github.com/cppfw/" + self.name + ".git")
-		#self.run("cd " + self.name + " && git checkout " + self.version)
-		#self.run("cd " + self.name + " && git submodule update --init --recursive")
+	# save commit and remote URL to conandata.yml for packaging
+	def export(self):
+		git = Git(self, self.recipe_folder)
+		scm_url = git.get_remote_url()
+		scm_commit = git.get_commit()
+		update_conandata(self, {"sources": {"commit": scm_commit, "url": scm_url}})
 
-		# This small hack might be useful to guarantee proper /MT /MD linkage
-		# in MSVC if the packaged project doesn't have variables to set it
-		# properly
-# 		tools.replace_in_file("hello/CMakeLists.txt", "PROJECT(HelloWorld)",
-# 							'''PROJECT(HelloWorld)
-# include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-# conan_basic_setup()''')
+	# copy local sources for package building
+	def export_sources(self):
+		source_folder = os.path.join(self.recipe_folder, "..")
+		copy(self, "*", source_folder, self.export_sources_folder)
 
 	def build(self):
-		self.run("CONANBUILDINFO_DIR=$(pwd)/ make")
-		self.run("CONANBUILDINFO_DIR=$(pwd)/ make test")
+		self.run("make lint=off")
+		self.run("make lint=off test")
 
 	def package(self):
-		self.copy("*.h", dst="include", src="src")
-		self.copy("*.hpp", dst="include", src="src")
-		self.copy("*" + self.name + ".lib", dst="lib", keep_path=False)
-		self.copy("*.dll", dst="bin", src=  "src/out/rel", keep_path=False)
-		self.copy("*.so", dst="lib", src=   "src/out/rel", keep_path=False)
-		self.copy("*.so.*", dst="lib", src= "src/out/rel", keep_path=False)
-		self.copy("*.dylib", dst="lib", src="src/out/rel", keep_path=False)
-		self.copy("*.a", dst="lib", src=    "src/out/rel", keep_path=False)
+		src_dir = os.path.join(self.build_folder, "src")
+		src_rel_dir = os.path.join(self.build_folder, "src/out/rel")
+		dst_include_dir = os.path.join(self.package_folder, "include")
+		dst_lib_dir = os.path.join(self.package_folder, "lib")
+		dst_bin_dir = os.path.join(self.package_folder, "bin")
+		copy(conanfile=self, pattern="*.h",                    dst=dst_include_dir, src=src_dir,     keep_path=True)
+		copy(conanfile=self, pattern="*.hpp",                  dst=dst_include_dir, src=src_dir,     keep_path=True)
+		copy(conanfile=self, pattern="*" + self.name + ".lib", dst=dst_lib_dir,     src="",          keep_path=False)
+		copy(conanfile=self, pattern="*.dll",                  dst=dst_bin_dir,     src=src_rel_dir, keep_path=False)
+		copy(conanfile=self, pattern="*.so",                   dst=dst_lib_dir,     src=src_rel_dir, keep_path=False)
+		copy(conanfile=self, pattern="*.so.*",                 dst=dst_lib_dir,     src=src_rel_dir, keep_path=False)
+		copy(conanfile=self, pattern="*.dylib",                dst=dst_lib_dir,     src=src_rel_dir, keep_path=False)
+		copy(conanfile=self, pattern="*.a",                    dst=dst_lib_dir,     src=src_rel_dir, keep_path=False)
 
 	def package_info(self):
 		self.cpp_info.libs = [self.name]
@@ -52,3 +58,4 @@ class UtkiConan(ConanFile):
 	# change package id only when minor or major version changes, i.e. when ABI breaks
 	def package_id(self):
 		self.info.requires.minor_mode()
+

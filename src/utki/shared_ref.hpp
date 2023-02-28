@@ -127,86 +127,11 @@ public:
 	}
 
 	/**
-	 * @brief Convert to std::shared_ptr.
-	 * This is an equivalent of to_shared_ptr().
-	 *
-	 * @return Underlying std::shared_ptr.
-	 */
-	[[deprecated]] operator const std::shared_ptr<object_type>&() const noexcept
-	{
-		return this->p;
-	}
-
-	/**
-	 * @brief Convert to std::shared_ptr of convertible type.
-	 *
-	 * @tparam other_object_type - pointed type to convert to.
-	 * @return std::shared_ptr<other_object_type> pointing to the converted type.
-	 */
-	template < //
-		typename other_object_type,
-		typename std::enable_if_t< //
-			std::is_convertible_v< //
-				object_type*,
-				other_object_type*>,
-			bool> = true>
-#if CFG_COMPILER != CFG_COMPILER_MSVC
-	[[deprecated]]
-#endif
-	operator std::shared_ptr<other_object_type>() const noexcept
-	{
-		return this->p;
-	}
-
-	/**
-	 * @brief Convert to std::weak_ptr.
-	 * This operator converts the underlying std::shared_ptr to std::weak_ptr,
-	 * possibly pointing to a convertible type.
-	 *
-	 * @tparam other_object_type - pointed type to convert to.
-	 * @return std::weak_ptr<other_object_type> pointing to the converted type.
-	 */
-	template < //
-		typename other_object_type,
-		typename std::enable_if_t< //
-			std::is_convertible_v< //
-				object_type*,
-				other_object_type*>,
-			bool> = true>
-#if CFG_COMPILER != CFG_COMPILER_MSVC
-	[[deprecated]]
-#endif
-	operator std::weak_ptr<other_object_type>() const noexcept
-	{
-		return this->p;
-	}
-
-	/**
 	 * @brief Get reference to the pointed type.
 	 *
 	 * @return Const reference to the pointed type.
 	 */
 	object_type& get() const noexcept
-	{
-		return *this->p;
-	}
-
-	/**
-	 * @brief Operator arrow.
-	 *
-	 * @return Pointer to the pointed object. Never nullptr.
-	 */
-	[[deprecated]] object_type* operator->() const noexcept
-	{
-		return this->p.get();
-	}
-
-	/**
-	 * @brief Dereference operator.
-	 *
-	 * @return Reference to the pointed object.
-	 */
-	[[deprecated]] object_type& operator*() const noexcept
 	{
 		return *this->p;
 	}
@@ -222,16 +147,6 @@ public:
  */
 template <typename object_type, typename... arguments_type>
 shared_ref<object_type> make_shared(arguments_type&&... args)
-{
-	return shared_ref<object_type>(std::make_shared<object_type>(std::forward<arguments_type>(args)...));
-}
-
-template <typename object_type, typename... arguments_type>
-#if CFG_COMPILER != CFG_COMPILER_MSVC
-[[deprecated]]
-#endif
-shared_ref<object_type>
-make_shared_ref(arguments_type&&... args)
 {
 	return shared_ref<object_type>(std::make_shared<object_type>(std::forward<arguments_type>(args)...));
 }

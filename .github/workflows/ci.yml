@@ -175,6 +175,13 @@ jobs:
           locale-gen
       - name: build
         run: dpkg-buildpackage --unsigned-source --unsigned-changes
+      # - name: upload binaries to artifacts
+      #   uses: actions/upload-artifact@v3.1.2
+      #   with:
+      #     name: binaries-${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }}
+      #     path: |
+      #       src/out/rel/*.so.*
+      #       src/out/rel/*.a
       - name: deploy deb packages
         run: |
           echo "${{ secrets.MYCI_REPO_SSH_KEY }}" > repo_key_rsa && chmod 600 repo_key_rsa
@@ -388,10 +395,11 @@ jobs:
           keys-asc: http://gagis.hopto.org/repo/cppfw/pubkey.gpg
           install: devscripts equivs myci prorab prorab-extra python3-pip cmake git
       - name: install conan
+        run: pip3 --quiet install conan
+      - name: create default conan profile
         run: |
-          pip3 --quiet install conan
-          conan profile new --detect default
-          conan profile update settings.compiler.libcxx=libstdc++11 default
+          conan profile detect --name default
+          sed -i -E "s/compiler.cppstd=.*$/compiler.cppstd=17/g" ~/.conan2/profiles/default
       - name: git clone
         uses: myci-actions/checkout@master
       - name: set PACKAGE_VERSION
@@ -403,7 +411,7 @@ jobs:
       - name: build
         run: |
           conan remote add cppfw $MYCI_CONAN_REMOTE
-          conan create conan $MYCI_CONAN_USER/main --ignore-dirty
+          conan create conan --user $MYCI_CONAN_USER --channel main
       - name: deploy conan package
         run: |
           conan user --remote cppfw --password $MYCI_CONAN_PASSWORD $MYCI_CONAN_USER
@@ -438,6 +446,10 @@ jobs:
       # NOTE: the preinstalled make is old and sometimes crashes, so install latest make
       - name: install ci tools
         run: brew install myci prorab prorab-extra conan make
+      - name: create default conan profile
+        run: |
+          conan profile detect --name default
+          sed -i -E "s/compiler.cppstd=.*$/compiler.cppstd=17/g" ~/.conan2/profiles/default
       - name: set PATH to use latest make
         uses: myci-actions/export-env-var@master
         with: {name: PATH, value: "/usr/local/opt/make/libexec/gnubin:$PATH"}
@@ -450,7 +462,7 @@ jobs:
       - name: build
         run: |
           conan remote add cppfw $MYCI_CONAN_REMOTE
-          conan create conan $MYCI_CONAN_USER/main --ignore-dirty
+          conan create conan --user $MYCI_CONAN_USER --channel main
       - name: deploy conan package
         run: |
           conan user --remote cppfw --password $MYCI_CONAN_PASSWORD $MYCI_CONAN_USER
