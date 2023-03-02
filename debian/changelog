@@ -1,3 +1,9 @@
+libutki (1.1.191) unstable; urgency=medium
+
+  * conan2 deploy
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 02 Mar 2023 15:10:10 +0200
+
 libutki (1.1.190) unstable; urgency=medium
 
   * migrate to conan2
