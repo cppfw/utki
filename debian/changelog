@@ -1,3 +1,9 @@
+libutki (1.1.190) unstable; urgency=medium
+
+  * migrate to conan2
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 02 Mar 2023 14:53:25 +0200
+
 libutki (1.1.189) unstable; urgency=medium
 
   * deprecate stuff in shared_ref
