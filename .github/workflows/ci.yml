@@ -414,8 +414,8 @@ jobs:
           conan create conan --user $MYCI_CONAN_USER --channel main
       - name: deploy conan package
         run: |
-          conan user --remote cppfw --password $MYCI_CONAN_PASSWORD $MYCI_CONAN_USER
-          conan upload --remote cppfw --all $PACKAGE_NAME/$PACKAGE_VERSION@$MYCI_CONAN_USER/main
+          conan remote login --password $MYCI_CONAN_PASSWORD cppfw $MYCI_CONAN_USER
+          conan upload --check --remote cppfw $PACKAGE_NAME/$PACKAGE_VERSION@$MYCI_CONAN_USER/main
         if: startsWith(github.ref, 'refs/tags/')
 ##### conan - macosx #####
   conan-macosx:
