@@ -1,3 +1,9 @@
+libutki (1.1.193) unstable; urgency=medium
+
+  * just rebuild
+
+ -- Ivan Gagis <igagis@gmail.com>  Sat, 04 Mar 2023 00:54:06 +0200
+
 libutki (1.1.192) unstable; urgency=medium
 
   * conan2 macos deploy
