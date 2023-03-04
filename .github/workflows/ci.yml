@@ -378,8 +378,6 @@ jobs:
     container: ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }}
     name: conan - linux - ${{ matrix.arch }}
     steps:
-      - name: clean
-        uses: myci-actions/clean@master
       - name: add llvm repo (for clang-format)
         uses: myci-actions/add-deb-repo@master
         with:
@@ -431,8 +429,6 @@ jobs:
     name: conan - ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     steps:
-      - name: clean
-        uses: myci-actions/clean@master
       - name: git clone
         uses: myci-actions/checkout@master
       - name: install clang-tidy and clang-format
