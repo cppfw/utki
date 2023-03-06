@@ -28,10 +28,12 @@ class UtkiConan(ConanFile):
 		scm_commit = git.get_commit()
 		update_conandata(self, {"sources": {"commit": scm_commit, "url": scm_url}})
 
-	# copy local sources for package building
-	def export_sources(self):
-		source_folder = os.path.join(self.recipe_folder, "..")
-		copy(self, "*", source_folder, self.export_sources_folder)
+	def source(self):
+		git = Git(self)
+		sources = self.conan_data["sources"]
+		# we want shallow clone of the git repo (--depth 1) of a specific tag/commit (--branch self.version)
+		clone_args = ['--depth', '1', '--branch', self.version, '--recurse-submodules', '--shallow-submodules']
+		git.clone(url=sources["url"], target=".", args=clone_args)
 
 	def build(self):
 		self.run("make lint=off")
