@@ -414,6 +414,8 @@ jobs:
         run: |
           conan remote add cppfw $MYCI_CONAN_REMOTE
           conan create conan --user $MYCI_CONAN_USER --channel main
+      - name: print conanmanifest.txt
+        run: cat $(conan cache path utki/$PACKAGE_VERSION@cppfw/main)/conanmanifest.txt
       - name: deploy conan package
         run: |
           conan remote login --password $MYCI_CONAN_PASSWORD cppfw $MYCI_CONAN_USER
@@ -467,6 +469,8 @@ jobs:
         run: |
           conan remote add cppfw $MYCI_CONAN_REMOTE
           conan create conan --user $MYCI_CONAN_USER --channel main
+      - name: print conanmanifest.txt
+        run: cat $(conan cache path utki/$PACKAGE_VERSION@cppfw/main)/conanmanifest.txt
       - name: deploy conan package
         run: |
           conan remote login --password $MYCI_CONAN_PASSWORD cppfw $MYCI_CONAN_USER
