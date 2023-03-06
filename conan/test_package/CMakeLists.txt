@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.15)
 project(PackageTest CXX)
 
-set(CMAKE_VERBOSE_MAKEFILE on)
+# set(CMAKE_VERBOSE_MAKEFILE on)
 
 find_package(utki CONFIG REQUIRED)
 
