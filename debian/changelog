@@ -1,3 +1,9 @@
+libutki (1.1.195) unstable; urgency=medium
+
+  * conan: fix different package revisions problem
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 06 Mar 2023 15:37:59 +0200
+
 libutki (1.1.194) unstable; urgency=medium
 
   * conan: do shallow clone of the repo instead of exporting all files
