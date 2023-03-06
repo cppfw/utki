@@ -31,9 +31,10 @@ class UtkiConan(ConanFile):
 	def source(self):
 		git = Git(self)
 		sources = self.conan_data["sources"]
-		# we want shallow clone of the git repo (--depth 1) of a specific tag/commit (--branch self.version)
-		clone_args = ['--depth', '1', '--branch', self.version, '--recurse-submodules', '--shallow-submodules']
-		git.clone(url=sources["url"], target=".", args=clone_args)
+		# shallow fetch commit
+		git.fetch_commit(url=sources["url"], commit=sources['commit'])
+		# shallow clone submodules
+		git.run("submodule update --init --remote --depth 1")
 
 	def build(self):
 		self.run("make lint=off")

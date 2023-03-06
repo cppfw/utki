@@ -400,6 +400,8 @@ jobs:
           sed -i -E "s/compiler.cppstd=.*$/compiler.cppstd=17/g" ~/.conan2/profiles/default
       - name: git clone
         uses: myci-actions/checkout@master
+        with:
+          submodules: false
       - name: set PACKAGE_VERSION
         uses: myci-actions/export-env-var@master
         with: {name: PACKAGE_VERSION, value: $(myci-deb-version.sh debian/changelog)}
@@ -431,6 +433,8 @@ jobs:
     steps:
       - name: git clone
         uses: myci-actions/checkout@master
+        with:
+          submodules: false
       - name: install clang-tidy and clang-format
         run: |
           brew install llvm
