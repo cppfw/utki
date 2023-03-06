@@ -1,3 +1,9 @@
+libutki (1.1.194) unstable; urgency=medium
+
+  * conan: do shallow clone of the repo instead of exporting all files
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 06 Mar 2023 10:49:30 +0200
+
 libutki (1.1.193) unstable; urgency=medium
 
   * just rebuild
