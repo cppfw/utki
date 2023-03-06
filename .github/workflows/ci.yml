@@ -417,7 +417,7 @@ jobs:
       - name: print conanmanifest.txt
         run: |
           cat $(conan cache path utki/$PACKAGE_VERSION@cppfw/main)/conanmanifest.txt
-          cat $(conan cache path utki/1.1.193@cppfw/main)/conandata.yml
+          cat $(conan cache path utki/$PACKAGE_VERSION@cppfw/main)/conandata.yml
       - name: deploy conan package
         run: |
           conan remote login --password $MYCI_CONAN_PASSWORD cppfw $MYCI_CONAN_USER
@@ -474,7 +474,7 @@ jobs:
       - name: print conanmanifest.txt
         run: |
           cat $(conan cache path utki/$PACKAGE_VERSION@cppfw/main)/conanmanifest.txt
-          cat $(conan cache path utki/1.1.193@cppfw/main)/conandata.yml
+          cat $(conan cache path utki/$PACKAGE_VERSION@cppfw/main)/conandata.yml
       - name: deploy conan package
         run: |
           conan remote login --password $MYCI_CONAN_PASSWORD cppfw $MYCI_CONAN_USER
