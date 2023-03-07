@@ -1,3 +1,9 @@
+libutki (1.1.196) unstable; urgency=medium
+
+  * conan: do not change package id for different compiler versions
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 07 Mar 2023 14:30:02 +0200
+
 libutki (1.1.195) unstable; urgency=medium
 
   * conan: fix different package revisions problem
