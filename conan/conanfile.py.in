@@ -63,9 +63,26 @@ class UtkiConan(ConanFile):
 		# change package id only when minor or major version changes, i.e. when ABI breaks
 		self.info.requires.minor_mode()
 
-		# do not change package id for different compiler/version/std
-		self.info.settings.compiler = "some compiler"
+		# do not change package id for different compiler.version/std
 		self.info.settings.compiler.cppstd = "some compiler std"
 		self.info.settings.compiler.version = "some compiler version"
 
 		# still change package_id for different compiler.libcxx
+
+	def compatibility(self):
+		# define compatibility between compilers
+
+		# gcc is compatible with clang. On macos clang is called apple-clang.
+
+		# gcc can be on macos and on linux
+		if self.settings.compiler == "gcc":
+			return [{"settings": [("compiler", v)]}
+				for v in ("clang", "apple-clang")]
+
+		if self.settings.compiler == "clang":
+			return [{"settings": [("compiler", v)]}
+				for v in ("gcc")]
+
+		if self.settings.compiler == "apple-clang":
+			return [{"settings": [("compiler", v)]}
+				for v in ("gcc")]
