@@ -63,6 +63,9 @@ class UtkiConan(ConanFile):
 		# change package id only when minor or major version changes, i.e. when ABI breaks
 		self.info.requires.minor_mode()
 
-		# do not change package id for different compiler versions
+		# do not change package id for different compiler/version/std
+		self.info.settings.compiler = "some compiler"
+		self.info.settings.compiler.cppstd = "some compiler std"
 		self.info.settings.compiler.version = "some compiler version"
 
+		# still change package_id for different compiler.libcxx
