@@ -58,7 +58,11 @@ class UtkiConan(ConanFile):
 	def package_info(self):
 		self.cpp_info.libs = [self.name]
 
-	# change package id only when minor or major version changes, i.e. when ABI breaks
 	def package_id(self):
+		
+		# change package id only when minor or major version changes, i.e. when ABI breaks
 		self.info.requires.minor_mode()
+
+		# do not change package id for different compiler versions
+		self.info.settings.compiler.version = "some compiler version"
 
