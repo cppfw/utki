@@ -1,3 +1,9 @@
+libutki (1.1.198) unstable; urgency=medium
+
+  * conan: revert compiler package_id
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 07 Mar 2023 16:44:42 +0200
+
 libutki (1.1.197) unstable; urgency=medium
 
   * conan: compilers compatibility
