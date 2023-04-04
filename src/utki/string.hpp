@@ -354,7 +354,12 @@ public:
 		}
 
 		if (res.ec == std::errc::invalid_argument) {
-			throw std::invalid_argument("string_parser::read_integer(): could not parse integer number");
+			throw std::invalid_argument("string_parser::read_integer(): could not parse number");
+		}
+
+		if (res.ec == std::errc::result_out_of_range) {
+			throw std::invalid_argument("string_parser::read_integer(): parsed number does not fit into requested type"
+			);
 		}
 
 		ASSERT(this->view.data() != res.ptr)
