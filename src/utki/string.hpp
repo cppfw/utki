@@ -364,8 +364,19 @@ public:
 		return ret;
 	}
 
+	/**
+	 * @brief Read character at current parser position.
+	 * The parser position is avanced one character further.
+	 * @return Character at current parser position.
+	 * @throw std::invalid_argument in case end of string is reached.
+	 */
 	char read_char();
 
+	/**
+	 * @brief Get current character without advancing parser position.
+	 * @return Character at the current parser position.
+	 * @throw std::invalid_argument in case end of string is reached.
+	 */
 	char peek_char() const;
 
 	/**
@@ -376,14 +387,37 @@ public:
 	 */
 	char peek_char(size_t n) const;
 
+	/**
+	 * @brief Read N characters.
+	 * @param n - number of characters to read.
+	 * @return Read characters. It can be less than requested in case string has ended before
+	 *     reading requested number of characters.
+	 */
 	std::string_view read_chars(size_t n);
+
+	/**
+	 * @brief Read until specified character.
+	 * Read until specified character, not including the character,
+	 * or till the end of the string, whatever is encountered first.
+	 * @param c - character to read until.
+	 * @return Read characters.
+	 */
 	std::string_view read_chars_until(char c);
 
+	/**
+	 * @brief Check if parser has reached end of string.
+	 * @return true in case end of string is reached.
+	 * @return false otherwise.
+	 */
 	bool empty() const noexcept
 	{
 		return this->view.empty();
 	}
 
+	/**
+	 * @brief Number of characters left to parse.
+	 * @return Number of characters left to parse.
+	 */
 	size_t size() const noexcept
 	{
 		return this->view.size();
