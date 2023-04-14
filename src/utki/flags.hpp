@@ -71,7 +71,7 @@ namespace utki {
 template <class enumeration_type>
 class flags
 {
-	static_assert(std::is_enum<enumeration_type>::value, "template parameter must be an enumaration type");
+	static_assert(std::is_enum_v<enumeration_type>, "template parameter must be an enumaration type");
 
 public:
 	using enum_type = enumeration_type;
@@ -358,12 +358,12 @@ struct is_flaggable : public std::false_type {};
 } // namespace utki
 
 template <class enum_type>
-typename std::enable_if<
-	std::is_enum<enum_type>::value
+typename std::enable_if_t<
+	std::is_enum_v<enum_type>
 		// TODO: add std::is_scoped_enum check when C++'23 is widely available
-		// check that enum has enum_size item. Note, that this is the only way to do it for MSVC compiler.
+		// check that enum has enum_size item. Note, that this is the only way to do it for MSVC compiler at the moment.
 		&& enum_type::enum_size == enum_type::enum_size,
-	utki::flags<enum_type>>::type
+	utki::flags<enum_type>>
 operator|(enum_type e1, enum_type e2)
 {
 	return {e1, e2};

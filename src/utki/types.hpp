@@ -123,12 +123,12 @@ struct int_size<8> {
 
 template <typename in_type>
 struct remove_const_pointer {
-	using type = typename std::remove_const<typename std::remove_pointer<in_type>::type>::type;
+	using type = typename std::remove_const_t<typename std::remove_pointer_t<in_type>>;
 };
 
 template <typename in_type>
 struct remove_const_reference {
-	using type = typename std::remove_const<typename std::remove_reference<in_type>::type>::type;
+	using type = typename std::remove_const_t<typename std::remove_reference_t<in_type>>;
 };
 
 /**
@@ -191,5 +191,11 @@ template <class owner_type>
 struct type_or_void<owner_type, std::void_t<typename owner_type::type>> {
 	using type = typename owner_type::type;
 };
+
+/**
+ * @brief Type alias for type_or_void.
+ */
+template <typename owner_type>
+using type_or_void_t = typename type_or_void<owner_type>::type;
 
 } // namespace utki

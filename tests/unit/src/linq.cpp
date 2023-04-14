@@ -25,7 +25,7 @@ tst::set set("linq", [](tst::suite& suite) {
 					   .get();
 
 		static_assert( //
-			std::is_same<decltype(out), std::vector<std::pair<std::string, float>>>::value,
+			std::is_same_v<decltype(out), std::vector<std::pair<std::string, float>>>,
 			"not same"
 		);
 
@@ -258,7 +258,7 @@ tst::set set("linq", [](tst::suite& suite) {
 					   .get();
 
 		static_assert( //
-			std::is_same<decltype(out), decltype(in)>::value,
+			std::is_same_v<decltype(out), decltype(in)>,
 			"not same"
 		);
 
@@ -301,7 +301,7 @@ tst::set set("linq", [](tst::suite& suite) {
 					   .get();
 
 		static_assert( //
-			std::is_same<decltype(out), decltype(in)>::value,
+			std::is_same_v<decltype(out), decltype(in)>,
 			"not same"
 		);
 
@@ -342,7 +342,7 @@ tst::set set("linq", [](tst::suite& suite) {
 					   .get();
 
 		static_assert( //
-			std::is_same<decltype(out), std::remove_const<decltype(in)>::type>::value,
+			std::is_same_v<decltype(out), std::remove_const_t<decltype(in)>>,
 			"not same"
 		);
 

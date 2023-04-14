@@ -115,10 +115,7 @@ template <typename T>
 from_chars_result
 from_chars(const char* first, const char* last, T& value, chars_format fmt /*= chars_format::general*/) noexcept
 {
-	static_assert(
-		std::is_same<T, double>::value || std::is_same<T, float>::value,
-		"only float and double are supported"
-	);
+	static_assert(std::is_same_v<T, double> || std::is_same_v<T, float>, "only float and double are supported");
 
 	from_chars_result answer;
 	if (first == last) {

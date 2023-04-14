@@ -37,7 +37,7 @@ namespace utki {
 /**
  * @brief Reference counting pointer which cannot be null.
  * shared_ref is same as std::shared_ptr except that it is never null.
- * Objects have to be created with make_shared_ref() in order to be managed by shared_ref.
+ * Objects have to be created with utki::make_shared() in order to be managed by shared_ref.
  * The shared_ref is implemented as a wrapper around std::shared_ptr.
  *
  * shared_ref mimics the API provided by std::reference_wrapper.
@@ -59,10 +59,6 @@ namespace utki {
 template <class object_type>
 class shared_ref
 {
-	// TODO: remove friend when deprecaeted make_shared_ref() is removed
-	template <typename other_object_type, typename... arguments_type>
-	friend shared_ref<other_object_type> make_shared_ref(arguments_type&&... args);
-
 	template <typename other_object_type, typename... arguments_type>
 	friend shared_ref<other_object_type> make_shared(arguments_type&&... args);
 

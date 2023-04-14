@@ -111,16 +111,16 @@ public:
 	{}
 
 	template <size_t array_size>
-	span(std::array<typename std::remove_const<element_type>::type, array_size>& a) :
+	span(std::array<typename std::remove_const_t<element_type>, array_size>& a) :
 		span(a.data(), a.size())
 	{}
 
 	template <size_t array_size>
-	span(const std::array<typename std::remove_const<element_type>::type, array_size>& a) :
+	span(const std::array<typename std::remove_const_t<element_type>, array_size>& a) :
 		span(a.data(), a.size())
 	{}
 
-	span(std::vector<typename std::remove_const<element_type>::type>& v) :
+	span(std::vector<typename std::remove_const_t<element_type>>& v) :
 		span(v.data(), v.size())
 	{}
 
@@ -135,7 +135,7 @@ public:
 		span(v.data(), v.size())
 	{}
 
-	span(std::basic_string<typename std::remove_const<element_type>::type>& v) :
+	span(std::basic_string<typename std::remove_const_t<element_type>>& v) :
 		span(v.data(), v.size())
 	{}
 
@@ -448,9 +448,9 @@ inline utki::span<const char> make_span(const char* str)
 }
 
 template <class value_type>
-std::vector<typename std::remove_const<value_type>::type> make_vector(span<value_type> s)
+std::vector<typename std::remove_const_t<value_type>> make_vector(span<value_type> s)
 {
-	std::vector<typename std::remove_const<value_type>::type> ret;
+	std::vector<typename std::remove_const_t<value_type>> ret;
 	ret.reserve(s.size());
 	std::copy(s.begin(), s.end(), std::back_inserter(ret));
 	return ret;

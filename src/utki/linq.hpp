@@ -56,10 +56,11 @@ class linq_collection_aggregator
 	template <typename other_collection_type>
 	friend linq_collection_aggregator<other_collection_type&&> linq(other_collection_type&&);
 
-	typename std::conditional< //
-		std::is_rvalue_reference<collection_type>::value,
-		typename std::remove_reference<collection_type>::type,
-		collection_type>::type collection;
+	typename std::conditional_t< //
+		std::is_rvalue_reference_v<collection_type>,
+		typename std::remove_reference_t<collection_type>,
+		collection_type>
+		collection;
 
 	using value_type = typename std::remove_reference<decltype(collection)>::type::value_type;
 
@@ -81,7 +82,7 @@ public:
 	template <typename func_type>
 	auto select(func_type func)
 	{
-		using func_arg_type = typename std::add_rvalue_reference<value_type>::type;
+		using func_arg_type = typename std::add_rvalue_reference_t<value_type>;
 
 		static constexpr bool func_one_arg = std::is_invocable_v<func_type, func_arg_type>;
 
@@ -90,10 +91,10 @@ public:
 			"passed in function must have one argument or two arguments with the second argument of type size_t"
 		);
 
-		using func_return_type = typename std::conditional<
+		using func_return_type = typename std::conditional_t<
 			func_one_arg,
-			typename type_or_void<std::invoke_result<func_type, func_arg_type>>::type,
-			typename type_or_void<std::invoke_result<func_type, func_arg_type, size_t>>::type>::type;
+			type_or_void_t<std::invoke_result<func_type, func_arg_type>>,
+			type_or_void_t<std::invoke_result<func_type, func_arg_type, size_t>>>;
 
 		std::vector<func_return_type> ret;
 		ret.reserve(this->collection.size());
@@ -128,9 +129,9 @@ public:
 			"functor must return non-void"
 		);
 
-		using func_arg_type = typename std::add_lvalue_reference<value_type>::type;
-		using func_return_type = typename std::remove_reference< //
-			typename std::invoke_result<func_type, func_arg_type>::type>::type;
+		using func_arg_type = typename std::add_lvalue_reference_t<value_type>;
+		using func_return_type = typename std::remove_reference_t< //
+			typename std::invoke_result_t<func_type, func_arg_type>>;
 
 		std::map<func_return_type, std::vector<value_type>> ret;
 
@@ -181,8 +182,7 @@ public:
 		using invoke_result = std::invoke_result_t<func_type, const value_type&>;
 
 		static_assert(
-			std::is_reference<invoke_result>::value
-				&& std::is_const<typename std::remove_reference<invoke_result>::type>::value,
+			std::is_reference_v<invoke_result> && std::is_const_v<typename std::remove_reference_t<invoke_result>>,
 			"functor must return const reference"
 		);
 
@@ -190,7 +190,7 @@ public:
 			return func(a) < func(b);
 		};
 
-		if constexpr (std::is_rvalue_reference<collection_type>::value) {
+		if constexpr (std::is_rvalue_reference_v<collection_type>) {
 			std::sort(this->collection.begin(), this->collection.end(), comparer);
 			return linq_collection_aggregator<decltype(this->collection)&&>(std::move(this->collection));
 		} else {
