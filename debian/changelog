@@ -1,3 +1,9 @@
+libutki (1.1.199) unstable; urgency=medium
+
+  * conan: add package_type to recepie
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 17 Apr 2023 15:40:54 +0300
+
 libutki (1.1.198) unstable; urgency=medium
 
   * conan: revert compiler package_id
