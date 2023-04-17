@@ -12,6 +12,7 @@ class UtkiConan(ConanFile):
 	description = "Utility C++ library"
 	topics = ("C++", "cross-platform")
 	settings = "os", "compiler", "build_type", "arch"
+	package_type = "library"
 	options = {"shared": [True, False], "fPIC": [True, False]}
 	default_options = {"shared": False, "fPIC": True}
 	generators = "AutotoolsDeps" # this will set CXXFLAGS etc. env vars
