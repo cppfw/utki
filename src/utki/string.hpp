@@ -429,4 +429,76 @@ public:
 	}
 };
 
+// TODO: doxygen
+enum class integer_base {
+	// WARNING: add new items to the bottom of the enum to preserve existing item's values
+	bin,
+	oct,
+	dec,
+	hex
+};
+
+// TODO: doxygen
+int to_int(integer_base conversion_base)
+{
+	switch (conversion_base) {
+		case integer_base::bin:
+			return 2;
+		case integer_base::oct:
+			return 8;
+		default:
+			[[fallthrough]];
+		case integer_base::dec:
+			return 10;
+		case integer_base::hex:
+			return 16;
+	}
+}
+
+/**
+ * @brief Locale-independent version of std::to_string().
+ * @param value - Number value to convert to string.
+ * @param conversion_base - Integer base to use for the conversion.
+ * @return String representing the converted integer value.
+ */
+template <typename number_type>
+std::string to_string(number_type value, integer_base conversion_base = integer_base::dec)
+{
+	std::array<char, 128> buf; // 128 chars is large enough to hold any built-in integral or floating point type
+	auto begin_ptr = buf.data();
+	auto end_ptr = buf.data() + buf.size();
+
+	if constexpr (std::is_unsigned_v<number_type>) {
+		switch (conversion_base) {
+			case integer_base::bin:
+				buf[0] = '0';
+				buf[1] = 'b';
+				begin_ptr += 2;
+				break;
+			case integer_base::oct:
+				buf[0] = '0';
+				++begin_ptr;
+				break;
+			case integer_base::hex:
+				buf[0] = '0';
+				buf[1] = 'x';
+				begin_ptr += 2;
+				break;
+			default:
+				break;
+		}
+	}
+
+	auto res = std::to_chars(begin_ptr, end_ptr, value, to_int(conversion_base));
+
+	if (res.ec != std::errc()) {
+		// std::to_chars() returned error
+		return {};
+	}
+
+	ASSERT(res.ptr <= end_ptr)
+
+	return std::string(buf.data(), res.ptr - buf.data());
+}
+
 } // namespace utki

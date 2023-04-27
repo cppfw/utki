@@ -877,6 +877,23 @@ tst::set set("string", [](tst::suite& suite) {
 			tst::check_eq(c, '\0', SL);
 		}
 	});
+
+	suite.add<std::pair<size_t, std::string>>(
+		"to_string__size_t",
+		{
+			{								   0,          "0"},
+			{								   1,          "1"},
+			{								  13,         "13"},
+
+ // size_t can be 32 bit on 32 bit CPUs, so don't go over 32 bit max value
+			{std::numeric_limits<uint32_t>::max(), "4294967295"}
+    },
+		[](const auto& p) {
+			auto s = utki::to_string(p.first);
+
+			tst::check_eq(s, p.second, SL);
+		}
+	);
 });
 } // namespace
 
