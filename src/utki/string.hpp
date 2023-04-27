@@ -439,21 +439,7 @@ enum class integer_base {
 };
 
 // TODO: doxygen
-int to_int(integer_base conversion_base)
-{
-	switch (conversion_base) {
-		case integer_base::bin:
-			return 2;
-		case integer_base::oct:
-			return 8;
-		default:
-			[[fallthrough]];
-		case integer_base::dec:
-			return 10;
-		case integer_base::hex:
-			return 16;
-	}
-}
+int to_int(integer_base conversion_base);
 
 /**
  * @brief Locale-independent version of std::to_string().
