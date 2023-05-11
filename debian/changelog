@@ -1,3 +1,9 @@
+libutki (1.1.202) unstable; urgency=medium
+
+  * fix makefile bug
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 11 May 2023 21:07:23 +0300
+
 libutki (1.1.201) unstable; urgency=medium
 
   * conan: package only shared or only static binaries depending on the
