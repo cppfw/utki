@@ -19,7 +19,7 @@ $(eval $(call prorab-depend, \
 	))
 
 harness_old_cxxflags := $(CXXFLAGS)
-harness_old_ldflags := $(LDLFAGS)
+harness_old_ldflags := $(LDFLAGS)
 CXXFLAGS += -I$(d)../../src -I$(d)clargs/src
 LDFLAGS += -L$(d)../../src/out/$(c) -L$(d)clargs/src/out/$(clargs_cfg)
 $(eval $(call prorab-include, clargs/src/makefile, $(clargs_cfg)))
