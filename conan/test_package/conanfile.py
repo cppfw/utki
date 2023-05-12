@@ -19,4 +19,4 @@ class UtkiTestConan(ConanFile):
 		cmake_layout(self)
 
 	def test(self):
-		self.run(".%sexample" % os.sep, env="conanbuild") # env sets LD_LIBRARY_PATH etc. to find dependency libs
+		self.run(".%sexample" % os.sep, env="conanrun") # env sets LD_LIBRARY_PATH etc. to find dependency libs
