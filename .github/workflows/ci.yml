@@ -12,9 +12,6 @@ env:
   MYCI_CONAN_REMOTE: https://gagis.hopto.org/conan
   MYCI_CONAN_USER: cppfw
   MYCI_CONAN_PASSWORD: ${{ secrets.MYCI_CONAN_PASSWORD }}
-  CONAN_V2_MODE: 1
-  CONAN_REVISIONS_ENABLED: 1
-  CONAN_SCM_TO_CONANDATA: 1
 jobs:
 ##### coverage #####
   coverage:
