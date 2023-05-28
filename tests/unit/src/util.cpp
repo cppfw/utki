@@ -138,5 +138,7 @@ tst::set set("util", [](tst::suite& suite) {
 		tst::check(res == expected, SL);
 	});
 #endif // ~ non-MSVC compiler or MSVC compiler tools >= v142
+
+	// TODO: test utki::next() and utki::prev()
 });
 } // namespace

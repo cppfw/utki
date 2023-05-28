@@ -59,6 +59,28 @@ iterator_type next(iterator_type iter, size_t n)
 }
 
 /**
+ * @brief Returns n-th predecessor of iterator.
+ * Same as std::prev() but only moves backwards and accepts size_t
+ * as number of steps.
+ * @param iter - iterator to get predecessor of.
+ * @param n - number of steps to go backwards.
+ * @return Predecessor of the iterator.
+ */
+template <typename iterator_type>
+iterator_type prev(iterator_type iter, size_t n)
+{
+	const auto max_advance = std::numeric_limits<typename std::iterator_traits<iterator_type>::difference_type>::max();
+	for (size_t num_left = n;;) {
+		if (num_left > size_t(max_advance)) {
+			num_left -= max_advance;
+			iter = std::prev(iter, max_advance);
+		} else {
+			return std::prev(iter, num_left);
+		}
+	}
+}
+
+/**
  * @brief Construct std::pair with swapped components.
  * @param p - initial std::pair.
  * @return a new std::pair with swapped component.
