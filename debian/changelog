@@ -1,3 +1,9 @@
+libutki (1.1.203) unstable; urgency=medium
+
+  * add prev(iterator, size_t)
+
+ -- Ivan Gagis <igagis@gmail.com>  Sun, 28 May 2023 20:42:34 +0300
+
 libutki (1.1.202) unstable; urgency=medium
 
   * fix makefile bug
