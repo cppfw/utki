@@ -123,6 +123,6 @@ public:
 };
 
 template <typename enum_type>
-constexpr enum_iterable<enum_type> enum_iterable_v;
+constexpr enum_iterable<enum_type> enum_iterable_v{};
 
 } // namespace utki

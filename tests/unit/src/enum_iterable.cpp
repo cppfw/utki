@@ -12,7 +12,7 @@ tst::set set("enum_iterable", [](tst::suite& suite) {
 		enum_size
 	};
 
-	suite.add("enum_iterable_value", []() {
+	suite.add("enum_iterable__value", []() {
 		unsigned count = 0;
 
 		for (auto i : utki::enum_iterable<test_enum>::value) {
