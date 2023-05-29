@@ -118,8 +118,6 @@ public:
 	{
 		return reverse_iterator(this->begin());
 	}
-
-	constexpr static enum_iterable value{};
 };
 
 template <typename enum_type>
