@@ -32,7 +32,7 @@ SOFTWARE.
 namespace utki {
 
 template <typename enum_type>
-class enum_iterable_internal
+class enum_iterable
 {
 	static_assert(std::is_enum_v<enum_type>, "enum type expected");
 
@@ -45,7 +45,7 @@ class enum_iterable_internal
 public:
 	class iterator
 	{
-		friend class enum_iterable_internal;
+		friend class enum_iterable;
 
 		enum_type e;
 
@@ -118,9 +118,11 @@ public:
 	{
 		return reverse_iterator(this->begin());
 	}
+
+	constexpr static enum_iterable value{};
 };
 
 template <typename enum_type>
-constexpr enum_iterable_internal<enum_type> enum_iterable;
+constexpr enum_iterable<enum_type> enum_iterable_v;
 
 } // namespace utki

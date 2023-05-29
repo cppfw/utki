@@ -4,18 +4,29 @@
 
 namespace {
 tst::set set("enum_iterable", [](tst::suite& suite) {
-	suite.add("basic", []() {
-		enum class test_enum {
-			item1,
-			item2,
-			item3,
+	enum class test_enum {
+		item1,
+		item2,
+		item3,
 
-			enum_size
-		};
+		enum_size
+	};
 
+	suite.add("enum_iterable_value", []() {
 		unsigned count = 0;
 
-		for (auto i : utki::enum_iterable<test_enum>) {
+		for (auto i : utki::enum_iterable<test_enum>::value) {
+			tst::check_eq(unsigned(i), count, SL);
+			++count;
+		}
+
+		tst::check_eq(count, unsigned(3), SL);
+	});
+
+	suite.add("enum_iterable_v", []() {
+		unsigned count = 0;
+
+		for (auto i : utki::enum_iterable_v<test_enum>) {
 			tst::check_eq(unsigned(i), count, SL);
 			++count;
 		}
