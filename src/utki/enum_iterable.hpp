@@ -55,7 +55,7 @@ public:
 
 	public:
 		using iterator_category = std::input_iterator_tag;
-		using difference_type = std::underlying_type_t<enum_type>;
+		using difference_type = std::make_signed_t<std::underlying_type_t<enum_type>>;
 		using value_type = enum_type;
 		using reference = value_type;
 		using pointer = void;
