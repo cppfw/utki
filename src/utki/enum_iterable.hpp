@@ -31,6 +31,7 @@ SOFTWARE.
 
 namespace utki {
 
+// TODO: doxygen all
 template <typename enum_type>
 class enum_iterable
 {
