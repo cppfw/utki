@@ -1,3 +1,9 @@
+libutki (1.1.205) unstable; urgency=medium
+
+  * add CFG_ENDIANNESS macros
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 01 Jun 2023 13:12:18 +0300
+
 libutki (1.1.204) unstable; urgency=medium
 
   * add enum_iterable_v
