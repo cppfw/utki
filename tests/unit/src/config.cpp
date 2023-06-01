@@ -12,11 +12,11 @@ tst::set set("config", [](tst::suite& suite) {
 		bool is_little_endian = (*p == 1);
 
 		if (is_little_endian) {
-			tst::check(CFG_ENDIANNESS == CFG_ENDIANNESS_LITTLE, SL);
-			tst::check(CFG_ENDIANNESS != CFG_ENDIANNESS_BIG, SL);
+			tst::check(CFG_ENDIANNESS == CFG_ENDIANNESS_LITTLE, SL) << "CFG_ENDIANNESS = " << CFG_ENDIANNESS;
+			tst::check(CFG_ENDIANNESS != CFG_ENDIANNESS_BIG, SL) << "CFG_ENDIANNESS = " << CFG_ENDIANNESS;
 		} else {
-			tst::check(CFG_ENDIANNESS == CFG_ENDIANNESS_BIG, SL);
-			tst::check(CFG_ENDIANNESS != CFG_ENDIANNESS_LITTLE, SL);
+			tst::check(CFG_ENDIANNESS == CFG_ENDIANNESS_BIG, SL) << "CFG_ENDIANNESS = " << CFG_ENDIANNESS;
+			tst::check(CFG_ENDIANNESS != CFG_ENDIANNESS_LITTLE, SL) << "CFG_ENDIANNESS = " << CFG_ENDIANNESS;
 		}
 	});
 });

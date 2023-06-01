@@ -242,31 +242,6 @@ SOFTWARE.
 #	define M_CPU_VERSION 0
 #endif
 
-//====================================================|
-//            CPU endianness definitions              |
-//                                                    |
-
-// NOLINTBEGIN(modernize-macro-to-enum)
-#define CFG_ENDIANNESS_UNKNOWN 0
-#define CFG_ENDIANNESS_LITTLE 1
-#define CFG_ENDIANNESS_BIG 2
-// NOLINTEND(modernize-macro-to-enum)
-
-#if (defined(__ORDER_BIG_ENDIAN__) && (__BYTE_ORDER__ == __ORDER_BIG_ENDIAN__ || __FLOAT_WORD_ORDER__ == __ORDER_BIG_ENDIAN__)) \
-	|| defined(__BIG_ENDIAN__) || defined(__ARMEB__) || defined(__THUMBEB__) || defined(__AARCH64EB__) \
-	|| defined(_MIPSEB) || defined(__MIPSEB) || defined(__MIPSEB__)
-#	define CFG_ENDIANNESS CFG_ENDIANNESS_BIG
-#elif ( \
-	defined(__ORDER_LITTLE_ENDIAN__) \
-	&& (__BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__ || __FLOAT_WORD_ORDER__ == __ORDER_LITTLE_ENDIAN__) \
-) || defined(__LITTLE_ENDIAN__) \
-	|| defined(__ARMEL__) || defined(__THUMBEL__) || defined(__AARCH64EL__) || defined(_MIPSEL) || defined(__MIPSEL) \
-	|| defined(__MIPSEL__)
-#	define CFG_ENDIANNESS CFG_ENDIANNESS_LITTLE
-#else
-#	define CFG_ENDIANNESS CFG_ENDIANNESS_UNKNOWN
-#endif
-
 //======================================|
 //            OS definitions            |
 //                                      |
@@ -365,4 +340,34 @@ SOFTWARE.
 #	endif
 #else
 #	define DLLEXPORT
+#endif
+
+//====================================================|
+//            CPU endianness definitions              |
+//                                                    |
+
+// NOLINTBEGIN(modernize-macro-to-enum)
+#define CFG_ENDIANNESS_UNKNOWN 0
+#define CFG_ENDIANNESS_LITTLE 1
+#define CFG_ENDIANNESS_BIG 2
+// NOLINTEND(modernize-macro-to-enum)
+
+#if CFG_OS == CFG_OS_WINDOWS
+// Windows 32/64 bit is always little endian
+#	define CFG_ENDIANNESS CFG_ENDIANNESS_LITTLE
+#else
+#	if (defined(__ORDER_BIG_ENDIAN__) && (__BYTE_ORDER__ == __ORDER_BIG_ENDIAN__ || __FLOAT_WORD_ORDER__ == __ORDER_BIG_ENDIAN__)) \
+		|| defined(__BIG_ENDIAN__) || defined(__ARMEB__) || defined(__THUMBEB__) || defined(__AARCH64EB__) \
+		|| defined(_MIPSEB) || defined(__MIPSEB) || defined(__MIPSEB__)
+#		define CFG_ENDIANNESS CFG_ENDIANNESS_BIG
+#	elif ( \
+		defined(__ORDER_LITTLE_ENDIAN__) \
+		&& (__BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__ || __FLOAT_WORD_ORDER__ == __ORDER_LITTLE_ENDIAN__) \
+	) || defined(__LITTLE_ENDIAN__) \
+		|| defined(__ARMEL__) || defined(__THUMBEL__) || defined(__AARCH64EL__) || defined(_MIPSEL) \
+		|| defined(__MIPSEL) || defined(__MIPSEL__)
+#		define CFG_ENDIANNESS CFG_ENDIANNESS_LITTLE
+#	else
+#		define CFG_ENDIANNESS CFG_ENDIANNESS_UNKNOWN
+#	endif
 #endif
