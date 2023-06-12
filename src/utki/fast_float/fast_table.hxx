@@ -66,7 +66,7 @@ struct powers_template {
 
 // NOLINTNEXTLINE(readability-identifier-naming)
 template <class unused>
-// NOLINTNEXTLINE(modernize-avoid-c-arrays)
+// NOLINTNEXTLINE(modernize-avoid-c-arrays, cppcoreguidelines-avoid-c-arrays)
 const uint64_t powers_template<unused>::power_of_five_128[number_of_entries] = {
 	0xeef453d6923bd65a, 0x113faa2906a13b3f,
 	0x9558b4661b6565f8, 0x4ac7ca59a424c507,

@@ -82,6 +82,7 @@ SOFTWARE.
 #	endif
 #
 #	if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
+// NOLINNEXTLINE(cppcoreguidelines-macro-usage)
 #		define FASTFLOAT_IS_BIG_ENDIAN 0
 #	else
 #		define FASTFLOAT_IS_BIG_ENDIAN 1
@@ -101,9 +102,10 @@ inline bool fastfloat_strncasecmp(const char* input1, const char* input2, size_t
 {
 	char running_diff{0};
 	for (size_t i = 0; i < length; i++) {
-		// NOLINTNEXTLINE(bugprone-narrowing-conversions)
+		// NOLINTNEXTLINE(bugprone-narrowing-conversions, cppcoreguidelines-pro-bounds-pointer-arithmetic, cppcoreguidelines-narrowing-conversions)
 		running_diff |= (input1[i] ^ input2[i]);
 	}
+	// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
 	return (running_diff == 0) || (running_diff == 32);
 }
 
@@ -198,6 +200,7 @@ fastfloat_really_inline value128 full_multiplication(uint64_t a, uint64_t b)
 #elif defined(FASTFLOAT_64BIT)
 	__uint128_t r = ((__uint128_t)a) * b;
 	answer.low = uint64_t(r);
+	// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
 	answer.high = uint64_t(r >> 64);
 #else
 #	error Not implemented
