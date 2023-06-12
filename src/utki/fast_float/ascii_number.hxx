@@ -45,11 +45,19 @@ fastfloat_really_inline bool is_integer(char c) noexcept
 
 fastfloat_really_inline uint64_t byteswap(uint64_t val)
 {
-	// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
-	return (val & 0xFF00000000000000) >> 56 | (val & 0x00FF000000000000) >> 40 | (val & 0x0000FF0000000000) >> 24
-		// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
-		| (val & 0x000000FF00000000) >> 8 | (val & 0x00000000FF000000) << 8 | (val & 0x0000000000FF0000) << 24
-		// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
+	// NOLINTNEXTLINE
+	return (val & 0xFF00000000000000) >> 56
+		// NOLINTNEXTLINE
+		| (val & 0x00FF000000000000) >> 40
+		// NOLINTNEXTLINE
+		| (val & 0x0000FF0000000000) >> 24
+		// NOLINTNEXTLINE
+		| (val & 0x000000FF00000000) >> 8
+		// NOLINTNEXTLINE
+		| (val & 0x00000000FF000000) << 8
+		// NOLINTNEXTLINE
+		| (val & 0x0000000000FF0000) << 24
+		// NOLINTNEXTLINE
 		| (val & 0x000000000000FF00) << 40 | (val & 0x00000000000000FF) << 56;
 }
 
@@ -164,7 +172,7 @@ parse_number_string(const char* p, const char* pend, chars_format fmt) noexcept
 			if ((p + 8 <= pend) && is_made_of_eight_digits_fast(p)) {
 				// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
 				i = i * 100000000 + parse_eight_digits_unrolled(p); // in rare cases, this will overflow, but that's ok
-				// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic, cppcoreguidelines-avoid-magic-numbers)
+				// NOLINTNEXTLINE
 				p += 8;
 			}
 		}
@@ -335,7 +343,7 @@ fastfloat_really_inline decimal parse_decimal(const char* p, const char* pend) n
 			// We have eight digits, process them in one go!
 			// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
 			val -= 0x3030303030303030;
-			// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic, cppcoreguidelines-pro-bounds-array-to-pointer-decay)
+			// NOLINTNEXTLINE
 			write_u64(answer.digits + answer.num_digits, val);
 			// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
 			answer.num_digits += 8;

@@ -102,7 +102,7 @@ inline bool fastfloat_strncasecmp(const char* input1, const char* input2, size_t
 {
 	char running_diff{0};
 	for (size_t i = 0; i < length; i++) {
-		// NOLINTNEXTLINE(bugprone-narrowing-conversions, cppcoreguidelines-pro-bounds-pointer-arithmetic, cppcoreguidelines-narrowing-conversions)
+		// NOLINTNEXTLINE
 		running_diff |= (input1[i] ^ input2[i]);
 	}
 	// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
