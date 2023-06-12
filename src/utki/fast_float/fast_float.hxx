@@ -24,10 +24,12 @@ SOFTWARE.
 
 /* ================ LICENSE END ================ */
 
-#ifndef FASTFLOAT_FAST_FLOAT_H
-#define FASTFLOAT_FAST_FLOAT_H
+// NOLINTBEGIN
 
-#include <system_error>
+#ifndef FASTFLOAT_FAST_FLOAT_H
+#	define FASTFLOAT_FAST_FLOAT_H
+
+#	include <system_error>
 
 namespace fast_float {
 enum chars_format {
@@ -72,5 +74,7 @@ from_chars_result from_chars(
 
 } // namespace fast_float
 
-#include "parse_number.hxx"
+#	include "parse_number.hxx"
 #endif // FASTFLOAT_FAST_FLOAT_H
+
+// NOLINTEND

@@ -24,8 +24,10 @@ SOFTWARE.
 
 /* ================ LICENSE END ================ */
 
+// NOLINTBEGIN
+
 #ifndef FASTFLOAT_GENERIC_DECIMAL_TO_BINARY_H
-#define FASTFLOAT_GENERIC_DECIMAL_TO_BINARY_H
+#	define FASTFLOAT_GENERIC_DECIMAL_TO_BINARY_H
 
 /**
  * This code is meant to handle the case where we have more than 19 digits.
@@ -39,10 +41,10 @@ SOFTWARE.
  * It is probably not very fast but it is a fallback that should almost never
  * be used in real life. Though it is not fast, it is "easily" understood and debugged.
  **/
-#include <cstdint>
+#	include <cstdint>
 
-#include "ascii_number.hxx"
-#include "decimal_to_binary.hxx"
+#	include "ascii_number.hxx"
+#	include "decimal_to_binary.hxx"
 
 namespace fast_float {
 
@@ -374,3 +376,5 @@ adjusted_mantissa parse_long_mantissa(const char* first, const char* last)
 
 } // namespace fast_float
 #endif
+
+// NOLINTEND

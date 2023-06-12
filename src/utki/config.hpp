@@ -26,6 +26,8 @@ SOFTWARE.
 
 #pragma once
 
+// NOLINTBEGIN(cppcoreguidelines-macro-usage)
+
 // TODO: M_ prefixed macros are deprecated, remove those when all usages are migrated to new macros.
 
 //====================================================|
@@ -371,3 +373,5 @@ SOFTWARE.
 #		define CFG_ENDIANNESS CFG_ENDIANNESS_UNKNOWN
 #	endif
 #endif
+
+// NOLINTEND(cppcoreguidelines-macro-usage)

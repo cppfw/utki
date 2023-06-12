@@ -24,19 +24,21 @@ SOFTWARE.
 
 /* ================ LICENSE END ================ */
 
+// NOLINTBEGIN
+
 #ifndef FASTFLOAT_DECIMAL_TO_BINARY_H
-#define FASTFLOAT_DECIMAL_TO_BINARY_H
+#	define FASTFLOAT_DECIMAL_TO_BINARY_H
 
-#include <cfloat>
-#include <cinttypes>
-#include <cmath>
-#include <cstdint>
-#include <cstdio>
-#include <cstdlib>
-#include <cstring>
+#	include <cfloat>
+#	include <cinttypes>
+#	include <cmath>
+#	include <cstdint>
+#	include <cstdio>
+#	include <cstdlib>
+#	include <cstring>
 
-#include "fast_table.hxx"
-#include "float_common.hxx"
+#	include "fast_table.hxx"
+#	include "float_common.hxx"
 
 namespace fast_float {
 
@@ -201,3 +203,5 @@ fastfloat_really_inline adjusted_mantissa compute_float(int64_t q, uint64_t w) n
 } // namespace fast_float
 
 #endif
+
+// NOLINTEND

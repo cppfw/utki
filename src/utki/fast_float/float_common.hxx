@@ -24,76 +24,78 @@ SOFTWARE.
 
 /* ================ LICENSE END ================ */
 
+// NOLINTBEGIN
+
 #ifndef FASTFLOAT_FLOAT_COMMON_H
-#define FASTFLOAT_FLOAT_COMMON_H
+#	define FASTFLOAT_FLOAT_COMMON_H
 
-#include <cfloat>
-#include <cstdint>
+#	include <cfloat>
+#	include <cstdint>
 
-#if (defined(__x86_64) || defined(__x86_64__) || defined(_M_X64) || defined(__amd64) || defined(__aarch64__) || defined(_M_ARM64) || defined(__MINGW64__) || defined(__s390x__) || (defined(__ppc64__) || defined(__PPC64__) || defined(__ppc64le__) || defined(__PPC64LE__)) || defined(__EMSCRIPTEN__))
-#	define FASTFLOAT_64BIT
-#elif ( \
-	defined(__i386) || defined(__i386__) || defined(_M_IX86) || defined(__arm__) || defined(_M_ARM) \
-	|| defined(__MINGW32__) \
-)
-#	define FASTFLOAT_32BIT
-#else
+#	if (defined(__x86_64) || defined(__x86_64__) || defined(_M_X64) || defined(__amd64) || defined(__aarch64__) || defined(_M_ARM64) || defined(__MINGW64__) || defined(__s390x__) || (defined(__ppc64__) || defined(__PPC64__) || defined(__ppc64le__) || defined(__PPC64LE__)) || defined(__EMSCRIPTEN__))
+#		define FASTFLOAT_64BIT
+#	elif ( \
+		defined(__i386) || defined(__i386__) || defined(_M_IX86) || defined(__arm__) || defined(_M_ARM) \
+		|| defined(__MINGW32__) \
+	)
+#		define FASTFLOAT_32BIT
+#	else
 // Need to check incrementally, since SIZE_MAX is a size_t, avoid overflow.
 // We can never tell the register width, but the SIZE_MAX is a good approximation.
 // UINTPTR_MAX and INTPTR_MAX are optional, so avoid them for max portability.
-#	if SIZE_MAX == 0xffff
-#		error Unknown platform (16-bit, unsupported)
-#	elif SIZE_MAX == 0xffffffff
-#		define FASTFLOAT_32BIT
-#	elif SIZE_MAX == 0xffffffffffffffff
-#		define FASTFLOAT_64BIT
-#	else
-#		error Unknown platform (not 32-bit, not 64-bit?)
+#		if SIZE_MAX == 0xffff
+#			error Unknown platform (16-bit, unsupported)
+#		elif SIZE_MAX == 0xffffffff
+#			define FASTFLOAT_32BIT
+#		elif SIZE_MAX == 0xffffffffffffffff
+#			define FASTFLOAT_64BIT
+#		else
+#			error Unknown platform (not 32-bit, not 64-bit?)
+#		endif
 #	endif
-#endif
 
-#if ((defined(_WIN32) || defined(_WIN64)) && !defined(__clang__))
-#	include <intrin.h>
-#endif
-
-#if defined(_MSC_VER) && !defined(__clang__)
-#	define FASTFLOAT_VISUAL_STUDIO 1
-#endif
-
-#ifdef _WIN32
-#	define FASTFLOAT_IS_BIG_ENDIAN 0
-#else
-#	if defined(__APPLE__) || defined(__FreeBSD__)
-#		include <machine/endian.h>
-#	elif defined(sun) || defined(__sun)
-#		include <sys/byteorder.h>
-#	else
-#		include <endian.h>
+#	if ((defined(_WIN32) || defined(_WIN64)) && !defined(__clang__))
+#		include <intrin.h>
 #	endif
-#
-#	ifndef __BYTE_ORDER__
-// safe choice
+
+#	if defined(_MSC_VER) && !defined(__clang__)
+#		define FASTFLOAT_VISUAL_STUDIO 1
+#	endif
+
+#	ifdef _WIN32
 #		define FASTFLOAT_IS_BIG_ENDIAN 0
-#	endif
+#	else
+#		if defined(__APPLE__) || defined(__FreeBSD__)
+#			include <machine/endian.h>
+#		elif defined(sun) || defined(__sun)
+#			include <sys/byteorder.h>
+#		else
+#			include <endian.h>
+#		endif
 #
-#	ifndef __ORDER_LITTLE_ENDIAN__
+#		ifndef __BYTE_ORDER__
 // safe choice
-#		define FASTFLOAT_IS_BIG_ENDIAN 0
-#	endif
+#			define FASTFLOAT_IS_BIG_ENDIAN 0
+#		endif
 #
-#	if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
+#		ifndef __ORDER_LITTLE_ENDIAN__
+// safe choice
+#			define FASTFLOAT_IS_BIG_ENDIAN 0
+#		endif
+#
+#		if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
 // NOLINNEXTLINE(cppcoreguidelines-macro-usage)
-#		define FASTFLOAT_IS_BIG_ENDIAN 0
-#	else
-#		define FASTFLOAT_IS_BIG_ENDIAN 1
+#			define FASTFLOAT_IS_BIG_ENDIAN 0
+#		else
+#			define FASTFLOAT_IS_BIG_ENDIAN 1
+#		endif
 #	endif
-#endif
 
-#ifdef FASTFLOAT_VISUAL_STUDIO
-#	define fastfloat_really_inline __forceinline
-#else
-#	define fastfloat_really_inline inline __attribute__((always_inline))
-#endif
+#	ifdef FASTFLOAT_VISUAL_STUDIO
+#		define fastfloat_really_inline __forceinline
+#	else
+#		define fastfloat_really_inline inline __attribute__((always_inline))
+#	endif
 
 namespace fast_float {
 
@@ -109,9 +111,9 @@ inline bool fastfloat_strncasecmp(const char* input1, const char* input2, size_t
 	return (running_diff == 0) || (running_diff == 32);
 }
 
-#ifndef FLT_EVAL_METHOD
-#	error "FLT_EVAL_METHOD should be defined, please include cfloat."
-#endif
+#	ifndef FLT_EVAL_METHOD
+#		error "FLT_EVAL_METHOD should be defined, please include cfloat."
+#	endif
 
 namespace {
 constexpr uint32_t max_digits = 768;
@@ -135,14 +137,14 @@ struct value128 {
 fastfloat_really_inline int leading_zeroes(uint64_t input_num)
 {
 	ASSERT(input_num > 0)
-#ifdef FASTFLOAT_VISUAL_STUDIO
-#	if defined(_M_X64) || defined(_M_ARM64)
+#	ifdef FASTFLOAT_VISUAL_STUDIO
+#		if defined(_M_X64) || defined(_M_ARM64)
 	unsigned long leading_zero = 0;
 	// Search the mask data from most significant bit (MSB)
 	// to least significant bit (LSB) for a set bit (1).
 	_BitScanReverse64(&leading_zero, input_num);
 	return (int)(63 - leading_zero);
-#	else
+#		else
 	int last_bit = 0;
 	if (input_num & uint64_t(0xffffffff00000000))
 		input_num >>= 32, last_bit |= 32;
@@ -157,13 +159,13 @@ fastfloat_really_inline int leading_zeroes(uint64_t input_num)
 	if (input_num & uint64_t(0x2))
 		input_num >>= 1, last_bit |= 1;
 	return 63 - last_bit;
-#	endif
-#else
+#		endif
+#	else
 	return __builtin_clzll(input_num);
-#endif
+#	endif
 }
 
-#ifdef FASTFLOAT_32BIT
+#	ifdef FASTFLOAT_32BIT
 
 // slow emulation routine for 32-bit
 fastfloat_really_inline uint64_t emulu(uint32_t x, uint32_t y)
@@ -172,7 +174,7 @@ fastfloat_really_inline uint64_t emulu(uint32_t x, uint32_t y)
 }
 
 // slow emulation routine for 32-bit
-#	if !defined(__MINGW64__)
+#		if !defined(__MINGW64__)
 fastfloat_really_inline uint64_t _umul128(uint64_t ab, uint64_t cd, uint64_t* hi) // NOLINT
 {
 	uint64_t ad = emulu((uint32_t)(ab >> 32), (uint32_t)cd);
@@ -183,28 +185,28 @@ fastfloat_really_inline uint64_t _umul128(uint64_t ab, uint64_t cd, uint64_t* hi
 	*hi = emulu((uint32_t)(ab >> 32), (uint32_t)(cd >> 32)) + (adbc >> 32) + (adbc_carry << 32) + !!(lo < bd);
 	return lo;
 }
-#	endif // !__MINGW64__
+#		endif // !__MINGW64__
 
-#endif // FASTFLOAT_32BIT
+#	endif // FASTFLOAT_32BIT
 
 // compute 64-bit a*b
 fastfloat_really_inline value128 full_multiplication(uint64_t a, uint64_t b)
 {
 	value128 answer;
-#ifdef _M_ARM64
+#	ifdef _M_ARM64
 	// ARM64 has native support for 64-bit multiplications, no need to emulate
 	answer.high = __umulh(a, b);
 	answer.low = a * b;
-#elif defined(FASTFLOAT_32BIT) || (defined(_WIN64) && !defined(__clang__))
+#	elif defined(FASTFLOAT_32BIT) || (defined(_WIN64) && !defined(__clang__))
 	answer.low = _umul128(a, b, &answer.high); // _umul128 not available on ARM64
-#elif defined(FASTFLOAT_64BIT)
+#	elif defined(FASTFLOAT_64BIT)
 	__uint128_t r = ((__uint128_t)a) * b;
 	answer.low = uint64_t(r);
 	// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
 	answer.high = uint64_t(r >> 64);
-#else
-#	error Not implemented
-#endif
+#	else
+#		error Not implemented
+#	endif
 	return answer;
 }
 
@@ -348,21 +350,21 @@ inline constexpr int binary_format<float>::sign_index()
 template <>
 inline constexpr int binary_format<double>::min_exponent_fast_path()
 {
-#if (FLT_EVAL_METHOD != 1) && (FLT_EVAL_METHOD != 0)
+#	if (FLT_EVAL_METHOD != 1) && (FLT_EVAL_METHOD != 0)
 	return 0;
-#else
+#	else
 	return -22;
-#endif
+#	endif
 }
 
 template <>
 inline constexpr int binary_format<float>::min_exponent_fast_path()
 {
-#if (FLT_EVAL_METHOD != 1) && (FLT_EVAL_METHOD != 0)
+#	if (FLT_EVAL_METHOD != 1) && (FLT_EVAL_METHOD != 0)
 	return 0;
-#else
+#	else
 	return -10;
-#endif
+#	endif
 }
 
 template <>
@@ -441,3 +443,5 @@ inline OStream& operator<<(OStream& out, const fast_float::decimal& d)
 }
 
 #endif
+
+// NOLINTEND

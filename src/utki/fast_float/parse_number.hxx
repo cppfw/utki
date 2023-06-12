@@ -24,16 +24,18 @@ SOFTWARE.
 
 /* ================ LICENSE END ================ */
 
-#ifndef FASTFLOAT_PARSE_NUMBER_H
-#define FASTFLOAT_PARSE_NUMBER_H
-#include <cmath>
-#include <cstring>
-#include <limits>
-#include <system_error>
+// NOLINTBEGIN
 
-#include "ascii_number.hxx"
-#include "decimal_to_binary.hxx"
-#include "simple_decimal_conversion.hxx"
+#ifndef FASTFLOAT_PARSE_NUMBER_H
+#	define FASTFLOAT_PARSE_NUMBER_H
+#	include <cmath>
+#	include <cstring>
+#	include <limits>
+#	include <system_error>
+
+#	include "ascii_number.hxx"
+#	include "decimal_to_binary.hxx"
+#	include "simple_decimal_conversion.hxx"
 
 namespace fast_float {
 
@@ -96,16 +98,16 @@ fastfloat_really_inline void to_float(bool negative, adjusted_mantissa am, T& va
 	uint64_t word = am.mantissa;
 	word |= uint64_t(am.power2) << binary_format<T>::mantissa_explicit_bits();
 	word = negative ? word | (uint64_t(1) << binary_format<T>::sign_index()) : word;
-#if FASTFLOAT_IS_BIG_ENDIAN == 1
+#	if FASTFLOAT_IS_BIG_ENDIAN == 1
 	if (std::is_same<T, float>::value) {
 		::memcpy(&value, (char*)&word + 4, sizeof(T)); // extract value at offset 4-7 if float on big-endian
 	} else {
 		::memcpy(&value, &word, sizeof(T));
 	}
-#else
+#	else
 	// For little-endian systems:
 	::memcpy(&value, &word, sizeof(T));
-#endif
+#	endif
 }
 
 } // namespace detail
@@ -163,3 +165,5 @@ from_chars(const char* first, const char* last, T& value, chars_format fmt /*= c
 } // namespace fast_float
 
 #endif
+
+// NOLINTEND

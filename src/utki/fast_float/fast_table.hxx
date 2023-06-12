@@ -24,9 +24,11 @@ SOFTWARE.
 
 /* ================ LICENSE END ================ */
 
+// NOLINTBEGIN
+
 #ifndef FASTFLOAT_FAST_TABLE_H
-#define FASTFLOAT_FAST_TABLE_H
-#include <cstdint>
+#	define FASTFLOAT_FAST_TABLE_H
+#	include <cstdint>
 
 namespace fast_float {
 
@@ -725,3 +727,5 @@ using powers = powers_template<>;
 } // namespace fast_float
 
 #endif
+
+// NOLINTEND

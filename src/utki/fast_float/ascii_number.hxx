@@ -24,15 +24,17 @@ SOFTWARE.
 
 /* ================ LICENSE END ================ */
 
+// NOLINTBEGIN
+
 #ifndef FASTFLOAT_ASCII_NUMBER_H
-#define FASTFLOAT_ASCII_NUMBER_H
+#	define FASTFLOAT_ASCII_NUMBER_H
 
-#include <cctype>
-#include <cstdint>
-#include <cstdio>
-#include <cstring>
+#	include <cctype>
+#	include <cstdint>
+#	include <cstdio>
+#	include <cstring>
 
-#include "float_common.hxx"
+#	include "float_common.hxx"
 
 namespace fast_float {
 
@@ -66,19 +68,19 @@ fastfloat_really_inline uint64_t read_u64(const char* chars)
 	// NOLINTNEXTLINE(cppcoreguidelines-init-variables)
 	uint64_t val;
 	::memcpy(&val, chars, sizeof(uint64_t));
-#if FASTFLOAT_IS_BIG_ENDIAN == 1
+#	if FASTFLOAT_IS_BIG_ENDIAN == 1
 	// Need to read as-if the number was in little-endian order.
 	val = byteswap(val);
-#endif
+#	endif
 	return val;
 }
 
 fastfloat_really_inline void write_u64(uint8_t* chars, uint64_t val)
 {
-#if FASTFLOAT_IS_BIG_ENDIAN == 1
+#	if FASTFLOAT_IS_BIG_ENDIAN == 1
 	// Need to read as-if the number was in little-endian order.
 	val = byteswap(val);
-#endif
+#	endif
 	::memcpy(chars, &val, sizeof(uint64_t));
 }
 
@@ -422,3 +424,5 @@ fastfloat_really_inline decimal parse_decimal(const char* p, const char* pend) n
 } // namespace fast_float
 
 #endif
+
+// NOLINTEND

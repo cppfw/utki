@@ -88,15 +88,13 @@ namespace utki {
 // backport of std::source_location
 struct source_location {
 	constexpr source_location(
-		uint_least32_t l = 0,
-		uint_least32_t c = 0,
-		char const* fn = nullptr,
-		char const* fnn = nullptr
+		uint_least32_t line = 0,
+		uint_least32_t column = 0,
+		const char* file_name = nullptr
 	) noexcept :
-		line_{l},
-		column_{c},
-		file_name_{fn},
-		function_name_{fnn}
+		line_{line},
+		column_{column},
+		file_name_{file_name}
 	{}
 
 #if CFG_CPP >= 20
@@ -128,8 +126,8 @@ struct source_location {
 private:
 	uint_least32_t line_;
 	uint_least32_t column_;
-	char const* file_name_;
-	char const* function_name_;
+	const char* file_name_;
+	const char* function_name_ = nullptr;
 };
 } // namespace utki
 
@@ -140,7 +138,7 @@ private:
 #if CFG_CPP >= 20
 #	define SL utki::std_source_location::current()
 #else
-#	define SL utki::source_location(__LINE__, 0, __FILE__, __func__)
+#	define SL utki::source_location(__LINE__, 0, __FILE__)
 #endif
 
 namespace utki {
