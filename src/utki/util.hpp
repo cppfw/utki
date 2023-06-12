@@ -33,6 +33,8 @@ SOFTWARE.
 #include <memory>
 
 #include "debug.hpp"
+#include "span.hpp"
+#include "types.hpp"
 
 namespace utki {
 
@@ -248,12 +250,14 @@ inline uint8_t* serialize64le(uint64_t value, uint8_t* out_buf) noexcept
  */
 inline uint16_t deserialize16le(const uint8_t* buf) noexcept
 {
-	uint16_t ret;
+	uint16_t ret = 0;
 
-	// assume little-endian
-	ret = uint16_t(*buf);
-	++buf;
-	ret |= ((uint16_t(*buf)) << 8);
+	unsigned index = 0;
+
+	for (auto b : utki::make_span(buf, sizeof(ret))) {
+		ret |= (decltype(ret)(b) << (num_bits_in_byte * index));
+		++index;
+	}
 
 	return ret;
 }
@@ -267,16 +271,14 @@ inline uint16_t deserialize16le(const uint8_t* buf) noexcept
  */
 inline uint32_t deserialize32le(const uint8_t* buf) noexcept
 {
-	uint32_t ret;
+	uint32_t ret = 0;
 
-	// assume little-endian
-	ret = uint32_t(*buf);
-	++buf;
-	ret |= ((uint32_t(*buf)) << 8);
-	++buf;
-	ret |= ((uint32_t(*buf)) << 16);
-	++buf;
-	ret |= ((uint32_t(*buf)) << 24);
+	unsigned index = 0;
+
+	for (auto b : utki::make_span(buf, sizeof(ret))) {
+		ret |= (decltype(ret)(b) << (num_bits_in_byte * index));
+		++index;
+	}
 
 	return ret;
 }
@@ -290,24 +292,14 @@ inline uint32_t deserialize32le(const uint8_t* buf) noexcept
  */
 inline uint64_t deserialize64le(const uint8_t* buf) noexcept
 {
-	uint64_t ret;
+	uint64_t ret = 0;
 
-	// assume little-endian
-	ret = uint64_t(*buf);
-	++buf;
-	ret |= ((uint64_t(*buf)) << 8);
-	++buf;
-	ret |= ((uint64_t(*buf)) << 16);
-	++buf;
-	ret |= ((uint64_t(*buf)) << 24);
-	++buf;
-	ret |= ((uint64_t(*buf)) << 32);
-	++buf;
-	ret |= ((uint64_t(*buf)) << 40);
-	++buf;
-	ret |= ((uint64_t(*buf)) << 48);
-	++buf;
-	ret |= ((uint64_t(*buf)) << 56);
+	unsigned index = 0;
+
+	for (auto b : utki::make_span(buf, sizeof(ret))) {
+		ret |= (decltype(ret)(b) << (num_bits_in_byte * index));
+		++index;
+	}
 
 	return ret;
 }
@@ -385,12 +377,14 @@ inline uint8_t* serialize64be(uint64_t value, uint8_t* out_buf) noexcept
  */
 inline uint16_t deserialize16be(const uint8_t* buf) noexcept
 {
-	uint16_t ret;
+	uint16_t ret = 0;
 
-	// assume big-endian
-	ret = ((uint16_t(*buf)) << 8);
-	++buf;
-	ret |= uint16_t(*buf);
+	unsigned index = sizeof(ret);
+
+	for (auto b : utki::make_span(buf, sizeof(ret))) {
+		--index;
+		ret |= (decltype(ret)(b) << (num_bits_in_byte * index));
+	}
 
 	return ret;
 }
@@ -404,16 +398,14 @@ inline uint16_t deserialize16be(const uint8_t* buf) noexcept
  */
 inline uint32_t deserialize32be(const uint8_t* buf) noexcept
 {
-	uint32_t ret;
+	uint32_t ret = 0;
 
-	// assume big-endian
-	ret = ((uint32_t(*buf)) << 24);
-	++buf;
-	ret |= ((uint32_t(*buf)) << 16);
-	++buf;
-	ret |= ((uint32_t(*buf)) << 8);
-	++buf;
-	ret |= uint32_t(*buf);
+	unsigned index = sizeof(ret);
+
+	for (auto b : utki::make_span(buf, sizeof(ret))) {
+		--index;
+		ret |= (decltype(ret)(b) << (num_bits_in_byte * index));
+	}
 
 	return ret;
 }
@@ -427,24 +419,14 @@ inline uint32_t deserialize32be(const uint8_t* buf) noexcept
  */
 inline uint64_t deserialize64be(const uint8_t* buf) noexcept
 {
-	uint64_t ret;
+	uint64_t ret = 0;
 
-	// assume big-endian
-	ret = ((uint64_t(*buf)) << 56);
-	++buf;
-	ret |= ((uint64_t(*buf)) << 48);
-	++buf;
-	ret |= ((uint64_t(*buf)) << 40);
-	++buf;
-	ret |= ((uint64_t(*buf)) << 32);
-	++buf;
-	ret |= ((uint64_t(*buf)) << 24);
-	++buf;
-	ret |= ((uint64_t(*buf)) << 16);
-	++buf;
-	ret |= ((uint64_t(*buf)) << 8);
-	++buf;
-	ret |= uint64_t(*buf);
+	unsigned index = sizeof(ret);
+
+	for (auto b : utki::make_span(buf, sizeof(ret))) {
+		--index;
+		ret |= (decltype(ret)(b) << (num_bits_in_byte * index));
+	}
 
 	return ret;
 }

@@ -35,6 +35,8 @@ SOFTWARE.
 
 namespace utki {
 
+static const auto num_bits_in_byte = 8;
+
 template <size_t type_size>
 struct uint_size;
 

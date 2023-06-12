@@ -37,8 +37,6 @@ SOFTWARE.
 #endif
 
 #include "debug.hpp"
-#include "types.hpp"
-#include "util.hpp"
 
 // undefine the max macro in case it is defined (e.g. by windows.h)
 #ifdef max

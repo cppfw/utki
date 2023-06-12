@@ -57,7 +57,7 @@ enum non_flag_enum {
 } // namespace
 
 namespace {
-tst::set set("flags", [](tst::suite& suite) {
+const tst::set set("flags", [](tst::suite& suite) {
 	suite.add("basic", []() {
 		utki::flags<test_enum> fs;
 
