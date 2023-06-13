@@ -171,6 +171,27 @@ public:
 };
 
 /**
+ * @brief Serialize unsigned integral value, little-endian.
+ * @param value - value to serialize.
+ * @param out_buf - output buffer.
+ * @return Pointer to the next byte after serialized value.
+ */
+template <typename unsigned_type>
+uint8_t* serialize_le(unsigned_type value, uint8_t* out_buf) noexcept
+{
+	static_assert(std::is_integral_v<unsigned_type>, "serialized type must be integral");
+	static_assert(std::is_unsigned_v<unsigned_type>, "serialized type must be unsigned");
+
+	unsigned index = 0;
+	for (auto& b : utki::make_span(out_buf, sizeof(value))) {
+		b = uint8_t((value >> (num_bits_in_byte * index)) & std::numeric_limits<uint8_t>::max());
+		++index;
+	}
+
+	return out_buf;
+}
+
+/**
  * @brief serialize 16 bit value, little-endian.
  * Serialize 16 bit value, less significant byte first.
  * @param value - the value.
@@ -179,13 +200,7 @@ public:
  */
 inline uint8_t* serialize16le(uint16_t value, uint8_t* out_buf) noexcept
 {
-	unsigned index = 0;
-	for (auto& b : utki::make_span(out_buf, sizeof(value))) {
-		b = uint8_t((value >> (num_bits_in_byte * index)) & std::numeric_limits<uint8_t>::max());
-		++index;
-	}
-
-	return out_buf;
+	return serialize_le(value, out_buf);
 }
 
 /**
@@ -197,13 +212,7 @@ inline uint8_t* serialize16le(uint16_t value, uint8_t* out_buf) noexcept
  */
 inline uint8_t* serialize32le(uint32_t value, uint8_t* out_buf) noexcept
 {
-	unsigned index = 0;
-	for (auto& b : utki::make_span(out_buf, sizeof(value))) {
-		b = uint8_t((value >> (num_bits_in_byte * index)) & std::numeric_limits<uint8_t>::max());
-		++index;
-	}
-
-	return out_buf;
+	return serialize_le(value, out_buf);
 }
 
 /**
@@ -215,13 +224,30 @@ inline uint8_t* serialize32le(uint32_t value, uint8_t* out_buf) noexcept
  */
 inline uint8_t* serialize64le(uint64_t value, uint8_t* out_buf) noexcept
 {
+	return serialize_le(value, out_buf);
+}
+
+/**
+ * @brief Deserialize unsigned integral value, little-endian.
+ * @param buf - array of bytes to deserialize.
+ * @return Deserialized value.
+ */
+template <typename unsigned_type>
+unsigned_type deserialize_le(const uint8_t* buf) noexcept
+{
+	static_assert(std::is_integral_v<unsigned_type>, "deserialized type must be integral");
+	static_assert(std::is_unsigned_v<unsigned_type>, "deserialized type must be unsigned");
+
+	unsigned_type ret = 0;
+
 	unsigned index = 0;
-	for (auto& b : utki::make_span(out_buf, sizeof(value))) {
-		b = uint8_t((value >> (num_bits_in_byte * index)) & std::numeric_limits<uint8_t>::max());
+
+	for (auto b : utki::make_span(buf, sizeof(ret))) {
+		ret |= (decltype(ret)(b) << (num_bits_in_byte * index));
 		++index;
 	}
 
-	return out_buf;
+	return ret;
 }
 
 /**
@@ -233,16 +259,7 @@ inline uint8_t* serialize64le(uint64_t value, uint8_t* out_buf) noexcept
  */
 inline uint16_t deserialize16le(const uint8_t* buf) noexcept
 {
-	uint16_t ret = 0;
-
-	unsigned index = 0;
-
-	for (auto b : utki::make_span(buf, sizeof(ret))) {
-		ret |= (decltype(ret)(b) << (num_bits_in_byte * index));
-		++index;
-	}
-
-	return ret;
+	return deserialize_le<uint16_t>(buf);
 }
 
 /**
@@ -254,16 +271,7 @@ inline uint16_t deserialize16le(const uint8_t* buf) noexcept
  */
 inline uint32_t deserialize32le(const uint8_t* buf) noexcept
 {
-	uint32_t ret = 0;
-
-	unsigned index = 0;
-
-	for (auto b : utki::make_span(buf, sizeof(ret))) {
-		ret |= (decltype(ret)(b) << (num_bits_in_byte * index));
-		++index;
-	}
-
-	return ret;
+	return deserialize_le<uint32_t>(buf);
 }
 
 /**
@@ -275,16 +283,7 @@ inline uint32_t deserialize32le(const uint8_t* buf) noexcept
  */
 inline uint64_t deserialize64le(const uint8_t* buf) noexcept
 {
-	uint64_t ret = 0;
-
-	unsigned index = 0;
-
-	for (auto b : utki::make_span(buf, sizeof(ret))) {
-		ret |= (decltype(ret)(b) << (num_bits_in_byte * index));
-		++index;
-	}
-
-	return ret;
+	return deserialize_le<uint64_t>(buf);
 }
 
 /**
