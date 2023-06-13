@@ -10,6 +10,8 @@
 using namespace std::string_literals;
 using namespace std::string_view_literals;
 
+// NOLINTBEGIN(cppcoreguidelines-avoid-magic-numbers)
+
 namespace {
 tst::set set("string", [](tst::suite& suite) {
 	suite.add("make_string_from_const_char_ptr", []() {
@@ -896,5 +898,7 @@ tst::set set("string", [](tst::suite& suite) {
 	);
 });
 } // namespace
+
+// NOLINTEND(cppcoreguidelines-avoid-magic-numbers)
 
 #endif // ~ non-MSVC compiler or MSVC compiler tools >= v142

@@ -3,16 +3,23 @@
 #include <utki/destructable.hpp>
 
 namespace {
-tst::set set("destructable", [](tst::suite& suite) {
+const tst::set set("destructable", [](tst::suite& suite) {
 	suite.add("virtual_destructor", []() {
 		class test : public utki::destructable
 		{
 		public:
+			// NOLINTNEXTLINE(cppcoreguidelines-avoid-const-or-ref-data-members)
 			bool& destructor_called;
 
 			test(bool& destructor_called) :
 				destructor_called(destructor_called)
 			{}
+
+			test(const test&) = delete;
+			test& operator=(const test&) = delete;
+
+			test(test&&) = delete;
+			test& operator=(test&&) = delete;
 
 			~test() override
 			{

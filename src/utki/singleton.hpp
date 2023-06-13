@@ -160,11 +160,13 @@ public:
 	singleton& operator=(singleton&&) = delete;
 
 private:
+	// NOLINTNEXTLINE(cppcoreguidelines-avoid-non-const-global-variables)
 	static typename intrusive_singleton<object_type, singleton<object_type>>::instance_type instance;
 };
 
 template <class object_type>
 typename utki::intrusive_singleton<object_type, singleton<object_type>>::instance_type
+	// NOLINTNEXTLINE(cppcoreguidelines-avoid-non-const-global-variables)
 	utki::singleton<object_type>::instance;
 
 #else

@@ -5,6 +5,8 @@
 
 #if CFG_COMPILER != CFG_COMPILER_MSVC
 
+// NOLINTBEGIN(cppcoreguidelines-avoid-magic-numbers)
+
 namespace {
 class test_singleton : public utki::singleton<test_singleton>
 {
@@ -14,7 +16,7 @@ public:
 } // namespace
 
 namespace {
-tst::set set("singleton", [](tst::suite& suite) {
+const tst::set set("singleton", [](tst::suite& suite) {
 	suite.add( //
 		"only_one_singleton_instance_can_exist_at_a_time",
 		tst::flag::no_parallel,
@@ -31,3 +33,5 @@ tst::set set("singleton", [](tst::suite& suite) {
 });
 } // namespace
 #endif // ~msvc compiler
+
+// NOLINTEND(cppcoreguidelines-avoid-magic-numbers)

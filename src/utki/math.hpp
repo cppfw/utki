@@ -58,7 +58,8 @@ constexpr number_type sign(number_type n) noexcept
 template <typename number_type>
 constexpr number_type pi() noexcept
 {
-	return number_type(3.14159265358979323846264338327950288);
+	const auto pi_number = 3.14159265358979323846264338327950288;
+	return number_type(pi_number);
 }
 
 /**
@@ -72,6 +73,11 @@ constexpr number_type two_pi() noexcept
 }
 
 /**
+ * @brief Number of angle degrees in two pi radians.
+ */
+const auto two_pi_degrees = 180;
+
+/**
  * @brief Convert angle degrees to radians.
  * @param deg - angle in degrees.
  * @return Angle in radians.
@@ -79,7 +85,7 @@ constexpr number_type two_pi() noexcept
 template <typename number_type>
 constexpr number_type deg_to_rad(number_type deg) noexcept
 {
-	return pi<number_type>() * deg / number_type(180);
+	return pi<number_type>() * deg / number_type(two_pi_degrees);
 }
 
 /**
@@ -90,7 +96,6 @@ constexpr number_type deg_to_rad(number_type deg) noexcept
 template <typename number_type>
 constexpr number_type rad_to_deg(number_type rad) noexcept
 {
-	const auto two_pi_degrees = number_type(180);
 	return two_pi_degrees * rad / pi<number_type>();
 }
 
@@ -101,7 +106,8 @@ constexpr number_type rad_to_deg(number_type rad) noexcept
 template <typename number_type>
 constexpr number_type log_2() noexcept
 {
-	return number_type(0.693147181);
+	const auto natural_logarithm_of_two = 0.693147181;
+	return number_type(natural_logarithm_of_two);
 }
 
 /**

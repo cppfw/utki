@@ -2,6 +2,8 @@
 #include <tst/set.hpp>
 #include <utki/shared_ref.hpp>
 
+// NOLINTBEGIN(cppcoreguidelines-avoid-magic-numbers)
+
 namespace {
 const std::string etalon = "hello world!";
 
@@ -170,3 +172,5 @@ tst::set set("shared_ref", [](tst::suite& suite) {
 });
 
 } // namespace
+
+// NOLINTEND(cppcoreguidelines-avoid-magic-numbers)
