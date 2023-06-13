@@ -146,7 +146,7 @@ namespace utki {
 void assert(
 	bool condition,
 	const std::function<void(std::ostream&)>& print,
-	utki::source_location&& source_location
+	const utki::source_location& source_location
 #if CFG_CPP >= 20
 	= std_source_location::current()
 #endif
@@ -154,13 +154,13 @@ void assert(
 
 inline void assert(
 	bool condition,
-	utki::source_location&& source_location
+	const utki::source_location& source_location
 #if CFG_CPP >= 20
 	= std_source_location::current()
 #endif
 )
 {
-	utki::assert(condition, nullptr, std::move(source_location));
+	utki::assert(condition, nullptr, source_location);
 }
 
 // MSVC compiler gives warning about implicit conversion of pointer to bool,
@@ -170,25 +170,25 @@ template <class object_type>
 void assert(
 	object_type* p,
 	const std::function<void(std::ostream&)>& print,
-	utki::source_location&& source_location
+	const utki::source_location& source_location
 #if CFG_CPP >= 20
 	= std_source_location::current()
 #endif
 )
 {
-	assert(p != nullptr, print, std::move(source_location));
+	assert(p != nullptr, print, source_location);
 }
 
 template <class object_type>
 void assert(
 	object_type* p,
-	utki::source_location&& source_location
+	const utki::source_location& source_location
 #if CFG_CPP >= 20
 	= std_source_location::current()
 #endif
 )
 {
-	assert(p != nullptr, nullptr, std::move(source_location));
+	assert(p != nullptr, nullptr, source_location);
 }
 
 // smart pointers do not have implicit conversion to bool, so we need to define
@@ -198,50 +198,50 @@ template <class object_type>
 void assert(
 	const std::shared_ptr<object_type>& p,
 	const std::function<void(std::ostream&)>& print,
-	utki::source_location&& source_location
+	const utki::source_location& source_location
 #if CFG_CPP >= 20
 	= std_source_location::current()
 #endif
 )
 {
-	assert(p != nullptr, print, std::move(source_location));
+	assert(p != nullptr, print, source_location);
 }
 
 template <class object_type>
 void assert(
 	const std::shared_ptr<object_type>& p,
-	utki::source_location&& source_location
+	const utki::source_location& source_location
 #if CFG_CPP >= 20
 	= std_source_location::current()
 #endif
 )
 {
-	assert(p != nullptr, nullptr, std::move(source_location));
+	assert(p != nullptr, nullptr, source_location);
 }
 
 template <class object_type>
 void assert(
 	const std::unique_ptr<object_type>& p,
 	const std::function<void(std::ostream&)>& print,
-	utki::source_location&& source_location
+	const utki::source_location& source_location
 #if CFG_CPP >= 20
 	= std_source_location::current()
 #endif
 )
 {
-	assert(p != nullptr, print, std::move(source_location));
+	assert(p != nullptr, print, source_location);
 }
 
 template <class object_type>
 void assert(
 	const std::unique_ptr<object_type>& p,
-	utki::source_location&& source_location
+	const utki::source_location& source_location
 #if CFG_CPP >= 20
 	= std_source_location::current()
 #endif
 )
 {
-	assert(p != nullptr, nullptr, std::move(source_location));
+	assert(p != nullptr, nullptr, source_location);
 }
 
 // std::function does not have implicit conversion to bool, so we need to define
@@ -251,25 +251,25 @@ template <class func_type>
 void assert(
 	const std::function<func_type>& p,
 	const std::function<void(std::ostream&)>& print,
-	utki::source_location&& source_location
+	const utki::source_location& source_location
 #if CFG_CPP >= 20
 	= std_source_location::current()
 #endif
 )
 {
-	assert(p != nullptr, print, std::move(source_location));
+	assert(p != nullptr, print, source_location);
 }
 
 template <class func_type>
 void assert(
 	const std::function<func_type>& p,
-	utki::source_location&& source_location
+	const utki::source_location& source_location
 #if CFG_CPP >= 20
 	= std_source_location::current()
 #endif
 )
 {
-	assert(p != nullptr, nullptr, std::move(source_location));
+	assert(p != nullptr, nullptr, source_location);
 }
 
 } // namespace utki

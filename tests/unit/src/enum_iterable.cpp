@@ -3,7 +3,7 @@
 #include <utki/enum_iterable.hpp>
 
 namespace {
-tst::set set("enum_iterable", [](tst::suite& suite) {
+const tst::set set("enum_iterable", [](tst::suite& suite) {
 	enum class test_enum {
 		item1,
 		item2,

@@ -37,6 +37,14 @@ namespace utki {
 class destructable
 {
 public:
+	destructable() = default;
+
+	destructable(const destructable&) = default;
+	destructable& operator=(const destructable&) = default;
+
+	destructable(destructable&&) = default;
+	destructable& operator=(destructable&&) = default;
+
 	virtual ~destructable() noexcept = default;
 };
 

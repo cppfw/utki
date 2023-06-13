@@ -43,14 +43,14 @@ SOFTWARE.
 using namespace utki;
 
 namespace {
-std::string_view colored_error_string = "\033[1;31merror\033[0m";
-std::string_view uncolored_error_string = "error";
+const std::string_view colored_error_string = "\033[1;31merror\033[0m";
+const std::string_view uncolored_error_string = "error";
 } // namespace
 
 void utki::assert(
 	bool condition,
 	const std::function<void(std::ostream&)>& print,
-	utki::source_location&& source_location
+	const utki::source_location& source_location
 )
 {
 	if (condition) {

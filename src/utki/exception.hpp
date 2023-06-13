@@ -47,8 +47,8 @@ public:
 	 *
 	 * @param message - text message to be stored in the exception object.
 	 */
-	exception(std::string&& message) :
-		message(message)
+	exception(std::string message) :
+		message(std::move(message))
 	{}
 
 	const char* what() const noexcept override

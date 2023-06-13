@@ -4,8 +4,15 @@
 
 class test_singleton : public utki::singleton<test_singleton>{
 public:
+	// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
 	int a{32};
 
 	test_singleton() = default;
 	~test_singleton()noexcept override = default;
+
+	test_singleton(const test_singleton&) = delete;
+	test_singleton& operator=(const test_singleton&) = delete;
+
+	test_singleton(test_singleton&&) = delete;
+	test_singleton& operator=(test_singleton&&) = delete;
 };

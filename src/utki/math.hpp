@@ -90,7 +90,8 @@ constexpr number_type deg_to_rad(number_type deg) noexcept
 template <typename number_type>
 constexpr number_type rad_to_deg(number_type rad) noexcept
 {
-	return number_type(180) * rad / pi<number_type>();
+	const auto two_pi_degrees = number_type(180);
+	return two_pi_degrees * rad / pi<number_type>();
 }
 
 /**

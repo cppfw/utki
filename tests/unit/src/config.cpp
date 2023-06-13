@@ -3,10 +3,11 @@
 #include <utki/config.hpp>
 
 namespace {
-tst::set set("config", [](tst::suite& suite) {
+const tst::set set("config", [](tst::suite& suite) {
 	suite.add("endianness", []() {
 		unsigned integer = 1;
 		static_assert(sizeof(integer) >= 2, "1 byte integer detected");
+		// NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast)
 		auto p = reinterpret_cast<const uint8_t*>(&integer);
 
 		bool is_little_endian = (*p == 1);

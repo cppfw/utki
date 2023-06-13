@@ -39,16 +39,21 @@ using namespace utki;
 
 std::string utki::make_string_va_list(const char* format, va_list args)
 {
-	std::array<char, 0x400> buf; // first guess is that the resulting string will take less than 1k
+	const size_t one_kilobyte = 0x400;
+	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-member-init)
+	std::array<char, one_kilobyte> buf; // first guess is that the resulting string will take less than 1k
 
 	std::string ret;
 
 	auto buf_ptr = buf.data();
 	auto buf_size = buf.size();
 
+	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-vararg)
 	va_list cur_args;
+	// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-array-to-pointer-decay)
 	va_copy(cur_args, args);
 	utki::scope_exit cur_args_scope_exit([&cur_args]() { //
+		// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-array-to-pointer-decay)
 		va_end(cur_args);
 	});
 
@@ -64,6 +69,7 @@ std::string utki::make_string_va_list(const char* format, va_list args)
 			buf_ptr,
 			buf_size,
 			format,
+			// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-array-to-pointer-decay)
 			cur_args
 		);
 
@@ -80,7 +86,9 @@ std::string utki::make_string_va_list(const char* format, va_list args)
 			buf_size = ret.size() + 1;
 
 			// after the vsnprintf() call the cur_args remain in altered state, thus, re-initialize it
+			// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-array-to-pointer-decay)
 			va_end(cur_args);
+			// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-array-to-pointer-decay)
 			va_copy(cur_args, args);
 		} else {
 			ret = std::string(buf_ptr, size);
@@ -95,9 +103,13 @@ std::string utki::make_string_va_list(const char* format, va_list args)
 
 std::string utki::make_string(const char* format, ...)
 {
+	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-vararg)
 	va_list args;
+	// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-array-to-pointer-decay)
 	va_start(args, format);
+	// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-array-to-pointer-decay)
 	auto ret = make_string_va_list(format, args);
+	// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-array-to-pointer-decay)
 	va_end(args);
 	return ret;
 }
@@ -234,6 +246,7 @@ std::from_chars_result utki::from_chars( //
 	chars_format fmt
 ) noexcept
 {
+	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-member-init)
 	std::from_chars_result ret;
 
 	auto res = fast_float::from_chars(first, last, value, to_fast_float_format(fmt));
@@ -251,6 +264,7 @@ std::from_chars_result utki::from_chars( //
 	chars_format fmt
 ) noexcept
 {
+	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-member-init)
 	std::from_chars_result ret;
 
 	auto res = fast_float::from_chars(first, last, value, to_fast_float_format(fmt));
