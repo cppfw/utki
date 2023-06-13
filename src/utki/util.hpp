@@ -288,6 +288,27 @@ inline uint64_t deserialize64le(const uint8_t* buf) noexcept
 }
 
 /**
+ * @brief Serialize unsigned integral value, big-endian.
+ * @param value - value to serialize.
+ * @param out_buf - output buffer.
+ * @return Pointer to the next byte after serialized value.
+ */
+template <typename unsigned_type>
+uint8_t* serialize_be(unsigned_type value, uint8_t* out_buf) noexcept
+{
+	static_assert(std::is_integral_v<unsigned_type>, "serialized type must be integral");
+	static_assert(std::is_unsigned_v<unsigned_type>, "serialized type must be unsigned");
+
+	unsigned index = sizeof(value);
+	for (auto& b : utki::make_span(out_buf, sizeof(value))) {
+		--index;
+		b = uint8_t((value >> (num_bits_in_byte * index)) & std::numeric_limits<uint8_t>::max());
+	}
+
+	return out_buf;
+}
+
+/**
  * @brief serialize 16 bit value, big-endian.
  * Serialize 16 bit value, most significant byte first.
  * @param value - the value.
@@ -296,13 +317,7 @@ inline uint64_t deserialize64le(const uint8_t* buf) noexcept
  */
 inline uint8_t* serialize16be(uint16_t value, uint8_t* out_buf) noexcept
 {
-	unsigned index = sizeof(value);
-	for (auto& b : utki::make_span(out_buf, sizeof(value))) {
-		--index;
-		b = uint8_t((value >> (num_bits_in_byte * index)) & std::numeric_limits<uint8_t>::max());
-	}
-
-	return out_buf;
+	return serialize_be(value, out_buf);
 }
 
 /**
@@ -314,13 +329,7 @@ inline uint8_t* serialize16be(uint16_t value, uint8_t* out_buf) noexcept
  */
 inline uint8_t* serialize32be(uint32_t value, uint8_t* out_buf) noexcept
 {
-	unsigned index = sizeof(value);
-	for (auto& b : utki::make_span(out_buf, sizeof(value))) {
-		--index;
-		b = uint8_t((value >> (num_bits_in_byte * index)) & std::numeric_limits<uint8_t>::max());
-	}
-
-	return out_buf;
+	return serialize_be(value, out_buf);
 }
 
 /**
@@ -332,13 +341,30 @@ inline uint8_t* serialize32be(uint32_t value, uint8_t* out_buf) noexcept
  */
 inline uint8_t* serialize64be(uint64_t value, uint8_t* out_buf) noexcept
 {
-	unsigned index = sizeof(value);
-	for (auto& b : utki::make_span(out_buf, sizeof(value))) {
+	return serialize_be(value, out_buf);
+}
+
+/**
+ * @brief Deserialize unsigned integral value, big-endian.
+ * @param buf - array of bytes to deserialize.
+ * @return Deserialized value.
+ */
+template <typename unsigned_type>
+unsigned_type deserialize_be(const uint8_t* buf) noexcept
+{
+	static_assert(std::is_integral_v<unsigned_type>, "deserialized type must be integral");
+	static_assert(std::is_unsigned_v<unsigned_type>, "deserialized type must be unsigned");
+
+	unsigned_type ret = 0;
+
+	unsigned index = sizeof(ret);
+
+	for (auto b : utki::make_span(buf, sizeof(ret))) {
 		--index;
-		b = uint8_t((value >> (num_bits_in_byte * index)) & std::numeric_limits<uint8_t>::max());
+		ret |= (decltype(ret)(b) << (num_bits_in_byte * index));
 	}
 
-	return out_buf;
+	return ret;
 }
 
 /**
@@ -350,16 +376,7 @@ inline uint8_t* serialize64be(uint64_t value, uint8_t* out_buf) noexcept
  */
 inline uint16_t deserialize16be(const uint8_t* buf) noexcept
 {
-	uint16_t ret = 0;
-
-	unsigned index = sizeof(ret);
-
-	for (auto b : utki::make_span(buf, sizeof(ret))) {
-		--index;
-		ret |= (decltype(ret)(b) << (num_bits_in_byte * index));
-	}
-
-	return ret;
+	return deserialize_be<uint16_t>(buf);
 }
 
 /**
@@ -371,16 +388,7 @@ inline uint16_t deserialize16be(const uint8_t* buf) noexcept
  */
 inline uint32_t deserialize32be(const uint8_t* buf) noexcept
 {
-	uint32_t ret = 0;
-
-	unsigned index = sizeof(ret);
-
-	for (auto b : utki::make_span(buf, sizeof(ret))) {
-		--index;
-		ret |= (decltype(ret)(b) << (num_bits_in_byte * index));
-	}
-
-	return ret;
+	return deserialize_be<uint32_t>(buf);
 }
 
 /**
@@ -392,16 +400,7 @@ inline uint32_t deserialize32be(const uint8_t* buf) noexcept
  */
 inline uint64_t deserialize64be(const uint8_t* buf) noexcept
 {
-	uint64_t ret = 0;
-
-	unsigned index = sizeof(ret);
-
-	for (auto b : utki::make_span(buf, sizeof(ret))) {
-		--index;
-		ret |= (decltype(ret)(b) << (num_bits_in_byte * index));
-	}
-
-	return ret;
+	return deserialize_be<uint64_t>(buf);
 }
 
 /**
