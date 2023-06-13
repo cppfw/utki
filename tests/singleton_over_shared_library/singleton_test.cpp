@@ -3,6 +3,8 @@
 
 #include "../../src/utki/debug.hpp"
 
+// NOLINTBEGIN(cppcoreguidelines-avoid-magic-numbers)
+
 // NOLINTNEXTLINE(bugprone-exception-escape): global exceptions are not caught
 int main(int argc, char *argv[]){
 	test_singleton ts;
@@ -29,3 +31,5 @@ int main(int argc, char *argv[]){
 
 	return 0;
 }
+
+// NOLINTEND(cppcoreguidelines-avoid-magic-numbers)

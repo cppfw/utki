@@ -428,19 +428,3 @@ std::string_view string_parser::read_chars_until(char until_char)
 
 	return ret;
 }
-
-int utki::to_int(integer_base conversion_base)
-{
-	switch (conversion_base) {
-		case integer_base::bin:
-			return 2;
-		case integer_base::oct:
-			return 8;
-		default:
-			[[fallthrough]];
-		case integer_base::dec:
-			return 10;
-		case integer_base::hex:
-			return 16;
-	}
-}

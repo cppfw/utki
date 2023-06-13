@@ -211,6 +211,37 @@ std::vector<std::string> split(std::string_view str);
  */
 std::vector<std::string> word_wrap(std::string_view str, unsigned width);
 
+// TODO: doxygen
+enum class integer_base {
+	// WARNING: add new items to the bottom of the enum to preserve existing item's values
+	bin,
+	oct,
+	dec,
+	hex
+};
+
+// TODO: doxygen
+inline constexpr int to_int(integer_base conversion_base)
+{
+	const int bin_base = 2;
+	const int oct_base = 8;
+	const int dec_base = 10;
+	const int hex_base = 16;
+
+	switch (conversion_base) {
+		case integer_base::bin:
+			return bin_base;
+		case integer_base::oct:
+			return oct_base;
+		default:
+			[[fallthrough]];
+		case integer_base::dec:
+			return dec_base;
+		case integer_base::hex:
+			return hex_base;
+	}
+}
+
 /**
  * @brief Format for from_chars().
  * This is to be removed when std::chars_format is widely supported by compilers.
@@ -294,11 +325,6 @@ public:
 
 		number_type ret = 0;
 
-		static const int bin_base = 2;
-		static const int oct_base = 8;
-		static const int dec_base = 10;
-		static const int hex_base = 16;
-
 		// NOLINTNEXTLINE(cppcoreguidelines-pro-type-member-init)
 		std::from_chars_result res;
 
@@ -311,7 +337,7 @@ public:
 				res = utki::from_chars(this->view.data(), this->view.data() + this->view.size(), ret);
 			}
 		} else {
-			int base = dec_base;
+			int base = to_int(integer_base::dec);
 
 			if constexpr (std::is_unsigned_v<number_type>) {
 				// detect base
@@ -328,7 +354,7 @@ public:
 							}
 							c = this->peek_char(1);
 							if (('0' <= c && c <= '9') || ('a' <= c && c <= 'f') || ('A' <= c && c <= 'F')) {
-								base = hex_base;
+								base = to_int(integer_base::hex);
 								this->read_char();
 							} else {
 								return number_type(0);
@@ -340,7 +366,7 @@ public:
 							}
 							c = this->peek_char(1);
 							if (c == '0' || c == '1') {
-								base = bin_base;
+								base = to_int(integer_base::bin);
 								this->read_char();
 							} else {
 								return number_type(0);
@@ -348,7 +374,7 @@ public:
 							break;
 						default:
 							if ('0' <= c && c <= '7') {
-								base = oct_base;
+								base = to_int(integer_base::oct);
 							} else if (c < '0' || '9' < c) {
 								return number_type(0);
 							}
@@ -435,18 +461,6 @@ public:
 		return this->view.size();
 	}
 };
-
-// TODO: doxygen
-enum class integer_base {
-	// WARNING: add new items to the bottom of the enum to preserve existing item's values
-	bin,
-	oct,
-	dec,
-	hex
-};
-
-// TODO: doxygen
-int to_int(integer_base conversion_base);
 
 /**
  * @brief Locale-independent version of std::to_string().

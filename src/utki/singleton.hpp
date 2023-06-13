@@ -84,6 +84,9 @@ public:
 	intrusive_singleton(const intrusive_singleton&) = delete;
 	intrusive_singleton& operator=(const intrusive_singleton&) = delete;
 
+	intrusive_singleton(intrusive_singleton&&) = delete;
+	intrusive_singleton& operator=(intrusive_singleton&&) = delete;
+
 public:
 	/**
 	 * @brief tells if singleton object is created or not.
@@ -148,8 +151,13 @@ protected:
 	singleton() = default;
 
 public:
+	~singleton() override = default;
+
 	singleton(const singleton&) = delete;
 	singleton& operator=(const singleton&) = delete;
+
+	singleton(singleton&&) = delete;
+	singleton& operator=(singleton&&) = delete;
 
 private:
 	static typename intrusive_singleton<object_type, singleton<object_type>>::instance_type instance;

@@ -7,6 +7,8 @@
 
 #if CFG_COMPILER != CFG_COMPILER_MSVC || CFG_COMPILER_MSVC_TOOLS_V >= 142
 
+// NOLINTBEGIN(cppcoreguidelines-avoid-magic-numbers)
+
 namespace {
 tst::set set("linq", [](tst::suite& suite) {
 	suite.add("linq_from_rvalue_select", []() {
@@ -418,5 +420,7 @@ tst::set set("linq", [](tst::suite& suite) {
 	);
 });
 } // namespace
+
+// NOLINTEND(cppcoreguidelines-avoid-magic-numbers)
 
 #endif // ~ non-MSVC compiler or MSVC compiler tools >= v142
