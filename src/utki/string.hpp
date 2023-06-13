@@ -83,6 +83,7 @@ inline std::string_view make_string_view(utki::span<const char> buf)
  */
 inline std::string_view make_string_view(utki::span<const uint8_t> buf)
 {
+	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast)
 	return std::string_view{reinterpret_cast<const char*>(buf.data()), buf.size()};
 }
 
@@ -93,7 +94,7 @@ inline std::string_view make_string_view(utki::span<const uint8_t> buf)
  */
 inline std::string make_string(utki::span<const uint8_t> buf)
 {
-	return utki::make_string(utki::make_span(reinterpret_cast<const char*>(buf.data()), buf.size()));
+	return std::string(utki::make_string_view(buf));
 }
 
 /**
@@ -293,6 +294,11 @@ public:
 
 		number_type ret = 0;
 
+		static const int bin_base = 2;
+		static const int oct_base = 8;
+		static const int dec_base = 10;
+		static const int hex_base = 16;
+
 		std::from_chars_result res;
 
 		if constexpr (std::is_floating_point<number_type>::value) {
@@ -304,7 +310,7 @@ public:
 				res = utki::from_chars(this->view.data(), this->view.data() + this->view.size(), ret);
 			}
 		} else {
-			int base = 10;
+			int base = dec_base;
 
 			if constexpr (std::is_unsigned_v<number_type>) {
 				// detect base
@@ -321,7 +327,7 @@ public:
 							}
 							c = this->peek_char(1);
 							if (('0' <= c && c <= '9') || ('a' <= c && c <= 'f') || ('A' <= c && c <= 'F')) {
-								base = 16;
+								base = hex_base;
 								this->read_char();
 							} else {
 								return number_type(0);
@@ -333,7 +339,7 @@ public:
 							}
 							c = this->peek_char(1);
 							if (c == '0' || c == '1') {
-								base = 2;
+								base = bin_base;
 								this->read_char();
 							} else {
 								return number_type(0);
@@ -341,7 +347,7 @@ public:
 							break;
 						default:
 							if ('0' <= c && c <= '7') {
-								base = 8;
+								base = oct_base;
 							} else if (c < '0' || '9' < c) {
 								return number_type(0);
 							}
@@ -450,39 +456,41 @@ int to_int(integer_base conversion_base);
 template <typename number_type>
 std::string to_string(number_type value, integer_base conversion_base = integer_base::dec)
 {
-	std::array<char, 128> buf; // 128 chars is large enough to hold any built-in integral or floating point type
-	auto begin_ptr = buf.data();
-	auto end_ptr = buf.data() + buf.size();
+	// 128 chars is large enough to hold any built-in integral or floating point type
+	static const size_t buf_size = 128;
+	std::array<char, buf_size> buf = {0};
+	auto begin = buf.begin();
+	auto end = buf.end();
 
 	if constexpr (std::is_unsigned_v<number_type>) {
 		switch (conversion_base) {
 			case integer_base::bin:
 				buf[0] = '0';
 				buf[1] = 'b';
-				begin_ptr += 2;
+				begin = std::next(begin, 2);
 				break;
 			case integer_base::oct:
 				buf[0] = '0';
-				++begin_ptr;
+				begin = std::next(begin);
 				break;
 			case integer_base::hex:
 				buf[0] = '0';
 				buf[1] = 'x';
-				begin_ptr += 2;
+				begin = std::next(begin, 2);
 				break;
 			default:
 				break;
 		}
 	}
 
-	auto res = std::to_chars(begin_ptr, end_ptr, value, to_int(conversion_base));
+	auto res = std::to_chars(&*begin, &*end, value, to_int(conversion_base));
 
 	if (res.ec != std::errc()) {
 		// std::to_chars() returned error
 		return {};
 	}
 
-	ASSERT(res.ptr <= end_ptr)
+	ASSERT(res.ptr <= &*end)
 
 	return std::string(buf.data(), res.ptr - buf.data());
 }
