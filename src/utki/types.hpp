@@ -61,21 +61,25 @@ struct uint_size<4> {
 };
 
 template <>
+// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
 struct uint_size<5> {
 	using type = uint64_t;
 };
 
 template <>
+// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
 struct uint_size<6> {
 	using type = uint64_t;
 };
 
 template <>
+// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
 struct uint_size<7> {
 	using type = uint64_t;
 };
 
 template <>
+// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
 struct uint_size<8> {
 	using type = uint64_t;
 };
@@ -85,42 +89,46 @@ struct int_size;
 
 template <>
 struct int_size<1> {
-	using type = std::int8_t;
+	using type = int8_t;
 };
 
 template <>
 struct int_size<2> {
-	using type = std::int16_t;
+	using type = int16_t;
 };
 
 template <>
 struct int_size<3> {
-	using type = std::int32_t;
+	using type = int32_t;
 };
 
 template <>
 struct int_size<4> {
-	using type = std::int32_t;
+	using type = int32_t;
 };
 
 template <>
+// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
 struct int_size<5> {
-	using type = std::int64_t;
+	using type = int64_t;
 };
 
 template <>
+// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
 struct int_size<6> {
-	using type = std::int64_t;
+	using type = int64_t;
 };
 
 template <>
+// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
 struct int_size<7> {
-	using type = std::int64_t;
+	using type = int64_t;
 };
 
 template <>
+// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
 struct int_size<8> {
-	using type = std::int64_t;
+	using type = int64_t;
 };
 
 template <typename in_type>
@@ -141,6 +149,7 @@ struct remove_const_reference {
 template <class object_type>
 inline const object_type* make_pointer_to_const(object_type* p)
 {
+	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-const-cast)
 	return const_cast<const object_type*>(p);
 }
 
