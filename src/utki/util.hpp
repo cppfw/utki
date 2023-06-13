@@ -128,6 +128,9 @@ public:
 	scope_exit(const scope_exit&) = delete;
 	scope_exit& operator=(const scope_exit&) = delete;
 
+	scope_exit(scope_exit&&) = delete;
+	scope_exit& operator=(scope_exit&&) = delete;
+
 	/**
 	 * @brief Constructor.
 	 * @param f - function to call on object destruction.
@@ -176,10 +179,12 @@ public:
  */
 inline uint8_t* serialize16le(uint16_t value, uint8_t* out_buf) noexcept
 {
-	*out_buf = value & 0xff;
-	++out_buf;
-	*out_buf = value >> 8;
-	++out_buf;
+	unsigned index = 0;
+	for (auto& b : utki::make_span(out_buf, sizeof(value))) {
+		b = uint8_t((value >> (num_bits_in_byte * index)) & std::numeric_limits<uint8_t>::max());
+		++index;
+	}
+
 	return out_buf;
 }
 
@@ -192,17 +197,12 @@ inline uint8_t* serialize16le(uint16_t value, uint8_t* out_buf) noexcept
  */
 inline uint8_t* serialize32le(uint32_t value, uint8_t* out_buf) noexcept
 {
-	*out_buf = uint8_t(value & 0xff);
-	++out_buf;
-	value >>= 8;
-	*out_buf = uint8_t(value & 0xff);
-	++out_buf;
-	value >>= 8;
-	*out_buf = uint8_t(value & 0xff);
-	++out_buf;
-	value >>= 8;
-	*out_buf = uint8_t(value & 0xff);
-	++out_buf;
+	unsigned index = 0;
+	for (auto& b : utki::make_span(out_buf, sizeof(value))) {
+		b = uint8_t((value >> (num_bits_in_byte * index)) & std::numeric_limits<uint8_t>::max());
+		++index;
+	}
+
 	return out_buf;
 }
 
@@ -215,29 +215,12 @@ inline uint8_t* serialize32le(uint32_t value, uint8_t* out_buf) noexcept
  */
 inline uint8_t* serialize64le(uint64_t value, uint8_t* out_buf) noexcept
 {
-	*out_buf = uint8_t(value & 0xff);
-	++out_buf;
-	value >>= 8;
-	*out_buf = uint8_t(value & 0xff);
-	++out_buf;
-	value >>= 8;
-	*out_buf = uint8_t(value & 0xff);
-	++out_buf;
-	value >>= 8;
-	*out_buf = uint8_t(value & 0xff);
-	++out_buf;
-	value >>= 8;
-	*out_buf = uint8_t(value & 0xff);
-	++out_buf;
-	value >>= 8;
-	*out_buf = uint8_t(value & 0xff);
-	++out_buf;
-	value >>= 8;
-	*out_buf = uint8_t(value & 0xff);
-	++out_buf;
-	value >>= 8;
-	*out_buf = uint8_t(value & 0xff);
-	++out_buf;
+	unsigned index = 0;
+	for (auto& b : utki::make_span(out_buf, sizeof(value))) {
+		b = uint8_t((value >> (num_bits_in_byte * index)) & std::numeric_limits<uint8_t>::max());
+		++index;
+	}
+
 	return out_buf;
 }
 
@@ -313,10 +296,12 @@ inline uint64_t deserialize64le(const uint8_t* buf) noexcept
  */
 inline uint8_t* serialize16be(uint16_t value, uint8_t* out_buf) noexcept
 {
-	*out_buf = value >> 8;
-	++out_buf;
-	*out_buf = value & 0xff;
-	++out_buf;
+	unsigned index = sizeof(value);
+	for (auto& b : utki::make_span(out_buf, sizeof(value))) {
+		--index;
+		b = uint8_t((value >> (num_bits_in_byte * index)) & std::numeric_limits<uint8_t>::max());
+	}
+
 	return out_buf;
 }
 
@@ -329,14 +314,12 @@ inline uint8_t* serialize16be(uint16_t value, uint8_t* out_buf) noexcept
  */
 inline uint8_t* serialize32be(uint32_t value, uint8_t* out_buf) noexcept
 {
-	*out_buf = uint8_t((value >> 24) & 0xff);
-	++out_buf;
-	*out_buf = uint8_t((value >> 16) & 0xff);
-	++out_buf;
-	*out_buf = uint8_t((value >> 8) & 0xff);
-	++out_buf;
-	*out_buf = uint8_t(value & 0xff);
-	++out_buf;
+	unsigned index = sizeof(value);
+	for (auto& b : utki::make_span(out_buf, sizeof(value))) {
+		--index;
+		b = uint8_t((value >> (num_bits_in_byte * index)) & std::numeric_limits<uint8_t>::max());
+	}
+
 	return out_buf;
 }
 
@@ -349,22 +332,12 @@ inline uint8_t* serialize32be(uint32_t value, uint8_t* out_buf) noexcept
  */
 inline uint8_t* serialize64be(uint64_t value, uint8_t* out_buf) noexcept
 {
-	*out_buf = uint8_t((value >> 56) & 0xff);
-	++out_buf;
-	*out_buf = uint8_t((value >> 48) & 0xff);
-	++out_buf;
-	*out_buf = uint8_t((value >> 40) & 0xff);
-	++out_buf;
-	*out_buf = uint8_t((value >> 32) & 0xff);
-	++out_buf;
-	*out_buf = uint8_t((value >> 24) & 0xff);
-	++out_buf;
-	*out_buf = uint8_t((value >> 16) & 0xff);
-	++out_buf;
-	*out_buf = uint8_t((value >> 8) & 0xff);
-	++out_buf;
-	*out_buf = uint8_t(value & 0xff);
-	++out_buf;
+	unsigned index = sizeof(value);
+	for (auto& b : utki::make_span(out_buf, sizeof(value))) {
+		--index;
+		b = uint8_t((value >> (num_bits_in_byte * index)) & std::numeric_limits<uint8_t>::max());
+	}
+
 	return out_buf;
 }
 
