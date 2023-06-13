@@ -286,4 +286,5 @@ void assert(
 
 #endif // ~DEBUG
 
+// NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
 #define ASSERT(...) UTKI_GET_MACRO(__VA_ARGS__, _10, _9, _8, _7, _6, _5, _4, _3, ASSERT2, ASSERT1)(__VA_ARGS__)

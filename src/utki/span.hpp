@@ -72,6 +72,12 @@ public:
 	span(const span&) = default;
 	span& operator=(const span&) = default;
 
+	// move semantics makes no sense for span
+	span(span&&) = delete;
+	span& operator=(span&&) = delete;
+
+	~span() = default;
+
 	/**
 	 * @brief Create a span object.
 	 * Creates a span object which wraps given memory buffer of specified size.
@@ -100,7 +106,9 @@ public:
 		typename other_element_type,
 		typename std::enable_if_t< //
 			std::is_convertible_v< // note pointers to array, this is because span points to an array of objects
+								   // NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
 				other_element_type (*)[], // NOLINT(modernize-avoid-c-arrays)
+				// NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
 				element_type (*)[]>, // NOLINT(modernize-avoid-c-arrays)
 			bool> = true>
 	constexpr span(const span<other_element_type>& sp) noexcept :
@@ -126,7 +134,9 @@ public:
 		typename other_element_type,
 		typename std::enable_if_t< //
 			std::is_convertible_v< //
+								   // NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
 				other_element_type (*)[], // NOLINT(modernize-avoid-c-arrays)
+				// NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
 				const element_type (*)[]>, // NOLINT(modernize-avoid-c-arrays)
 			bool> = true>
 	span(const std::vector<other_element_type>& v) :
@@ -141,7 +151,9 @@ public:
 		typename other_element_type,
 		typename std::enable_if_t< //
 			std::is_convertible_v< //
+								   // NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
 				other_element_type (*)[], // NOLINT(modernize-avoid-c-arrays)
+				// NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
 				const element_type (*)[]>, // NOLINT(modernize-avoid-c-arrays)
 			bool> = true>
 	span(const std::basic_string<other_element_type>& v) :
@@ -152,7 +164,9 @@ public:
 		typename other_element_type,
 		typename std::enable_if_t< //
 			std::is_convertible_v< //
+								   // NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
 				other_element_type (*)[], // NOLINT(modernize-avoid-c-arrays)
+				// NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
 				const element_type (*)[]>, // NOLINT(modernize-avoid-c-arrays)
 			bool> = true>
 	span(std::basic_string_view<other_element_type> v) :
@@ -163,7 +177,9 @@ public:
 		typename other_element_type,
 		typename std::enable_if_t< //
 			std::is_convertible_v< //
+								   // NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
 				other_element_type (*)[], // NOLINT(modernize-avoid-c-arrays)
+				// NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
 				const char (*)[]>, // NOLINT(modernize-avoid-c-arrays)
 			bool> = true>
 	span(other_element_type* v) :

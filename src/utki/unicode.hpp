@@ -132,6 +132,7 @@ inline std::u32string to_utf32(utki::span<const char> str)
 {
 	static_assert(sizeof(char) == sizeof(uint8_t), "unexpected char size");
 	return to_utf32(utki::make_span( //
+									 // NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast)
 		reinterpret_cast<const uint8_t*>(str.data()),
 		str.size()
 	));
