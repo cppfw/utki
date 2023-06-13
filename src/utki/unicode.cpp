@@ -40,10 +40,13 @@ utf8_iterator::utf8_iterator(utki::span<const uint8_t> str) :
 static_assert(sizeof(char) == sizeof(uint8_t), "unexpected char size");
 
 utf8_iterator::utf8_iterator(const char* str) :
+	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast)
 	p(reinterpret_cast<const uint8_t*>(str))
 {
 	this->operator++();
 }
+
+// NOLINTBEGIN(cppcoreguidelines-avoid-magic-numbers)
 
 utf8_iterator& utf8_iterator::operator++() noexcept
 {
@@ -53,6 +56,7 @@ utf8_iterator& utf8_iterator::operator++() noexcept
 	}
 
 	uint8_t b = *this->p;
+	// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic)
 	++this->p;
 
 	if ((b & 0x80) == 0) {
@@ -66,12 +70,15 @@ utf8_iterator& utf8_iterator::operator++() noexcept
 	}
 
 	this->c = (*this->p) & 0x3f;
+	// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic)
 	++this->p;
 
 	unsigned i = 2;
 	for (; //
 		 (uint8_t(b << i) >> 7);
-		 ++i, ++this->p)
+		 ++i,
+		 // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic)
+		 ++this->p)
 	{
 		if (this->p == this->end) {
 			this->c = 0;
@@ -89,6 +96,7 @@ utf8_iterator& utf8_iterator::operator++() noexcept
 std::array<char, max_size_of_utf8_encoded_character + 1> //
 utki::to_utf8(char32_t c)
 {
+	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-member-init)
 	std::array<char, 7> ret;
 
 	if (c <= 0x7f) {
@@ -97,6 +105,7 @@ utki::to_utf8(char32_t c)
 		return ret;
 	}
 
+	// NOLINTNEXTLINE(cppcoreguidelines-init-variables)
 	unsigned num_bytes;
 
 	if (c <= 0x7ff) {
@@ -157,6 +166,8 @@ utki::to_utf8(char32_t c)
 
 	return ret;
 }
+
+// NOLINTEND(cppcoreguidelines-avoid-magic-numbers)
 
 std::string utki::to_utf8(utki::span<const char32_t> str)
 {

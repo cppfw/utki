@@ -299,6 +299,7 @@ public:
 		static const int dec_base = 10;
 		static const int hex_base = 16;
 
+		// NOLINTNEXTLINE(cppcoreguidelines-pro-type-member-init)
 		std::from_chars_result res;
 
 		if constexpr (std::is_floating_point<number_type>::value) {
