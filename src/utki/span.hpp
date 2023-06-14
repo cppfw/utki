@@ -72,9 +72,17 @@ public:
 	span(const span&) = default;
 	span& operator=(const span&) = default;
 
-	// move semantics makes no sense for span
-	span(span&&) = delete;
-	span& operator=(span&&) = delete;
+	span(span&& s) :
+		// move is same as copy for span
+		span(static_cast<const span&>(s))
+	{}
+
+	span& operator=(span&& s)
+	{
+		// move is same as copy for span
+		this->operator=(static_cast<const span&>(s));
+		return *this;
+	}
 
 	~span() = default;
 
