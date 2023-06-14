@@ -176,12 +176,12 @@ fastfloat_really_inline uint64_t emulu(uint32_t x, uint32_t y)
 #		if !defined(__MINGW64__)
 fastfloat_really_inline uint64_t _umul128(uint64_t ab, uint64_t cd, uint64_t* hi) // NOLINT
 {
-	uint64_t ad = emulu((uint32_t)(ab >> 32), (uint32_t)cd);
+	uint64_t ad = emulu((uint32_t)(ab >> 32), (uint32_t)cd); // NOLINT
 	uint64_t bd = emulu((uint32_t)ab, (uint32_t)cd);
-	uint64_t adbc = ad + emulu((uint32_t)ab, (uint32_t)(cd >> 32));
+	uint64_t adbc = ad + emulu((uint32_t)ab, (uint32_t)(cd >> 32)); // NOLINT
 	uint64_t adbc_carry = !!(adbc < ad);
-	uint64_t lo = bd + (adbc << 32);
-	*hi = emulu((uint32_t)(ab >> 32), (uint32_t)(cd >> 32)) + (adbc >> 32) + (adbc_carry << 32) + !!(lo < bd);
+	uint64_t lo = bd + (adbc << 32); // NOLINT
+	*hi = emulu((uint32_t)(ab >> 32), (uint32_t)(cd >> 32)) + (adbc >> 32) + (adbc_carry << 32) + !!(lo < bd); // NOLINT
 	return lo;
 }
 #		endif // !__MINGW64__
