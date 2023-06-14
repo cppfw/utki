@@ -136,9 +136,9 @@ private:
  * Constructs an object which holds current filename and current line number.
  */
 #if CFG_CPP >= 20
-#	define SL utki::std_source_location::current()
+#	define SL utki::std_source_location::current() // NOLINT(cppcoreguidelines-macro-usage)
 #else
-#	define SL utki::source_location(__LINE__, 0, __FILE__)
+#	define SL utki::source_location(__LINE__, 0, __FILE__) // NOLINT(cppcoreguidelines-macro-usage)
 #endif
 
 namespace utki {

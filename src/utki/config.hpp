@@ -35,20 +35,20 @@ SOFTWARE.
 //                                                    |
 
 #if __cplusplus > 201703L
-#	define M_CPP 20
-#	define CFG_CPP 20
+#	define M_CPP 20 // NOLINT(cppcoreguidelines-macro-usage)
+#	define CFG_CPP 20 // NOLINT(cppcoreguidelines-macro-usage)
 #elif __cplusplus > 201402L
-#	define M_CPP 17
-#	define CFG_CPP 17
+#	define M_CPP 17 // NOLINT(cppcoreguidelines-macro-usage)
+#	define CFG_CPP 17 // NOLINT(cppcoreguidelines-macro-usage)
 #elif __cplusplus > 201103L
-#	define M_CPP 14
-#	define CFG_CPP 14
+#	define M_CPP 14 // NOLINT(cppcoreguidelines-macro-usage)
+#	define CFG_CPP 14 // NOLINT(cppcoreguidelines-macro-usage)
 #elif __cplusplus > 199711L
-#	define M_CPP 11
-#	define CFG_CPP 11
+#	define M_CPP 11 // NOLINT(cppcoreguidelines-macro-usage)
+#	define CFG_CPP 11 // NOLINT(cppcoreguidelines-macro-usage)
 #else
-#	define M_CPP 3
-#	define CFG_CPP 3
+#	define M_CPP 3 // NOLINT(cppcoreguidelines-macro-usage)
+#	define CFG_CPP 3 // NOLINT(cppcoreguidelines-macro-usage)
 #endif
 
 //====================================================|
@@ -56,15 +56,15 @@ SOFTWARE.
 //                                                    |
 
 // NOLINTBEGIN(modernize-macro-to-enum)
-#define CFG_COMPILER_UNKNOWN 0
-#define CFG_COMPILER_GCC 1
-#define CFG_COMPILER_MSVC 2
-#define CFG_COMPILER_CLANG 3
+#define CFG_COMPILER_UNKNOWN 0 // NOLINT(cppcoreguidelines-macro-usage)
+#define CFG_COMPILER_GCC 1 // NOLINT(cppcoreguidelines-macro-usage)
+#define CFG_COMPILER_MSVC 2 // NOLINT(cppcoreguidelines-macro-usage)
+#define CFG_COMPILER_CLANG 3 // NOLINT(cppcoreguidelines-macro-usage)
 
-#define M_COMPILER_UNKNOWN 0
-#define M_COMPILER_GCC 1
-#define M_COMPILER_MSVC 2
-#define M_COMPILER_CLANG 3
+#define M_COMPILER_UNKNOWN 0 // NOLINT(cppcoreguidelines-macro-usage)
+#define M_COMPILER_GCC 1 // NOLINT(cppcoreguidelines-macro-usage)
+#define M_COMPILER_MSVC 2 // NOLINT(cppcoreguidelines-macro-usage)
+#define M_COMPILER_CLANG 3 // NOLINT(cppcoreguidelines-macro-usage)
 // NOLINTEND(modernize-macro-to-enum)
 
 #if defined(__GNUC__) || defined(__GNUG__)
