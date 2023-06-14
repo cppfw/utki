@@ -363,6 +363,10 @@ public:
 
 	friend std::ostream& operator<<(std::ostream& s, const span<element_type>& buf)
 	{
+		// TODO: some old clang-tidy mistakingly complains about this string,
+		//    remove this lint suppression when newer clang-tidy is available
+		//    on ARM linuxes
+		// NOLINTNEXTLINE(cppcoreguidelines-pro-type-vararg)
 		for (auto& e : buf) {
 			s << e;
 		}
