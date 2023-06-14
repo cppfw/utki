@@ -477,6 +477,7 @@ std::string to_string(number_type value, integer_base conversion_base = integer_
 	std::array<char, buf_size> buf;
 	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-vararg)
 	auto begin = buf.begin();
+	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-vararg)
 	auto end = buf.end();
 
 	if constexpr (std::is_unsigned_v<number_type>) {

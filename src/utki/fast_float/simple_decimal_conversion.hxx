@@ -287,9 +287,8 @@ adjusted_mantissa compute_float(decimal& d)
 	}
 	static const uint32_t max_shift = 60;
 	static const uint32_t num_powers = 19;
-	// NOLINTNEXTLINE(modernize-avoid-c-arrays)
+	// NOLINTNEXTLINE
 	static const uint8_t decimal_powers[19] = {
-		// NOLINT
 		0,  3,  6,  9,  13, 16, 19, 23, 26, 29, //
 		33, 36, 39, 43, 46, 49, 53, 56, 59, //
 	};

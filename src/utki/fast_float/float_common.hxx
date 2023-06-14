@@ -375,7 +375,7 @@ inline constexpr int binary_format<double>::max_exponent_fast_path()
 template <>
 inline constexpr int binary_format<float>::max_exponent_fast_path()
 {
-	return 10;
+	return 10; // NOLINT
 }
 
 template <>
