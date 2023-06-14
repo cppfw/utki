@@ -86,13 +86,13 @@ public:
 	shared_ref(const shared_ref&) = default;
 	shared_ref& operator=(const shared_ref&) = default;
 
-	shared_ref(shared_ref&& r) :
+	shared_ref(shared_ref&& r) noexcept :
 		// move constructor delegates to copy constructor
 		// because moved-from shared_ref should remain valid
 		shared_ref(static_cast<const shared_ref&>(r))
 	{}
 
-	shared_ref& operator=(shared_ref&& r)
+	shared_ref& operator=(shared_ref&& r) noexcept
 	{
 		// call copy-assign operator
 		// because moved-from shared_ref should remain valid
