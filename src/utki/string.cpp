@@ -48,7 +48,7 @@ std::string utki::make_string_va_list(const char* format, va_list args)
 	auto buf_ptr = buf.data();
 	auto buf_size = buf.size();
 
-	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-vararg)
+	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-vararg, cppcoreguidelines-init-variables)
 	va_list cur_args;
 	// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-array-to-pointer-decay)
 	va_copy(cur_args, args);
@@ -103,7 +103,7 @@ std::string utki::make_string_va_list(const char* format, va_list args)
 
 std::string utki::make_string(const char* format, ...)
 {
-	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-vararg)
+	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-vararg, cppcoreguidelines-init-variables)
 	va_list args;
 	// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-array-to-pointer-decay)
 	va_start(args, format);

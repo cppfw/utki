@@ -72,7 +72,7 @@ public:
 	span(const span&) = default;
 	span& operator=(const span&) = default;
 
-	span(span&& s) :
+	span(span&& s) noexcept :
 		// move is same as copy for span
 		span(static_cast<const span&>(s))
 	{}
