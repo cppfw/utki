@@ -77,7 +77,7 @@ public:
 		span(static_cast<const span&>(s))
 	{}
 
-	span& operator=(span&& s)
+	span& operator=(span&& s) noexcept
 	{
 		// move is same as copy for span
 		this->operator=(static_cast<const span&>(s));
