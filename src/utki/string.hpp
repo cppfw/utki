@@ -475,10 +475,13 @@ std::string to_string(number_type value, integer_base conversion_base = integer_
 	static const size_t buf_size = 128;
 	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-member-init, cppcoreguidelines-pro-type-vararg)
 	std::array<char, buf_size> buf;
+	// under MSVC compiler the &*buf.end() is not a pointer to the past-the-end of the buffer,
+	// so we wrap the buffer to span and use the span's iterators
+	auto span = utki::make_span(buf);
 	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-vararg)
-	auto begin = buf.begin();
+	auto begin = span.begin();
 	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-vararg)
-	auto end = buf.end();
+	auto end = span.end();
 
 	if constexpr (std::is_unsigned_v<number_type>) {
 		switch (conversion_base) {
