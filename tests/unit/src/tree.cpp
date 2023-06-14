@@ -4,8 +4,6 @@
 
 using namespace std::string_literals;
 
-// NOLINTBEGIN(cppcoreguidelines-avoid-magic-numbers)
-
 namespace {
 const tst::set set("tree", [](tst::suite& suite) {
 	suite.add("tree_node_default_constructor", []() {
@@ -1320,5 +1318,3 @@ const tst::set set("tree", [](tst::suite& suite) {
 	});
 });
 } // namespace
-
-// NOLINTEND(cppcoreguidelines-avoid-magic-numbers)

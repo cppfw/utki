@@ -7,8 +7,6 @@
 
 using namespace std::string_view_literals;
 
-// NOLINTBEGIN(cppcoreguidelines-avoid-magic-numbers)
-
 #if CFG_COMPILER != CFG_COMPILER_MSVC || CFG_COMPILER_MSVC_TOOLS_V >= 142
 namespace {
 namespace test_compile_time_sorting {
@@ -136,5 +134,3 @@ const tst::set set("sort", [](tst::suite& suite) {
 	});
 });
 } // namespace
-
-// NOLINTEND(cppcoreguidelines-avoid-magic-numbers)

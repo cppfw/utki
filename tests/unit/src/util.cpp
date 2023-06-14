@@ -6,8 +6,6 @@
 #include <utki/types.hpp>
 #include <utki/util.hpp>
 
-// NOLINTBEGIN(cppcoreguidelines-avoid-magic-numbers)
-
 namespace {
 const tst::set set("util", [](tst::suite& suite) {
 	suite.add("serialization_16_bit", []() {
@@ -144,5 +142,3 @@ const tst::set set("util", [](tst::suite& suite) {
 	// TODO: test utki::next() and utki::prev()
 });
 } // namespace
-
-// NOLINTEND(cppcoreguidelines-avoid-magic-numbers)

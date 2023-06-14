@@ -5,8 +5,6 @@
 
 #if CFG_COMPILER != CFG_COMPILER_MSVC
 
-// NOLINTBEGIN(cppcoreguidelines-avoid-magic-numbers)
-
 namespace {
 class test_singleton : public utki::singleton<test_singleton>
 {
@@ -33,5 +31,3 @@ const tst::set set("singleton", [](tst::suite& suite) {
 });
 } // namespace
 #endif // ~msvc compiler
-
-// NOLINTEND(cppcoreguidelines-avoid-magic-numbers)

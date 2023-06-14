@@ -2,8 +2,6 @@
 #include <tst/set.hpp>
 #include <utki/shared.hpp>
 
-// NOLINTBEGIN(cppcoreguidelines-avoid-magic-numbers)
-
 namespace {
 class test_class : public utki::shared
 {
@@ -95,5 +93,3 @@ const tst::set set("shared", [](tst::suite& suite) {
 	});
 });
 } // namespace
-
-// NOLINTEND(cppcoreguidelines-avoid-magic-numbers)

@@ -7,8 +7,6 @@
 #	undef assert
 #endif
 
-// NOLINTBEGIN(cppcoreguidelines-avoid-magic-numbers)
-
 namespace {
 const tst::set set("debug", [](tst::suite& suite) {
 	suite.add("assert_macro", []() {
@@ -54,5 +52,3 @@ const tst::set set("debug", [](tst::suite& suite) {
 	});
 });
 } // namespace
-
-// NOLINTEND(cppcoreguidelines-avoid-magic-numbers)

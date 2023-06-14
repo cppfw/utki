@@ -11,8 +11,6 @@
 
 using namespace std::string_literals;
 
-// NOLINTBEGIN(cppcoreguidelines-avoid-magic-numbers)
-
 // declare templates to instantiate all template methods to include all methods to gcov coverage
 template class utki::span<int>;
 template class utki::span<const int>;
@@ -343,5 +341,3 @@ const tst::set set("span", [](tst::suite& suite) {
 	});
 });
 } // namespace
-
-// NOLINTEND(cppcoreguidelines-avoid-magic-numbers)
