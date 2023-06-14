@@ -70,10 +70,13 @@ public:
 	 */
 	container_type children;
 
-	tree() = default;
 	tree(const tree&) = default;
 	tree& operator=(const tree&) = default;
+
 	tree(tree&&) = default;
+	tree& operator=(tree&&) = default;
+
+	~tree() = default;
 
 	/**
 	 * @brief Create a tree node with the given value.
@@ -81,7 +84,7 @@ public:
 	 * Children list of the created node is empty.
 	 * @param value - initializer of the tree node value.
 	 */
-	tree(element_type value) :
+	tree(element_type value = element_type()) :
 		value(std::move(value))
 	{}
 
@@ -157,6 +160,7 @@ class traversal
 		"collection_type::value_type must have 'children' member of type collection_type"
 	);
 
+	// NOLINTNEXTLINE(cppcoreguidelines-avoid-const-or-ref-data-members)
 	collection_type& roots;
 
 public:

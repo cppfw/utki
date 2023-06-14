@@ -10,7 +10,7 @@
 // NOLINTBEGIN(cppcoreguidelines-avoid-magic-numbers)
 
 namespace {
-tst::set set("linq", [](tst::suite& suite) {
+const tst::set set("linq", [](tst::suite& suite) {
 	suite.add("linq_from_rvalue_select", []() {
 		std::vector<std::pair<int, std::string>> in = {
 			{13, "13"},
@@ -373,10 +373,18 @@ tst::set set("linq", [](tst::suite& suite) {
 		"select_shared_ptr",
 		[]() {
 			struct test_struct {
+				// NOLINTNEXTLINE(cppcoreguidelines-avoid-const-or-ref-data-members)
 				bool& destroyed;
 				test_struct(bool& destroyed) :
 					destroyed(destroyed)
 				{}
+
+				test_struct(const test_struct&) = delete;
+				test_struct& operator=(const test_struct&) = delete;
+
+				test_struct(test_struct&&) = delete;
+				test_struct& operator=(test_struct&&) = delete;
+
 				~test_struct()
 				{
 					this->destroyed = true;
@@ -388,6 +396,12 @@ tst::set set("linq", [](tst::suite& suite) {
 			struct wrapper {
 				std::shared_ptr<test_struct> ts;
 				int dummy;
+
+				wrapper(const wrapper&) = default;
+				wrapper& operator=(const wrapper&) = default;
+
+				wrapper(wrapper&&) = default;
+				wrapper& operator=(wrapper&&) = default;
 
 				~wrapper() = default;
 

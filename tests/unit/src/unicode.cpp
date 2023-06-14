@@ -12,15 +12,16 @@ using namespace std::string_view_literals;
 // NOLINTBEGIN(cppcoreguidelines-avoid-magic-numbers)
 
 namespace {
-tst::set set("unicode", [](tst::suite& suite) {
+const tst::set set("unicode", [](tst::suite& suite) {
 	suite.add("utf8_iterator", []() {
 		// string in utf8 = aБцﺶ𠀋
 		std::vector<uint8_t> buf = {0x61, 0xd0, 0x91, 0xd1, 0x86, 0xef, 0xba, 0xb6, 0xf0, 0xa0, 0x80, 0x8b};
 
 		std::vector<uint8_t> str(buf.size() + 1);
-		memcpy(str.data(), buf.data(), buf.size());
-		str[buf.size()] = 0; // null-terminate
+		std::copy(buf.begin(), buf.end(), str.begin());
+		str.back() = 0; // null-terminate
 
+		// NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast)
 		utki::utf8_iterator i(reinterpret_cast<char*>(str.data()));
 
 		tst::check_eq(uint32_t(i.character()), uint32_t(U'a'), SL);

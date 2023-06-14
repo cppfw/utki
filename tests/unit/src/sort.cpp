@@ -62,7 +62,7 @@ static_assert(
 #endif
 
 namespace {
-tst::set set("sort", [](tst::suite& suite) {
+const tst::set set("sort", [](tst::suite& suite) {
 	suite.add("sort_strings_with_default_comparator", [] {
 		std::array<std::string, 5> arr = {
 			{

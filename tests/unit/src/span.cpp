@@ -11,12 +11,14 @@
 
 using namespace std::string_literals;
 
+// NOLINTBEGIN(cppcoreguidelines-avoid-magic-numbers)
+
 // declare templates to instantiate all template methods to include all methods to gcov coverage
 template class utki::span<int>;
 template class utki::span<const int>;
 
 namespace {
-tst::set set("span", [](tst::suite& suite) {
+const tst::set set("span", [](tst::suite& suite) {
 	suite.add("output_to_stream_operator", []() {
 		std::array<char, 12> buf = {
 			{'H', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', '!'}
@@ -190,6 +192,7 @@ tst::set set("span", [](tst::suite& suite) {
 		auto ss = f.s.subspan(3);
 
 		tst::check_eq(ss.size(), f.str.size() - 3, SL);
+		// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic)
 		tst::check_eq(ss.data(), f.str.data() + 3, SL);
 	});
 
@@ -236,6 +239,7 @@ tst::set set("span", [](tst::suite& suite) {
 			},
 			SL
 		);
+		// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic)
 		tst::check_eq(ss.data(), f.str.data() + 3, SL);
 	});
 
@@ -254,7 +258,7 @@ tst::set set("span", [](tst::suite& suite) {
 
 		auto sp = utki::make_span(in);
 
-		auto csp = utki::make_span(const_cast<decltype(sp)::const_pointer>(sp.data()), sp.size());
+		utki::span<const size_t> csp = sp;
 
 		auto out = utki::make_vector(csp);
 
@@ -339,3 +343,5 @@ tst::set set("span", [](tst::suite& suite) {
 	});
 });
 } // namespace
+
+// NOLINTEND(cppcoreguidelines-avoid-magic-numbers)

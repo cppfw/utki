@@ -14,6 +14,12 @@ struct a0 {
 		a_0(a)
 	{}
 
+	a0(const a0&) = default;
+	a0& operator=(const a0&) = default;
+
+	a0(a0&&) = default;
+	a0& operator=(a0&&) = default;
+
 	virtual ~a0() = default;
 };
 
@@ -26,7 +32,7 @@ struct a1 : public a0 {
 	{}
 };
 
-tst::set set("shared_ref", [](tst::suite& suite) {
+const tst::set set("shared_ref", [](tst::suite& suite) {
 	static_assert(
 		!std::is_constructible_v<utki::shared_ref<std::string>>,
 		"shared_ref must not be default constructible"
@@ -129,6 +135,7 @@ tst::set set("shared_ref", [](tst::suite& suite) {
 		decltype(a) b(std::move(a));
 
 		// 'a' should remain valid and not lead to crash
+		// NOLINTNEXTLINE(clang-analyzer-cplusplus.Move)
 		tst::check_eq(a.get().a_0, 13, SL); // NOLINT(bugprone-use-after-move)
 
 		tst::check_eq(b.get().a_0, 13, SL);
@@ -146,6 +153,7 @@ tst::set set("shared_ref", [](tst::suite& suite) {
 		b = std::move(a);
 
 		// 'a' should remain valid and not lead to crash
+		// NOLINTNEXTLINE(clang-analyzer-cplusplus.Move)
 		tst::check_eq(a.get().a_0, 13, SL); // NOLINT(bugprone-use-after-move)
 
 		tst::check_eq(b.get().a_0, 13, SL);

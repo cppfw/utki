@@ -46,7 +46,16 @@ class shared : public std::enable_shared_from_this<shared>
 		return ::operator new(size);
 	}
 
+protected:
+	shared() = default;
+
 public:
+	shared(const shared&) = default;
+	shared& operator=(const shared&) = default;
+
+	shared(shared&&) = default;
+	shared& operator=(shared&&) = default;
+
 	virtual ~shared() noexcept = default;
 };
 

@@ -7,7 +7,7 @@ using namespace std::string_literals;
 // NOLINTBEGIN(cppcoreguidelines-avoid-magic-numbers)
 
 namespace {
-tst::set set("tree", [](tst::suite& suite) {
+const tst::set set("tree", [](tst::suite& suite) {
 	suite.add("tree_node_default_constructor", []() {
 		utki::tree<int> t;
 		t.children.emplace_back(35);
@@ -155,6 +155,11 @@ tst::set set("tree", [](tst::suite& suite) {
 
 			wrapper(const wrapper&) = default;
 			wrapper& operator=(const wrapper&) = default;
+
+			wrapper(wrapper&&) = default;
+			wrapper& operator=(wrapper&&) = default;
+
+			~wrapper() = default;
 
 			bool operator==(const char* str) const
 			{

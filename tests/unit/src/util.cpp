@@ -12,13 +12,13 @@ namespace {
 const tst::set set("util", [](tst::suite& suite) {
 	suite.add("serialization_16_bit", []() {
 		for (uint32_t i = 0; i <= uint16_t(-1); ++i) {
-			std::array<uint8_t, sizeof(uint16_t)> buf;
-			utki::serialize16le(uint16_t(i), &*buf.begin());
+			std::array<uint8_t, sizeof(uint16_t)> buf = {0};
+			utki::serialize16le(uint16_t(i), buf.data());
 
 			tst::check_eq(buf[0], uint8_t(i & 0xff), SL);
 			tst::check_eq(buf[1], uint8_t((i >> 8) & 0xff), SL);
 
-			uint16_t res = utki::deserialize16le(&*buf.begin());
+			uint16_t res = utki::deserialize16le(buf.data());
 			tst::check_eq(res, uint16_t(i), SL);
 		}
 	});
@@ -26,22 +26,22 @@ const tst::set set("util", [](tst::suite& suite) {
 	suite.add("serialization_32_bit", []() {
 		// increment by 513177, because if increment by 1 it takes too long to run the test
 		for (uint64_t i = 0; i <= uint32_t(-1); i += 513177) {
-			std::array<uint8_t, sizeof(uint32_t)> buf;
-			utki::serialize32le(uint32_t(i), &*buf.begin());
+			std::array<uint8_t, sizeof(uint32_t)> buf = {0};
+			utki::serialize32le(uint32_t(i), buf.data());
 
 			tst::check_eq(buf[0], uint8_t(i & 0xff), SL);
 			tst::check_eq(buf[1], uint8_t((i >> 8) & 0xff), SL);
 			tst::check_eq(buf[2], uint8_t((i >> 16) & 0xff), SL);
 			tst::check_eq(buf[3], uint8_t((i >> 24) & 0xff), SL);
 
-			uint32_t res = utki::deserialize32le(&*buf.begin());
+			uint32_t res = utki::deserialize32le(buf.data());
 			tst::check_eq(res, uint32_t(i), SL);
 		}
 	});
 
 	suite.add("serialization_64_bit", []() {
 		uint64_t val = 0xabcdef87bcde67af;
-		std::array<uint8_t, sizeof(uint64_t)> buf;
+		std::array<uint8_t, sizeof(uint64_t)> buf = {0};
 		utki::serialize64le(val, buf.data());
 
 		tst::check_eq(buf[0], uint8_t(val & 0xff), SL);

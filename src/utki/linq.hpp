@@ -60,6 +60,7 @@ class linq_collection_aggregator
 		std::is_rvalue_reference_v<collection_type>,
 		typename std::remove_reference_t<collection_type>,
 		collection_type>
+		// NOLINTNEXTLINE(cppcoreguidelines-avoid-const-or-ref-data-members)
 		collection;
 
 	using value_type = typename std::remove_reference<decltype(collection)>::type::value_type;
@@ -67,6 +68,11 @@ class linq_collection_aggregator
 	struct noncopyable_value_type : public value_type {
 		noncopyable_value_type(const noncopyable_value_type&) = delete;
 		noncopyable_value_type& operator=(const noncopyable_value_type&) = delete;
+
+		noncopyable_value_type(noncopyable_value_type&&) = delete;
+		noncopyable_value_type& operator=(noncopyable_value_type&&) = delete;
+
+		~noncopyable_value_type() = default;
 	};
 
 	linq_collection_aggregator(collection_type collection) :

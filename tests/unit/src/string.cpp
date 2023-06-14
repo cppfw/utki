@@ -13,8 +13,9 @@ using namespace std::string_view_literals;
 // NOLINTBEGIN(cppcoreguidelines-avoid-magic-numbers)
 
 namespace {
-tst::set set("string", [](tst::suite& suite) {
+const tst::set set("string", [](tst::suite& suite) {
 	suite.add("make_string_from_const_char_ptr", []() {
+		// NOLINTNEXTLINE(cppcoreguidelines-pro-type-vararg)
 		auto str = utki::make_string(" ");
 
 		tst::check_eq(
@@ -36,6 +37,7 @@ tst::set set("string", [](tst::suite& suite) {
 	});
 
 	suite.add("make_string_short_formatted", []() {
+		// NOLINTNEXTLINE(cppcoreguidelines-pro-type-vararg)
 		auto str = utki::make_string("Hello %d world!", 13);
 
 		tst::check_eq(
@@ -57,6 +59,7 @@ tst::set set("string", [](tst::suite& suite) {
 	});
 
 	suite.add("make_string_long_formatted_over_1k", []() {
+		// NOLINTNEXTLINE(cppcoreguidelines-pro-type-vararg)
 		auto str = utki::make_string(
 			"1234567890abcdef"
 			"1234567890abcdef"
@@ -675,6 +678,7 @@ tst::set set("string", [](tst::suite& suite) {
 	suite.add("from_chars_float", []() {
 		std::string_view str = "3.14159  ";
 
+		// NOLINTNEXTLINE(cppcoreguidelines-init-variables)
 		float v;
 
 		auto r = utki::from_chars(str.data(), str.data() + str.size(), v);
@@ -687,6 +691,7 @@ tst::set set("string", [](tst::suite& suite) {
 	suite.add("from_chars_double", []() {
 		std::string_view str = "3.14159  ";
 
+		// NOLINTNEXTLINE(cppcoreguidelines-init-variables)
 		double v;
 
 		auto r = utki::from_chars(str.data(), str.data() + str.size(), v);
