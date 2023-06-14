@@ -53,15 +53,15 @@ namespace detail {
 // remove all final zeroes
 inline void trim(decimal& h)
 {
-	while ((h.num_digits > 0) && (h.digits[h.num_digits - 1] == 0)) {
+	while ((h.num_digits > 0) && (h.digits[h.num_digits - 1] == 0)) { // NOLINT
 		h.num_digits--;
 	}
 }
 
 inline uint32_t number_of_digits_decimal_left_shift(const decimal& h, uint32_t shift)
 {
-	shift &= 63;
-	// NOLINTNEXTLINE(modernize-avoid-c-arrays)
+	shift &= 63; // NOLINT
+	// NOLINTNEXTLINE
 	const static uint16_t number_of_digits_decimal_left_shift_table[65] = {
 		0x0000, 0x0800, 0x0801, 0x0803, 0x1006, 0x1009, 0x100D, 0x1812, 0x1817, 0x181D, 0x2024, 0x202B, 0x2033,
 		0x203C, 0x2846, 0x2850, 0x285B, 0x3067, 0x3073, 0x3080, 0x388E, 0x389C, 0x38AB, 0x38BB, 0x40CC, 0x40DD,
@@ -69,12 +69,12 @@ inline uint32_t number_of_digits_decimal_left_shift(const decimal& h, uint32_t s
 		0x6218, 0x6A34, 0x6A50, 0x6A6D, 0x6A8B, 0x72AA, 0x72C9, 0x72E9, 0x7B0A, 0x7B2B, 0x7B4D, 0x8370, 0x8393,
 		0x83B7, 0x83DC, 0x8C02, 0x8C28, 0x8C4F, 0x9477, 0x949F, 0x94C8, 0x9CF2, 0x051C, 0x051C, 0x051C, 0x051C,
 	};
-	uint32_t x_a = number_of_digits_decimal_left_shift_table[shift];
-	uint32_t x_b = number_of_digits_decimal_left_shift_table[shift + 1];
-	uint32_t num_new_digits = x_a >> 11;
-	uint32_t pow5_a = 0x7FF & x_a;
-	uint32_t pow5_b = 0x7FF & x_b;
-	// NOLINTNEXTLINE(modernize-avoid-c-arrays)
+	uint32_t x_a = number_of_digits_decimal_left_shift_table[shift]; // NOLINT
+	uint32_t x_b = number_of_digits_decimal_left_shift_table[shift + 1]; // NOLINT
+	uint32_t num_new_digits = x_a >> 11; // NOLINT
+	uint32_t pow5_a = 0x7FF & x_a; // NOLINT
+	uint32_t pow5_b = 0x7FF & x_b; // NOLINT
+	// NOLINTNEXTLINE
 	const static uint8_t number_of_digits_decimal_left_shift_table_powers_of_5[0x051C] = {
 		5, 2, 5, 1, 2, 5, 6, 2, 5, 3, 1, 2, 5, 1, 5, 6, 2, 5, 7, 8, 1, 2, 5, 3, 9, 0, 6, 2, 5, 1, 9, 5, 3, 1, 2, 5, 9,
 		7, 6, 5, 6, 2, 5, 4, 8, 8, 2, 8, 1, 2, 5, 2, 4, 4, 1, 4, 0, 6, 2, 5, 1, 2, 2, 0, 7, 0, 3, 1, 2, 5, 6, 1, 0, 3,
@@ -113,16 +113,16 @@ inline uint32_t number_of_digits_decimal_left_shift(const decimal& h, uint32_t s
 		7, 3, 8, 2, 8, 1, 2, 5, 8, 6, 7, 3, 6, 1, 7, 3, 7, 9, 8, 8, 4, 0, 3, 5, 4, 7, 2, 0, 5, 9, 6, 2, 2, 4, 0, 6, 9,
 		5, 9, 5, 3, 3, 6, 9, 1, 4, 0, 6, 2, 5,
 	};
-	const uint8_t* pow5 = &number_of_digits_decimal_left_shift_table_powers_of_5[pow5_a];
+	const uint8_t* pow5 = &number_of_digits_decimal_left_shift_table_powers_of_5[pow5_a]; // NOLINT
 	uint32_t i = 0;
 	uint32_t n = pow5_b - pow5_a;
 	for (; i < n; i++) {
 		// NOLINTNEXTLINE(bugprone-branch-clone)
 		if (i >= h.num_digits) {
 			return num_new_digits - 1;
-		} else if (h.digits[i] == pow5[i]) {
+		} else if (h.digits[i] == pow5[i]) { // NOLINT
 			continue;
-		} else if (h.digits[i] < pow5[i]) {
+		} else if (h.digits[i] < pow5[i]) { // NOLINT
 			return num_new_digits - 1;
 		} else {
 			return num_new_digits;
@@ -135,21 +135,22 @@ inline uint64_t round(decimal& h)
 {
 	if ((h.num_digits == 0) || (h.decimal_point < 0)) {
 		return 0;
-	} else if (h.decimal_point > 18) {
+	} else if (h.decimal_point > 18) { // NOLINT
 		return UINT64_MAX;
 	}
 	// at this point, we know that h.decimal_point >= 0
 	auto dp = uint32_t(h.decimal_point);
 	uint64_t n = 0;
 	for (uint32_t i = 0; i < dp; i++) {
-		n = (10 * n) + ((i < h.num_digits) ? h.digits[i] : 0);
+		n = (10 * n) + ((i < h.num_digits) ? h.digits[i] : 0); // NOLINT
 	}
 	bool round_up = false;
 	if (dp < h.num_digits) {
+		// NOLINTNEXTLINE
 		round_up = h.digits[dp] >= 5; // normally, we round up
 		// but we may need to round to even!
-		if ((h.digits[dp] == 5) && (dp + 1 == h.num_digits)) {
-			round_up = h.truncated || ((dp > 0) && (1 & h.digits[dp - 1]));
+		if ((h.digits[dp] == 5) && (dp + 1 == h.num_digits)) { // NOLINT
+			round_up = h.truncated || ((dp > 0) && (1 & h.digits[dp - 1])); // NOLINT
 		}
 	}
 	if (round_up) {
@@ -170,11 +171,11 @@ inline void decimal_left_shift(decimal& h, uint32_t shift)
 	uint64_t n = 0;
 
 	while (read_index >= 0) {
-		n += uint64_t(h.digits[read_index]) << shift;
-		uint64_t quotient = n / 10;
-		uint64_t remainder = n - (10 * quotient);
+		n += uint64_t(h.digits[read_index]) << shift; // NOLINT
+		uint64_t quotient = n / 10; // NOLINT
+		uint64_t remainder = n - (10 * quotient); // NOLINT
 		if (write_index < max_digits) {
-			h.digits[write_index] = uint8_t(remainder);
+			h.digits[write_index] = uint8_t(remainder); // NOLINT
 		} else if (remainder > 0) {
 			h.truncated = true;
 		}
@@ -183,10 +184,10 @@ inline void decimal_left_shift(decimal& h, uint32_t shift)
 		read_index--;
 	}
 	while (n > 0) {
-		uint64_t quotient = n / 10;
-		uint64_t remainder = n - (10 * quotient);
+		uint64_t quotient = n / 10; // NOLINT
+		uint64_t remainder = n - (10 * quotient); // NOLINT
 		if (write_index < max_digits) {
-			h.digits[write_index] = uint8_t(remainder);
+			h.digits[write_index] = uint8_t(remainder); // NOLINT
 		} else if (remainder > 0) {
 			h.truncated = true;
 		}
@@ -211,12 +212,12 @@ inline void decimal_right_shift(decimal& h, uint32_t shift)
 
 	while ((n >> shift) == 0) {
 		if (read_index < h.num_digits) {
-			n = (10 * n) + h.digits[read_index++];
+			n = (10 * n) + h.digits[read_index++]; // NOLINT
 		} else if (n == 0) {
 			return;
 		} else {
 			while ((n >> shift) == 0) {
-				n = 10 * n;
+				n = 10 * n; // NOLINT
 				read_index++;
 			}
 			break;
@@ -233,14 +234,14 @@ inline void decimal_right_shift(decimal& h, uint32_t shift)
 	uint64_t mask = (uint64_t(1) << shift) - 1;
 	while (read_index < h.num_digits) {
 		auto new_digit = uint8_t(n >> shift);
-		n = (10 * (n & mask)) + h.digits[read_index++];
-		h.digits[write_index++] = new_digit;
+		n = (10 * (n & mask)) + h.digits[read_index++]; // NOLINT
+		h.digits[write_index++] = new_digit; // NOLINT
 	}
 	while (n > 0) {
 		auto new_digit = uint8_t(n >> shift);
-		n = 10 * (n & mask);
+		n = 10 * (n & mask); // NOLINT
 		if (write_index < max_digits) {
-			h.digits[write_index++] = new_digit;
+			h.digits[write_index++] = new_digit; // NOLINT
 		} else if (new_digit > 0) {
 			h.truncated = true;
 		}
@@ -270,14 +271,14 @@ adjusted_mantissa compute_float(decimal& d)
 	// which is fine, but log(10**299995)/log(2**60) ~= 16609 which is not
 	// fine (runs for a long time).
 	//
-	if (d.decimal_point < -324) {
+	if (d.decimal_point < -324) { // NOLINT
 		// We have something smaller than 1e-324 which is always zero
 		// in binary64 and binary32.
 		// It should be zero.
 		answer.power2 = 0;
 		answer.mantissa = 0;
 		return answer;
-	} else if (d.decimal_point >= 310) {
+	} else if (d.decimal_point >= 310) { // NOLINT
 		// We have something at least as large as 0.1e310 which is
 		// always infinite.
 		answer.power2 = binary::infinite_power();
@@ -288,13 +289,14 @@ adjusted_mantissa compute_float(decimal& d)
 	static const uint32_t num_powers = 19;
 	// NOLINTNEXTLINE(modernize-avoid-c-arrays)
 	static const uint8_t decimal_powers[19] = {
+		// NOLINT
 		0,  3,  6,  9,  13, 16, 19, 23, 26, 29, //
 		33, 36, 39, 43, 46, 49, 53, 56, 59, //
 	};
 	int32_t exp2 = 0;
 	while (d.decimal_point > 0) {
 		auto n = uint32_t(d.decimal_point);
-		uint32_t shift = (n < num_powers) ? decimal_powers[n] : max_shift;
+		uint32_t shift = (n < num_powers) ? decimal_powers[n] : max_shift; // NOLINT
 		detail::decimal_right_shift(d, shift);
 		if (d.decimal_point < -decimal_point_range) {
 			// should be zero
@@ -306,15 +308,15 @@ adjusted_mantissa compute_float(decimal& d)
 	}
 	// We shift left toward [1/2 ... 1].
 	while (d.decimal_point <= 0) {
-		uint32_t shift;
+		uint32_t shift; // NOLINT
 		if (d.decimal_point == 0) {
-			if (d.digits[0] >= 5) {
+			if (d.digits[0] >= 5) { // NOLINT
 				break;
 			}
 			shift = (d.digits[0] < 2) ? 2 : 1;
 		} else {
 			auto n = uint32_t(-d.decimal_point);
-			shift = (n < num_powers) ? decimal_powers[n] : max_shift;
+			shift = (n < num_powers) ? decimal_powers[n] : max_shift; // NOLINT
 		}
 		detail::decimal_left_shift(d, shift);
 		if (d.decimal_point > decimal_point_range) {

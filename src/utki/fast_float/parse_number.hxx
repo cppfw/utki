@@ -50,24 +50,25 @@ namespace detail {
 template <typename T>
 from_chars_result parse_infnan(const char* first, const char* last, T& value) noexcept
 {
-	from_chars_result answer;
+	from_chars_result answer; // NOLINT
 	answer.ptr = first;
 	answer.ec = std::errc(); // be optimistic
 	bool minus_sign = false;
 	if (*first == '-')
 	{ // assume first < last, so dereference without checks; C++17 20.19.3.(7.1) explicitly forbids '+' here
 		minus_sign = true;
-		++first;
+		++first; // NOLINT
 	}
 	if (last - first >= 3) {
 		if (fastfloat_strncasecmp(first, "nan", 3)) {
-			answer.ptr = (first += 3);
+			answer.ptr = (first += 3); // NOLINT
 			value = minus_sign ? -std::numeric_limits<T>::quiet_NaN() : std::numeric_limits<T>::quiet_NaN();
 			// Check for possible nan(n-char-seq-opt), C++17 20.19.3.7, C11 7.20.1.3.3. At least MSVC produces nan(ind)
 			// and nan(snan).
 			if (first != last && *first == '(') {
-				for (const char* ptr = first + 1; ptr != last; ++ptr) {
+				for (const char* ptr = first + 1; ptr != last; ++ptr) { // NOLINT
 					if (*ptr == ')') {
+						// NOLINTNEXTLINE
 						answer.ptr = ptr + 1; // valid nan(n-char-seq-opt)
 						break;
 					} else if (!(('a' <= *ptr && *ptr <= 'z') || ('A' <= *ptr && *ptr <= 'Z')
@@ -78,10 +79,10 @@ from_chars_result parse_infnan(const char* first, const char* last, T& value) no
 			return answer;
 		}
 		if (fastfloat_strncasecmp(first, "inf", 3)) {
-			if ((last - first >= 8) && fastfloat_strncasecmp(first + 3, "inity", 5)) {
-				answer.ptr = first + 8;
+			if ((last - first >= 8) && fastfloat_strncasecmp(first + 3, "inity", 5)) { // NOLINT
+				answer.ptr = first + 8; // NOLINT
 			} else {
-				answer.ptr = first + 3;
+				answer.ptr = first + 3; // NOLINT
 			}
 			value = minus_sign ? -std::numeric_limits<T>::infinity() : std::numeric_limits<T>::infinity();
 			return answer;
@@ -119,7 +120,7 @@ from_chars(const char* first, const char* last, T& value, chars_format fmt /*= c
 {
 	static_assert(std::is_same_v<T, double> || std::is_same_v<T, float>, "only float and double are supported");
 
-	from_chars_result answer;
+	from_chars_result answer; // NOLINT
 	if (first == last) {
 		answer.ec = std::errc::invalid_argument;
 		answer.ptr = first;

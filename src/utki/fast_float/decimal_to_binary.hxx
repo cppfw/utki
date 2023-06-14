@@ -53,14 +53,14 @@ fastfloat_really_inline value128 compute_product_approximation(int64_t q, uint64
 	// For small values of q, e.g., q in [0,27], the answer is always exact because
 	// The line value128 firstproduct = full_multiplication(w, power_of_five_128[index]);
 	// gives the exact answer.
-	value128 firstproduct = full_multiplication(w, powers::power_of_five_128[index]);
-	static_assert((bit_precision >= 0) && (bit_precision <= 64), " precision should  be in (0,64]");
+	value128 firstproduct = full_multiplication(w, powers::power_of_five_128[index]); // NOLINT
+	static_assert((bit_precision >= 0) && (bit_precision <= 64), " precision should  be in (0,64]"); // NOLINT
 	constexpr uint64_t precision_mask =
 		(bit_precision < 64) ? (uint64_t(0xFFFFFFFFFFFFFFFF) >> bit_precision) : uint64_t(0xFFFFFFFFFFFFFFFF);
 	if ((firstproduct.high & precision_mask) == precision_mask) { // could further guard with  (lower + w < lower)
 		// regarding the second product, we only need secondproduct.high, but our expectation is that the compiler will
 		// optimize this extra work away if needed.
-		value128 secondproduct = full_multiplication(w, powers::power_of_five_128[index + 1]);
+		value128 secondproduct = full_multiplication(w, powers::power_of_five_128[index + 1]); // NOLINT
 		firstproduct.low += secondproduct.high;
 		if (secondproduct.high > firstproduct.low) {
 			firstproduct.high++;
@@ -87,7 +87,7 @@ namespace detail {
  */
 fastfloat_really_inline int power(int q) noexcept
 {
-	return (((152170 + 65536) * q) >> 16) + 63;
+	return (((152170 + 65536) * q) >> 16) + 63; // NOLINT
 }
 } // namespace detail
 
@@ -125,6 +125,7 @@ fastfloat_really_inline adjusted_mantissa compute_float(int64_t q, uint64_t w) n
 	// 3. We might lose a bit due to the "upperbit" routine (result too small, requiring a shift)
 
 	value128 product = compute_product_approximation<binary::mantissa_explicit_bits() + 3>(q, w);
+	// NOLINTNEXTLINE
 	if (product.low == 0xFFFFFFFFFFFFFFFF) { //  could guard it further
 		// In some very rare cases, this could happen, in which case we might need a more accurate
 		// computation that what we can provide cheaply. This is very, very unlikely.
@@ -140,14 +141,14 @@ fastfloat_really_inline adjusted_mantissa compute_float(int64_t q, uint64_t w) n
 	// value128 product = compute_product(q, w);
 	// but in practice, we can win big with the compute_product_approximation if its additional branch
 	// is easily predicted. Which is best is data specific.
-	int upperbit = int(product.high >> 63);
+	int upperbit = int(product.high >> 63); // NOLINT
 
-	answer.mantissa = product.high >> (upperbit + 64 - binary::mantissa_explicit_bits() - 3);
+	answer.mantissa = product.high >> (upperbit + 64 - binary::mantissa_explicit_bits() - 3); // NOLINT
 
 	answer.power2 = int(detail::power(int(q)) + upperbit - lz - binary::minimum_exponent());
 	if (answer.power2 <= 0) { // we have a subnormal?
 		// Here have that answer.power2 <= 0 so -answer.power2 >= 0
-		if (-answer.power2 + 1 >= 64)
+		if (-answer.power2 + 1 >= 64) // NOLINT
 		{ // if we have more than 64 bits below the minimum exponent, you have a zero for sure.
 			answer.power2 = 0;
 			answer.mantissa = 0;
@@ -180,7 +181,7 @@ fastfloat_really_inline adjusted_mantissa compute_float(int64_t q, uint64_t w) n
 		// To be in-between two floats we need that in doing
 		//   answer.mantissa = product.high >> (upperbit + 64 - binary::mantissa_explicit_bits() - 3);
 		// ... we dropped out only zeroes. But if this happened, then we can go back!!!
-		if ((answer.mantissa << (upperbit + 64 - binary::mantissa_explicit_bits() - 3)) == product.high) {
+		if ((answer.mantissa << (upperbit + 64 - binary::mantissa_explicit_bits() - 3)) == product.high) { // NOLINT
 			answer.mantissa &= ~uint64_t(1); // flip it so that we do not round up
 		}
 	}

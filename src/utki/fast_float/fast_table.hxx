@@ -63,7 +63,7 @@ struct powers_template {
 	constexpr static int largest_power_of_five = binary_format<double>::largest_power_of_ten();
 	constexpr static int number_of_entries = 2 * (largest_power_of_five - smallest_power_of_five + 1);
 	// Powers of five from 5^-342 all the way to 5^308 rounded toward one.
-	static const uint64_t power_of_five_128[number_of_entries]; // NOLINT(modernize-avoid-c-arrays)
+	static const uint64_t power_of_five_128[number_of_entries]; // NOLINT
 };
 
 // NOLINTNEXTLINE(readability-identifier-naming)

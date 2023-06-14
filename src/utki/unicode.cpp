@@ -59,7 +59,7 @@ utf8_iterator& utf8_iterator::operator++() noexcept
 	// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic)
 	++this->p;
 
-	if ((b & 0x80) == 0) {
+	if ((b & 0x80) == 0) { // NOLINT(cppcoreguidelines-avoid-magic-numbers)
 		this->c = char32_t(b);
 		return *this;
 	}
@@ -69,13 +69,13 @@ utf8_iterator& utf8_iterator::operator++() noexcept
 		return *this;
 	}
 
-	this->c = (*this->p) & 0x3f;
+	this->c = (*this->p) & 0x3f; // NOLINT(cppcoreguidelines-avoid-magic-numbers)
 	// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic)
 	++this->p;
 
 	unsigned i = 2;
 	for (; //
-		 (uint8_t(b << i) >> 7);
+		 (uint8_t(b << i) >> 7); // NOLINT(cppcoreguidelines-avoid-magic-numbers)
 		 ++i,
 		 // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic)
 		 ++this->p)
@@ -85,9 +85,10 @@ utf8_iterator& utf8_iterator::operator++() noexcept
 			return *this;
 		}
 
-		this->c <<= 6;
-		this->c |= (*this->p) & 0x3f;
+		this->c <<= 6; // NOLINT(cppcoreguidelines-avoid-magic-numbers)
+		this->c |= (*this->p) & 0x3f; // NOLINT(cppcoreguidelines-avoid-magic-numbers)
 	}
+	// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
 	this->c |= (char32_t(uint8_t(b << (i + 1)) >> (i + 1)) << (6 * (i - 1)));
 
 	return *this;
@@ -97,70 +98,75 @@ std::array<char, max_size_of_utf8_encoded_character + 1> //
 utki::to_utf8(char32_t c)
 {
 	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-member-init)
-	std::array<char, 7> ret;
+	std::array<char, 7> ret; // NOLINT(cppcoreguidelines-avoid-magic-numbers)
 
-	if (c <= 0x7f) {
-		ret[0] = char(c);
-		ret[1] = 0;
+	if (c <= 0x7f) { // NOLINT(cppcoreguidelines-avoid-magic-numbers)
+		ret[0] = char(c); // NOLINT(cppcoreguidelines-avoid-magic-numbers)
+		ret[1] = 0; // NOLINT(cppcoreguidelines-avoid-magic-numbers)
 		return ret;
 	}
 
 	// NOLINTNEXTLINE(cppcoreguidelines-init-variables)
 	unsigned num_bytes;
 
-	if (c <= 0x7ff) {
-		num_bytes = 2;
-	} else if (c <= 0xffff) {
-		num_bytes = 3;
-	} else if (c <= 0x1fffff) {
-		num_bytes = 4;
-	} else if (c <= 0x3ffffff) {
-		num_bytes = 5;
-	} else if (c <= 0x7fffffff) {
-		num_bytes = 6;
+	if (c <= 0x7ff) { // NOLINT(cppcoreguidelines-avoid-magic-numbers)
+		num_bytes = 2; // NOLINT(cppcoreguidelines-avoid-magic-numbers)
+	} else if (c <= 0xffff) { // NOLINT(cppcoreguidelines-avoid-magic-numbers)
+		num_bytes = 3; // NOLINT(cppcoreguidelines-avoid-magic-numbers)
+	} else if (c <= 0x1fffff) { // NOLINT(cppcoreguidelines-avoid-magic-numbers)
+		num_bytes = 4; // NOLINT(cppcoreguidelines-avoid-magic-numbers)
+	} else if (c <= 0x3ffffff) { // NOLINT(cppcoreguidelines-avoid-magic-numbers)
+		num_bytes = 5; // NOLINT(cppcoreguidelines-avoid-magic-numbers)
+	} else if (c <= 0x7fffffff) { // NOLINT(cppcoreguidelines-avoid-magic-numbers)
+		num_bytes = 6; // NOLINT(cppcoreguidelines-avoid-magic-numbers)
 	} else {
-		ret[0] = 0;
+		ret[0] = 0; // NOLINT(cppcoreguidelines-avoid-magic-numbers)
 		return ret;
 	}
 
 	switch (num_bytes) {
-		case 1:
+		case 1: // NOLINT(cppcoreguidelines-avoid-magic-numbers)
 			ASSERT(false)
 			break;
-		case 2:
-			ret[0] = char(0xc0 | ((c >> 6) & 0x1f)); // 0xc0 = 0b11000000
-			ret[1] = char(0x80 | (c & 0x3f));
-			ret[2] = 0;
+		case 2: // NOLINT(cppcoreguidelines-avoid-magic-numbers)
+			// 0xc0 = 0b11000000
+			ret[0] = char(0xc0 | ((c >> 6) & 0x1f)); // NOLINT(cppcoreguidelines-avoid-magic-numbers)
+			ret[1] = char(0x80 | (c & 0x3f)); // NOLINT(cppcoreguidelines-avoid-magic-numbers)
+			ret[2] = 0; // NOLINT(cppcoreguidelines-avoid-magic-numbers)
 			break;
-		case 3:
-			ret[0] = char(0xe0 | ((c >> 12) & 0xf)); // 0xe0 = 0b11100000
-			ret[1] = char(0x80 | ((c >> 6) & 0x3f));
-			ret[2] = char(0x80 | (c & 0x3f));
-			ret[3] = 0;
+		case 3: // NOLINT(cppcoreguidelines-avoid-magic-numbers)
+			// 0xe0 = 0b11100000
+			ret[0] = char(0xe0 | ((c >> 12) & 0xf)); // NOLINT(cppcoreguidelines-avoid-magic-numbers)
+			ret[1] = char(0x80 | ((c >> 6) & 0x3f)); // NOLINT(cppcoreguidelines-avoid-magic-numbers)
+			ret[2] = char(0x80 | (c & 0x3f)); // NOLINT(cppcoreguidelines-avoid-magic-numbers)
+			ret[3] = 0; // NOLINT(cppcoreguidelines-avoid-magic-numbers)
 			break;
-		case 4:
-			ret[0] = char(0xf0 | ((c >> 18) & 0x7)); // 0xf0 = 0b11110000
-			ret[1] = char(0x80 | ((c >> 12) & 0x3f));
-			ret[2] = char(0x80 | ((c >> 6) & 0x3f));
-			ret[3] = char(0x80 | (c & 0x3f));
-			ret[4] = 0;
+		case 4: // NOLINT(cppcoreguidelines-avoid-magic-numbers)
+			// 0xf0 = 0b11110000
+			ret[0] = char(0xf0 | ((c >> 18) & 0x7)); // NOLINT(cppcoreguidelines-avoid-magic-numbers)
+			ret[1] = char(0x80 | ((c >> 12) & 0x3f)); // NOLINT(cppcoreguidelines-avoid-magic-numbers)
+			ret[2] = char(0x80 | ((c >> 6) & 0x3f)); // NOLINT(cppcoreguidelines-avoid-magic-numbers)
+			ret[3] = char(0x80 | (c & 0x3f)); // NOLINT(cppcoreguidelines-avoid-magic-numbers)
+			ret[4] = 0; // NOLINT(cppcoreguidelines-avoid-magic-numbers)
 			break;
-		case 5:
-			ret[0] = char(0xf8 | ((c >> 24) & 0x3)); // 0xf8 = 0b11111000
-			ret[1] = char(0x80 | ((c >> 18) & 0x3f));
-			ret[2] = char(0x80 | ((c >> 12) & 0x3f));
-			ret[3] = char(0x80 | ((c >> 6) & 0x3f));
-			ret[4] = char(0x80 | (c & 0x3f));
-			ret[5] = 0;
+		case 5: // NOLINT(cppcoreguidelines-avoid-magic-numbers)
+			// 0xf8 = 0b11111000
+			ret[0] = char(0xf8 | ((c >> 24) & 0x3)); // NOLINT(cppcoreguidelines-avoid-magic-numbers)
+			ret[1] = char(0x80 | ((c >> 18) & 0x3f)); // NOLINT(cppcoreguidelines-avoid-magic-numbers)
+			ret[2] = char(0x80 | ((c >> 12) & 0x3f)); // NOLINT(cppcoreguidelines-avoid-magic-numbers)
+			ret[3] = char(0x80 | ((c >> 6) & 0x3f)); // NOLINT(cppcoreguidelines-avoid-magic-numbers)
+			ret[4] = char(0x80 | (c & 0x3f)); // NOLINT(cppcoreguidelines-avoid-magic-numbers)
+			ret[5] = 0; // NOLINT(cppcoreguidelines-avoid-magic-numbers)
 			break;
-		case 6:
-			ret[0] = char(0xfc | ((c >> 30) & 0x1)); // 0xfc = 0b11111100
-			ret[1] = char(0x80 | ((c >> 24) & 0x3f));
-			ret[2] = char(0x80 | ((c >> 18) & 0x3f));
-			ret[3] = char(0x80 | ((c >> 12) & 0x3f));
-			ret[4] = char(0x80 | ((c >> 6) & 0x3f));
-			ret[5] = char(0x80 | (c & 0x3f));
-			ret[6] = 0;
+		case 6: // NOLINT(cppcoreguidelines-avoid-magic-numbers)
+			// 0xfc = 0b11111100
+			ret[0] = char(0xfc | ((c >> 30) & 0x1)); // NOLINT(cppcoreguidelines-avoid-magic-numbers)
+			ret[1] = char(0x80 | ((c >> 24) & 0x3f)); // NOLINT(cppcoreguidelines-avoid-magic-numbers)
+			ret[2] = char(0x80 | ((c >> 18) & 0x3f)); // NOLINT(cppcoreguidelines-avoid-magic-numbers)
+			ret[3] = char(0x80 | ((c >> 12) & 0x3f)); // NOLINT(cppcoreguidelines-avoid-magic-numbers)
+			ret[4] = char(0x80 | ((c >> 6) & 0x3f)); // NOLINT(cppcoreguidelines-avoid-magic-numbers)
+			ret[5] = char(0x80 | (c & 0x3f)); // NOLINT(cppcoreguidelines-avoid-magic-numbers)
+			ret[6] = 0; // NOLINT(cppcoreguidelines-avoid-magic-numbers)
 			break;
 	}
 

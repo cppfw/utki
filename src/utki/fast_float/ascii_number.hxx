@@ -350,7 +350,7 @@ fastfloat_really_inline decimal parse_decimal(const char* p, const char* pend) n
 			// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
 			answer.num_digits += 8;
 			// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic)
-			p += 8;
+			p += 8; // NOLINT
 		}
 		while ((p != pend) && is_integer(*p)) {
 			if (answer.num_digits < max_digits) {

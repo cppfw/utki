@@ -473,7 +473,9 @@ std::string to_string(number_type value, integer_base conversion_base = integer_
 {
 	// 128 chars is large enough to hold any built-in integral or floating point type
 	static const size_t buf_size = 128;
-	std::array<char, buf_size> buf = {0};
+	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-member-init, cppcoreguidelines-pro-type-vararg)
+	std::array<char, buf_size> buf;
+	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-vararg)
 	auto begin = buf.begin();
 	auto end = buf.end();
 

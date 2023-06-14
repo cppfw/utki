@@ -45,6 +45,7 @@ std::string utki::make_string_va_list(const char* format, va_list args)
 
 	std::string ret;
 
+	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-vararg)
 	auto buf_ptr = buf.data();
 	auto buf_size = buf.size();
 

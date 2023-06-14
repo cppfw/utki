@@ -84,8 +84,7 @@ SOFTWARE.
 #		endif
 #
 #		if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
-// NOLINNEXTLINE(cppcoreguidelines-macro-usage)
-#			define FASTFLOAT_IS_BIG_ENDIAN 0
+#			define FASTFLOAT_IS_BIG_ENDIAN 0 // NOLINT
 #		else
 #			define FASTFLOAT_IS_BIG_ENDIAN 1
 #		endif
@@ -94,7 +93,7 @@ SOFTWARE.
 #	ifdef FASTFLOAT_VISUAL_STUDIO
 #		define fastfloat_really_inline __forceinline
 #	else
-#		define fastfloat_really_inline inline __attribute__((always_inline))
+#		define fastfloat_really_inline inline __attribute__((always_inline)) // NOLINT
 #	endif
 
 namespace fast_float {
@@ -226,26 +225,26 @@ struct adjusted_mantissa {
 	}
 };
 
-struct decimal {
+struct decimal { // NOLINT
 	uint32_t num_digits{0};
 	int32_t decimal_point{0};
 	bool negative{false};
 	bool truncated{false};
-	uint8_t digits[max_digits]; // NOLINT(modernize-avoid-c-arrays)
-	decimal() = default;
+	uint8_t digits[max_digits]; // NOLINT
+	decimal() = default; // NOLINT
 	// Copies are not allowed since this is a fat object.
 	decimal(const decimal&) = delete;
 	// Copies are not allowed since this is a fat object.
 	decimal& operator=(const decimal&) = delete;
 	// Moves are allowed:
-	decimal(decimal&&) = default;
+	decimal(decimal&&) = default; // NOLINT
 	decimal& operator=(decimal&& other) = default;
 };
 
-constexpr static double powers_of_ten_double[] = { // NOLINT(modernize-avoid-c-arrays)
+constexpr static double powers_of_ten_double[] = { // NOLINT
 	1e0,  1e1,  1e2,  1e3,  1e4,  1e5,  1e6,  1e7,  1e8,  1e9,  1e10, 1e11,
 	1e12, 1e13, 1e14, 1e15, 1e16, 1e17, 1e18, 1e19, 1e20, 1e21, 1e22};
-constexpr static float powers_of_ten_float[] = { // NOLINT(modernize-avoid-c-arrays)
+constexpr static float powers_of_ten_float[] = { // NOLINT
 	1e0,
 	1e1,
 	1e2,
@@ -278,73 +277,73 @@ struct binary_format {
 template <>
 inline constexpr int binary_format<double>::mantissa_explicit_bits()
 {
-	return 52;
+	return 52; // NOLINT
 }
 
 template <>
 inline constexpr int binary_format<float>::mantissa_explicit_bits()
 {
-	return 23;
+	return 23; // NOLINT
 }
 
 template <>
 inline constexpr int binary_format<double>::max_exponent_round_to_even()
 {
-	return 23;
+	return 23; // NOLINT
 }
 
 template <>
 inline constexpr int binary_format<float>::max_exponent_round_to_even()
 {
-	return 10;
+	return 10; // NOLINT
 }
 
 template <>
 inline constexpr int binary_format<double>::min_exponent_round_to_even()
 {
-	return -4;
+	return -4; // NOLINT
 }
 
 template <>
 inline constexpr int binary_format<float>::min_exponent_round_to_even()
 {
-	return -17;
+	return -17; // NOLINT
 }
 
 template <>
 inline constexpr int binary_format<double>::minimum_exponent()
 {
-	return -1023;
+	return -1023; // NOLINT
 }
 
 template <>
 inline constexpr int binary_format<float>::minimum_exponent()
 {
-	return -127;
+	return -127; // NOLINT
 }
 
 template <>
 inline constexpr int binary_format<double>::infinite_power()
 {
-	return 0x7FF;
+	return 0x7FF; // NOLINT
 }
 
 template <>
 inline constexpr int binary_format<float>::infinite_power()
 {
-	return 0xFF;
+	return 0xFF; // NOLINT
 }
 
 template <>
 inline constexpr int binary_format<double>::sign_index()
 {
-	return 63;
+	return 63; // NOLINT
 }
 
 template <>
 inline constexpr int binary_format<float>::sign_index()
 {
-	return 31;
+	return 31; // NOLINT
 }
 
 template <>
@@ -353,7 +352,7 @@ inline constexpr int binary_format<double>::min_exponent_fast_path()
 #	if (FLT_EVAL_METHOD != 1) && (FLT_EVAL_METHOD != 0)
 	return 0;
 #	else
-	return -22;
+	return -22; // NOLINT
 #	endif
 }
 
@@ -363,14 +362,14 @@ inline constexpr int binary_format<float>::min_exponent_fast_path()
 #	if (FLT_EVAL_METHOD != 1) && (FLT_EVAL_METHOD != 0)
 	return 0;
 #	else
-	return -10;
+	return -10; // NOLINT
 #	endif
 }
 
 template <>
 inline constexpr int binary_format<double>::max_exponent_fast_path()
 {
-	return 22;
+	return 22; // NOLINT
 }
 
 template <>
@@ -394,37 +393,37 @@ inline constexpr uint64_t binary_format<float>::max_mantissa_fast_path()
 template <>
 inline constexpr double binary_format<double>::exact_power_of_ten(int64_t power)
 {
-	return powers_of_ten_double[power];
+	return powers_of_ten_double[power]; // NOLINT
 }
 
 template <>
 inline constexpr float binary_format<float>::exact_power_of_ten(int64_t power)
 {
-	return powers_of_ten_float[power];
+	return powers_of_ten_float[power]; // NOLINT
 }
 
 template <>
 inline constexpr int binary_format<double>::largest_power_of_ten()
 {
-	return 308;
+	return 308; // NOLINT
 }
 
 template <>
 inline constexpr int binary_format<float>::largest_power_of_ten()
 {
-	return 38;
+	return 38; // NOLINT
 }
 
 template <>
 inline constexpr int binary_format<double>::smallest_power_of_ten()
 {
-	return -342;
+	return -342; // NOLINT
 }
 
 template <>
 inline constexpr int binary_format<float>::smallest_power_of_ten()
 {
-	return -65;
+	return -65; // NOLINT
 }
 
 } // namespace fast_float
@@ -436,7 +435,7 @@ inline OStream& operator<<(OStream& out, const fast_float::decimal& d)
 {
 	out << "0.";
 	for (size_t i = 0; i < d.num_digits; i++) {
-		out << int32_t(d.digits[i]);
+		out << int32_t(d.digits[i]); // NOLINT
 	}
 	out << " * 10 ** " << d.decimal_point;
 	return out;
