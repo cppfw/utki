@@ -30,6 +30,8 @@ SOFTWARE.
 
 namespace utki {
 
+constexpr auto num_millisec_in_sec = 1000;
+
 /**
  * @brief Get system ticks in milliseconds.
  * @return System clock ticks in milliseconds.
