@@ -1,3 +1,9 @@
+libutki (1.1.206) unstable; urgency=medium
+
+  * fix lint issues
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 15 Jun 2023 10:49:59 +0300
+
 libutki (1.1.205) unstable; urgency=medium
 
   * add CFG_ENDIANNESS macros
