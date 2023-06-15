@@ -90,7 +90,7 @@ public:
 	{
 		using func_arg_type = typename std::add_rvalue_reference_t<value_type>;
 
-		static constexpr bool func_one_arg = std::is_invocable_v<func_type, func_arg_type>;
+		constexpr bool func_one_arg = std::is_invocable_v<func_type, func_arg_type>;
 
 		static_assert(
 			func_one_arg || std::is_invocable_v<func_type, func_arg_type, size_t>,

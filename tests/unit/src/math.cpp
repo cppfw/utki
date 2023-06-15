@@ -5,8 +5,8 @@
 namespace {
 const tst::set set("math", [](tst::suite& suite) {
 	suite.add("basic", []() {
-		static const auto epsilon = 0.00001;
-		static const auto two_pi_degrees = 180.0;
+		constexpr auto epsilon = 0.00001;
+		constexpr auto two_pi_degrees = 180.0;
 
 		tst::check_eq(std::sin((long double)(0)), (long double)(0), SL);
 		tst::check_lt(std::abs(std::sin(utki::pi<long double>() / 2) - 1), (long double)(epsilon), SL);

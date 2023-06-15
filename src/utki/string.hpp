@@ -472,7 +472,7 @@ template <typename number_type>
 std::string to_string(number_type value, integer_base conversion_base = integer_base::dec)
 {
 	// 128 chars is large enough to hold any built-in integral or floating point type
-	static const size_t buf_size = 128;
+	constexpr size_t buf_size = 128;
 	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-member-init, cppcoreguidelines-pro-type-vararg)
 	std::array<char, buf_size> buf;
 	// under MSVC compiler the &*buf.end() is not a pointer to the past-the-end of the buffer,
