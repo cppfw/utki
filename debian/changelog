@@ -1,3 +1,9 @@
+libutki (1.1.207) unstable; urgency=medium
+
+  * fix lint issues
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 16 Jun 2023 11:18:51 +0300
+
 libutki (1.1.206) unstable; urgency=medium
 
   * fix lint issues
