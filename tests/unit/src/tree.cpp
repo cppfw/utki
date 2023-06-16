@@ -154,6 +154,10 @@ const tst::set set("tree", [](tst::suite& suite) {
 			wrapper(const wrapper&) = default;
 			wrapper& operator=(const wrapper&) = default;
 
+			// TODO: clang-tidy bug https://github.com/llvm/llvm-project/issues/54668
+			//  reproduced on macos,
+			//  remove the lint suppression when bug is fixed
+			// NOLINTNEXTLINE(bugprone-exception-escape)
 			wrapper(wrapper&&) = default;
 			wrapper& operator=(wrapper&&) = default;
 
