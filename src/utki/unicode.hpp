@@ -148,7 +148,7 @@ inline std::u32string to_utf32(std::string_view str)
 	return to_utf32(utki::make_span(str));
 }
 
-const unsigned max_size_of_utf8_encoded_character = 6;
+constexpr unsigned max_size_of_utf8_encoded_character = 6;
 
 /**
  * @brief Convert UTF-32 character to UTF-8.
