@@ -44,6 +44,16 @@ namespace utki {
 constexpr auto kilobyte = 1024;
 
 /**
+ * @brief Number of milliunits in one unit.
+ */
+constexpr auto reciprocal_milli = 1000;
+
+/**
+ * @brief Number of nanounits in one unit.
+ */
+constexpr auto reciprocal_nano = reciprocal_milli * reciprocal_milli;
+
+/**
  * @brief Returns the advance of iterator.
  * Same as std::next() but only moves forward and accepts size_t
  * as number of steps to advance.
