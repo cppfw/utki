@@ -39,6 +39,11 @@ SOFTWARE.
 namespace utki {
 
 /**
+ * @brief Number of bytyes in kilobyte.
+ */
+constexpr auto kilobyte = 1024;
+
+/**
  * @brief Returns the advance of iterator.
  * Same as std::next() but only moves forward and accepts size_t
  * as number of steps to advance.

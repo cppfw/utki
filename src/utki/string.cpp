@@ -39,9 +39,8 @@ using namespace utki;
 
 std::string utki::make_string_va_list(const char* format, va_list args)
 {
-	const size_t one_kilobyte = 0x400;
 	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-member-init)
-	std::array<char, one_kilobyte> buf; // first guess is that the resulting string will take less than 1k
+	std::array<char, kilobyte> buf; // first guess is that the resulting string will take less than 1k
 
 	std::string ret;
 
