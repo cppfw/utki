@@ -39,6 +39,7 @@ constexpr auto num_bits_in_byte = 8;
 constexpr auto num_bits_in_nibble = num_bits_in_byte / 2;
 
 constexpr auto lower_nibble_mask = 0xf;
+constexpr auto upper_nibble_mask = 0xf0;
 constexpr auto byte_mask = 0xff;
 
 template <size_t type_size>
