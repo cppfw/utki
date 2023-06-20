@@ -204,7 +204,7 @@ uint8_t* serialize_le(unsigned_type value, uint8_t* out_buf) noexcept
 
 	unsigned index = 0;
 	for (auto& b : utki::make_span(out_buf, sizeof(value))) {
-		b = uint8_t((value >> (num_bits_in_byte * index)) & std::numeric_limits<uint8_t>::max());
+		b = uint8_t((value >> (num_bits_in_byte * index)) & byte_mask);
 		++index;
 	}
 
@@ -321,7 +321,7 @@ uint8_t* serialize_be(unsigned_type value, uint8_t* out_buf) noexcept
 	unsigned index = sizeof(value);
 	for (auto& b : utki::make_span(out_buf, sizeof(value))) {
 		--index;
-		b = uint8_t((value >> (num_bits_in_byte * index)) & std::numeric_limits<uint8_t>::max());
+		b = uint8_t((value >> (num_bits_in_byte * index)) & byte_mask);
 	}
 
 	return out_buf;
