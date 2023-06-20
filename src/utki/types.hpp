@@ -36,6 +36,9 @@ SOFTWARE.
 namespace utki {
 
 constexpr auto num_bits_in_byte = 8;
+constexpr auto num_bits_in_nibble = num_bits_in_byte / 2;
+
+constexpr auto lower_nibble_mask = 0xf;
 
 template <size_t type_size>
 struct uint_size;
