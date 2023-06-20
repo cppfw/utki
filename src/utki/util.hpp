@@ -54,6 +54,11 @@ constexpr auto reciprocal_milli = 1000;
 constexpr auto reciprocal_nano = reciprocal_milli * reciprocal_milli;
 
 /**
+ * @brief Hundred percent constant.
+ */
+constexpr auto hundred_percent = 100;
+
+/**
  * @brief Returns the advance of iterator.
  * Same as std::next() but only moves forward and accepts size_t
  * as number of steps to advance.
