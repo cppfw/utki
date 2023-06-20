@@ -52,30 +52,19 @@ constexpr number_type sign(number_type n) noexcept
 }
 
 /**
- * @brief Get number Pi.
- * @return number Pi.
+ * @brief The pi number constant.
  */
-template <typename number_type>
-constexpr number_type pi() noexcept
-{
-	const auto pi_number = 3.14159265358979323846264338327950288;
-	return number_type(pi_number);
-}
+constexpr auto pi = 3.14159265358979323846264338327950288;
 
 /**
- * @brief Get 2 * Pi.
- * @return 2 * Pi.
+ * @brief Two pi constant.
  */
-template <typename number_type>
-constexpr number_type two_pi() noexcept
-{
-	return number_type(2) * pi<number_type>();
-}
+constexpr auto two_pi = 2 * pi;
 
 /**
- * @brief Number of angle degrees in two pi radians.
+ * @brief Number of angle degrees in pi radians.
  */
-const auto two_pi_degrees = 180;
+constexpr auto pi_degrees = 180;
 
 /**
  * @brief Convert angle degrees to radians.
@@ -85,7 +74,7 @@ const auto two_pi_degrees = 180;
 template <typename number_type>
 constexpr number_type deg_to_rad(number_type deg) noexcept
 {
-	return pi<number_type>() * deg / number_type(two_pi_degrees);
+	return number_type(pi) * deg / number_type(pi_degrees);
 }
 
 /**
@@ -96,19 +85,13 @@ constexpr number_type deg_to_rad(number_type deg) noexcept
 template <typename number_type>
 constexpr number_type rad_to_deg(number_type rad) noexcept
 {
-	return two_pi_degrees * rad / pi<number_type>();
+	return pi_degrees * rad / number_type(pi);
 }
 
 /**
- * @brief Get natural logarithm of 2, i.e. ln(2).
- * @return natural logarithm of 2.
+ * @brief Natural logarithm of 2 constant, i.e. ln(2).
  */
-template <typename number_type>
-constexpr number_type log_2() noexcept
-{
-	const auto natural_logarithm_of_two = 0.693147181;
-	return number_type(natural_logarithm_of_two);
-}
+constexpr auto log_2 = 0.693147180559945309417232121458;
 
 /**
  * @brief Calculate x^2.
