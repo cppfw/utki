@@ -7,6 +7,7 @@
 #include <utki/util.hpp>
 
 using namespace std::string_literals;
+using namespace std::string_view_literals;
 
 namespace {
 const tst::set set("util", [](tst::suite& suite) {
@@ -110,18 +111,18 @@ const tst::set set("util", [](tst::suite& suite) {
 	});
 
 	suite.add("flip_map_comparator", []() {
-		std::map<std::string, int, std::less<>> m = {
-			{"10", 10},
-			{"13", 13},
-			{"42", 42}
+		std::map<int, std::string> m = {
+			{10, "10"},
+			{13, "13"},
+			{42, "42"}
         };
 
 		auto fm = utki::flip_map<std::less<>>(m);
 
 		tst::check_eq(fm.size(), size_t(3), SL);
-		tst::check_eq(fm[10], "10"s, SL);
-		tst::check_eq(fm[13], "13"s, SL);
-		tst::check_eq(fm[42], "42"s, SL);
+		tst::check_eq(fm.find("10"sv)->second, 10, SL);
+		tst::check_eq(fm.find("13"sv)->second, 13, SL);
+		tst::check_eq(fm.find("42"sv)->second, 42, SL);
 	});
 
 #if CFG_COMPILER != CFG_COMPILER_MSVC || CFG_COMPILER_MSVC_TOOLS_V >= 142
