@@ -1,3 +1,9 @@
+libutki (1.1.211) unstable; urgency=medium
+
+  * add flip_map overload for custom comparator
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 21 Jun 2023 16:07:20 +0300
+
 libutki (1.1.210) unstable; urgency=medium
 
   * refactor math constants
