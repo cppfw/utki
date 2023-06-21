@@ -6,6 +6,8 @@
 #include <utki/types.hpp>
 #include <utki/util.hpp>
 
+using namespace std::string_literals;
+
 namespace {
 const tst::set set("util", [](tst::suite& suite) {
 	suite.add("serialization_16_bit", []() {
@@ -90,6 +92,36 @@ const tst::set set("util", [](tst::suite& suite) {
 		tst::check_eq(fm["10"], 10, SL);
 		tst::check_eq(fm["13"], 13, SL);
 		tst::check_eq(fm["42"], 42, SL);
+	});
+
+	suite.add("flip_map_less", []() {
+		std::map<std::string, int, std::less<>> m = {
+			{"10", 10},
+			{"13", 13},
+			{"42", 42}
+        };
+
+		auto fm = utki::flip_map(m);
+
+		tst::check_eq(fm.size(), size_t(3), SL);
+		tst::check_eq(fm[10], "10"s, SL);
+		tst::check_eq(fm[13], "13"s, SL);
+		tst::check_eq(fm[42], "42"s, SL);
+	});
+
+	suite.add("flip_map_comparator", []() {
+		std::map<std::string, int, std::less<>> m = {
+			{"10", 10},
+			{"13", 13},
+			{"42", 42}
+        };
+
+		auto fm = utki::flip_map<std::less<>>(m);
+
+		tst::check_eq(fm.size(), size_t(3), SL);
+		tst::check_eq(fm[10], "10"s, SL);
+		tst::check_eq(fm[13], "13"s, SL);
+		tst::check_eq(fm[42], "42"s, SL);
 	});
 
 #if CFG_COMPILER != CFG_COMPILER_MSVC || CFG_COMPILER_MSVC_TOOLS_V >= 142

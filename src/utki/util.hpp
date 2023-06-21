@@ -118,10 +118,24 @@ std::pair<second_type, first_type> flip_pair(const std::pair<first_type, second_
  * @param m - initial map to flip.
  * @return a new map with flipped keys and values in each element.
  */
-template <typename key_type, typename value_type>
-std::map<value_type, key_type> flip_map(const std::map<key_type, value_type>& m)
+template <typename key_type, typename value_type, typename comparator_type>
+std::map<value_type, key_type> flip_map(const std::map<key_type, value_type, comparator_type>& m)
 {
 	std::map<value_type, key_type> ret;
+	std::transform(m.begin(), m.end(), std::inserter(ret, ret.begin()), flip_pair<key_type, value_type>);
+	return ret;
+}
+
+/**
+ * @brief Flip map's keys and values.
+ * This function overload allows supplying the new comparator type for the flipped map.
+ * @param m - initial map to flip.
+ * @return a new map with flipped keys and values in each element.
+ */
+template <typename new_comparator_type, typename key_type, typename value_type, typename comparator_type>
+std::map<value_type, key_type, new_comparator_type> flip_map(const std::map<key_type, value_type, comparator_type>& m)
+{
+	std::map<value_type, key_type, new_comparator_type> ret;
 	std::transform(m.begin(), m.end(), std::inserter(ret, ret.begin()), flip_pair<key_type, value_type>);
 	return ret;
 }
