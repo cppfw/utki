@@ -239,7 +239,9 @@ const tst::set set("span", [](tst::suite& suite) {
 	suite.add("subspan_offset", []() {
 		subspan_fixture f;
 
-		auto ss = f.s.subspan(3);
+		auto ss = f.s;
+
+		ss = ss.subspan(3);
 
 		tst::check_eq(ss.size(), f.str.size() - 3, SL);
 		// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic)
