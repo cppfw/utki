@@ -196,8 +196,33 @@ const tst::set set("span", [](tst::suite& suite) {
 		tst::check_eq(cs, cs2, SL);
 	});
 
-	static_assert(!std::is_move_constructible_v<utki::span<uint8_t>>, "span must have no move constructor");
-	static_assert(!std::is_move_assignable_v<utki::span<uint8_t>>, "span must have no move assignment operator");
+	suite.add("constructor_move", []() {
+		const char* v = "hello world!";
+
+		utki::span<const char> cs(v);
+
+		utki::span<const char> cs2(std::move(cs));
+
+		// moved from span should remain valid
+		// NOLINTNEXTLINE(bugprone-use-after-move)
+		tst::check_eq(cs, utki::make_span(v), SL);
+		tst::check_eq(cs, cs2, SL);
+	});
+
+	suite.add("operator_assign_move", []() {
+		const char* v = "hello world!";
+
+		utki::span<const char> cs(v);
+
+		utki::span<const char> cs2;
+
+		cs2 = std::move(cs);
+
+		// moved from span should remain valid
+		// NOLINTNEXTLINE(bugprone-use-after-move)
+		tst::check_eq(cs, utki::make_span(v), SL);
+		tst::check_eq(cs, cs2, SL);
+	});
 
 	struct subspan_fixture {
 		std::string str = "Hello world!";
