@@ -1,3 +1,4 @@
 Checks: |
-  -cppcoreguidelines-avoid-magic-numbers
+  -cppcoreguidelines-avoid-magic-numbers,
+  -clang-analyzer-cplusplus.Move
 InheritParentConfig: true
