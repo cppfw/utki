@@ -1,3 +1,9 @@
+libutki (1.1.213) unstable; urgency=medium
+
+  * remove span move semantics
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 26 Jun 2023 16:04:13 +0300
+
 libutki (1.1.212) unstable; urgency=medium
 
   * span default move constructor
