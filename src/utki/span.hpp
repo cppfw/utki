@@ -72,8 +72,8 @@ public:
 	span(const span&) = default;
 	span& operator=(const span&) = default;
 
-	span(span&&) = default;
-	span& operator=(span&&) = default;
+	span(span&&) = delete;
+	span& operator=(span&&) = delete;
 
 	~span() = default;
 
