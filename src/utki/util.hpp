@@ -217,12 +217,13 @@ uint8_t* serialize_le(unsigned_type value, uint8_t* out_buf) noexcept
 	static_assert(std::is_unsigned_v<unsigned_type>, "serialized type must be unsigned");
 
 	unsigned index = 0;
-	for (auto& b : utki::make_span(out_buf, sizeof(value))) {
+	auto span = utki::make_span(out_buf, sizeof(value));
+	for (auto& b : span) {
 		b = uint8_t((value >> (num_bits_in_byte * index)) & byte_mask);
 		++index;
 	}
 
-	return out_buf;
+	return span.end_pointer();
 }
 
 /**
@@ -333,12 +334,17 @@ uint8_t* serialize_be(unsigned_type value, uint8_t* out_buf) noexcept
 	static_assert(std::is_unsigned_v<unsigned_type>, "serialized type must be unsigned");
 
 	unsigned index = sizeof(value);
-	for (auto& b : utki::make_span(out_buf, sizeof(value))) {
+	auto span = utki::make_span(out_buf, sizeof(value));
+	for (auto& b : span) {
+		ASSERT(index > 0)
 		--index;
-		b = uint8_t((value >> (num_bits_in_byte * index)) & byte_mask);
+		auto num_bits_to_shift = num_bits_in_byte * index;
+		ASSERT(num_bits_to_shift <= sizeof(value) * num_bits_in_byte)
+		// NOLINTNEXTLINE(clang-analyzer-core.UndefinedBinaryOperatorResult)
+		b = uint8_t((value >> num_bits_to_shift) & byte_mask);
 	}
 
-	return out_buf;
+	return span.end_pointer();
 }
 
 /**

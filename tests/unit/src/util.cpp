@@ -12,15 +12,30 @@ using namespace std::string_view_literals;
 
 namespace {
 const tst::set set("util", [](tst::suite& suite) {
-	suite.add("serialization_16_bit", []() {
+	suite.add("serialization_16_bit_little_endian", []() {
 		for (uint32_t i = 0; i <= uint16_t(-1); ++i) {
 			std::array<uint8_t, sizeof(uint16_t)> buf = {0};
-			utki::serialize16le(uint16_t(i), buf.data());
+			auto retp = utki::serialize16le(uint16_t(i), buf.data());
 
 			tst::check_eq(buf[0], uint8_t(i & 0xff), SL);
 			tst::check_eq(buf[1], uint8_t((i >> 8) & 0xff), SL);
+			tst::check_eq(retp, buf.data() + buf.size(), SL);
 
 			uint16_t res = utki::deserialize16le(buf.data());
+			tst::check_eq(res, uint16_t(i), SL);
+		}
+	});
+
+	suite.add("serialization_16_bit_big_endian", []() {
+		for (uint32_t i = 0; i <= uint16_t(-1); ++i) {
+			std::array<uint8_t, sizeof(uint16_t)> buf = {0};
+			auto retp = utki::serialize16be(uint16_t(i), buf.data());
+
+			tst::check_eq(buf[0], uint8_t((i >> 8) & 0xff), SL);
+			tst::check_eq(buf[1], uint8_t(i & 0xff), SL);
+			tst::check_eq(retp, buf.data() + buf.size(), SL);
+
+			uint16_t res = utki::deserialize16be(buf.data());
 			tst::check_eq(res, uint16_t(i), SL);
 		}
 	});
