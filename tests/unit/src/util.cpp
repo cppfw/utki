@@ -19,7 +19,7 @@ const tst::set set("util", [](tst::suite& suite) {
 
 			tst::check_eq(buf[0], uint8_t(i & 0xff), SL);
 			tst::check_eq(buf[1], uint8_t((i >> 8) & 0xff), SL);
-			tst::check_eq(retp, buf.data() + buf.size(), SL);
+			tst::check_eq(retp, utki::make_span(buf).end_pointer(), SL);
 
 			uint16_t res = utki::deserialize16le(buf.data());
 			tst::check_eq(res, uint16_t(i), SL);
@@ -33,7 +33,7 @@ const tst::set set("util", [](tst::suite& suite) {
 
 			tst::check_eq(buf[0], uint8_t((i >> 8) & 0xff), SL);
 			tst::check_eq(buf[1], uint8_t(i & 0xff), SL);
-			tst::check_eq(retp, buf.data() + buf.size(), SL);
+			tst::check_eq(retp, utki::make_span(buf).end_pointer(), SL);
 
 			uint16_t res = utki::deserialize16be(buf.data());
 			tst::check_eq(res, uint16_t(i), SL);
