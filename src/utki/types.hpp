@@ -142,9 +142,21 @@ struct remove_const_pointer {
 };
 
 template <typename in_type>
+using remove_const_pointer_t = typename remove_const_pointer<in_type>::type;
+
+// test remove_const_pointer_t
+static_assert(std::is_same_v<remove_const_pointer_t<const char*>, char>, "remove_const_pointer_t test failed");
+
+template <typename in_type>
 struct remove_const_reference {
 	using type = typename std::remove_const_t<typename std::remove_reference_t<in_type>>;
 };
+
+template <typename in_type>
+using remove_const_reference_t = typename remove_const_reference<in_type>::type;
+
+// test remove_const_reference_t
+static_assert(std::is_same_v<remove_const_reference_t<const char&>, char>, "remove_const_reference_t test failed");
 
 /**
  * @brief Cast pointer to pointer-to-const.
