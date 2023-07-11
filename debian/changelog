@@ -1,3 +1,9 @@
+libutki (1.1.217) unstable; urgency=medium
+
+  * use std::ratio
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 11 Jul 2023 14:45:22 +0300
+
 libutki (1.1.216) unstable; urgency=medium
 
   * add remove_const_pointer_t and remove_const_reference_t
