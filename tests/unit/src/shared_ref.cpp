@@ -158,10 +158,8 @@ const tst::set set("shared_ref", [](tst::suite& suite) {
 	});
 
 	suite.add("move_constructible_and_move_assignable", []() {
-		std::vector<utki::shared_ref<a0>> vec = {
-			utki::make_shared<a1>(1),
-			utki::make_shared<a1>(2),
-			utki::make_shared<a1>(3)};
+		std::vector<utki::shared_ref<a0>> vec =
+			{utki::make_shared<a1>(1), utki::make_shared<a1>(2), utki::make_shared<a1>(3)};
 
 		tst::check_eq(vec[0].get().a_0, 1, SL);
 		tst::check_eq(vec[1].get().a_0, 2, SL);

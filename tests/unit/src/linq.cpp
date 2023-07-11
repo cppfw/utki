@@ -14,7 +14,7 @@ const tst::set set("linq", [](tst::suite& suite) {
 			{13, "13"},
 			{14, "14"},
 			{ 1,  "1"}
-        };
+		};
 
 		auto out = utki::linq(std::move(in))
 					   .select([](auto v) {
@@ -33,7 +33,7 @@ const tst::set set("linq", [](tst::suite& suite) {
 			{"13", 13.4f},
 			{"14", 13.4f},
 			{ "1", 13.4f}
-        };
+		};
 
 		tst::check(out == expected, SL);
 
@@ -47,7 +47,7 @@ const tst::set set("linq", [](tst::suite& suite) {
 			{13, "13"},
 			{14, "14"},
 			{ 1,  "1"}
-        };
+		};
 
 		auto out = utki::linq(in)
 					   .select([](auto v, auto i) {
@@ -62,7 +62,7 @@ const tst::set set("linq", [](tst::suite& suite) {
 			{ "1", 0},
 			{"13", 1},
 			{"14", 2}
-        };
+		};
 
 		tst::check(
 			out == expected,
@@ -80,7 +80,7 @@ const tst::set set("linq", [](tst::suite& suite) {
 			{13, "13"},
 			{14, "14"},
 			{ 1,  "1"}
-        };
+		};
 
 		auto out = utki::linq(in)
 					   .select([](auto v) {
@@ -94,7 +94,7 @@ const tst::set set("linq", [](tst::suite& suite) {
 			{"13", 13.4f},
 			{"14", 13.4f},
 			{ "1", 13.4f}
-        };
+		};
 
 		tst::check(out == expected, SL);
 		tst::check(!in.empty(), SL);
@@ -110,7 +110,7 @@ const tst::set set("linq", [](tst::suite& suite) {
 			{ 15, "15"},
 			{133, "13"},
 			{ 11,  "1"}
-        };
+		};
 
 		auto out = utki::linq(std::move(in))
 					   .select([](auto v, auto i) {
@@ -171,7 +171,7 @@ const tst::set set("linq", [](tst::suite& suite) {
 			{13, "13_2"},
 			{ 3,    "3"},
 			{13, "13_3"}
-        };
+		};
 
 		auto out = utki::linq(in) //
 					   .where([](const decltype(in)::value_type& v) { //
@@ -183,7 +183,7 @@ const tst::set set("linq", [](tst::suite& suite) {
 			{13,   "13"},
 			{13, "13_2"},
 			{13, "13_3"}
-        };
+		};
 
 		tst::check(out == expected, SL);
 		tst::check(!in.empty(), SL);
@@ -198,7 +198,7 @@ const tst::set set("linq", [](tst::suite& suite) {
 			{13, "13_2"},
 			{ 3,    "3"},
 			{ 3,  "3_2"}
-        };
+		};
 
 		auto out = utki::linq(in) //
 					   .group_by([](const auto& v) { //
@@ -249,7 +249,7 @@ const tst::set set("linq", [](tst::suite& suite) {
 			{14, "asdh"},
 			{ 5,  "asd"},
 			{ 1,    "1"}
-        };
+		};
 
 		auto out = utki::linq(std::move(in)) //
 					   .order_by([](const auto& v) -> const int& { //
@@ -268,7 +268,7 @@ const tst::set set("linq", [](tst::suite& suite) {
 			{13,   "13"},
 			{14,  "hgb"},
 			{14, "asdh"}
-        };
+		};
 
 #	ifdef DEBUG
 		for (auto& e : out) {
@@ -292,7 +292,7 @@ const tst::set set("linq", [](tst::suite& suite) {
 			{14, "asdh"},
 			{ 5,  "asd"},
 			{ 1,    "1"}
-        };
+		};
 
 		auto out = utki::linq(in) //
 					   .order_by([](const auto& v) -> const int& { //
@@ -311,7 +311,7 @@ const tst::set set("linq", [](tst::suite& suite) {
 			{13,   "13"},
 			{14,  "hgb"},
 			{14, "asdh"}
-        };
+		};
 
 #	ifdef DEBUG
 		for (auto& e : out) {
@@ -333,7 +333,7 @@ const tst::set set("linq", [](tst::suite& suite) {
 			{14, "asdh"},
 			{ 5,  "asd"},
 			{ 1,    "1"}
-        };
+		};
 
 		auto out = utki::linq(in) //
 					   .order_by([](const auto& v) -> const int& { //
@@ -352,7 +352,7 @@ const tst::set set("linq", [](tst::suite& suite) {
 			{13,   "13"},
 			{14,  "hgb"},
 			{14, "asdh"}
-        };
+		};
 
 #	ifdef DEBUG
 		for (auto& e : out) {
@@ -412,7 +412,7 @@ const tst::set set("linq", [](tst::suite& suite) {
 			std::vector<wrapper> vec{
 				{std::make_shared<test_struct>(destroyed), 10},
 				{std::make_shared<test_struct>(destroyed), 13}
-            };
+			};
 
 			auto res = utki::linq(vec) //
 						   .select([](const auto& i) -> std::shared_ptr<const test_struct> { //

@@ -37,8 +37,8 @@ SOFTWARE.
 namespace utki {
 
 [[deprecated("use utki::byte_bits")]] constexpr auto num_bits_in_byte = 8;
-constexpr auto byte_bits = std::numeric_limits<uint8_t>::digits;
-static_assert(byte_bits == 8, "system with non-8-bit bytes is not supported");
+constexpr auto byte_bits = 8;
+static_assert(std::numeric_limits<uint8_t>::digits == byte_bits, "system with non-8-bit bytes is not supported");
 [[deprecated("use utki::nibble_bits")]] constexpr auto num_bits_in_nibble = byte_bits / 2;
 constexpr auto nibble_bits = byte_bits / 2;
 

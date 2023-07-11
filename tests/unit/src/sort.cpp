@@ -23,7 +23,7 @@ struct str_num_pair {
 constexpr auto arr = []() constexpr {
 	std::array<str_num_pair, 5> arr = {
 		{{"hello"sv, 13}, {"bye"sv, 15}, {"how"sv, 33}, {"are"sv, 4}, {"you"sv, 9}}
-    };
+	};
 
 	utki::sort( //
 		arr.begin(),
@@ -67,7 +67,7 @@ const tst::set set("sort", [](tst::suite& suite) {
              "hello", "bye",
              "how", "are",
              "you", }
-        };
+		};
 
 		utki::sort(arr.begin(), arr.end());
 
@@ -76,7 +76,7 @@ const tst::set set("sort", [](tst::suite& suite) {
              "are", "bye",
              "hello", "how",
              "you", }
-        };
+		};
 
 		tst::check(arr == expected, SL);
 	});
@@ -84,7 +84,7 @@ const tst::set set("sort", [](tst::suite& suite) {
 	suite.add("sort_strings_with_custom_comparator", [] {
 		std::array<std::pair<std::string, int>, 5> arr = {
 			{{"hello", 13}, {"bye", 15}, {"how", 33}, {"are", 4}, {"you", 9}}
-        };
+		};
 
 		utki::sort( //
 			arr.begin(),
@@ -96,7 +96,7 @@ const tst::set set("sort", [](tst::suite& suite) {
 
 		decltype(arr) expected = {
 			{{"are", 4}, {"bye", 15}, {"hello", 13}, {"how", 33}, {"you", 9}}
-        };
+		};
 
 		tst::check(arr == expected, SL);
 	});
@@ -110,7 +110,7 @@ const tst::set set("sort", [](tst::suite& suite) {
              {"are", 4},
              {"you", 9},
 			 }
-        };
+		};
 
 		utki::sort( //
 			arr.begin(),
@@ -128,7 +128,7 @@ const tst::set set("sort", [](tst::suite& suite) {
              {"bye", 15},
              {"how", 33},
 			 }
-        };
+		};
 
 		tst::check(arr == expected, SL);
 	});

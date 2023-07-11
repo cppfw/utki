@@ -101,7 +101,7 @@ const tst::set set("util", [](tst::suite& suite) {
 			{10, "10"},
 			{13, "13"},
 			{42, "42"}
-        };
+		};
 
 		auto fm = utki::flip_map(m);
 
@@ -116,7 +116,7 @@ const tst::set set("util", [](tst::suite& suite) {
 			{"10", 10},
 			{"13", 13},
 			{"42", 42}
-        };
+		};
 
 		auto fm = utki::flip_map(m);
 
@@ -131,7 +131,7 @@ const tst::set set("util", [](tst::suite& suite) {
 			{10, "10"},
 			{13, "13"},
 			{42, "42"}
-        };
+		};
 
 		auto fm = utki::flip_map<std::less<>>(m);
 
@@ -147,7 +147,7 @@ const tst::set set("util", [](tst::suite& suite) {
 
 		std::array<variant_type, std::variant_size<variant_type>::value> variants = {
 			{std::string("hello world!"), int(123), "const char*", std::make_pair(true, 45)}
-        };
+		};
 
 		tst::check_eq(variants.size(), size_t(4), SL);
 
@@ -182,7 +182,7 @@ const tst::set set("util", [](tst::suite& suite) {
 
 		std::vector<std::string> expected = {
 			{"string", "int", "const char*", "pair"}
-        };
+		};
 
 		tst::check(res == expected, SL);
 	});

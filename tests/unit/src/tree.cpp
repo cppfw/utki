@@ -118,7 +118,7 @@ const tst::set set("tree", [](tst::suite& suite) {
 		utki::tree<int> t{
 			{34, 45},
 			{{78, 89, 96}, {32, 64, 128}, decltype(t)(42, {98, 99, 100})}
-        };
+		};
 
 		tst::check_eq(t.children.size(), size_t(2), SL);
 		tst::check_eq(t.children[0].children.size(), size_t(2), SL);
@@ -259,7 +259,8 @@ const tst::set set("tree", [](tst::suite& suite) {
 		using tree_str = utki::tree<std::string>;
 		tree_str::container_type children = { //
 			tree_str("hello"),
-			tree_str("world")};
+			tree_str("world")
+		};
 
 		tst::check_eq(children.size(), size_t(2), SL);
 
@@ -301,7 +302,8 @@ const tst::set set("tree", [](tst::suite& suite) {
 		using tree_str = utki::tree<std::string>;
 		tree_str::container_type children = { //
 			tree_str("hello"),
-			tree_str("world")};
+			tree_str("world")
+		};
 
 		tst::check_eq(children.size(), size_t(2), SL);
 
@@ -349,7 +351,8 @@ const tst::set set("tree", [](tst::suite& suite) {
 		using tree_str = utki::tree<std::string>;
 		tree_str::container_type children = { //
 			tree_str("10"),
-			tree_str("20")};
+			tree_str("20")
+		};
 
 		tst::check_eq(children.size(), size_t(2), SL);
 
@@ -407,8 +410,10 @@ const tst::set set("tree", [](tst::suite& suite) {
 				{//
 				 tree(3, {78, 89, 96}),
 				 tree(4, {32, 64, 128}),
-				 tree(42, {98, 99, 100})}
-			)};
+				 tree(42, {98, 99, 100})
+				}
+			)
+		};
 
 		std::vector<int> encountered;
 
@@ -469,8 +474,10 @@ const tst::set set("tree", [](tst::suite& suite) {
 				{//
 				 tree(3, {78, 89, 96}),
 				 tree(4, {32, 64, 128}),
-				 tree(42, {98, 99, 100})}
-			)};
+				 tree(42, {98, 99, 100})
+				}
+			)
+		};
 
 		std::vector<int> encountered;
 
@@ -505,8 +512,10 @@ const tst::set set("tree", [](tst::suite& suite) {
 				{//
 				 tree(3, {78, 89, 96}),
 				 tree(4, {32, 64, 128}),
-				 tree(42, {98, 99, 100})}
-			)};
+				 tree(42, {98, 99, 100})
+				}
+			)
+		};
 
 		std::vector<int> encountered;
 
@@ -566,8 +575,10 @@ const tst::set set("tree", [](tst::suite& suite) {
 				{//
 				 tree(3, {78, 89, 96}),
 				 tree(4, {32, 64, 128}),
-				 tree(42, {98, 99, 100})}
-			)};
+				 tree(42, {98, 99, 100})
+				}
+			)
+		};
 
 		std::vector<int> encountered;
 
@@ -627,8 +638,10 @@ const tst::set set("tree", [](tst::suite& suite) {
 				{//
 				 tree(3, {78, 89, 96}),
 				 tree(4, {32, 64, 128}),
-				 tree(42, {98, 99, 100})}
-			)};
+				 tree(42, {98, 99, 100})
+				}
+			)
+		};
 
 		std::vector<int> encountered;
 
@@ -688,8 +701,10 @@ const tst::set set("tree", [](tst::suite& suite) {
 				{//
 				 tree(3, {78, 89, 96}),
 				 tree(4, {32, 64, 128}),
-				 tree(42, {98, 99, 100})}
-			)};
+				 tree(42, {98, 99, 100})
+				}
+			)
+		};
 
 		std::vector<int> encountered;
 
@@ -749,8 +764,10 @@ const tst::set set("tree", [](tst::suite& suite) {
 				{//
 				 tree(3, {78, 89, 96}),
 				 tree(4, {32, 64, 128}),
-				 tree(42, {98, 99, 100})}
-			)};
+				 tree(42, {98, 99, 100})
+				}
+			)
+		};
 
 		std::vector<int> encountered;
 
@@ -810,8 +827,10 @@ const tst::set set("tree", [](tst::suite& suite) {
 				{//
 				 tree(3, {78, 89, 96}),
 				 tree(4, {32, 64, 128}),
-				 tree(42, {98, 99, 100})}
-			)};
+				 tree(42, {98, 99, 100})
+				}
+			)
+		};
 
 		std::vector<int> encountered;
 
@@ -871,8 +890,10 @@ const tst::set set("tree", [](tst::suite& suite) {
 				{//
 				 tree(3, {78, 89, 96}),
 				 tree(4, {32, 64, 128}),
-				 tree(42, {98, 99, 100})}
-			)};
+				 tree(42, {98, 99, 100})
+				}
+			)
+		};
 
 		std::vector<int> encountered;
 
@@ -966,8 +987,10 @@ const tst::set set("tree", [](tst::suite& suite) {
 				{//
 				 tree(3, {78, 89, 96}),
 				 tree(4, {32, 64, 128}),
-				 tree(42, {98, 99, 100})}
-			)};
+				 tree(42, {98, 99, 100})
+				}
+			)
+		};
 
 		std::vector<int> encountered;
 
@@ -1061,8 +1084,10 @@ const tst::set set("tree", [](tst::suite& suite) {
 				{//
 				 tree(3, {78, 89, 96}),
 				 tree(4, {32, 64, 128}),
-				 tree(42, {98, 99, 100})}
-			)};
+				 tree(42, {98, 99, 100})
+				}
+			)
+		};
 
 		std::vector<int> encountered;
 
@@ -1091,8 +1116,10 @@ const tst::set set("tree", [](tst::suite& suite) {
 				{//
 				 tree(3, {78, 89, 96}),
 				 tree(4, {32, 64, 128}),
-				 tree(42, {98, 99, 100})}
-			)};
+				 tree(42, {98, 99, 100})
+				}
+			)
+		};
 
 		std::vector<int> encountered;
 
@@ -1117,8 +1144,10 @@ const tst::set set("tree", [](tst::suite& suite) {
 				{//
 				 tree(3, {78, 89, 96}),
 				 tree(4, {32, 64, 128}),
-				 tree(42, {98, 99, 100})}
-			)};
+				 tree(42, {98, 99, 100})
+				}
+			)
+		};
 
 		const auto traversal = utki::make_traversal(roots);
 
@@ -1145,8 +1174,10 @@ const tst::set set("tree", [](tst::suite& suite) {
 				{//
 				 tree(3, {78, 89, 96}),
 				 tree(4, {32, 64, 128}),
-				 tree(42, {98, 99, 100})}
-			)};
+				 tree(42, {98, 99, 100})
+				}
+			)
+		};
 
 		auto traversal = utki::make_traversal(roots);
 
@@ -1171,8 +1202,10 @@ const tst::set set("tree", [](tst::suite& suite) {
 				{//
 				 tree(3, {78, 89, 96}),
 				 tree(4, {32, 64, 128}),
-				 tree(42, {98, 99, 100})}
-			)};
+				 tree(42, {98, 99, 100})
+				}
+			)
+		};
 
 		auto traversal = utki::make_traversal(roots);
 
@@ -1201,8 +1234,10 @@ const tst::set set("tree", [](tst::suite& suite) {
 				{//
 				 tree(3, {78, 89, 96}),
 				 tree(4, {32, 64, 128}),
-				 tree(42, {98, 99, 100})}
-			)};
+				 tree(42, {98, 99, 100})
+				}
+			)
+		};
 
 		auto traversal = utki::make_traversal(roots);
 
@@ -1224,8 +1259,10 @@ const tst::set set("tree", [](tst::suite& suite) {
 				{//
 				 tree(3, {78, 89, 96}),
 				 tree(4, {32, 64, 128}),
-				 tree(42, {98, 99, 100})}
-			)};
+				 tree(42, {98, 99, 100})
+				}
+			)
+		};
 
 		auto traversal = utki::make_traversal(roots);
 
@@ -1247,8 +1284,10 @@ const tst::set set("tree", [](tst::suite& suite) {
 				{//
 				 tree(3, {78, 89, 96}),
 				 tree(4, {32, 64, 128}),
-				 tree(42, {98, 99, 100})}
-			)};
+				 tree(42, {98, 99, 100})
+				}
+			)
+		};
 
 		auto traversal = utki::make_traversal(roots);
 
@@ -1270,8 +1309,10 @@ const tst::set set("tree", [](tst::suite& suite) {
 				{//
 				 tree(3, {78, 89, 96}),
 				 tree(4, {32, 64, 128}),
-				 tree(42, {98, 99, 100})}
-			)};
+				 tree(42, {98, 99, 100})
+				}
+			)
+		};
 
 		decltype(utki::make_traversal(roots)) traversal = utki::make_traversal(roots);
 	};
@@ -1300,8 +1341,10 @@ const tst::set set("tree", [](tst::suite& suite) {
 				{//
 				 tree(3, {78, 89, 96}),
 				 tree(4, {32, 64, 128}),
-				 tree(42, {98, 99, 100})}
-			)};
+				 tree(42, {98, 99, 100})
+				}
+			)
+		};
 
 		auto traversal = utki::make_traversal(roots);
 

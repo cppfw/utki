@@ -565,10 +565,10 @@ const tst::set set("string", [](tst::suite& suite) {
 	suite.add("make_string_from_span_char", []() {
 		std::array<char, 12> arr = {
 			{'H', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', '!'}
-        };
+		};
 		std::vector<char> vec = {
 			{'H', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', '!'}
-        };
+		};
 
 		auto str_arr = utki::make_string(utki::make_span(arr));
 		tst::check_eq(str_arr, "Hello world!"s, SL);
@@ -580,10 +580,10 @@ const tst::set set("string", [](tst::suite& suite) {
 	suite.add("make_string_view_from_span_char_explicit_conversion", []() {
 		std::array<char, 12> arr = {
 			{'H', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', '!'}
-        };
+		};
 		std::vector<char> vec = {
 			{'H', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', '!'}
-        };
+		};
 
 		auto str_arr = utki::make_string_view(utki::make_span(arr));
 		tst::check_eq(str_arr, "Hello world!"sv, SL);
@@ -595,10 +595,10 @@ const tst::set set("string", [](tst::suite& suite) {
 	suite.add("make_string_view_from_span_char_implicit_conversion", []() {
 		std::array<char, 12> arr = {
 			{'H', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', '!'}
-        };
+		};
 		std::vector<char> vec = {
 			{'H', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', '!'}
-        };
+		};
 
 		auto str_arr = utki::make_string_view(arr);
 		tst::check_eq(str_arr, "Hello world!"sv, SL);
@@ -610,10 +610,10 @@ const tst::set set("string", [](tst::suite& suite) {
 	suite.add("make_string_view_from_span_uint8_t_explicit_conversion", []() {
 		std::array<uint8_t, 12> arr = {
 			{'H', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', '!'}
-        };
+		};
 		std::vector<uint8_t> vec = {
 			{'H', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', '!'}
-        };
+		};
 
 		auto str_arr = utki::make_string_view(utki::make_span(arr));
 		tst::check_eq(str_arr, "Hello world!"sv, SL);
@@ -625,10 +625,10 @@ const tst::set set("string", [](tst::suite& suite) {
 	suite.add("make_string_view_from_span_uint8_t_implicit_conversion", []() {
 		std::array<uint8_t, 12> arr = {
 			{'H', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', '!'}
-        };
+		};
 		std::vector<uint8_t> vec = {
 			{'H', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', '!'}
-        };
+		};
 
 		auto str_arr = utki::make_string_view(arr);
 		tst::check_eq(str_arr, "Hello world!"sv, SL);
@@ -640,7 +640,7 @@ const tst::set set("string", [](tst::suite& suite) {
 	suite.add("make_string_from_array_char", []() {
 		std::array<char, 12> arr = {
 			{'H', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', '!'}
-        };
+		};
 
 		auto str_arr = utki::make_string(arr);
 		tst::check_eq(str_arr, "Hello world!"s, SL);
@@ -649,7 +649,7 @@ const tst::set set("string", [](tst::suite& suite) {
 	suite.add("make_string_from_array_uint8_t", []() {
 		std::array<uint8_t, 12> arr = {
 			{'H', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', '!'}
-        };
+		};
 
 		auto str_arr = utki::make_string(arr);
 		tst::check_eq(str_arr, "Hello world!"s, SL);
@@ -658,7 +658,7 @@ const tst::set set("string", [](tst::suite& suite) {
 	suite.add("make_string_from_vector_char", []() {
 		std::vector<char> vec = {
 			{'H', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', '!'}
-        };
+		};
 
 		auto str_vec = utki::make_string(vec);
 		tst::check_eq(str_vec, "Hello world!"s, SL);
@@ -667,7 +667,7 @@ const tst::set set("string", [](tst::suite& suite) {
 	suite.add("make_string_from_vector_uint8_t", []() {
 		std::vector<uint8_t> vec = {
 			{'H', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', '!'}
-        };
+		};
 
 		auto str_vec = utki::make_string(vec);
 		tst::check_eq(str_vec, "Hello world!"s, SL);
