@@ -44,19 +44,9 @@ namespace utki {
 constexpr auto kilobyte = 1024;
 
 /**
- * @brief Number of milliunits in one unit.
- */
-constexpr auto reciprocal_milli = 1000;
-
-/**
- * @brief Number of nanounits in one unit.
- */
-constexpr auto reciprocal_nano = reciprocal_milli * reciprocal_milli;
-
-/**
  * @brief Hundred percent constant.
  */
-constexpr auto hundred_percent = 100;
+[[deprecated("use std::centi::den")]] constexpr auto hundred_percent = 100;
 
 /**
  * @brief Returns the advance of iterator.
@@ -219,7 +209,7 @@ uint8_t* serialize_le(unsigned_type value, uint8_t* out_buf) noexcept
 	unsigned index = 0;
 	auto span = utki::make_span(out_buf, sizeof(value));
 	for (auto& b : span) {
-		b = uint8_t((value >> (num_bits_in_byte * index)) & byte_mask);
+		b = uint8_t((value >> (byte_bits * index)) & byte_mask);
 		++index;
 	}
 
@@ -278,7 +268,7 @@ unsigned_type deserialize_le(const uint8_t* buf) noexcept
 	unsigned index = 0;
 
 	for (auto b : utki::make_span(buf, sizeof(ret))) {
-		ret |= (decltype(ret)(b) << (num_bits_in_byte * index));
+		ret |= (decltype(ret)(b) << (byte_bits * index));
 		++index;
 	}
 
@@ -338,8 +328,8 @@ uint8_t* serialize_be(unsigned_type value, uint8_t* out_buf) noexcept
 	for (auto& b : span) {
 		ASSERT(index > 0)
 		--index;
-		auto num_bits_to_shift = num_bits_in_byte * index;
-		ASSERT(num_bits_to_shift <= sizeof(value) * num_bits_in_byte)
+		auto num_bits_to_shift = byte_bits * index;
+		ASSERT(num_bits_to_shift <= sizeof(value) * byte_bits)
 		// NOLINTNEXTLINE(clang-analyzer-core.UndefinedBinaryOperatorResult)
 		b = uint8_t((value >> num_bits_to_shift) & byte_mask);
 	}
@@ -400,7 +390,7 @@ unsigned_type deserialize_be(const uint8_t* buf) noexcept
 
 	for (auto b : utki::make_span(buf, sizeof(ret))) {
 		--index;
-		ret |= (decltype(ret)(b) << (num_bits_in_byte * index));
+		ret |= (decltype(ret)(b) << (byte_bits * index));
 	}
 
 	return ret;

@@ -28,6 +28,7 @@ SOFTWARE.
 
 #include <cstddef>
 #include <cstdint>
+#include <limits>
 #include <memory>
 #include <variant>
 
@@ -35,8 +36,11 @@ SOFTWARE.
 
 namespace utki {
 
-constexpr auto num_bits_in_byte = 8;
-constexpr auto num_bits_in_nibble = num_bits_in_byte / 2;
+[[deprecated("use utki::byte_bits")]] constexpr auto num_bits_in_byte = 8;
+constexpr auto byte_bits = std::numeric_limits<uint8_t>::digits;
+static_assert(byte_bits == 8, "system with non-8-bit bytes is not supported");
+[[deprecated("use utki::nibble_bits")]] constexpr auto num_bits_in_nibble = byte_bits / 2;
+constexpr auto nibble_bits = byte_bits / 2;
 
 constexpr auto lower_nibble_mask = 0xf;
 constexpr auto upper_nibble_mask = 0xf0;

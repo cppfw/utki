@@ -30,7 +30,7 @@ SOFTWARE.
 
 namespace utki {
 
-[[deprecated("use utki::reciprocal_milli")]] constexpr auto num_millisec_in_sec = 1000;
+[[deprecated("use std::milli::den")]] constexpr auto num_millisec_in_sec = 1000;
 
 /**
  * @brief Get system ticks in milliseconds.
