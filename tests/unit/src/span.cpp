@@ -393,5 +393,45 @@ const tst::set set("span", [](tst::suite& suite) {
 
 		tst::check(s.empty(), SL);
 	});
+
+	suite.add("to_uint8_t__and__to_char", []() {
+		std::string str = "abcd";
+
+		auto s = to_uint8_t(utki::make_span(str));
+
+		tst::check_eq(s.size(), str.size(), SL);
+		tst::check_eq(s[0], uint8_t(str[0]), SL);
+		tst::check_eq(s[1], uint8_t(str[1]), SL);
+		tst::check_eq(s[2], uint8_t(str[2]), SL);
+		tst::check_eq(s[3], uint8_t(str[3]), SL);
+
+		auto cs = to_char(s);
+
+		tst::check_eq(cs.size(), str.size(), SL);
+		tst::check_eq(cs[0], str[0], SL);
+		tst::check_eq(cs[1], str[1], SL);
+		tst::check_eq(cs[2], str[2], SL);
+		tst::check_eq(cs[3], str[3], SL);
+	});
+
+	suite.add("to_uint8_t__and__to_char__const", []() {
+		const std::string str = "abcd";
+
+		auto s = to_uint8_t(utki::make_span(str));
+
+		tst::check_eq(s.size(), str.size(), SL);
+		tst::check_eq(s[0], uint8_t(str[0]), SL);
+		tst::check_eq(s[1], uint8_t(str[1]), SL);
+		tst::check_eq(s[2], uint8_t(str[2]), SL);
+		tst::check_eq(s[3], uint8_t(str[3]), SL);
+
+		auto cs = to_char(s);
+
+		tst::check_eq(cs.size(), str.size(), SL);
+		tst::check_eq(cs[0], str[0], SL);
+		tst::check_eq(cs[1], str[1], SL);
+		tst::check_eq(cs[2], str[2], SL);
+		tst::check_eq(cs[3], str[3], SL);
+	});
 });
 } // namespace
