@@ -239,7 +239,7 @@ const tst::set set("unicode", [](tst::suite& suite) {
 
 	suite.add("utf8_to_utf32_string_view", []() {
 		// string in utf8 = aБцﺶ𠀋
-		std::string_view buf = "aБцﺶ𠀋";
+		std::string_view buf = "aБцﺶ𠀋"sv;
 
 		auto str = utki::to_utf32(buf);
 
