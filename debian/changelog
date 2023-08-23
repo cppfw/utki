@@ -1,3 +1,9 @@
+libutki (1.1.219) unstable; urgency=medium
+
+  * deploy to archlinux
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 23 Aug 2023 15:45:54 +0300
+
 libutki (1.1.218) unstable; urgency=medium
 
   * add to_uint8_t(span) and to_char(span)
