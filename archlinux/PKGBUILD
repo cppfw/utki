@@ -1,0 +1,55 @@
+# Maintainer: Ivan Gagis <igagis@gmail.com>
+
+pkgname="utki"
+pkgver=$PACKAGE_VERSION
+pkgrel=1
+epoch=
+pkgdesc="C++ utilities"
+#arch=('any') # defined above
+url="http://github.com/cppfw/utki"
+license=('MIT')
+groups=()
+
+depends=()
+
+makedepends=(
+		'myci'
+		'prorab'
+		'prorab-extra'
+		'doxygen'
+		"clang" # for clang-format and clang-tidy
+	)
+checkdepends=()
+optdepends=()
+provides=()
+conflicts=()
+replaces=()
+backup=()
+options=()
+install=
+changelog=
+source=() # Do not download any sources
+noextract=()
+md5sums=()
+validpgpkeys=()
+
+rootDir=$(pwd)/.. # project root directory
+
+prepare() {
+	cd "$rootDir"
+}
+
+build() {
+	cd "$rootDir"
+	make
+}
+
+check() {
+	cd "$rootDir"
+	make test
+}
+
+package() {
+	cd "$rootDir"
+	make DESTDIR="$pkgdir" PREFIX="$dirPrefix" install
+}
