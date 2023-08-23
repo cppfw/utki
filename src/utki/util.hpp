@@ -168,6 +168,8 @@ public:
 		if (this->f) {
 			try {
 				this->f();
+				// destructor must not throw
+				// NOLINTNEXTLINE(bugprone-empty-catch)
 			} catch (...) {
 				// ignore
 			}
@@ -330,7 +332,7 @@ uint8_t* serialize_be(unsigned_type value, uint8_t* out_buf) noexcept
 		--index;
 		auto num_bits_to_shift = byte_bits * index;
 		ASSERT(num_bits_to_shift <= sizeof(value) * byte_bits)
-		// NOLINTNEXTLINE(clang-analyzer-core.UndefinedBinaryOperatorResult)
+		// NOLINTNEXTLINE(clang-analyzer-core.UndefinedBinaryOperatorResult, clang-analyzer-core.BitwiseShift)
 		b = uint8_t((value >> num_bits_to_shift) & byte_mask);
 	}
 
@@ -390,6 +392,8 @@ unsigned_type deserialize_be(const uint8_t* buf) noexcept
 
 	for (auto b : utki::make_span(buf, sizeof(ret))) {
 		--index;
+		ASSERT(index <= sizeof(ret))
+		// NOLINTNEXTLINE(clang-analyzer-core.BitwiseShift)
 		ret |= (decltype(ret)(b) << (byte_bits * index));
 	}
 

@@ -55,7 +55,7 @@ SOFTWARE.
 //            Compiler definitions                    |
 //                                                    |
 
-// NOLINTBEGIN(modernize-macro-to-enum)
+// NOLINTBEGIN(modernize-macro-to-enum, cppcoreguidelines-macro-to-enum)
 #define CFG_COMPILER_UNKNOWN 0 // NOLINT(cppcoreguidelines-macro-usage)
 #define CFG_COMPILER_GCC 1 // NOLINT(cppcoreguidelines-macro-usage)
 #define CFG_COMPILER_MSVC 2 // NOLINT(cppcoreguidelines-macro-usage)
@@ -65,7 +65,7 @@ SOFTWARE.
 #define M_COMPILER_GCC 1 // NOLINT(cppcoreguidelines-macro-usage)
 #define M_COMPILER_MSVC 2 // NOLINT(cppcoreguidelines-macro-usage)
 #define M_COMPILER_CLANG 3 // NOLINT(cppcoreguidelines-macro-usage)
-// NOLINTEND(modernize-macro-to-enum)
+// NOLINTEND(modernize-macro-to-enum, cppcoreguidelines-macro-to-enum)
 
 #if defined(__GNUC__) || defined(__GNUG__)
 #	define CFG_COMPILER CFG_COMPILER_GCC // NOLINT(cppcoreguidelines-macro-usage)
@@ -105,7 +105,7 @@ SOFTWARE.
 //            CPU architecture definitions            |
 //                                                    |
 
-// NOLINTBEGIN(modernize-macro-to-enum)
+// NOLINTBEGIN(modernize-macro-to-enum, cppcoreguidelines-macro-to-enum)
 #define CFG_CPU_UNKNOWN 0 // NOLINT(cppcoreguidelines-macro-usage)
 #define CFG_CPU_X86 1 // NOLINT(cppcoreguidelines-macro-usage)
 #define CFG_CPU_X86_64 2 // NOLINT(cppcoreguidelines-macro-usage)
@@ -115,7 +115,7 @@ SOFTWARE.
 #define M_CPU_X86 1 // NOLINT(cppcoreguidelines-macro-usage)
 #define M_CPU_X86_64 2 // NOLINT(cppcoreguidelines-macro-usage)
 #define M_CPU_ARM 3 // NOLINT(cppcoreguidelines-macro-usage)
-// NOLINTEND(modernize-macro-to-enum)
+// NOLINTEND(modernize-macro-to-enum, cppcoreguidelines-macro-to-enum)
 
 #if CFG_COMPILER == CFG_COMPILER_GCC
 #	if defined(__i386__) // __i386__ is defined for any x86 processor
@@ -248,7 +248,7 @@ SOFTWARE.
 //            OS definitions            |
 //                                      |
 
-// NOLINTBEGIN(modernize-macro-to-enum)
+// NOLINTBEGIN(modernize-macro-to-enum, cppcoreguidelines-macro-to-enum)
 
 // OS family
 #define CFG_OS_UNKNOWN 0 // NOLINT(cppcoreguidelines-macro-usage)
@@ -276,7 +276,7 @@ SOFTWARE.
 #define M_OS_NAME_ANDROID 3 // NOLINT(cppcoreguidelines-macro-usage)
 #define M_OS_NAME_SOLARIS 4 // NOLINT(cppcoreguidelines-macro-usage)
 
-// NOLINTEND(modernize-macro-to-enum)
+// NOLINTEND(modernize-macro-to-enum, cppcoreguidelines-macro-to-enum)
 
 #if defined(__linux__)
 #	define CFG_OS CFG_OS_LINUX // NOLINT(cppcoreguidelines-macro-usage)
@@ -348,11 +348,11 @@ SOFTWARE.
 //            CPU endianness definitions              |
 //                                                    |
 
-// NOLINTBEGIN(modernize-macro-to-enum)
+// NOLINTBEGIN(modernize-macro-to-enum, cppcoreguidelines-macro-to-enum)
 #define CFG_ENDIANNESS_UNKNOWN 0 // NOLINT(cppcoreguidelines-macro-usage)
 #define CFG_ENDIANNESS_LITTLE 1 // NOLINT(cppcoreguidelines-macro-usage)
 #define CFG_ENDIANNESS_BIG 2 // NOLINT(cppcoreguidelines-macro-usage)
-// NOLINTEND(modernize-macro-to-enum)
+// NOLINTEND(modernize-macro-to-enum, cppcoreguidelines-macro-to-enum)
 
 #if CFG_OS == CFG_OS_WINDOWS
 // Windows 32/64 bit is always little endian

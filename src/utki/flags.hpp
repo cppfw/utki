@@ -156,6 +156,7 @@ public:
 		// try-catch and ignore the exception to silence linter
 		try {
 			this->bitset.set(size_t(flag), value);
+			// NOLINTNEXTLINE(bugprone-empty-catch)
 		} catch (...) {
 			ASSERT(false)
 		}
@@ -190,6 +191,7 @@ public:
 		// try-catch and ignore the exception to silence linter
 		try {
 			this->bitset.reset(size_t(flag));
+			// NOLINTNEXTLINE(bugprone-empty-catch)
 		} catch (...) {
 			ASSERT(false)
 		}

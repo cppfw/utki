@@ -21,11 +21,15 @@ const tst::set set("singleton", [](tst::suite& suite) {
 		[] {
 			test_singleton sing1;
 
+			bool thrown = false;
 			try {
 				test_singleton sing2;
 				tst::check(false, SL) << "creating second singleton object should throw";
 			} catch (std::logic_error&) {
+				thrown = true;
 			}
+
+			tst::check(thrown, SL);
 		}
 	);
 });
