@@ -1,8 +1,9 @@
 # Maintainer: Ivan Gagis <igagis@gmail.com>
 
-pkgname="utki"
+pkgname=utki
 pkgver=$PACKAGE_VERSION
 pkgrel=1
+arch=('x86_64')
 epoch=
 pkgdesc="C++ utilities"
 #arch=('any') # defined above
@@ -51,5 +52,5 @@ check() {
 
 package() {
 	cd "$rootDir"
-	make DESTDIR="$pkgdir" PREFIX="$dirPrefix" install
+	make DESTDIR="$pkgdir" PREFIX=/usr install
 }
