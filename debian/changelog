@@ -1,3 +1,9 @@
+libutki (1.1.220) unstable; urgency=medium
+
+  * archlinux: build for arm32
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 25 Aug 2023 15:35:50 +0300
+
 libutki (1.1.219) unstable; urgency=medium
 
   * deploy to archlinux
