@@ -204,7 +204,7 @@ jobs:
         uses: myci-actions/add-pacman-repo@master
         with:
           name: cppfw
-          url: https://gagis.hopto.org/repo/cppfw/archlinux
+          url: https://gagis.hopto.org/repo/cppfw/archlinux/${{ matrix.arch }}
           key-server: https://gagis.hopto.org/repo/cppfw/pubkey.gpg
           install: >-
             myci
