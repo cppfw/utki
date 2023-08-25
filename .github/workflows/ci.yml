@@ -198,7 +198,7 @@ jobs:
     steps:
       - name: install ci tools
         run: |
-          pacman --sync --refresh --sysupgrade --noconfirm base-devel git
+          pacman --sync --refresh --sysupgrade --noconfirm --noprogressbar base-devel git
       - name: add cppfw pacman repo
         uses: myci-actions/add-pacman-repo@master
         with:
