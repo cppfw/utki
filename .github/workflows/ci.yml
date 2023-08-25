@@ -191,7 +191,7 @@ jobs:
       matrix:
         include:
           - {os: archlinux, codename: latest, image_owner: }
-          - {os: archlinux, codename: latest, image_owner: lopsided/, labels: [arm,docker]}
+          - {os: archlinux-arm32v7, codename: latest, image_owner: lopsided/, labels: [arm,docker]}
     runs-on: ${{ (matrix.labels == '' && 'ubuntu-latest') || matrix.labels }}
     container: ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }}
     name: linux - ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }}
