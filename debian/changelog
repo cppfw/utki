@@ -1,3 +1,9 @@
+libutki (1.1.222) unstable; urgency=medium
+
+  * archlinux: deploy to arch repos
+
+ -- Ivan Gagis <igagis@gmail.com>  Sat, 26 Aug 2023 00:13:13 +0300
+
 libutki (1.1.221) unstable; urgency=medium
 
   * archlinux: deploy to arm64
