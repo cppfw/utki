@@ -1,3 +1,9 @@
+libutki (1.1.223) unstable; urgency=medium
+
+  * fix c++20 source_location
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 05 Oct 2023 17:59:46 +0300
+
 libutki (1.1.222) unstable; urgency=medium
 
   * archlinux: deploy to arch repos
