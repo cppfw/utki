@@ -99,7 +99,7 @@ struct source_location {
 
 #if CFG_CPP >= 20
 	constexpr source_location(const std_source_location& sl) :
-		source_location(sl.line(), sl.column(), sl.file_name(), sl.function_name())
+		source_location(sl.line(), sl.column(), sl.file_name())
 	{}
 #endif
 
