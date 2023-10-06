@@ -1,3 +1,9 @@
+libutki (1.1.224) unstable; urgency=medium
+
+  * add utki::is_specialization_of and utki::offset_sequence
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 06 Oct 2023 16:20:10 +0300
+
 libutki (1.1.223) unstable; urgency=medium
 
   * fix c++20 source_location
