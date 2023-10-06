@@ -235,17 +235,17 @@ using type_or_void_t = typename type_or_void<owner_type>::type;
 
 /**
  * @brief Check if given type is a specialization of given template.
- * @tparam template_ttype - template to check for specialization of.
+ * @tparam template_templ - template to check for specialization of.
  * @tparam checked_type - type to check for specialization of given template.
  */
-template <template <typename...> class template_ttype, typename checked_type>
+template <template <typename...> class template_templ, typename checked_type>
 struct is_specialization_of : std::false_type {};
 
-template <template <typename...> class template_ttype, typename... args_type>
-struct is_specialization_of<template_ttype, template_ttype<args_type...>> : std::true_type {};
+template <template <typename...> class template_templ, typename... args_type>
+struct is_specialization_of<template_templ, template_templ<args_type...>> : std::true_type {};
 
-template <template <typename...> class template_ttype, typename checked_type>
-constexpr static bool is_specialization_of_v = is_specialization_of<template_ttype, checked_type>::value;
+template <template <typename...> class template_templ, typename checked_type>
+constexpr static bool is_specialization_of_v = is_specialization_of<template_templ, checked_type>::value;
 
 /**
  * @brief Offset std::index_sequence by constant value.
