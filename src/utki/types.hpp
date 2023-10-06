@@ -186,39 +186,42 @@ class dummy_class
 template <typename>
 struct tag {};
 
-template <typename, typename>
+/**
+ * @brief Get variant's alternative index by its type in compile time.
+ * @tparam inedx_type - type to get index of.
+ * @tparam variant_type - std::variant type to get index from.
+ */
+template <typename index_type, typename variant_type>
 struct get_index;
 
 // MSVC compiler prior to tools v142 doesn't compile this
 #if CFG_COMPILER != CFG_COMPILER_MSVC || CFG_COMPILER_MSVC_TOOLS_V >= 142
-/**
- * @brief Get variant's alternative index by its type in compile time.
- */
-template <typename index_type, typename... variant_type>
-struct get_index<index_type, std::variant<variant_type...>> :
-	std::integral_constant<size_t, std::variant<tag<variant_type>...>(tag<index_type>()).index()> {};
+template <typename index_type, typename... variant_item_type>
+struct get_index<index_type, std::variant<variant_item_type...>> :
+	std::integral_constant<size_t, std::variant<tag<variant_item_type>...>(tag<index_type>()).index()> {};
 #endif
-
-template <class, class = void>
-struct is_type_defined : std::false_type {};
 
 /**
  * @brief Check if owner_type::type is defined.
  * Defines bool 'value' which is true if owner_type::type is defined and false otherwise.
+ * @tparam owner_type - type to check.
  */
+template <class owner_type, class = void>
+struct is_type_defined : std::false_type {};
+
 template <class owner_type>
 struct is_type_defined<owner_type, std::void_t<typename owner_type::type>> : std::true_type {};
-
-template <class, class = void>
-struct type_or_void {
-	using type = void;
-};
 
 /**
  * @brief Get type or void.
  * @tparam owner_type - type to get owner_type::type from.
  * Defines 'type' member which is same as owner_type::type in case owner_type::type is defined, or void type otherwise.
  */
+template <class owner_type, class = void>
+struct type_or_void {
+	using type = void;
+};
+
 template <class owner_type>
 struct type_or_void<owner_type, std::void_t<typename owner_type::type>> {
 	using type = typename owner_type::type;
@@ -229,5 +232,36 @@ struct type_or_void<owner_type, std::void_t<typename owner_type::type>> {
  */
 template <typename owner_type>
 using type_or_void_t = typename type_or_void<owner_type>::type;
+
+/**
+ * @brief Check if given type is a specialization of given template.
+ * @tparam template_ttype - template to check for specialization of.
+ * @tparam checked_type - type to check for specialization of given template.
+ */
+template <template <typename...> class template_ttype, typename checked_type>
+struct is_specialization_of : std::false_type {};
+
+template <template <typename...> class template_ttype, typename... args_type>
+struct is_specialization_of<template_ttype, template_ttype<args_type...>> : std::true_type {};
+
+template <template <typename...> class template_ttype, typename checked_type>
+constexpr static bool is_specialization_of_v = is_specialization_of<template_ttype, checked_type>::value;
+
+/**
+ * @brief Offset std::index_sequence by constant value.
+ * Adds constant value to each index of a given std::index_sequence type.
+ * @tparam offset - index offset to add.
+ * @tparam sequence_type - original std::index_sequence to add offset to.
+ */
+template <std::size_t offset, typename sequence_type>
+struct offset_sequence;
+
+template <std::size_t offset, std::size_t... indices>
+struct offset_sequence<offset, std::index_sequence<indices...>> {
+	using type = std::index_sequence<indices + offset...>;
+};
+
+template <std::size_t offset, typename sequence_type>
+using offset_sequence_t = typename offset_sequence<offset, sequence_type>::type;
 
 } // namespace utki
