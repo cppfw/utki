@@ -478,22 +478,26 @@ std::vector<typename std::remove_const_t<value_type>> make_vector(span<value_typ
 
 inline span<uint8_t> to_uint8_t(span<char> s)
 {
-	return make_span(static_cast<uint8_t*>(static_cast<void*>(s.data())), s.size());
+	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast)
+	return make_span(reinterpret_cast<uint8_t*>(s.data()), s.size());
 }
 
 inline span<const uint8_t> to_uint8_t(span<const char> s)
 {
-	return make_span(static_cast<const uint8_t*>(static_cast<const void*>(s.data())), s.size());
+	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast)
+	return make_span(reinterpret_cast<const uint8_t*>(s.data()), s.size());
 }
 
 inline span<char> to_char(span<uint8_t> s)
 {
-	return make_span(static_cast<char*>(static_cast<void*>(s.data())), s.size());
+	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast)
+	return make_span(reinterpret_cast<char*>(s.data()), s.size());
 }
 
 inline span<const char> to_char(span<const uint8_t> s)
 {
-	return make_span(static_cast<const char*>(static_cast<const void*>(s.data())), s.size());
+	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast)
+	return make_span(reinterpret_cast<const char*>(s.data()), s.size());
 }
 
 } // namespace utki

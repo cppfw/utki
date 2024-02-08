@@ -45,6 +45,14 @@ constexpr auto nibble_bits = byte_bits / 2;
 constexpr auto lower_nibble_mask = 0xf;
 constexpr auto upper_nibble_mask = 0xf0;
 constexpr auto byte_mask = 0xff;
+constexpr auto bit_0_mask = 0x01;
+constexpr auto bit_1_mask = 0x02;
+constexpr auto bit_2_mask = 0x04;
+constexpr auto bit_3_mask = 0x08;
+constexpr auto bit_4_mask = 0x10;
+constexpr auto bit_5_mask = 0x20;
+constexpr auto bit_6_mask = 0x40;
+constexpr auto bit_7_mask = 0x80;
 
 template <size_t type_size>
 struct uint_size;
