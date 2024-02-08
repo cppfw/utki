@@ -1,3 +1,9 @@
+libutki (1.1.225) unstable; urgency=medium
+
+  * add bit mask constants
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 08 Feb 2024 14:56:57 +0200
+
 libutki (1.1.224) unstable; urgency=medium
 
   * add utki::is_specialization_of and utki::offset_sequence
