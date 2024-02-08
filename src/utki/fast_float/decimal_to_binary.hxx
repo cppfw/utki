@@ -175,8 +175,8 @@ fastfloat_really_inline adjusted_mantissa compute_float(int64_t q, uint64_t w) n
 	// usually, we round *up*, but if we fall right in between and and we have an
 	// even basis, we need to round down
 	// We are only concerned with the cases where 5**q fits in single 64-bit word.
-	if ((product.low <= 1) && (q >= binary::min_exponent_round_to_even()) && (q <= binary::max_exponent_round_to_even())
-		&& ((answer.mantissa & 3) == 1))
+	if ((product.low <= 1) && (q >= binary::min_exponent_round_to_even()) &&
+		(q <= binary::max_exponent_round_to_even()) && ((answer.mantissa & 3) == 1))
 	{ // we may fall between two floats!
 		// To be in-between two floats we need that in doing
 		//   answer.mantissa = product.high >> (upperbit + 64 - binary::mantissa_explicit_bits() - 3);

@@ -71,8 +71,8 @@ from_chars_result parse_infnan(const char* first, const char* last, T& value) no
 						// NOLINTNEXTLINE
 						answer.ptr = ptr + 1; // valid nan(n-char-seq-opt)
 						break;
-					} else if (!(('a' <= *ptr && *ptr <= 'z') || ('A' <= *ptr && *ptr <= 'Z')
-								 || ('0' <= *ptr && *ptr <= '9') || *ptr == '_'))
+					} else if (!(('a' <= *ptr && *ptr <= 'z') || ('A' <= *ptr && *ptr <= 'Z') ||
+								 ('0' <= *ptr && *ptr <= '9') || *ptr == '_'))
 						break; // forbidden char, not nan(n-char-seq-opt)
 				}
 			}
@@ -133,9 +133,9 @@ from_chars(const char* first, const char* last, T& value, chars_format fmt /*= c
 	answer.ec = std::errc(); // be optimistic
 	answer.ptr = pns.lastmatch;
 	// Next is Clinger's fast path.
-	if (binary_format<T>::min_exponent_fast_path() <= pns.exponent
-		&& pns.exponent <= binary_format<T>::max_exponent_fast_path()
-		&& pns.mantissa <= binary_format<T>::max_mantissa_fast_path() && !pns.too_many_digits)
+	if (binary_format<T>::min_exponent_fast_path() <= pns.exponent &&
+		pns.exponent <= binary_format<T>::max_exponent_fast_path() &&
+		pns.mantissa <= binary_format<T>::max_mantissa_fast_path() && !pns.too_many_digits)
 	{
 		value = T(pns.mantissa);
 		if (pns.exponent < 0) {

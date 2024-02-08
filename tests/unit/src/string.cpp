@@ -890,7 +890,7 @@ const tst::set set("string", [](tst::suite& suite) {
 			{								   1,          "1"},
 			{								  13,         "13"},
 
- // size_t can be 32 bit on 32 bit CPUs, so don't go over 32 bit max value
+			// size_t can be 32 bit on 32 bit CPUs, so don't go over 32 bit max value
 			{std::numeric_limits<uint32_t>::max(), "4294967295"}
     },
 		[](const auto& p) {

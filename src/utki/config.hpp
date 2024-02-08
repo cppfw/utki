@@ -166,13 +166,13 @@ SOFTWARE.
 #		if defined(__ARM_ARCH_7__) || defined(__ARM_ARCH_7A__) || defined(__ARM_ARCH_7R__) || defined(__ARM_ARCH_7M__)
 #			define CFG_CPU_VERSION 7 // NOLINT(cppcoreguidelines-macro-usage)
 #			define M_CPU_VERSION 7 // NOLINT(cppcoreguidelines-macro-usage)
-#		elif defined(__ARM_ARCH_6T2__) || defined(__ARM_ARCH_6ZK__) || defined(__ARM_ARCH_6Z__) \
-			|| defined(__ARM_ARCH_6K__) || defined(__ARM_ARCH_6J__) || defined(__ARM_ARCH_6__)
+#		elif defined(__ARM_ARCH_6T2__) || defined(__ARM_ARCH_6ZK__) || defined(__ARM_ARCH_6Z__) || \
+			defined(__ARM_ARCH_6K__) || defined(__ARM_ARCH_6J__) || defined(__ARM_ARCH_6__)
 
 #			define CFG_CPU_VERSION 6 // NOLINT(cppcoreguidelines-macro-usage)
 #			define M_CPU_VERSION 6 // NOLINT(cppcoreguidelines-macro-usage)
-#		elif defined(__ARM_ARCH_5TEJ__) || defined(__ARM_ARCH_5TE__) || defined(__ARM_ARCH_5T__) \
-			|| defined(__ARM_ARCH_5E__) || defined(__ARM_ARCH_5__)
+#		elif defined(__ARM_ARCH_5TEJ__) || defined(__ARM_ARCH_5TE__) || defined(__ARM_ARCH_5T__) || \
+			defined(__ARM_ARCH_5E__) || defined(__ARM_ARCH_5__)
 
 #			define CFG_CPU_VERSION 5 // NOLINT(cppcoreguidelines-macro-usage)
 #			define M_CPU_VERSION 5 // NOLINT(cppcoreguidelines-macro-usage)
@@ -358,16 +358,17 @@ SOFTWARE.
 // Windows 32/64 bit is always little endian
 #	define CFG_ENDIANNESS CFG_ENDIANNESS_LITTLE // NOLINT(cppcoreguidelines-macro-usage)
 #else
-#	if (defined(__ORDER_BIG_ENDIAN__) && (__BYTE_ORDER__ == __ORDER_BIG_ENDIAN__ || __FLOAT_WORD_ORDER__ == __ORDER_BIG_ENDIAN__)) \
-		|| defined(__BIG_ENDIAN__) || defined(__ARMEB__) || defined(__THUMBEB__) || defined(__AARCH64EB__) \
-		|| defined(_MIPSEB) || defined(__MIPSEB) || defined(__MIPSEB__)
+#	if (defined(__ORDER_BIG_ENDIAN__) && \
+		 (__BYTE_ORDER__ == __ORDER_BIG_ENDIAN__ || __FLOAT_WORD_ORDER__ == __ORDER_BIG_ENDIAN__)) || \
+		defined(__BIG_ENDIAN__) || defined(__ARMEB__) || defined(__THUMBEB__) || defined(__AARCH64EB__) || \
+		defined(_MIPSEB) || defined(__MIPSEB) || defined(__MIPSEB__)
 #		define CFG_ENDIANNESS CFG_ENDIANNESS_BIG // NOLINT(cppcoreguidelines-macro-usage)
 #	elif ( \
-		defined(__ORDER_LITTLE_ENDIAN__) \
-		&& (__BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__ || __FLOAT_WORD_ORDER__ == __ORDER_LITTLE_ENDIAN__) \
-	) || defined(__LITTLE_ENDIAN__) \
-		|| defined(__ARMEL__) || defined(__THUMBEL__) || defined(__AARCH64EL__) || defined(_MIPSEL) \
-		|| defined(__MIPSEL) || defined(__MIPSEL__)
+		defined(__ORDER_LITTLE_ENDIAN__) && \
+		(__BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__ || __FLOAT_WORD_ORDER__ == __ORDER_LITTLE_ENDIAN__) \
+	) || defined(__LITTLE_ENDIAN__) || \
+		defined(__ARMEL__) || defined(__THUMBEL__) || defined(__AARCH64EL__) || defined(_MIPSEL) || \
+		defined(__MIPSEL) || defined(__MIPSEL__)
 #		define CFG_ENDIANNESS CFG_ENDIANNESS_LITTLE // NOLINT(cppcoreguidelines-macro-usage)
 #	else
 #		define CFG_ENDIANNESS CFG_ENDIANNESS_UNKNOWN // NOLINT(cppcoreguidelines-macro-usage)
