@@ -1,3 +1,9 @@
+libutki (1.1.226) unstable; urgency=medium
+
+  * add span::span(std::initializer_list)
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 09 Feb 2024 16:16:34 +0200
+
 libutki (1.1.225) unstable; urgency=medium
 
   * add bit mask constants
