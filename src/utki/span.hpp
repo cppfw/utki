@@ -118,6 +118,19 @@ public:
 		buf_size(sp.size())
 	{}
 
+	template < //
+		typename other_element_type,
+		typename std::enable_if_t< //
+			std::is_convertible_v< //
+								   // NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
+				other_element_type (*)[], // NOLINT(modernize-avoid-c-arrays)
+				// NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
+				const element_type (*)[]>, // NOLINT(modernize-avoid-c-arrays)
+			bool> = true>
+	span(std::initializer_list<other_element_type> l) :
+		span(l.begin(), l.size())
+	{}
+
 	template <size_t array_size>
 	span(std::array<typename std::remove_const_t<element_type>, array_size>& a) :
 		span(a.data(), a.size())

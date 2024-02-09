@@ -46,6 +46,23 @@ const tst::set set("span", [](tst::suite& suite) {
 		tst::check_eq(s.data(), str, SL);
 	});
 
+	suite.add("constructor_from_initializer_list", []() {
+		std::vector<int> v = {10, 13, 14};
+
+		utki::span<const int> cs({10, 13, 14});
+
+		auto f = [&](utki::span<int> s) {
+			tst::check(s == v, SL);
+		};
+
+		f(v);
+
+		auto cf = [&](utki::span<const int> s) {
+			tst::check(s == v, SL);
+		};
+		cf(v);
+	});
+
 	suite.add("constructor_from_vector", []() {
 		std::vector<int> v = {10, 13, 14};
 
