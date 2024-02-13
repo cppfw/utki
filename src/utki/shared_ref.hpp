@@ -36,23 +36,20 @@ namespace utki {
 
 /**
  * @brief Reference counting pointer which cannot be null.
- * shared_ref is same as std::shared_ptr except that it is never null.
+ * shared_ref is same as std::shared_ptr except that it practically is never null.
  * Objects have to be created with utki::make_shared() in order to be managed by shared_ref.
  * The shared_ref is implemented as a wrapper around std::shared_ptr.
  *
  * shared_ref mimics the API provided by std::reference_wrapper.
  *
- * shared_ref has move constructor, but it works in a same way as copy constructor.
- * because otherwise it would contradict to the whole idea of the non-null pointer,
- * since moved from pointer would become null then.
- * Because of this the recommended way to pass shared_ref as an argument to a function is
- * via the constant reference, like:
+ * shared_ref doesn't provide default constructor.
  *
- * @code {.cpp}
- * void func(const shared_ref<some_class>& str);
- * @endcode
- *
- * this way the copying of the shared_ref will be deferred to the very last moment when it is actually needed.
+ * For better code performance shared_ref provides move constructor and move-assignment operator
+ * which will leave the moved-from shared_ref instance in invalid state.
+ * This is considered okay. Because implicit moving occurs in temporary context where
+ * it is not possible to dereference moved-from instance. In case of user explicitly using
+ * std::move() it is possible to dereference moved-from instance, and for that it is
+ * suggested to rely on lint tools (e.g. clang-tidy) to catch such misuses of shared_ref.
  *
  * @tparam object_type - type pointed by the pointer.
  */
@@ -70,6 +67,7 @@ class shared_ref
 public:
 	/**
 	 * @brief Construct a new shared_ref from non-null std::shared_ptr.
+	 * If DEBUG macro is defined, it will assert in case passed in pointer is null.
 	 * @param ptr - std::shared_ptr pointer to initialize the shared_ref.
 	 *              Must not be null, otherwise it causes undefined behaviour.
 	 */
@@ -86,19 +84,8 @@ public:
 	shared_ref(const shared_ref&) = default;
 	shared_ref& operator=(const shared_ref&) = default;
 
-	shared_ref(shared_ref&& r) noexcept :
-		// move constructor delegates to copy constructor
-		// because moved-from shared_ref should remain valid
-		shared_ref(static_cast<const shared_ref&>(r))
-	{}
-
-	shared_ref& operator=(shared_ref&& r) noexcept
-	{
-		// call copy-assign operator
-		// because moved-from shared_ref should remain valid
-		this->operator=(static_cast<const shared_ref&>(r));
-		return *this;
-	}
+	shared_ref(shared_ref&& r) = default;
+	shared_ref& operator=(shared_ref&& r) = default;
 
 	~shared_ref() = default;
 
@@ -130,12 +117,21 @@ public:
 	}
 
 	/**
+	 * @brief Automatic conversion to shared_ptr.
+	 */
+	operator const std::shared_ptr<object_type>&() const noexcept
+	{
+		return this->p;
+	}
+
+	/**
 	 * @brief Get reference to the pointed type.
 	 *
 	 * @return Const reference to the pointed type.
 	 */
 	object_type& get() const noexcept
 	{
+		ASSERT(this->p)
 		return *this->p;
 	}
 };

@@ -43,11 +43,7 @@ const tst::set set("shared_ref", [](tst::suite& suite) {
 		// because shared_ptr can be nullptr, but shared_ref cannot
 	);
 
-	static_assert(
-		std::is_move_constructible_v<utki::shared_ref<std::string>>,
-		"shared_ref must be move constructible"
-		// moved-from shared_ref remains valid
-	);
+	static_assert(std::is_move_constructible_v<utki::shared_ref<std::string>>, "shared_ref must be move constructible");
 
 	suite.add("copy_constructor", []() {
 		utki::shared_ref<a1> sr = utki::make_shared<a1>(3);
@@ -132,9 +128,9 @@ const tst::set set("shared_ref", [](tst::suite& suite) {
 
 		decltype(a) b(std::move(a));
 
-		// 'a' should remain valid and not lead to crash
+		// 'a' should remain invalid
 		// NOLINTNEXTLINE(clang-analyzer-cplusplus.Move)
-		tst::check_eq(a.get().a_0, 13, SL); // NOLINT(bugprone-use-after-move)
+		tst::check(!a.to_shared_ptr(), SL); // NOLINT(bugprone-use-after-move)
 
 		tst::check_eq(b.get().a_0, 13, SL);
 	});
@@ -150,9 +146,9 @@ const tst::set set("shared_ref", [](tst::suite& suite) {
 
 		b = std::move(a);
 
-		// 'a' should remain valid and not lead to crash
+		// 'a' should remain invalid
 		// NOLINTNEXTLINE(clang-analyzer-cplusplus.Move)
-		tst::check_eq(a.get().a_0, 13, SL); // NOLINT(bugprone-use-after-move)
+		tst::check(!a.to_shared_ptr(), SL); // NOLINT(bugprone-use-after-move)
 
 		tst::check_eq(b.get().a_0, 13, SL);
 	});
