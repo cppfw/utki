@@ -59,7 +59,7 @@ prepare() {
 
 build() {
 	cd "$rootDir"
-	make
+	make verbose=true
 }
 
 check() {
