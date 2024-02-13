@@ -1,3 +1,9 @@
+libutki (1.1.227) unstable; urgency=medium
+
+  * make shared_ref movable
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 13 Feb 2024 13:36:29 +0200
+
 libutki (1.1.226) unstable; urgency=medium
 
   * add span::span(std::initializer_list)
