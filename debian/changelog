@@ -1,3 +1,9 @@
+libutki (1.1.228) unstable; urgency=medium
+
+  * add shared_ref::operator sahred_ptr<const>()
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 13 Feb 2024 15:53:46 +0200
+
 libutki (1.1.227) unstable; urgency=medium
 
   * make shared_ref movable
