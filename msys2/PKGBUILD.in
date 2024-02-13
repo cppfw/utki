@@ -59,7 +59,7 @@ prepare() {
 
 build() {
 	cd "$rootDir"
-	make verbose=true
+	make lint=off
 }
 
 check() {
