@@ -169,6 +169,34 @@ const tst::set set("shared_ref", [](tst::suite& suite) {
 		tst::check_eq(vec[1].get().a_0, 3, SL);
 		tst::check_eq(vec[2].get().a_0, 1, SL);
 	});
+
+	suite.add("operator_shared_ptr", []() {
+		auto a = utki::make_shared<a1>(13);
+
+		utki::shared_ref<const a1> ca = a;
+
+		std::shared_ptr<a1> p;
+		std::shared_ptr<const a1> cp1;
+		std::shared_ptr<const a1> cp2;
+
+		tst::check(a.to_shared_ptr(), SL);
+		tst::check(ca.to_shared_ptr(), SL);
+		tst::check(!p, SL);
+		tst::check(!cp1, SL);
+
+		p = a;
+		cp1 = a;
+		cp2 = ca;
+
+		tst::check(p, SL);
+		tst::check_eq(p, a.to_shared_ptr(), SL);
+
+		tst::check(cp1, SL);
+		tst::check_eq(cp1, ca.to_shared_ptr(), SL);
+
+		tst::check(cp2, SL);
+		tst::check_eq(cp2, ca.to_shared_ptr(), SL);
+	});
 });
 
 } // namespace
