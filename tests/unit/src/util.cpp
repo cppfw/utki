@@ -188,6 +188,20 @@ const tst::set set("util", [](tst::suite& suite) {
 	});
 #endif // ~ non-MSVC compiler or MSVC compiler tools >= v142
 
+	suite.add("skip_front", []() {
+		std::array<int, 10> arr{0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+
+		std::vector<int> result;
+
+		for (const auto& i : utki::skip_front<3>(arr)) {
+			result.push_back(i);
+		}
+
+		std::vector<int> expected = {3, 4, 5, 6, 7, 8, 9};
+
+		tst::check(result == expected, SL);
+	});
+
 	// TODO: test utki::next() and utki::prev()
 });
 } // namespace

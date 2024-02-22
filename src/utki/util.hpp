@@ -93,6 +93,46 @@ iterator_type prev(iterator_type iter, size_t n)
 }
 
 /**
+ * @brief Not to be used directly.
+ * Use skip_front<num_to_skip>(<collection>) function.
+ */
+template <size_t num_to_skip, typename collection_type>
+struct skip_front_collection_wrapper {
+	collection_type& collection;
+
+	skip_front_collection_wrapper(collection_type& collection) :
+		collection(collection)
+	{}
+
+	auto begin() -> typename collection_type::iterator
+	{
+		ASSERT(this->collection.size() >= num_to_skip)
+		using std::begin;
+		return utki::next(begin(this->collection), num_to_skip);
+	}
+
+	auto end() -> typename collection_type::iterator
+	{
+		using std::end;
+		return end(this->collection);
+	}
+};
+
+/**
+ * @brief Create collection wrapper which effectively skips first elements.
+ * @tparam num_to_skip - number of front elements to skip.
+ * @tparam collection_type - collection type.
+ * @param collection - collection to skip first elements of.
+ * @return A special wrapper class which provides begin() and end() methods
+ *         returning collection iterators.
+ */
+template <size_t num_to_skip, typename collection_type>
+auto skip_front(collection_type& collection)
+{
+	return skip_front_collection_wrapper<num_to_skip, collection_type>(collection);
+}
+
+/**
  * @brief Construct std::pair with swapped components.
  * @param p - initial std::pair.
  * @return a new std::pair with swapped component.
