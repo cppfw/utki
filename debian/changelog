@@ -1,3 +1,9 @@
+libutki (1.1.229) unstable; urgency=medium
+
+  * add skip_front()
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 22 Feb 2024 17:28:04 +0200
+
 libutki (1.1.228) unstable; urgency=medium
 
   * add shared_ref::operator sahred_ptr<const>()
