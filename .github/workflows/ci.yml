@@ -16,11 +16,11 @@ jobs:
 ##### coverage #####
   coverage:
     runs-on: ubuntu-latest
-    container: debian:bookworm
+    container: debian:bullseye
     name: coverage - measure
     env:
       linux_distro: debian
-      linux_release: bookworm
+      linux_release: bullseye
     steps:
       - name: add cppfw deb repo
         uses: myci-actions/add-deb-repo@master
