@@ -1,3 +1,9 @@
+libutki (1.1.230) unstable; urgency=medium
+
+  * add concat()
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 26 Feb 2024 11:18:46 +0200
+
 libutki (1.1.229) unstable; urgency=medium
 
   * add skip_front()
