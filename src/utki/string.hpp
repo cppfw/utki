@@ -524,7 +524,7 @@ std::string to_string(number_type value, integer_base conversion_base = integer_
  * @return std::string of concatenated values.
  */
 template <typename... streamable_type>
-std::string concat(const streamable_type&... s)
+std::string cat(const streamable_type&... s)
 {
 	std::stringstream ss;
 

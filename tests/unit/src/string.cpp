@@ -900,11 +900,11 @@ const tst::set set("string", [](tst::suite& suite) {
 		}
 	);
 
-	suite.add("concat", []() {
-		tst::check_eq(utki::concat(), ""s, SL);
-		tst::check_eq(utki::concat("hello "), "hello "s, SL);
-		tst::check_eq(utki::concat("num = "s, 1234), "num = 1234"s, SL);
-		tst::check_eq(utki::concat("hello "s, "world"sv, "!"), "hello world!"s, SL);
+	suite.add("cat", []() {
+		tst::check_eq(utki::cat(), ""s, SL);
+		tst::check_eq(utki::cat("hello "), "hello "s, SL);
+		tst::check_eq(utki::cat("num = "s, 1234), "num = 1234"s, SL);
+		tst::check_eq(utki::cat("hello "s, "world"sv, "!"), "hello world!"s, SL);
 	});
 });
 } // namespace
