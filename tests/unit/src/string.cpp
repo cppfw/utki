@@ -899,6 +899,13 @@ const tst::set set("string", [](tst::suite& suite) {
 			tst::check_eq(s, p.second, SL);
 		}
 	);
+
+	suite.add("concat", []() {
+		tst::check_eq(utki::concat(), ""s, SL);
+		tst::check_eq(utki::concat("hello "), "hello "s, SL);
+		tst::check_eq(utki::concat("num = "s, 1234), "num = 1234"s, SL);
+		tst::check_eq(utki::concat("hello "s, "world"sv, "!"), "hello world!"s, SL);
+	});
 });
 } // namespace
 

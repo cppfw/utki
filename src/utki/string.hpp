@@ -516,4 +516,21 @@ std::string to_string(number_type value, integer_base conversion_base = integer_
 	return std::string(buf.data(), res.ptr - buf.data());
 }
 
+/**
+ * @brief Concatenate strings.
+ * Concatenates values which can be streamed to an std::ostream using operator<<().
+ * @tparam streamable_type - parameter pack of types of values to concatenate.
+ * @param s - parameter pack of values to concatenate.
+ * @return std::string of concatenated values.
+ */
+template <typename... streamable_type>
+std::string concat(const streamable_type&... s)
+{
+	std::stringstream ss;
+
+	(ss << ... << s);
+
+	return ss.str();
+}
+
 } // namespace utki
