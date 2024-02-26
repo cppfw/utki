@@ -28,6 +28,7 @@ SOFTWARE.
 
 #include <array>
 #include <charconv>
+#include <locale>
 #include <string>
 #include <vector>
 
@@ -549,7 +550,7 @@ std::basic_string_view<element_type> trim_front(std::basic_string_view<element_t
 				s.begin(),
 				s.end(),
 				[](auto c) {
-					return !std::isspace(c);
+					return !std::isspace(c, std::locale::classic());
 				}
 			)
 		)
@@ -584,7 +585,7 @@ std::basic_string_view<element_type> trim_back(std::basic_string_view<element_ty
 				s.rbegin(),
 				s.rend(),
 				[](auto c) {
-					return !std::isspace(c);
+					return !std::isspace(c, std::locale::classic());
 				}
 			).base()
 		)
