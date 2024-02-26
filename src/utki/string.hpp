@@ -533,4 +533,96 @@ std::string cat(const streamable_type&... s)
 	return ss.str();
 }
 
+/**
+ * @brief Trim whitespaces from front of the string.
+ * @tparam element_type - string element type.
+ * @param s - string view to trim whitespaces from.
+ * @return string view with trimmed front whitespaces.
+ */
+template <typename element_type>
+std::basic_string_view<element_type> trim_front(std::basic_string_view<element_type> s)
+{
+	return s.substr( //
+		std::distance( //
+			s.begin(),
+			std::find_if( //
+				s.begin(),
+				s.end(),
+				[](auto c) {
+					return !std::isspace(c);
+				}
+			)
+		)
+	);
+}
+
+std::string_view trim_front(const char* s)
+{
+	return trim_front(make_string_view(utki::make_span(s)));
+}
+
+template <typename element_type>
+std::basic_string_view<element_type> trim_front(const std::basic_string<element_type>& s)
+{
+	return trim_front(std::basic_string_view<element_type>(s));
+}
+
+/**
+ * @brief Trim whitespaces from back of the string.
+ * @tparam element_type - string element type.
+ * @param s - string view to trim whitespaces from.
+ * @return string view with trimmed back whitespaces.
+ */
+template <typename element_type>
+std::basic_string_view<element_type> trim_back(std::basic_string_view<element_type> s)
+{
+	return s.substr( //
+		0,
+		std::distance( //
+			s.begin(),
+			std::find_if( //
+				s.rbegin(),
+				s.rend(),
+				[](auto c) {
+					return !std::isspace(c);
+				}
+			).base()
+		)
+	);
+}
+
+std::string_view trim_back(const char* s)
+{
+	return trim_back(make_string_view(utki::make_span(s)));
+}
+
+template <typename element_type>
+std::basic_string_view<element_type> trim_back(const std::basic_string<element_type>& s)
+{
+	return trim_back(std::basic_string_view<element_type>(s));
+}
+
+/**
+ * @brief Trim whitespaces from the string.
+ * @tparam element_type - string element type.
+ * @param s - string view to trim whitespaces from.
+ * @return string view with trimmed front and back whitespaces.
+ */
+template <typename element_type>
+std::basic_string_view<element_type> trim(std::basic_string_view<element_type> s)
+{
+	return trim_front(trim_back(s));
+}
+
+std::string_view trim(const char* s)
+{
+	return trim(make_string_view(utki::make_span(s)));
+}
+
+template <typename element_type>
+std::basic_string_view<element_type> trim(const std::basic_string<element_type>& s)
+{
+	return trim(std::basic_string_view<element_type>(s));
+}
+
 } // namespace utki

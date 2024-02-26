@@ -906,6 +906,36 @@ const tst::set set("string", [](tst::suite& suite) {
 		tst::check_eq(utki::cat("num = "s, 1234), "num = 1234"s, SL);
 		tst::check_eq(utki::cat("hello "s, "world"sv, "!"), "hello world!"s, SL);
 	});
+
+	suite.add("trim_front", []() {
+		const char* str = "\n  hello world \t\n";
+		std::string string = str;
+		std::string_view string_view = string;
+		std::string_view expected = "hello world \t\n"sv;
+		tst::check_eq(utki::trim_front(str), expected, SL);
+		tst::check_eq(utki::trim_front(string), expected, SL);
+		tst::check_eq(utki::trim_front(string_view), expected, SL);
+	});
+
+	suite.add("trim_back", []() {
+		const char* str = "\n  hello world \t\n";
+		std::string string = str;
+		std::string_view string_view = string;
+		std::string_view expected = "\n  hello world"sv;
+		tst::check_eq(utki::trim_back(str), expected, SL);
+		tst::check_eq(utki::trim_back(string), expected, SL);
+		tst::check_eq(utki::trim_back(string_view), expected, SL);
+	});
+
+	suite.add("trim", []() {
+		const char* str = "\n  hello world \t\n";
+		std::string string = str;
+		std::string_view string_view = string;
+		std::string_view expected = "hello world"sv;
+		tst::check_eq(utki::trim(str), expected, SL);
+		tst::check_eq(utki::trim(string), expected, SL);
+		tst::check_eq(utki::trim(string_view), expected, SL);
+	});
 });
 } // namespace
 
