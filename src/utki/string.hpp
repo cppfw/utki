@@ -557,7 +557,7 @@ std::basic_string_view<element_type> trim_front(std::basic_string_view<element_t
 	);
 }
 
-std::string_view trim_front(const char* s)
+inline std::string_view trim_front(const char* s)
 {
 	return trim_front(make_string_view(utki::make_span(s)));
 }
@@ -592,7 +592,7 @@ std::basic_string_view<element_type> trim_back(std::basic_string_view<element_ty
 	);
 }
 
-std::string_view trim_back(const char* s)
+inline std::string_view trim_back(const char* s)
 {
 	return trim_back(make_string_view(utki::make_span(s)));
 }
@@ -615,7 +615,7 @@ std::basic_string_view<element_type> trim(std::basic_string_view<element_type> s
 	return trim_front(trim_back(s));
 }
 
-std::string_view trim(const char* s)
+inline std::string_view trim(const char* s)
 {
 	return trim(make_string_view(utki::make_span(s)));
 }
