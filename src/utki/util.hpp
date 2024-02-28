@@ -104,14 +104,14 @@ struct skip_front_collection_wrapper {
 		collection(collection)
 	{}
 
-	auto begin() -> typename collection_type::iterator
+	auto begin()
 	{
 		ASSERT(this->collection.size() >= num_to_skip)
 		using std::begin;
 		return utki::next(begin(this->collection), num_to_skip);
 	}
 
-	auto end() -> typename collection_type::iterator
+	auto end()
 	{
 		using std::end;
 		return end(this->collection);

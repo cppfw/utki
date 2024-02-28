@@ -34,6 +34,7 @@ SOFTWARE.
 
 #include "config.hpp"
 #include "span.hpp"
+#include "util.hpp"
 
 namespace utki {
 
@@ -203,6 +204,34 @@ std::vector<std::basic_string<element_type>> split(const element_type* str, elem
  * @return vector of words.
  */
 std::vector<std::string> split(std::string_view str);
+
+/**
+ * @brief Join strings with delimeter.
+ * @tparam strings_collection_type - string collection type, can be e.g. std::vector<std::string> or
+ *         std::array<std::string_view, 3>.
+ * @param strings - collection of strings to join.
+ * @param delimeter - delimeter to join with.
+ * @return joined string.
+ */
+template <typename strings_collection_type>
+std::basic_string<typename strings_collection_type::value_type::value_type> join(
+	const strings_collection_type& strings,
+	typename strings_collection_type::value_type::value_type delimeter
+)
+{
+	if (strings.empty()) {
+		return {};
+	}
+
+	std::basic_stringstream<typename strings_collection_type::value_type::value_type> ss;
+	ss << strings.front();
+
+	for (const auto& s : utki::skip_front<1>(strings)) {
+		ss << delimeter << s;
+	}
+
+	return ss.str();
+}
 
 /**
  * @brief Word wrap string.

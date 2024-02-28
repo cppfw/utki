@@ -376,6 +376,42 @@ const tst::set set("string", [](tst::suite& suite) {
 		tst::check_eq(r[4], "!"s, SL);
 	});
 
+	suite.add("join_vector_of_strings", []() {
+		std::vector<std::string> strings = {"hello", "world", "!"};
+
+		tst::check_eq(utki::join(strings, '#'), "hello#world#!"s, SL);
+	});
+
+	suite.add("join_vector_of_string_views", []() {
+		std::vector<std::string_view> strings = {"hello"sv, "world"sv, "!"sv};
+
+		tst::check_eq(utki::join(strings, '#'), "hello#world#!"s, SL);
+	});
+
+	suite.add("join_array_of_strings", []() {
+		std::array<std::string, 3> strings = {"hello", "world", "!"};
+
+		tst::check_eq(utki::join(strings, '#'), "hello#world#!"s, SL);
+	});
+
+	suite.add("join_array_of_string_views", []() {
+		std::array<std::string_view, 3> strings = {"hello"sv, "world"sv, "!"sv};
+
+		tst::check_eq(utki::join(strings, '#'), "hello#world#!"s, SL);
+	});
+
+	suite.add("join_span_of_strings", []() {
+		std::vector<std::string> strings = {"hello", "world", "!"};
+
+		tst::check_eq(utki::join(utki::make_span(strings), '#'), "hello#world#!"s, SL);
+	});
+
+	suite.add("join_span_of_string_views", []() {
+		std::vector<std::string_view> strings = {"hello"sv, "world"sv, "!"sv};
+
+		tst::check_eq(utki::join(utki::make_span(strings), '#'), "hello#world#!"s, SL);
+	});
+
 	suite.add("word_wrap_basic", []() {
 		auto res = utki::word_wrap("abcd efgh i jkl mnop", 7);
 
