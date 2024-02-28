@@ -1,3 +1,9 @@
+libutki (1.1.233) unstable; urgency=medium
+
+  * dev package arch
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 28 Feb 2024 18:33:07 +0200
+
 libutki (1.1.232) unstable; urgency=medium
 
   * add join(strings, delimeter)
