@@ -22,13 +22,13 @@ Description: cross-platform C++ file system library.
 
 Package: libutki$(soname)-dbgsrc
 Section: debug
-Architecture: any
+Architecture: all
 Depends: libutki$(soname)-dbgsym (= ${binary:Version}), ${misc:Depends}
 Description: debugging sources for libutki$(soname) package.
 
 Package: libutki-dev
 Section: libdevel
-Architecture: all
+Architecture: any
 Depends: libutki$(soname) (= ${binary:Version}), ${misc:Depends}
 Suggests: libutki-doc
 Description: cross-platform C++ utility library.
