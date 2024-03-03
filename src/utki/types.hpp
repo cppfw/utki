@@ -196,17 +196,17 @@ struct tag {};
 
 /**
  * @brief Get variant's alternative index by its type in compile time.
- * @tparam inedx_type - type to get index of.
+ * @tparam indexed_type - type to get index of.
  * @tparam variant_type - std::variant type to get index from.
  */
-template <typename index_type, typename variant_type>
+template <typename indexed_type, typename variant_type>
 struct get_index;
 
 // MSVC compiler prior to tools v142 doesn't compile this
 #if CFG_COMPILER != CFG_COMPILER_MSVC || CFG_COMPILER_MSVC_TOOLS_V >= 142
-template <typename index_type, typename... variant_item_type>
-struct get_index<index_type, std::variant<variant_item_type...>> :
-	std::integral_constant<size_t, std::variant<tag<variant_item_type>...>(tag<index_type>()).index()> {};
+template <typename indexed_type, typename... variant_item_type>
+struct get_index<indexed_type, std::variant<variant_item_type...>> :
+	std::integral_constant<size_t, std::variant<tag<variant_item_type>...>(tag<indexed_type>()).index()> {};
 #endif
 
 /**
