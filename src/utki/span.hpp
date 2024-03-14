@@ -123,7 +123,7 @@ public:
 	{
 		static_assert(
 			std::is_const_v<element_type>,
-			"only span<const ...> is constructable from std::initializer_list"
+			"non-const span is not constructible from std::initializer_list, consider span<const ...>"
 		);
 	}
 

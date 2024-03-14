@@ -62,6 +62,34 @@ const tst::set set("span", [](tst::suite& suite) {
 		cf(v);
 	});
 
+	suite.add("initializer_list_downcast", []() {
+		struct a0 {
+			int a_0;
+
+			a0(int a) :
+				a_0(a)
+			{}
+		};
+
+		struct a1 : public a0 {
+			a1(int a) :
+				a0(a)
+			{}
+		};
+
+		auto v = [](utki::span<const std::shared_ptr<a0>> c) {
+			std::vector<std::shared_ptr<a0>> ret;
+			for (const auto& r : c) {
+				ret.push_back(r);
+			}
+			return ret;
+		}({std::make_shared<a1>(2), std::make_shared<a0>(1)});
+
+		tst::check(!v.empty(), SL);
+		tst::check(v.front(), SL);
+		tst::check_eq(v.front()->a_0, 2, SL);
+	});
+
 	suite.add("constructor_from_vector", []() {
 		std::vector<int> v = {10, 13, 14};
 
