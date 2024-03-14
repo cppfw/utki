@@ -65,7 +65,8 @@ namespace utki {
 template <class object_type, class instance_owner_type = object_type>
 class intrusive_singleton
 {
-protected: // use only as a base class
+protected:
+	// NOLINTNEXTLINE(bugprone-crtp-constructor-accessibility, "false positive")
 	intrusive_singleton()
 	{
 		if (instance_owner_type::instance) {
@@ -81,9 +82,11 @@ protected: // use only as a base class
 	using instance_type = std::unique_ptr<object_type>;
 
 public:
+	// NOLINTNEXTLINE(bugprone-crtp-constructor-accessibility, "false positive")
 	intrusive_singleton(const intrusive_singleton&) = delete;
 	intrusive_singleton& operator=(const intrusive_singleton&) = delete;
 
+	// NOLINTNEXTLINE(bugprone-crtp-constructor-accessibility, "false positive")
 	intrusive_singleton(intrusive_singleton&&) = delete;
 	intrusive_singleton& operator=(intrusive_singleton&&) = delete;
 
@@ -148,14 +151,17 @@ class singleton : public intrusive_singleton<object_type, singleton<object_type>
 	friend class intrusive_singleton<object_type, singleton<object_type>>;
 
 protected:
+	// NOLINTNEXTLINE(bugprone-crtp-constructor-accessibility, "false positive")
 	singleton() = default;
 
 public:
 	~singleton() override = default;
 
+	// NOLINTNEXTLINE(bugprone-crtp-constructor-accessibility, "false positive")
 	singleton(const singleton&) = delete;
 	singleton& operator=(const singleton&) = delete;
 
+	// NOLINTNEXTLINE(bugprone-crtp-constructor-accessibility, "false positive")
 	singleton(singleton&&) = delete;
 	singleton& operator=(singleton&&) = delete;
 
