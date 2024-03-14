@@ -85,7 +85,7 @@ const tst::set set("span", [](tst::suite& suite) {
 			return ret;
 		}({std::make_shared<a1>(2), std::make_shared<a0>(1)});
 
-		tst::check(!v.empty(), SL);
+		tst::check_eq(v.size(), size_t(2), SL);
 		tst::check(v.front(), SL);
 		tst::check_eq(v.front()->a_0, 2, SL);
 	});
