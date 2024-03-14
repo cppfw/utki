@@ -88,6 +88,8 @@ const tst::set set("span", [](tst::suite& suite) {
 		tst::check_eq(v.size(), size_t(2), SL);
 		tst::check(v.front(), SL);
 		tst::check_eq(v.front()->a_0, 2, SL);
+
+		// NOLINTNEXTLINE(clang-analyzer-cplusplus.NewDeleteLeaks, "false positive")
 	});
 
 	suite.add("constructor_from_vector", []() {
