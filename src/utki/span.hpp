@@ -119,24 +119,13 @@ public:
 	{}
 
 	span(std::initializer_list<std::remove_const_t<element_type>> l) :
-		span(
-			[&l]() {
-				if constexpr (std::is_const_v<element_type>) {
-					return l.begin();
-				} else {
-					utki::assert(
-						false,
-						[](auto& o) {
-							o << "requested to make non-const span from std::initializer_list";
-						},
-						SL
-					);
-					return nullptr;
-				}
-			}(),
-			l.size()
-		)
-	{}
+		span(l.begin(), l.size())
+	{
+		static_assert(
+			std::is_const_v<element_type>,
+			"only span<const ...> is constructable from std::initializer_list"
+		);
+	}
 
 	template <size_t array_size>
 	span(std::array<typename std::remove_const_t<element_type>, array_size>& a) :
