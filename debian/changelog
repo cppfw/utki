@@ -1,3 +1,9 @@
+libutki (1.1.234) unstable; urgency=medium
+
+  * improve span::span(std::initializer_list) constructor
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 14 Mar 2024 17:05:32 +0200
+
 libutki (1.1.233) unstable; urgency=medium
 
   * dev package arch
