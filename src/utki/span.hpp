@@ -118,17 +118,24 @@ public:
 		buf_size(sp.size())
 	{}
 
-	template < //
-		typename other_element_type,
-		typename std::enable_if_t< //
-			std::is_convertible_v< //
-								   // NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
-				other_element_type (*)[], // NOLINT(modernize-avoid-c-arrays)
-				// NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
-				const element_type (*)[]>, // NOLINT(modernize-avoid-c-arrays)
-			bool> = true>
-	span(std::initializer_list<other_element_type> l) :
-		span(l.begin(), l.size())
+	span(std::initializer_list<std::remove_const_t<element_type>> l) :
+		span(
+			[&l]() {
+				if constexpr (std::is_const_v<element_type>) {
+					return l.begin();
+				} else {
+					utki::assert(
+						false,
+						[](auto& o) {
+							o << "requested to make non-const span from std::initializer_list";
+						},
+						SL
+					);
+					return nullptr;
+				}
+			}(),
+			l.size()
+		)
 	{}
 
 	template <size_t array_size>
@@ -150,9 +157,9 @@ public:
 		typename std::enable_if_t< //
 			std::is_convertible_v< //
 								   // NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
-				other_element_type (*)[], // NOLINT(modernize-avoid-c-arrays)
+				const other_element_type (*)[], // NOLINT(modernize-avoid-c-arrays)
 				// NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
-				const element_type (*)[]>, // NOLINT(modernize-avoid-c-arrays)
+				element_type (*)[]>, // NOLINT(modernize-avoid-c-arrays)
 			bool> = true>
 	span(const std::vector<other_element_type>& v) :
 		span(v.data(), v.size())
@@ -167,9 +174,9 @@ public:
 		typename std::enable_if_t< //
 			std::is_convertible_v< //
 								   // NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
-				other_element_type (*)[], // NOLINT(modernize-avoid-c-arrays)
+				const other_element_type (*)[], // NOLINT(modernize-avoid-c-arrays)
 				// NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
-				const element_type (*)[]>, // NOLINT(modernize-avoid-c-arrays)
+				element_type (*)[]>, // NOLINT(modernize-avoid-c-arrays)
 			bool> = true>
 	span(const std::basic_string<other_element_type>& v) :
 		span(v.data(), v.size())
@@ -180,9 +187,9 @@ public:
 		typename std::enable_if_t< //
 			std::is_convertible_v< //
 								   // NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
-				other_element_type (*)[], // NOLINT(modernize-avoid-c-arrays)
+				const other_element_type (*)[], // NOLINT(modernize-avoid-c-arrays)
 				// NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
-				const element_type (*)[]>, // NOLINT(modernize-avoid-c-arrays)
+				element_type (*)[]>, // NOLINT(modernize-avoid-c-arrays)
 			bool> = true>
 	span(std::basic_string_view<other_element_type> v) :
 		span(v.data(), v.size())

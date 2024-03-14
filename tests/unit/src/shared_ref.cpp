@@ -1,6 +1,7 @@
 #include <tst/check.hpp>
 #include <tst/set.hpp>
 #include <utki/shared_ref.hpp>
+#include <utki/span.hpp>
 
 namespace {
 const std::string etalon = "hello world!";
@@ -98,6 +99,19 @@ const tst::set set("shared_ref", [](tst::suite& suite) {
 		utki::shared_ref<const a0> sr = utki::make_shared<a1>(2);
 
 		tst::check_eq(sr.get().a_0, 2, SL);
+	});
+
+	suite.add("brace_list_downcast", []() {
+		auto v = [](utki::span<const utki::shared_ref<a0>> c) {
+			std::vector<utki::shared_ref<const a0>> ret;
+			for (const auto& r : c) {
+				ret.push_back(r);
+			}
+			return ret;
+		}({utki::make_shared<a1>(2), utki::make_shared<a0>(1)});
+
+		tst::check(!v.empty(), SL);
+		tst::check_eq(v.front().get().a_0, 2, SL);
 	});
 
 	suite.add("dynamic_reference_cast", []() {

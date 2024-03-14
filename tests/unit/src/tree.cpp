@@ -151,6 +151,10 @@ const tst::set set("tree", [](tst::suite& suite) {
 
 			wrapper() = default;
 
+			wrapper(std::string str) :
+				str(std::move(str))
+			{}
+
 			wrapper(const wrapper&) = default;
 			wrapper& operator=(const wrapper&) = default;
 
@@ -171,10 +175,10 @@ const tst::set set("tree", [](tst::suite& suite) {
 
 		std::string str = "hello";
 
-		utki::tree<wrapper> t({str});
+		auto t = utki::tree<wrapper>(wrapper(str));
 
 		// this should use template tree::operator==()
-		tst::check(t == str.c_str(), SL);
+		tst::check(t == str.c_str(), SL) << "t = " << t.value.str;
 	});
 
 	suite.add("tree_to_tree_comparison", []() {

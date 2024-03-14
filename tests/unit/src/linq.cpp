@@ -395,6 +395,11 @@ const tst::set set("linq", [](tst::suite& suite) {
 				std::shared_ptr<test_struct> ts;
 				int dummy;
 
+				wrapper(std::shared_ptr<test_struct> ts, int dummy) :
+					ts(std::move(ts)),
+					dummy(dummy)
+				{}
+
 				wrapper(const wrapper&) = default;
 				wrapper& operator=(const wrapper&) = default;
 
@@ -409,9 +414,9 @@ const tst::set set("linq", [](tst::suite& suite) {
 				}
 			};
 
-			std::vector<wrapper> vec{
-				{std::make_shared<test_struct>(destroyed), 10},
-				{std::make_shared<test_struct>(destroyed), 13}
+			std::vector<wrapper> vec = {
+				wrapper{std::make_shared<test_struct>(destroyed), 10},
+				wrapper{std::make_shared<test_struct>(destroyed), 13}
 			};
 
 			auto res = utki::linq(vec) //
