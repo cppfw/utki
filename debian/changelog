@@ -1,3 +1,9 @@
+libutki (1.1.235) unstable; urgency=medium
+
+  * add version_duplet struct
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 26 Mar 2024 20:21:49 +0200
+
 libutki (1.1.234) unstable; urgency=medium
 
   * improve span::span(std::initializer_list) constructor
