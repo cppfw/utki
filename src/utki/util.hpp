@@ -481,20 +481,69 @@ inline uint64_t deserialize64be(const uint8_t* buf) noexcept
  * @return true in case stderr outputs to terminal.
  * @return false in case stderr outputs to file or pipe.
  */
-bool is_cerr_terminal();
+bool is_terminal_cerr();
+
+// TODO: remove deprecated stuff
+[[deprecated("use is_terminal_cerr()")]]
+inline bool is_cerr_terminal()
+{
+	return is_terminal_cerr();
+}
 
 /**
  * @brief Check if stdout is terminal or file/pipe.
  * @return true in case stdout outputs to terminal.
  * @return false in case stdout outputs to file or pipe.
  */
-bool is_cout_terminal();
+bool is_terminal_cout();
+
+// TODO: remove deprecated stuff
+[[deprecated("use is_terminal_cout()")]]
+inline bool is_cout_terminal()
+{
+	return is_terminal_cout();
+}
 
 /**
  * @brief Check if stdin is terminal or pipe.
  * @return true in case stdin inputs from terminal.
  * @return false in case stdin inputs from pipe.
  */
-bool is_cin_terminal();
+bool is_terminal_cin();
+
+// TODO: remove deprecated stuff
+[[deprecated("use is_terminal_cin()")]]
+inline bool is_cin_terminal()
+{
+	return is_terminal_cin();
+}
+
+/**
+ * @brief Version duplet.
+ */
+struct version_duplet {
+	/**
+	 * @brief Major version.
+	 */
+	uint16_t major;
+
+	/**
+	 * @brief Minor version.
+	 */
+	uint16_t minor;
+
+	/**
+	 * @brief Combine major and minor versions into one number.
+	 */
+	constexpr uint32_t to_uint32_t() const noexcept
+	{
+		return uint32_t(uint32_t(this->major) << sizeof(uint16_t) * utki::byte_bits) | uint32_t(this->minor);
+	}
+
+	friend std::ostream& operator<<(std::ostream& o, const version_duplet& vd)
+	{
+		return o << vd.major << '.' << vd.minor;
+	}
+};
 
 } // namespace utki

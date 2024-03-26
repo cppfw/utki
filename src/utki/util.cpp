@@ -34,7 +34,7 @@ SOFTWARE.
 
 using namespace utki;
 
-bool utki::is_cerr_terminal()
+bool utki::is_terminal_cerr()
 {
 #if CFG_OS == CFG_OS_WINDOWS
 	// need to compare result with 0 to avoid MSVC compiler warning
@@ -44,7 +44,7 @@ bool utki::is_cerr_terminal()
 #endif
 }
 
-bool utki::is_cout_terminal()
+bool utki::is_terminal_cout()
 {
 #if CFG_OS == CFG_OS_WINDOWS
 	// need to compare result with 0 to avoid MSVC compiler warning
@@ -54,7 +54,7 @@ bool utki::is_cout_terminal()
 #endif
 }
 
-bool utki::is_cin_terminal()
+bool utki::is_terminal_cin()
 {
 #if CFG_OS == CFG_OS_WINDOWS
 	// need to compare result with 0 to avoid MSVC compiler warning

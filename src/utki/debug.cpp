@@ -60,7 +60,7 @@ void utki::assert(
 	std::stringstream ss;
 	ss << source_location.file_name() << ":" << source_location.line() << ": ";
 
-	if (is_cerr_terminal()) {
+	if (is_terminal_cerr()) {
 #if CFG_COMPILER == CFG_COMPILER_MSVC && CFG_COMPILER_MSVC_TOOLS_V <= 141
 		ss << std::string(colored_error_string);
 	} else {
