@@ -28,26 +28,19 @@ SOFTWARE.
 
 // NOLINTBEGIN(cppcoreguidelines-macro-usage)
 
-// TODO: M_ prefixed macros are deprecated, remove those when all usages are migrated to new macros.
-
 //====================================================|
 //            C++ standard                            |
 //                                                    |
 
 #if __cplusplus > 201703L
-#	define M_CPP 20 // NOLINT(cppcoreguidelines-macro-usage)
 #	define CFG_CPP 20 // NOLINT(cppcoreguidelines-macro-usage)
 #elif __cplusplus > 201402L
-#	define M_CPP 17 // NOLINT(cppcoreguidelines-macro-usage)
 #	define CFG_CPP 17 // NOLINT(cppcoreguidelines-macro-usage)
 #elif __cplusplus > 201103L
-#	define M_CPP 14 // NOLINT(cppcoreguidelines-macro-usage)
 #	define CFG_CPP 14 // NOLINT(cppcoreguidelines-macro-usage)
 #elif __cplusplus > 199711L
-#	define M_CPP 11 // NOLINT(cppcoreguidelines-macro-usage)
 #	define CFG_CPP 11 // NOLINT(cppcoreguidelines-macro-usage)
 #else
-#	define M_CPP 3 // NOLINT(cppcoreguidelines-macro-usage)
 #	define CFG_CPP 3 // NOLINT(cppcoreguidelines-macro-usage)
 #endif
 
@@ -60,11 +53,6 @@ SOFTWARE.
 #define CFG_COMPILER_GCC 1 // NOLINT(cppcoreguidelines-macro-usage)
 #define CFG_COMPILER_MSVC 2 // NOLINT(cppcoreguidelines-macro-usage)
 #define CFG_COMPILER_CLANG 3 // NOLINT(cppcoreguidelines-macro-usage)
-
-#define M_COMPILER_UNKNOWN 0 // NOLINT(cppcoreguidelines-macro-usage)
-#define M_COMPILER_GCC 1 // NOLINT(cppcoreguidelines-macro-usage)
-#define M_COMPILER_MSVC 2 // NOLINT(cppcoreguidelines-macro-usage)
-#define M_COMPILER_CLANG 3 // NOLINT(cppcoreguidelines-macro-usage)
 // NOLINTEND(modernize-macro-to-enum, cppcoreguidelines-macro-to-enum)
 
 #if defined(__GNUC__) || defined(__GNUG__)
@@ -73,32 +61,21 @@ SOFTWARE.
 #	define CFG_COMPILER_VERSION_MINOR __GNUC_MINOR__ // NOLINT(cppcoreguidelines-macro-usage)
 #	define CFG_COMPILER_VERSION_PATCH __GNUC_PATCHLEVEL__ // NOLINT(cppcoreguidelines-macro-usage)
 
-#	define M_COMPILER M_COMPILER_GCC // NOLINT(cppcoreguidelines-macro-usage)
-#	define M_COMPILER_VERSION_MAJOR __GNUC__ // NOLINT(cppcoreguidelines-macro-usage)
-#	define M_COMPILER_VERSION_MINOR __GNUC_MINOR__ // NOLINT(cppcoreguidelines-macro-usage)
-#	define M_COMPILER_VERSION_PATCH __GNUC_PATCHLEVEL__ // NOLINT(cppcoreguidelines-macro-usage)
 #elif defined(_MSC_VER)
 #	define CFG_COMPILER CFG_COMPILER_MSVC // NOLINT(cppcoreguidelines-macro-usage)
-#	define M_COMPILER M_COMPILER_MSVC // NOLINT(cppcoreguidelines-macro-usage)
 #	if _MSC_VER < 1916
 #		define CFG_COMPILER_MSVC_TOOLS_V 140 // NOLINT(cppcoreguidelines-macro-usage)
-#		define M_COMPILER_MSVC_TOOLS_V 140 // NOLINT(cppcoreguidelines-macro-usage)
 #	elif _MSC_VER < 1929
 #		define CFG_COMPILER_MSVC_TOOLS_V 141 // NOLINT(cppcoreguidelines-macro-usage)
-#		define M_COMPILER_MSVC_TOOLS_V 141 // NOLINT(cppcoreguidelines-macro-usage)
 #	elif _MSC_VER < 1930
 #		define CFG_COMPILER_MSVC_TOOLS_V 142 // NOLINT(cppcoreguidelines-macro-usage)
-#		define M_COMPILER_MSVC_TOOLS_V 142 // NOLINT(cppcoreguidelines-macro-usage)
 #	else
 #		define CFG_COMPILER_MSVC_TOOLS_V 143 // NOLINT(cppcoreguidelines-macro-usage)
-#		define M_COMPILER_MSVC_TOOLS_V 143 // NOLINT(cppcoreguidelines-macro-usage)
 #	endif
 #elif defined(__clang__)
 #	define CFG_COMPILER CFG_COMPILER_CLANG // NOLINT(cppcoreguidelines-macro-usage)
-#	define M_COMPILER M_COMPILER_CLANG // NOLINT(cppcoreguidelines-macro-usage)
 #else
 #	define CFG_COMPILER CFG_COMPILER_UNKNOWN // NOLINT(cppcoreguidelines-macro-usage)
-#	define M_COMPILER M_COMPILER_UNKNOWN // NOLINT(cppcoreguidelines-macro-usage)
 #endif
 
 //====================================================|
@@ -110,11 +87,6 @@ SOFTWARE.
 #define CFG_CPU_X86 1 // NOLINT(cppcoreguidelines-macro-usage)
 #define CFG_CPU_X86_64 2 // NOLINT(cppcoreguidelines-macro-usage)
 #define CFG_CPU_ARM 3 // NOLINT(cppcoreguidelines-macro-usage)
-
-#define M_CPU_UNKNOWN 0 // NOLINT(cppcoreguidelines-macro-usage)
-#define M_CPU_X86 1 // NOLINT(cppcoreguidelines-macro-usage)
-#define M_CPU_X86_64 2 // NOLINT(cppcoreguidelines-macro-usage)
-#define M_CPU_ARM 3 // NOLINT(cppcoreguidelines-macro-usage)
 // NOLINTEND(modernize-macro-to-enum, cppcoreguidelines-macro-to-enum)
 
 #if CFG_COMPILER == CFG_COMPILER_GCC
@@ -122,21 +94,14 @@ SOFTWARE.
 #		define CFG_CPU CFG_CPU_X86 // NOLINT(cppcoreguidelines-macro-usage)
 #		define CFG_CPU_BITS 32 // NOLINT(cppcoreguidelines-macro-usage)
 
-#		define M_CPU M_CPU_X86 // NOLINT(cppcoreguidelines-macro-usage)
-#		define M_CPU_BITS 32 // NOLINT(cppcoreguidelines-macro-usage)
-
 #		if defined(__i686__)
 #			define CFG_CPU_VERSION 6 // NOLINT(cppcoreguidelines-macro-usage)
-#			define M_CPU_VERSION 6 // NOLINT(cppcoreguidelines-macro-usage)
 #		elif defined(__i586__)
 #			define CFG_CPU_VERSION 5 // NOLINT(cppcoreguidelines-macro-usage)
-#			define M_CPU_VERSION 5 // NOLINT(cppcoreguidelines-macro-usage)
 #		elif defined(__i486__)
 #			define CFG_CPU_VERSION 4 // NOLINT(cppcoreguidelines-macro-usage)
-#			define M_CPU_VERSION 4 // NOLINT(cppcoreguidelines-macro-usage)
 #		else
 #			define CFG_CPU_VERSION 3 // NOLINT(cppcoreguidelines-macro-usage)
-#			define M_CPU_VERSION 3 // NOLINT(cppcoreguidelines-macro-usage)
 #		endif
 
 #	elif defined(__x86_64__)
@@ -144,54 +109,41 @@ SOFTWARE.
 #		define CFG_CPU_BITS 64 // NOLINT(cppcoreguidelines-macro-usage)
 #		define CFG_CPU_VERSION 0 // NOLINT(cppcoreguidelines-macro-usage)
 
-#		define M_CPU M_CPU_X86_64 // NOLINT(cppcoreguidelines-macro-usage)
-#		define M_CPU_BITS 64 // NOLINT(cppcoreguidelines-macro-usage)
-#		define M_CPU_VERSION 0 // NOLINT(cppcoreguidelines-macro-usage)
-
 #	elif defined(__arm__)
 #		define CFG_CPU CFG_CPU_ARM // NOLINT(cppcoreguidelines-macro-usage)
 #		define CFG_CPU_BITS 32 // NOLINT(cppcoreguidelines-macro-usage)
 
-#		define M_CPU M_CPU_ARM // NOLINT(cppcoreguidelines-macro-usage)
-#		define M_CPU_BITS 32 // NOLINT(cppcoreguidelines-macro-usage)
-
 #		if defined(__thumb2__) // this macro is defined when targeting only thumb-2
 #			define CFG_CPU_ARM_THUMB_VERSION 2 // NOLINT(cppcoreguidelines-macro-usage)
-#			define M_CPU_ARM_THUMB_VERSION 2 // NOLINT(cppcoreguidelines-macro-usage)
 #		elif defined(__thumb__) // this macro is defined when targeting any, thumb-1 or thumb-2
 #			define CFG_CPU_ARM_THUMB_VERSION 1 // NOLINT(cppcoreguidelines-macro-usage)
-#			define M_CPU_ARM_THUMB_VERSION 1 // NOLINT(cppcoreguidelines-macro-usage)
 #		endif
 
 #		if defined(__ARM_ARCH_7__) || defined(__ARM_ARCH_7A__) || defined(__ARM_ARCH_7R__) || defined(__ARM_ARCH_7M__)
 #			define CFG_CPU_VERSION 7 // NOLINT(cppcoreguidelines-macro-usage)
-#			define M_CPU_VERSION 7 // NOLINT(cppcoreguidelines-macro-usage)
 #		elif defined(__ARM_ARCH_6T2__) || defined(__ARM_ARCH_6ZK__) || defined(__ARM_ARCH_6Z__) || \
 			defined(__ARM_ARCH_6K__) || defined(__ARM_ARCH_6J__) || defined(__ARM_ARCH_6__)
 
 #			define CFG_CPU_VERSION 6 // NOLINT(cppcoreguidelines-macro-usage)
-#			define M_CPU_VERSION 6 // NOLINT(cppcoreguidelines-macro-usage)
 #		elif defined(__ARM_ARCH_5TEJ__) || defined(__ARM_ARCH_5TE__) || defined(__ARM_ARCH_5T__) || \
 			defined(__ARM_ARCH_5E__) || defined(__ARM_ARCH_5__)
 
 #			define CFG_CPU_VERSION 5 // NOLINT(cppcoreguidelines-macro-usage)
-#			define M_CPU_VERSION 5 // NOLINT(cppcoreguidelines-macro-usage)
 #		elif defined(__ARM_ARCH_4T__) || defined(__ARM_ARCH_4__)
 #			define CFG_CPU_VERSION 4 // NOLINT(cppcoreguidelines-macro-usage)
-#			define M_CPU_VERSION 4 // NOLINT(cppcoreguidelines-macro-usage)
 #		else
 #			define CFG_CPU_VERSION 0 // NOLINT(cppcoreguidelines-macro-usage)
-#			define M_CPU_VERSION 0 // NOLINT(cppcoreguidelines-macro-usage)
 #		endif
+
+#	elif defined(__aarch64__)
+#		define CFG_CPU CFG_CPU_ARM // NOLINT(cppcoreguidelines-macro-usage)
+#		define CFG_CPU_BITS 64 // NOLINT(cppcoreguidelines-macro-usage)
+#		define CFG_CPU_VERSION 8 // NOLINT(cppcoreguidelines-macro-usage)
 
 #	else
 #		define CFG_CPU CFG_CPU_UNKNOWN // NOLINT(cppcoreguidelines-macro-usage)
 #		define CFG_CPU_BITS 0 // NOLINT(cppcoreguidelines-macro-usage)
 #		define CFG_CPU_VERSION 0 // NOLINT(cppcoreguidelines-macro-usage)
-
-#		define M_CPU M_CPU_UNKNOWN // NOLINT(cppcoreguidelines-macro-usage)
-#		define M_CPU_BITS 0 // NOLINT(cppcoreguidelines-macro-usage)
-#		define M_CPU_VERSION 0 // NOLINT(cppcoreguidelines-macro-usage)
 #	endif
 
 #elif CFG_COMPILER == CFG_COMPILER_MSVC
@@ -199,21 +151,14 @@ SOFTWARE.
 #		define CFG_CPU CFG_CPU_X86 // NOLINT(cppcoreguidelines-macro-usage)
 #		define CFG_CPU_BITS 32 // NOLINT(cppcoreguidelines-macro-usage)
 
-#		define M_CPU M_CPU_X86 // NOLINT(cppcoreguidelines-macro-usage)
-#		define M_CPU_BITS 32 // NOLINT(cppcoreguidelines-macro-usage)
-
 #		if _M_IX86 == 600
 #			define CFG_CPU_VERSION 6 // NOLINT(cppcoreguidelines-macro-usage)
-#			define M_CPU_VERSION 6 // NOLINT(cppcoreguidelines-macro-usage)
 #		elif _M_IX86 == 500
 #			define CFG_CPU_VERSION 5 // NOLINT(cppcoreguidelines-macro-usage)
-#			define M_CPU_VERSION 5 // NOLINT(cppcoreguidelines-macro-usage)
 #		elif _M_IX86 == 400
 #			define CFG_CPU_VERSION 4 // NOLINT(cppcoreguidelines-macro-usage)
-#			define M_CPU_VERSION 4 // NOLINT(cppcoreguidelines-macro-usage)
 #		else
 #			define CFG_CPU_VERSION 3 // NOLINT(cppcoreguidelines-macro-usage)
-#			define M_CPU_VERSION 3 // NOLINT(cppcoreguidelines-macro-usage)
 #		endif
 
 #	elif defined(_M_AMD64) || defined(_M_X64)
@@ -221,27 +166,15 @@ SOFTWARE.
 #		define CFG_CPU_BITS 64 // NOLINT(cppcoreguidelines-macro-usage)
 #		define CFG_CPU_VERSION 0 // NOLINT(cppcoreguidelines-macro-usage)
 
-#		define M_CPU M_CPU_X86_64 // NOLINT(cppcoreguidelines-macro-usage)
-#		define M_CPU_BITS 64 // NOLINT(cppcoreguidelines-macro-usage)
-#		define M_CPU_VERSION 0 // NOLINT(cppcoreguidelines-macro-usage)
-
 #	else
 #		define CFG_CPU CFG_CPU_UNKNOWN // NOLINT(cppcoreguidelines-macro-usage)
 #		define CFG_CPU_BITS 0 // NOLINT(cppcoreguidelines-macro-usage)
 #		define CFG_CPU_VERSION 0 // NOLINT(cppcoreguidelines-macro-usage)
-
-#		define M_CPU M_CPU_UNKNOWN // NOLINT(cppcoreguidelines-macro-usage)
-#		define M_CPU_BITS 0 // NOLINT(cppcoreguidelines-macro-usage)
-#		define M_CPU_VERSION 0 // NOLINT(cppcoreguidelines-macro-usage)
 #	endif
 #else
 #	define CFG_CPU CFG_CPU_UNKNOWN // NOLINT(cppcoreguidelines-macro-usage)
 #	define CFG_CPU_BITS 0 // NOLINT(cppcoreguidelines-macro-usage)
 #	define CFG_CPU_VERSION 0 // NOLINT(cppcoreguidelines-macro-usage)
-
-#	define M_CPU M_CPU_UNKNOWN // NOLINT(cppcoreguidelines-macro-usage)
-#	define M_CPU_BITS 0 // NOLINT(cppcoreguidelines-macro-usage)
-#	define M_CPU_VERSION 0 // NOLINT(cppcoreguidelines-macro-usage)
 #endif
 
 //======================================|
@@ -257,12 +190,6 @@ SOFTWARE.
 #define CFG_OS_MACOSX 3 // NOLINT(cppcoreguidelines-macro-usage)
 #define CFG_OS_UNIX 4 // NOLINT(cppcoreguidelines-macro-usage)
 
-#define M_OS_UNKNOWN 0 // NOLINT(cppcoreguidelines-macro-usage)
-#define M_OS_LINUX 1 // NOLINT(cppcoreguidelines-macro-usage)
-#define M_OS_WINDOWS 2 // NOLINT(cppcoreguidelines-macro-usage)
-#define M_OS_MACOSX 3 // NOLINT(cppcoreguidelines-macro-usage)
-#define M_OS_UNIX 4 // NOLINT(cppcoreguidelines-macro-usage)
-
 // OS name
 #define CFG_OS_NAME_UNKNOWN 0 // NOLINT(cppcoreguidelines-macro-usage)
 #define CFG_OS_NAME_MACOSX 1 // NOLINT(cppcoreguidelines-macro-usage)
@@ -270,61 +197,40 @@ SOFTWARE.
 #define CFG_OS_NAME_ANDROID 3 // NOLINT(cppcoreguidelines-macro-usage)
 #define CFG_OS_NAME_SOLARIS 4 // NOLINT(cppcoreguidelines-macro-usage)
 
-#define M_OS_NAME_UNKNOWN 0 // NOLINT(cppcoreguidelines-macro-usage)
-#define M_OS_NAME_MACOSX 1 // NOLINT(cppcoreguidelines-macro-usage)
-#define M_OS_NAME_IOS 2 // NOLINT(cppcoreguidelines-macro-usage)
-#define M_OS_NAME_ANDROID 3 // NOLINT(cppcoreguidelines-macro-usage)
-#define M_OS_NAME_SOLARIS 4 // NOLINT(cppcoreguidelines-macro-usage)
-
 // NOLINTEND(modernize-macro-to-enum, cppcoreguidelines-macro-to-enum)
 
 #if defined(__linux__)
 #	define CFG_OS CFG_OS_LINUX // NOLINT(cppcoreguidelines-macro-usage)
-#	define M_OS M_OS_LINUX // NOLINT(cppcoreguidelines-macro-usage)
 #	if defined(__ANDROID__)
 #		define CFG_OS_NAME CFG_OS_NAME_ANDROID // NOLINT(cppcoreguidelines-macro-usage)
-#		define M_OS_NAME M_OS_NAME_ANDROID // NOLINT(cppcoreguidelines-macro-usage)
 #	else
 #		define CFG_OS_NAME CFG_OS_NAME_UNKNOWN // NOLINT(cppcoreguidelines-macro-usage)
-#		define M_OS_NAME M_OS_NAME_UNKNOWN // NOLINT(cppcoreguidelines-macro-usage)
 #	endif
 
 // _WIN32 macro is defined for both win32 and win64. _WIN32 is the correct one, WIN32 is not always defined.
 #elif defined(_WIN32) || defined(WIN32)
 #	define CFG_OS CFG_OS_WINDOWS // NOLINT(cppcoreguidelines-macro-usage)
 #	define CFG_OS_NAME CFG_OS_NAME_UNKNOWN // NOLINT(cppcoreguidelines-macro-usage)
-
-#	define M_OS M_OS_WINDOWS // NOLINT(cppcoreguidelines-macro-usage)
-#	define M_OS_NAME M_OS_NAME_UNKNOWN // NOLINT(cppcoreguidelines-macro-usage)
 #elif defined(__APPLE__)
 #	define CFG_OS CFG_OS_MACOSX // NOLINT(cppcoreguidelines-macro-usage)
-#	define M_OS M_OS_MACOSX // NOLINT(cppcoreguidelines-macro-usage)
 #	include <TargetConditionals.h>
 #	if TARGET_OS_IPHONE == 1 || TARGET_IPHONE_SIMULATOR == 1
 #		define CFG_OS_NAME CFG_OS_NAME_IOS // NOLINT(cppcoreguidelines-macro-usage)
-#		define M_OS_NAME M_OS_NAME_IOS // NOLINT(cppcoreguidelines-macro-usage)
 #	else
 #		define CFG_OS_NAME CFG_OS_NAME_MACOSX // NOLINT(cppcoreguidelines-macro-usage)
-#		define M_OS_NAME M_OS_NAME_MACOSX // NOLINT(cppcoreguidelines-macro-usage)
 #	endif
 
 // check for UNIX should go after check for Linux, because on Linux the __unix macro is also defined
 #elif defined(__unix) || defined(__unix__)
 #	define CFG_OS CFG_OS_UNIX // NOLINT(cppcoreguidelines-macro-usage)
-#	define M_OS M_OS_UNIX // NOLINT(cppcoreguidelines-macro-usage)
 #	if defined(sun) || defined(__sun)
 #		define CFG_OS_NAME CFG_OS_NAME_SOLARIS // NOLINT(cppcoreguidelines-macro-usage)
-#		define M_OS_NAME M_OS_NAME_SOLARIS // NOLINT(cppcoreguidelines-macro-usage)
 #	else
 #		define CFG_OS_NAME CFG_OS_NAME_UNKNOWN // NOLINT(cppcoreguidelines-macro-usage)
-#		define M_OS_NAME M_OS_NAME_UNKNOWN // NOLINT(cppcoreguidelines-macro-usage)
 #	endif
 #else
 #	define CFG_OS CFG_OS_UNKNOWN // NOLINT(cppcoreguidelines-macro-usage)
 #	define CFG_OS_NAME CFG_OS_NAME_UNKNOWN // NOLINT(cppcoreguidelines-macro-usage)
-
-#	define M_OS M_OS_UNKNOWN // NOLINT(cppcoreguidelines-macro-usage)
-#	define M_OS_NAME M_OS_NAME_UNKNOWN // NOLINT(cppcoreguidelines-macro-usage)
 #endif
 
 #if CFG_OS == CFG_OS_WINDOWS
