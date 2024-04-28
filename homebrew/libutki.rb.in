@@ -10,6 +10,7 @@ class Libutki < Formula
   # use gmake here because otherwise homebrew uses default Mac's make which is of too old version 3.81
   def install
     ENV['PATH'] += ':/usr/local/bin'
+    system "gmake", "--version"
     # install from src directory because tests require submodules
     system "gmake", "--include-dir=#{ENV['HOMEBREW_PREFIX']}/include", "--directory=src", "install", "PREFIX=#{prefix}", "lint=off"
   end
