@@ -11,11 +11,11 @@ class Libutki < Formula
   def install
     ENV['PATH'] += ':/usr/local/bin'
     # install from src directory because tests require submodules
-    system "/usr/local/opt/make/libexec/gnubin/make", "--directory", "src", "install", "PREFIX=#{prefix}", "lint=off"
+    system "gmake", "--include-dir=#{ENV['HOMEBREW_PREFIX']}/include", "--directory=src", "install", "PREFIX=#{prefix}", "lint=off"
   end
 
   test do
 	# tests require submodules, so skip those in homebrew recepie
-#    system "/usr/local/opt/make/libexec/gnubin/make", "test"
+#    system "gmake", "--include-dir=#{ENV['HOMEBREW_PREFIX']}/include", "test"
   end
 end
