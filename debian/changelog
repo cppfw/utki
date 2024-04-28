@@ -1,3 +1,9 @@
+libutki (1.1.237) unstable; urgency=medium
+
+  * gmake version
+
+ -- Ivan Gagis <igagis@gmail.com>  Sun, 28 Apr 2024 19:49:44 +0300
+
 libutki (1.1.236) unstable; urgency=medium
 
   * update macos packaging
