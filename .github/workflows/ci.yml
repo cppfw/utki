@@ -64,10 +64,10 @@ jobs:
           name: cobertura.xml
           path: cobertura.xml
       - name: upload coverage data to codecov.io
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
         if: always() # even if previous steps fail, this one needs to be run
         with:
-          # token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
           files: cobertura.xml
           # flags: unittests # optional
           name: codecov-umbrella # optional
