@@ -261,6 +261,15 @@ jobs:
     - name: set PATH to use latest make
       uses: myci-actions/export-env-var@master
       with: {name: PATH, value: "$HOMEBREW_PREFIX/opt/make/libexec/gnubin:$PATH"}
+    - name: set CFLAGS
+      uses: myci-actions/export-env-var@master
+      with: {name: CFLAGS, value: "-I $HOMEBREW_PREFIX/include $CFLAGS"}
+    - name: set CXXFLAGS
+      uses: myci-actions/export-env-var@master
+      with: {name: CXXFLAGS, value: "-I $HOMEBREW_PREFIX/include $CXXFLAGS"}
+    - name: set LDFLAGS
+      uses: myci-actions/export-env-var@master
+      with: {name: LDFLAGS, value: "-L $HOMEBREW_PREFIX/lib $LDFLAGS"}
     - name: install deps
       run: myci-brew-install.sh `myci-list-deps-homebrew.sh`
     - name: build
