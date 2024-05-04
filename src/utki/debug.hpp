@@ -38,13 +38,13 @@ SOFTWARE.
 #		include <source_location>
 
 namespace utki {
-typedef std::source_location std_source_location;
+using std_source_location = std::source_location;
 } // namespace utki
 #	else
 #		include <experimental/source_location>
 
 namespace utki {
-typedef std::experimental::source_location std_source_location;
+using std_source_location = std::experimental::source_location;
 } // namespace utki
 #	endif
 #endif
