@@ -30,10 +30,14 @@ SOFTWARE.
 #include <cctype> // for std::isspace()
 #include <cstdarg> // for varargs
 
-#include "fast_float/fast_float.hxx"
+#include <fast_float/fast_float.h>
 
 #include "debug.hpp"
 #include "util.hpp"
+
+#ifdef assert
+#	undef assert
+#endif
 
 using namespace utki;
 

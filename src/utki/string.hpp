@@ -285,7 +285,7 @@ enum class chars_format {
 
 /**
  * @brief Convert chars to float.
- * This is to be removed when std::from_chars(float) is widely supported by compilers.
+ * This is to be removed when std::from_chars(float/double/long double) is widely supported by compilers.
  * @param first - chars start.
  * @param last - chars end.
  * @param value - the output value.
@@ -358,10 +358,10 @@ public:
 		// NOLINTNEXTLINE(cppcoreguidelines-pro-type-member-init)
 		std::from_chars_result res;
 
-		if constexpr (std::is_floating_point<number_type>::value) {
+		if constexpr (std::is_floating_point_v<number_type>) {
 			// TODO: use std::from_chars for floats when it is widely supported by C++17 compilers,
 			// so if constexpr will not be needed.
-			if constexpr (std::is_same<long double, number_type>::value) {
+			if constexpr (std::is_same_v<long double, number_type>) {
 				return number_type(this->read_number<double>());
 			} else {
 				res = utki::from_chars(this->view.data(), this->view.data() + this->view.size(), ret);
