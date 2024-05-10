@@ -9,7 +9,7 @@ this_name := utki
 
 this_soname := $(shell cat $(d)soname.txt)
 
-this_srcs := $(call prorab-src-dir, .)
+this_srcs := $(call prorab-src-dir, $(this_name))
 
 $(eval $(prorab-build-lib))
 
