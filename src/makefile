@@ -11,9 +11,7 @@ this_soname := $(shell cat $(d)soname.txt)
 
 this_srcs := $(call prorab-src-dir, $(this_name))
 
-this_cxxflags += -isystem deps
-
-this_headers_dir := $(this_name)
+this_cxxflags += -isystem ../src_deps
 
 $(eval $(prorab-build-lib))
 
