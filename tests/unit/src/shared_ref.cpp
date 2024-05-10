@@ -2,6 +2,8 @@
 #include <tst/set.hpp>
 #include <utki/shared_ref.hpp>
 
+#include <algorithm>
+
 namespace {
 const std::string etalon = "hello world!";
 

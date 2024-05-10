@@ -194,7 +194,7 @@ jobs:
       matrix:
         include:
           - {image: "archlinux:latest", arch: amd64}
-          - {image: "lopsided/archlinux-arm32v7:latest", arch: arm32, labels: [arm,docker]}
+          # - {image: "lopsided/archlinux-arm32v7:latest", arch: arm32, labels: [arm,docker]}
           - {image: "lopsided/archlinux-arm64v8:latest", arch: arm64, labels: [arm64,docker]}
     runs-on: ${{ (matrix.labels == '' && 'ubuntu-latest') || matrix.labels }}
     container: ${{ matrix.image }}
@@ -533,7 +533,7 @@ jobs:
           sed -i -E "s/compiler.cppstd=.*$/compiler.cppstd=17/g" ~/.conan2/profiles/default
       - name: set PATH to use latest make
         uses: myci-actions/export-env-var@master
-        with: {name: PATH, value: "/usr/local/opt/make/libexec/gnubin:$PATH"}
+        with: {name: PATH, value: "$HOMEBREW_PREFIX/opt/make/libexec/gnubin:$PATH"}
       - name: set PACKAGE_VERSION
         uses: myci-actions/export-env-var@master
         with: {name: PACKAGE_VERSION, value: $(myci-deb-version.sh debian/changelog)}
