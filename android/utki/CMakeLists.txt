@@ -23,8 +23,10 @@ add_library( # Specifies the name of the library.
              # Provides a relative path to your source file(s).
              ${srcs} )
 
-include_directories(
-        
+target_include_directories(
+        utki
+        PRIVATE
+        "../../src_deps"
     )
 
 target_link_libraries(
