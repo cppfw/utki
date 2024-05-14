@@ -10,26 +10,25 @@ cmake_minimum_required(VERSION 3.4.1)
 # and CMake builds them for you. When you build your app, Gradle
 # automatically packages shared libraries with your APK.
 
+set(name utki)
+
 file(GLOB_RECURSE srcs "../../src/utki/*.cpp")
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
 
-add_library( # Specifies the name of the library.
-             utki
-
-             # Sets the library as a shared library.
-             STATIC
-
-             # Provides a relative path to your source file(s).
-             ${srcs} )
+add_library(
+        ${name}
+        STATIC
+        ${srcs}
+    )
 
 target_include_directories(
-        utki
+        ${name}
         PRIVATE
         "../../src_deps"
     )
 
 target_link_libraries(
-        utki
+        ${name}
         android log
     )
