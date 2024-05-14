@@ -223,7 +223,7 @@ struct is_type_defined< //
 	std::void_t<typename owner_type::type> //
 	> :
 	std::true_type //
-{};
+	{};
 
 /**
  * @brief Get type or void.
@@ -260,7 +260,7 @@ struct is_specialization_of< //
 	template_templ<args_type...> //
 	> :
 	std::true_type //
-{};
+	{};
 
 template <template <typename...> class template_templ, typename checked_type>
 constexpr static bool is_specialization_of_v = is_specialization_of<template_templ, checked_type>::value;
