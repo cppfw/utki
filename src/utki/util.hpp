@@ -484,8 +484,9 @@ inline uint64_t deserialize64be(const uint8_t* buf) noexcept
 bool is_terminal_cerr();
 
 // TODO: remove deprecated stuff
-[[deprecated("use is_terminal_cerr()")]]
-inline bool is_cerr_terminal()
+[[deprecated("use is_terminal_cerr()")]] //
+inline bool
+is_cerr_terminal()
 {
 	return is_terminal_cerr();
 }
@@ -498,8 +499,9 @@ inline bool is_cerr_terminal()
 bool is_terminal_cout();
 
 // TODO: remove deprecated stuff
-[[deprecated("use is_terminal_cout()")]]
-inline bool is_cout_terminal()
+[[deprecated("use is_terminal_cout()")]] //
+inline bool
+is_cout_terminal()
 {
 	return is_terminal_cout();
 }
