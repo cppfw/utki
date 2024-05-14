@@ -354,6 +354,34 @@ inline uint64_t deserialize64le(const uint8_t* buf) noexcept
 }
 
 /**
+ * @brief Serialize float to IEEE 754, little-endian.
+ * @param value - flaot value to serialize.
+ * @param out_buf - pointer to the 4 byte buffer where the result will be placed.
+ * @return pointer to the next byte after serialized value.
+ */
+inline uint8_t* serialize_float_le(float value, uint8_t* out_buf) noexcept
+{
+	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast)
+	auto p = reinterpret_cast<uint8_t*>(&value);
+	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast)
+	return serialize32le(*reinterpret_cast<uint32_t*>(p), out_buf);
+}
+
+/**
+ * @brief De-serialize IEEE 754 single precision floating point value, little-endian.
+ * @param buf - pointer to buffer containing 4 bytes to convert from IEEE 754 little-endian format.
+ * @return floating point value.
+ */
+inline float deserialize_float_le(const uint8_t* buf) noexcept
+{
+	auto val = deserialize32le(buf);
+	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast)
+	auto p = reinterpret_cast<uint8_t*>(&val);
+	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast)
+	return *reinterpret_cast<float*>(p);
+}
+
+/**
  * @brief Serialize unsigned integral value, big-endian.
  * @param value - value to serialize.
  * @param out_buf - output buffer.
@@ -514,8 +542,9 @@ is_cout_terminal()
 bool is_terminal_cin();
 
 // TODO: remove deprecated stuff
-[[deprecated("use is_terminal_cin()")]]
-inline bool is_cin_terminal()
+[[deprecated("use is_terminal_cin()")]] //
+inline bool
+is_cin_terminal()
 {
 	return is_terminal_cin();
 }

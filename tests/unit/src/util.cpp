@@ -74,6 +74,37 @@ const tst::set set("util", [](tst::suite& suite) {
 		tst::check_eq(res, val, SL);
 	});
 
+	suite.add<std::pair<float, std::array<uint8_t, 4>>>( //
+		"serialization_float",
+		{
+			{       13, {0x00, 0x00, 0x50, 0x41}},
+			{    13666, {0x00, 0x88, 0x55, 0x46}},
+			{ 13666e10, {0x46, 0x95, 0xf8, 0x56}},
+			{  13.666f, {0xf0, 0xa7, 0x5a, 0x41}},
+			{      -13, {0x00, 0x00, 0x50, 0xc1}},
+			{   -13666, {0x00, 0x88, 0x55, 0xc6}},
+			{-13666e10, {0x46, 0x95, 0xf8, 0xd6}},
+			{ -13.666f, {0xf0, 0xa7, 0x5a, 0xc1}},
+    },
+		[](const auto& p) {
+			std::array<uint8_t, 4> buf{};
+			auto ret = utki::serialize_float_le(p.first, buf.data());
+
+			tst::check_eq(ret, buf.end(), SL);
+
+			// std::cout << "p.second = " << std::hex << unsigned(p.second[0]) << " " << unsigned(p.second[1]) << " "
+			// 		  << unsigned(p.second[2]) << " " << unsigned(p.second[3]) << std::endl
+			// 		  << "buf = " << unsigned(buf[0]) << " " << unsigned(buf[1]) << " " << unsigned(buf[2]) << " "
+			// 		  << unsigned(buf[3]) << std::endl;
+
+			tst::check(buf == p.second, SL);
+
+			float f = utki::deserialize_float_le(buf.data());
+
+			tst::check_eq(f, p.first, SL);
+		}
+	);
+
 	suite.add("scope_exit", []() {
 		bool flag = false;
 		{
