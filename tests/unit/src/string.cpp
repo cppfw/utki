@@ -921,14 +921,16 @@ const tst::set set("string", [](tst::suite& suite) {
 
 	suite.add<std::pair<size_t, std::string>>(
 		"to_string__size_t",
+		// clang-format off
 		{
-			{								   0,          "0"},
-			{								   1,          "1"},
-			{								  13,         "13"},
+			{ 0, "0"},
+			{ 1, "1"},
+			{ 13, "13"},
 
 			// size_t can be 32 bit on 32 bit CPUs, so don't go over 32 bit max value
 			{std::numeric_limits<uint32_t>::max(), "4294967295"}
-    },
+		},
+		// clang-format on
 		[](const auto& p) {
 			auto s = utki::to_string(p.first);
 
