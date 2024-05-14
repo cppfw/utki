@@ -256,6 +256,7 @@ struct is_specialization_of : std::false_type {};
 // clang-format off
 template <template <typename...> class template_templ, typename... args_type>
 struct is_specialization_of<template_templ, template_templ<args_type...>> : std::true_type{};
+
 // clang-format on
 
 template <template <typename...> class template_templ, typename checked_type>
