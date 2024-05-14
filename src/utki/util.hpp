@@ -59,7 +59,7 @@ constexpr auto kilobyte = 1024;
 template <typename iterator_type>
 iterator_type next(iterator_type iter, size_t n)
 {
-	const auto max_advance = std::numeric_limits<typename std::iterator_traits<iterator_type>::difference_type>::max();
+	constexpr auto max_advance = std::numeric_limits<typename std::iterator_traits<iterator_type>::difference_type>::max();
 	for (size_t num_left = n;;) {
 		if (num_left > size_t(max_advance)) {
 			num_left -= max_advance;

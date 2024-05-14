@@ -8,6 +8,10 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "clargs", "clargs\clargs.vcxproj", "{54267CD6-9EEB-46A0-B7AF-75682E184831}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tst", "tst\tst.vcxproj", "{534516A6-03CC-4128-A6D9-31FA91F0CCB3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{54267CD6-9EEB-46A0-B7AF-75682E184831} = {54267CD6-9EEB-46A0-B7AF-75682E184831}
+		{7000D75D-4B4B-43D9-A99D-C34805558D52} = {7000D75D-4B4B-43D9-A99D-C34805558D52}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "unit_tests", "unit_tests\unit_tests.vcxproj", "{EE7EF8BC-FDA0-4BE6-887C-459AD602C1B9}"
 EndProject
