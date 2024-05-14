@@ -264,6 +264,7 @@ SOFTWARE.
 // Windows 32/64 bit is always little endian
 #	define CFG_ENDIANNESS CFG_ENDIANNESS_LITTLE // NOLINT(cppcoreguidelines-macro-usage)
 #else
+// clang-format off
 #	if (defined(__ORDER_BIG_ENDIAN__) && \
 		 (__BYTE_ORDER__ == __ORDER_BIG_ENDIAN__ || __FLOAT_WORD_ORDER__ == __ORDER_BIG_ENDIAN__)) || \
 		defined(__BIG_ENDIAN__) || defined(__ARMEB__) || defined(__THUMBEB__) || defined(__AARCH64EB__) || \
@@ -279,6 +280,7 @@ SOFTWARE.
 #	else
 #		define CFG_ENDIANNESS CFG_ENDIANNESS_UNKNOWN // NOLINT(cppcoreguidelines-macro-usage)
 #	endif
+// clang-format on
 #endif
 
 // NOLINTEND(cppcoreguidelines-macro-usage)
