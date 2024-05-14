@@ -30,11 +30,12 @@ SOFTWARE.
 #include <stdexcept>
 
 #include "debug.hpp"
+#include "types.hpp"
 
 using namespace utki;
 
 namespace {
-constexpr const std::array<uint8_t, 0x100> decode_table{
+constexpr const std::array<uint8_t, size_t(std::numeric_limits<uint8_t>::max()) + 1> decode_table{
 	0x64, 0x64, 0x64, 0x64, 0x64, 0x64, 0x64, 0x64, 0x64, 0x64, 0x64, 0x64, 0x64, 0x64, 0x64, 0x64, 0x64, 0x64, 0x64,
 	0x64, 0x64, 0x64, 0x64, 0x64, 0x64, 0x64, 0x64, 0x64, 0x64, 0x64, 0x64, 0x64, 0x64, 0x64, 0x64, 0x64, 0x64, 0x64,
 	0x64, 0x64, 0x64, 0x64, 0x64, 0x3E, 0x64, 0x64, 0x64, 0x3F, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x3A, 0x3B, 0x3C,
@@ -53,16 +54,17 @@ constexpr const std::array<uint8_t, 0x100> decode_table{
 
 std::array<uint8_t, 3> base64_decode_quad(char a, char b, char c, char d)
 {
+	constexpr auto bits_per_char = 6;
 	uint32_t quad = //
-		(decode_table[a] << 18) | //
-		(decode_table[b] << 12) | //
-		(decode_table[c] << 6) | //
+		(decode_table[a] << bits_per_char * 3) | //
+		(decode_table[b] << bits_per_char * 2) | //
+		(decode_table[c] << bits_per_char) | //
 		decode_table[d];
 
 	return {
-		uint8_t((quad >> 16) & 0xff), //
-		uint8_t((quad >> 8) & 0xff),
-		uint8_t(quad & 0xff)
+		uint8_t((quad >> utki::byte_bits * 2) & utki::byte_mask), //
+		uint8_t((quad >> utki::byte_bits) & utki::byte_mask),
+		uint8_t(quad & utki::byte_mask)
 	};
 }
 } // namespace
