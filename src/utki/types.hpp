@@ -218,8 +218,10 @@ template <class owner_type, class = void>
 struct is_type_defined : std::false_type {};
 
 // clang-format off
+
 template <class owner_type>
 struct is_type_defined<owner_type, std::void_t<typename owner_type::type>> : std::true_type{};
+
 // clang-format on
 
 /**
