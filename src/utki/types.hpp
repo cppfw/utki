@@ -221,7 +221,9 @@ template <class owner_type>
 struct is_type_defined< //
 	owner_type,
 	std::void_t<typename owner_type::type> //
-	> : std::true_type {};
+	> :
+	std::true_type //
+{};
 
 /**
  * @brief Get type or void.
@@ -256,7 +258,9 @@ template <template <typename...> class template_templ, typename... args_type>
 struct is_specialization_of< //
 	template_templ,
 	template_templ<args_type...> //
-	> : std::true_type {};
+	> :
+	std::true_type //
+{};
 
 template <template <typename...> class template_templ, typename checked_type>
 constexpr static bool is_specialization_of_v = is_specialization_of<template_templ, checked_type>::value;
