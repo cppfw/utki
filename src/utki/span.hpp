@@ -154,7 +154,16 @@ public:
 		span(v.data(), v.size())
 	{}
 
-	span(std::basic_string<typename std::remove_const_t<element_type>>& v) :
+	// std::basic_string constructor is only allowed for char-like types
+	template < //
+		typename other_element_type,
+		typename std::enable_if_t< //
+			std::is_same_v<other_element_type, char> || //
+				std::is_same_v<other_element_type, wchar_t> || //
+				std::is_same_v<other_element_type, char16_t> || //
+				std::is_same_v<other_element_type, char32_t>,
+			bool> = true>
+	span(std::basic_string<other_element_type>& v) :
 		span(v.data(), v.size())
 	{}
 
