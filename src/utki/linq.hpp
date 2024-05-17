@@ -90,22 +90,23 @@ public:
 	{
 		using func_arg_type = typename std::add_rvalue_reference_t<value_type>;
 
-		constexpr bool func_one_arg = std::is_invocable_v<func_type, func_arg_type>;
+		constexpr bool func_has_one_arg = std::is_invocable_v<func_type, func_arg_type>;
+		constexpr bool func_has_two_args = std::is_invocable_v<func_type, func_arg_type, size_t>;
 
 		static_assert(
-			std::is_invocable_v<func_type, func_arg_type> || std::is_invocable_v<func_type, func_arg_type, size_t>,
+			func_has_one_arg || func_has_two_args,
 			"passed in function must have one argument or two arguments with the second argument of type size_t"
 		);
 
 		using func_return_type = typename std::conditional_t<
-			func_one_arg,
+			func_has_one_arg,
 			type_or_void_t<std::invoke_result<func_type, func_arg_type>>,
 			type_or_void_t<std::invoke_result<func_type, func_arg_type, size_t>>>;
 
 		std::vector<func_return_type> ret;
 		ret.reserve(this->collection.size());
 
-		if constexpr (func_one_arg) {
+		if constexpr (func_has_one_arg) {
 			for (auto&& e : this->collection) {
 				ret.push_back(func(std::move(e)));
 			}
