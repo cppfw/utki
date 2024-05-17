@@ -88,7 +88,11 @@ public:
 	template <typename func_type>
 	auto select(func_type func)
 	{
+#	if CFG_COMPILER == CFG_COMPILER_MSVC
+		using func_arg_type = value_type;
+#	else
 		using func_arg_type = typename std::add_rvalue_reference_t<value_type>;
+#	endif
 
 		constexpr bool func_one_arg = std::is_invocable_v<func_type, func_arg_type>;
 
