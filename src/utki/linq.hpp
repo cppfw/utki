@@ -28,7 +28,8 @@ SOFTWARE.
 
 #include "config.hpp"
 
-#if CFG_COMPILER != CFG_COMPILER_MSVC || CFG_COMPILER_MSVC_TOOLS_V >= 142
+// TODO: turn on compilation for MSVC tools >= v142
+#if CFG_COMPILER != CFG_COMPILER_MSVC //|| CFG_COMPILER_MSVC_TOOLS_V >= 142
 
 #	include <functional>
 #	include <vector>

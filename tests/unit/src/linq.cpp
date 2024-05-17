@@ -5,7 +5,8 @@
 #include <utki/config.hpp>
 #include <utki/linq.hpp>
 
-#if CFG_COMPILER != CFG_COMPILER_MSVC || CFG_COMPILER_MSVC_TOOLS_V >= 142
+// TODO: turn on compilation for MSVC tools >= v142
+#if CFG_COMPILER != CFG_COMPILER_MSVC //|| CFG_COMPILER_MSVC_TOOLS_V >= 142
 
 namespace {
 const tst::set set("linq", [](tst::suite& suite) {
