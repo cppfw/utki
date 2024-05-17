@@ -1,3 +1,9 @@
+libutki (1.1.239) unstable; urgency=medium
+
+  * add base64_decode()
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 17 May 2024 15:35:18 +0300
+
 libutki (1.1.238) unstable; urgency=medium
 
   * homebrew
