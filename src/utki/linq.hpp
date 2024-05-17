@@ -63,7 +63,7 @@ class linq_collection_aggregator
 		// NOLINTNEXTLINE(cppcoreguidelines-avoid-const-or-ref-data-members)
 		collection;
 
-	using value_type = typename std::remove_reference<decltype(collection)>::type::value_type;
+	using value_type = typename utki::remove_const_reference_t<decltype(collection)>::value_type;
 
 	struct noncopyable_value_type : public value_type {
 		noncopyable_value_type(const noncopyable_value_type&) = delete;

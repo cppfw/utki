@@ -419,8 +419,8 @@ const tst::set set("linq", [](tst::suite& suite) {
 				wrapper{std::make_shared<test_struct>(destroyed), 13}
 			};
 
-			auto res = utki::linq(vec) //
-						   .select([](const auto& i) -> std::shared_ptr<const test_struct> { //
+			auto res = utki::linq(vec)
+						   .select([](const auto& i) -> std::shared_ptr<const test_struct> {
 							   return i.get_ts();
 						   })
 						   .get();
