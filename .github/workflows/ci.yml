@@ -59,7 +59,7 @@ jobs:
       - name: generate coverage report
         run: gcovr --exclude-throw-branches --filter src/ --cobertura > cobertura.xml
       - name: upload coverage report to artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: cobertura.xml
           path: cobertura.xml
