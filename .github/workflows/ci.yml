@@ -321,7 +321,7 @@ jobs:
     - name: create package
       run: myci-create-zip-package.sh --headers-dir src --file xcode/build/$PACKAGE_NAME.xcframework///lib/ios --file LICENSE $PACKAGE_NAME-$PACKAGE_VERSION.zip
     - name: upload build artifacts to github
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: cocoapods-${{ env.PACKAGE_NAME }}-${{ env.PACKAGE_VERSION }}.zip
         path: ${{ env.PACKAGE_NAME }}-${{ env.PACKAGE_VERSION }}.zip
