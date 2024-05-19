@@ -1,3 +1,9 @@
+libutki (1.1.240) unstable; urgency=medium
+
+  * add deserializator
+
+ -- Ivan Gagis <igagis@gmail.com>  Sun, 19 May 2024 23:12:02 +0300
+
 libutki (1.1.239) unstable; urgency=medium
 
   * add base64_decode()
