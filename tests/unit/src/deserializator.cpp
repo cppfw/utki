@@ -7,7 +7,7 @@
 using namespace std::string_view_literals;
 
 namespace {
-tst::set set("deserializator", [](tst::suite& suite) {
+const tst::set set("deserializator", [](tst::suite& suite) {
 	suite.add("read_string", []() {
 		auto str = "bbbHello world!ccc"sv;
 

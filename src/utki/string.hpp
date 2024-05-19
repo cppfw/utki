@@ -558,6 +558,7 @@ std::string cat(const streamable_type&... s)
 {
 	std::stringstream ss;
 
+	// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-array-to-pointer-decay, "false positive")
 	(ss << ... << s);
 
 	return ss.str();
