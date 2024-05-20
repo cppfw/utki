@@ -30,12 +30,12 @@ SOFTWARE.
 
 namespace utki {
 
-class deserializator
+class deserializer
 {
 	utki::span<const uint8_t> data;
 
 public:
-	deserializator(utki::span<const uint8_t> data) :
+	deserializer(utki::span<const uint8_t> data) :
 		data(data)
 	{}
 

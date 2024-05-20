@@ -1,17 +1,17 @@
 #include <tst/check.hpp>
 #include <tst/set.hpp>
-#include <utki/deserializator.hpp>
+#include <utki/deserializer.hpp>
 #include <utki/string.hpp>
 #include <utki/util.hpp>
 
 using namespace std::string_view_literals;
 
 namespace {
-const tst::set set("deserializator", [](tst::suite& suite) {
+const tst::set set("deserializer", [](tst::suite& suite) {
 	suite.add("read_string", []() {
 		auto str = "bbbHello world!ccc"sv;
 
-		utki::deserializator d(utki::to_uint8_t(str));
+		utki::deserializer d(utki::to_uint8_t(str));
 
 		auto bbb = d.read_string(3);
 		auto hw = d.read_string(12);
@@ -25,7 +25,7 @@ const tst::set set("deserializator", [](tst::suite& suite) {
 	suite.add("read_span", []() {
 		auto str = "bbbHello world!ccc"sv;
 
-		utki::deserializator d(utki::to_uint8_t(str));
+		utki::deserializer d(utki::to_uint8_t(str));
 
 		auto bbb = d.read_span(3);
 		auto hw = d.read_span(12);
@@ -39,7 +39,7 @@ const tst::set set("deserializator", [](tst::suite& suite) {
 	suite.add("read_uint16_le", []() {
 		std::vector<uint8_t> buf = {0xa1, 0xb2};
 
-		utki::deserializator d(buf);
+		utki::deserializer d(buf);
 
 		tst::check(!d.empty(), SL);
 		tst::check_eq(d.size(), sizeof(uint16_t), SL);
@@ -54,7 +54,7 @@ const tst::set set("deserializator", [](tst::suite& suite) {
 	suite.add("read_uint32_le", []() {
 		std::vector<uint8_t> buf = {0xa1, 0xb2, 0xc3, 0xd4};
 
-		utki::deserializator d(buf);
+		utki::deserializer d(buf);
 
 		tst::check(!d.empty(), SL);
 		tst::check_eq(d.size(), sizeof(uint32_t), SL);
@@ -69,7 +69,7 @@ const tst::set set("deserializator", [](tst::suite& suite) {
 	suite.add("read_uint64_le", []() {
 		std::vector<uint8_t> buf = {0xa1, 0xb2, 0xc3, 0xd4, 0xe5, 0xf6, 0x17, 0x28};
 
-		utki::deserializator d(buf);
+		utki::deserializer d(buf);
 
 		tst::check(!d.empty(), SL);
 		tst::check_eq(d.size(), sizeof(uint64_t), SL);
@@ -101,7 +101,7 @@ const tst::set set("deserializator", [](tst::suite& suite) {
 
 			tst::check(buf == p.second, SL);
 
-			utki::deserializator d(buf);
+			utki::deserializer d(buf);
 
 			float f = d.read_float_le();
 
@@ -114,7 +114,7 @@ const tst::set set("deserializator", [](tst::suite& suite) {
 	suite.add("read_uint16_be", []() {
 		std::vector<uint8_t> buf = {0xb2, 0xa1};
 
-		utki::deserializator d(buf);
+		utki::deserializer d(buf);
 
 		tst::check(!d.empty(), SL);
 		tst::check_eq(d.size(), sizeof(uint16_t), SL);
@@ -129,7 +129,7 @@ const tst::set set("deserializator", [](tst::suite& suite) {
 	suite.add("read_uint32_be", []() {
 		std::vector<uint8_t> buf = {0xd4, 0xc3, 0xb2, 0xa1};
 
-		utki::deserializator d(buf);
+		utki::deserializer d(buf);
 
 		tst::check(!d.empty(), SL);
 		tst::check_eq(d.size(), sizeof(uint32_t), SL);
@@ -144,7 +144,7 @@ const tst::set set("deserializator", [](tst::suite& suite) {
 	suite.add("read_uint64_be", []() {
 		std::vector<uint8_t> buf = {0x28, 0x17, 0xf6, 0xe5, 0xd4, 0xc3, 0xb2, 0xa1};
 
-		utki::deserializator d(buf);
+		utki::deserializer d(buf);
 
 		tst::check(!d.empty(), SL);
 		tst::check_eq(d.size(), sizeof(uint64_t), SL);

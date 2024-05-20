@@ -24,18 +24,18 @@ SOFTWARE.
 
 /* ================ LICENSE END ================ */
 
-#include "deserializator.hpp"
+#include "deserializer.hpp"
 
 #include "string.hpp"
 #include "util.hpp"
 
 using namespace utki;
 
-std::string_view deserializator::read_string(size_t length)
+std::string_view deserializer::read_string(size_t length)
 {
 	if (this->size() < length) {
 		throw std::invalid_argument(
-			utki::cat("deserializator::read_string(", length, "): buffer size is only ", this->size())
+			utki::cat("deserializer::read_string(", length, "): buffer size is only ", this->size())
 		);
 	}
 
@@ -44,11 +44,11 @@ std::string_view deserializator::read_string(size_t length)
 	return ret;
 }
 
-utki::span<const uint8_t> deserializator::read_span(size_t length)
+utki::span<const uint8_t> deserializer::read_span(size_t length)
 {
 	if (this->size() < length) {
 		throw std::invalid_argument(
-			utki::cat("deserializator::read_span(", length, "): buffer size is only ", this->size())
+			utki::cat("deserializer::read_span(", length, "): buffer size is only ", this->size())
 		);
 	}
 
@@ -57,10 +57,10 @@ utki::span<const uint8_t> deserializator::read_span(size_t length)
 	return ret;
 }
 
-uint16_t deserializator::read_uint16_le()
+uint16_t deserializer::read_uint16_le()
 {
 	if (this->size() < sizeof(uint16_t)) {
-		throw std::invalid_argument("deserializator::read_uint16_le(): buffer has less bytes then needed");
+		throw std::invalid_argument("deserializer::read_uint16_le(): buffer has less bytes then needed");
 	}
 
 	auto ret = utki::deserialize16le(this->data.data());
@@ -68,10 +68,10 @@ uint16_t deserializator::read_uint16_le()
 	return ret;
 }
 
-uint32_t deserializator::read_uint32_le()
+uint32_t deserializer::read_uint32_le()
 {
 	if (this->size() < sizeof(uint32_t)) {
-		throw std::invalid_argument("deserializator::read_uint32_le(): buffer has less bytes then needed");
+		throw std::invalid_argument("deserializer::read_uint32_le(): buffer has less bytes then needed");
 	}
 
 	auto ret = utki::deserialize32le(this->data.data());
@@ -79,10 +79,10 @@ uint32_t deserializator::read_uint32_le()
 	return ret;
 }
 
-uint64_t deserializator::read_uint64_le()
+uint64_t deserializer::read_uint64_le()
 {
 	if (this->size() < sizeof(uint64_t)) {
-		throw std::invalid_argument("deserializator::read_uint64_le(): buffer has less bytes then needed");
+		throw std::invalid_argument("deserializer::read_uint64_le(): buffer has less bytes then needed");
 	}
 
 	auto ret = utki::deserialize64le(this->data.data());
@@ -90,10 +90,10 @@ uint64_t deserializator::read_uint64_le()
 	return ret;
 }
 
-float deserializator::read_float_le()
+float deserializer::read_float_le()
 {
 	if (this->size() < sizeof(float)) {
-		throw std::invalid_argument("deserializator::read_float_le(): buffer has less bytes then needed");
+		throw std::invalid_argument("deserializer::read_float_le(): buffer has less bytes then needed");
 	}
 
 	auto ret = utki::deserialize_float_le(this->data.data());
@@ -101,10 +101,10 @@ float deserializator::read_float_le()
 	return ret;
 }
 
-uint16_t deserializator::read_uint16_be()
+uint16_t deserializer::read_uint16_be()
 {
 	if (this->size() < sizeof(uint16_t)) {
-		throw std::invalid_argument("deserializator::read_uint16_be(): buffer has less bytes then needed");
+		throw std::invalid_argument("deserializer::read_uint16_be(): buffer has less bytes then needed");
 	}
 
 	auto ret = utki::deserialize16be(this->data.data());
@@ -112,10 +112,10 @@ uint16_t deserializator::read_uint16_be()
 	return ret;
 }
 
-uint32_t deserializator::read_uint32_be()
+uint32_t deserializer::read_uint32_be()
 {
 	if (this->size() < sizeof(uint32_t)) {
-		throw std::invalid_argument("deserializator::read_uint32_be(): buffer has less bytes then needed");
+		throw std::invalid_argument("deserializer::read_uint32_be(): buffer has less bytes then needed");
 	}
 
 	auto ret = utki::deserialize32be(this->data.data());
@@ -123,10 +123,10 @@ uint32_t deserializator::read_uint32_be()
 	return ret;
 }
 
-uint64_t deserializator::read_uint64_be()
+uint64_t deserializer::read_uint64_be()
 {
 	if (this->size() < sizeof(uint64_t)) {
-		throw std::invalid_argument("deserializator::read_uint64_be(): buffer has less bytes then needed");
+		throw std::invalid_argument("deserializer::read_uint64_be(): buffer has less bytes then needed");
 	}
 
 	auto ret = utki::deserialize64be(this->data.data());
