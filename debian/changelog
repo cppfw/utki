@@ -1,3 +1,9 @@
+libutki (1.1.241) unstable; urgency=medium
+
+  * add serialization for float big-endian
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 20 May 2024 10:53:39 +0300
+
 libutki (1.1.240) unstable; urgency=medium
 
   * add deserializator
