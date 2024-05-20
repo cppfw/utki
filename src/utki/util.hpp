@@ -506,6 +506,34 @@ inline uint64_t deserialize64be(const uint8_t* buf) noexcept
 }
 
 /**
+ * @brief Serialize float to IEEE 754, big-endian.
+ * @param value - flaot value to serialize.
+ * @param out_buf - pointer to the 4 byte buffer where the result will be placed.
+ * @return pointer to the next byte after serialized value.
+ */
+inline uint8_t* serialize_float_be(float value, uint8_t* out_buf) noexcept
+{
+	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast)
+	auto p = reinterpret_cast<uint8_t*>(&value);
+	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast)
+	return serialize32be(*reinterpret_cast<uint32_t*>(p), out_buf);
+}
+
+/**
+ * @brief De-serialize IEEE 754 single precision floating point value, big-endian.
+ * @param buf - pointer to buffer containing 4 bytes to convert from IEEE 754 big-endian format.
+ * @return floating point value.
+ */
+inline float deserialize_float_be(const uint8_t* buf) noexcept
+{
+	auto val = deserialize32be(buf);
+	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast)
+	auto p = reinterpret_cast<uint8_t*>(&val);
+	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast)
+	return *reinterpret_cast<float*>(p);
+}
+
+/**
  * @brief Check if stderr is terminal or file/pipe.
  * @return true in case stderr outputs to terminal.
  * @return false in case stderr outputs to file or pipe.

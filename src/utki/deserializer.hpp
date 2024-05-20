@@ -61,9 +61,7 @@ public:
 	uint16_t read_uint16_be();
 	uint32_t read_uint32_be();
 	uint64_t read_uint64_be();
-
-	// TODO: implement
-	// float read_float_be();
+	float read_float_be();
 };
 
 } // namespace utki

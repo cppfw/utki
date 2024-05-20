@@ -155,5 +155,35 @@ const tst::set set("deserializer", [](tst::suite& suite) {
 		tst::check(d.empty(), SL);
 		tst::check_eq(d.size(), size_t(0), SL);
 	});
+
+	suite.add<std::pair<float, std::array<uint8_t, 4>>>( //
+		"read_float_be",
+		// clang-format off
+		{
+			{ 13, {0x41, 0x50, 0x00, 0x00 }},
+			{ 13666, {0x46, 0x55, 0x88, 0x00 }},
+			{ 13666e10f, {0x56, 0xf8, 0x95, 0x46 }},
+			{ 13.666f, {0x41, 0x5a, 0xa7, 0xf0 }},
+			{ -13, {0xc1, 0x50, 0x00, 0x00 }},
+			{ -13666, {0xc6, 0x55, 0x88, 0x00 }},
+			{ -13666e10f, {0xd6, 0xf8, 0x95, 0x46}},
+			{ -13.666f, {0xc1, 0x5a, 0xa7, 0xf0}},
+		},
+		// clang-format on
+		[](const auto& p) {
+			std::array<uint8_t, 4> buf{};
+			utki::serialize_float_be(p.first, buf.data());
+
+			tst::check(buf == p.second, SL);
+
+			utki::deserializer d(buf);
+
+			float f = d.read_float_be();
+
+			tst::check_eq(f, p.first, SL);
+			tst::check(d.empty(), SL);
+			tst::check_eq(d.size(), size_t(0), SL);
+		}
+	);
 });
 } // namespace

@@ -133,3 +133,14 @@ uint64_t deserializer::read_uint64_be()
 	this->data = this->data.subspan(sizeof(uint64_t));
 	return ret;
 }
+
+float deserializer::read_float_be()
+{
+	if (this->size() < sizeof(float)) {
+		throw std::invalid_argument("deserializer::read_float_be(): buffer has less bytes then needed");
+	}
+
+	auto ret = utki::deserialize_float_be(this->data.data());
+	this->data = this->data.subspan(sizeof(float));
+	return ret;
+}
