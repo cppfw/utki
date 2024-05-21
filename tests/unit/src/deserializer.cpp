@@ -36,6 +36,23 @@ const tst::set set("deserializer", [](tst::suite& suite) {
 		tst::check_eq(utki::make_string_view(ccc), "ccc"sv, SL);
 	});
 
+	suite.add("read_uint8", []() {
+		std::vector<uint8_t> buf = {0xa1, 0xb2};
+
+		utki::deserializer d(buf);
+
+		tst::check(!d.empty(), SL);
+		tst::check_eq(d.size(), buf.size(), SL);
+
+		auto u8_1 = d.read_uint8();
+		auto u8_2 = d.read_uint8();
+
+		tst::check_eq(u8_1, uint8_t(0xa1), SL);
+		tst::check_eq(u8_2, uint8_t(0xb2), SL);
+		tst::check(d.empty(), SL);
+		tst::check_eq(d.size(), size_t(0), SL);
+	});
+
 	suite.add("read_uint16_le", []() {
 		std::vector<uint8_t> buf = {0xa1, 0xb2};
 

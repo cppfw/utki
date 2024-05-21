@@ -57,6 +57,17 @@ utki::span<const uint8_t> deserializer::read_span(size_t length)
 	return ret;
 }
 
+uint8_t deserializer::read_uint8()
+{
+	if (this->size() < sizeof(uint8_t)) {
+		throw std::invalid_argument("deserializer::read_uint8(): buffer has less bytes then needed");
+	}
+
+	auto ret = this->data.front();
+	this->data = this->data.subspan(sizeof(uint8_t));
+	return ret;
+}
+
 uint16_t deserializer::read_uint16_le()
 {
 	if (this->size() < sizeof(uint16_t)) {

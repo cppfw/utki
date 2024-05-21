@@ -53,6 +53,8 @@ public:
 
 	utki::span<const uint8_t> read_span(size_t length);
 
+	uint8_t read_uint8();
+
 	uint16_t read_uint16_le();
 	uint32_t read_uint32_le();
 	uint64_t read_uint64_le();
