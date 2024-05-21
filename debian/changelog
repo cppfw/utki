@@ -1,3 +1,9 @@
+libutki (1.1.242) unstable; urgency=medium
+
+  * add deserializer::read_uint8()
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 21 May 2024 14:40:57 +0300
+
 libutki (1.1.241) unstable; urgency=medium
 
   * add serialization for float big-endian
