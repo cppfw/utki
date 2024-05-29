@@ -16,11 +16,11 @@ jobs:
 ##### coverage #####
   coverage:
     runs-on: ubuntu-latest
-    container: debian:bullseye
+    container: debian:bookworm
     name: coverage - measure
     env:
       linux_distro: debian
-      linux_release: bullseye
+      linux_release: bookworm
     steps:
       - name: add cppfw deb repo
         uses: myci-actions/add-deb-repo@master
@@ -28,19 +28,13 @@ jobs:
           repo: deb https://gagis.hopto.org/repo/cppfw/${{ env.linux_distro }} ${{ env.linux_release }} main
           repo-name: cppfw
           keys-asc: https://gagis.hopto.org/repo/cppfw/pubkey.gpg
-          install: myci locales git
+          install: myci locales git devscripts equivs pipx
       - name: add llvm repo (for clang-format)
         uses: myci-actions/add-deb-repo@master
         with:
           repo: deb https://apt.llvm.org/${{ env.linux_release }} llvm-toolchain-${{ env.linux_release }} main
           repo-name: llvm
           keys-asc: https://apt.llvm.org/llvm-snapshot.gpg.key
-      - name: install ci tools
-        run: |
-          apt --quiet install --assume-yes devscripts equivs python3-pip
-
-          # install gcovr >5.2
-          pip install git+https://github.com/gcovr/gcovr.git
       - name: git clone
         uses: myci-actions/checkout@master
       - name: prepare debian package
@@ -57,7 +51,7 @@ jobs:
       - name: test
         run: make config=gcov test
       - name: generate coverage report
-        run: gcovr --exclude-throw-branches --filter src/ --cobertura > cobertura.xml
+        run: pipx run gcovr --exclude-throw-branches --filter src/ --cobertura > cobertura.xml
       - name: upload coverage report to artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -135,6 +129,7 @@ jobs:
           - {os: debian, codename: bookworm, image_owner: arm64v8/, labels: [arm64,docker]}
           - {os: ubuntu, codename: focal, image_owner: }
           - {os: ubuntu, codename: jammy, image_owner: }
+          - {os: ubuntu, codename: noble, image_owner: }
           # - {os: raspbian, codename: buster, image_owner: igagis/, labels: [arm,docker]}
           - {os: raspbian, codename: bullseye, image_owner: igagis/, labels: [arm,docker]}
           - {os: raspbian, codename: bookworm, image_owner: igagis/, labels: [arm,docker]}
