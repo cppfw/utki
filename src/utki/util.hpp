@@ -43,6 +43,9 @@ namespace utki {
  */
 constexpr auto kilobyte = 1024;
 
+constexpr auto cm_per_inch = 2.54;
+constexpr auto mm_per_inch = cm_per_inch * 10;
+
 /**
  * @brief Hundred percent constant.
  */
