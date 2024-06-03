@@ -36,16 +36,32 @@ const tst::set set("shared_ref", [](tst::suite& suite) {
 	static_assert(
 		!std::is_constructible_v<utki::shared_ref<std::string>>,
 		"shared_ref must not be default constructible"
-		// because shared_ref cannot be nullptr
+		" because shared_ref cannot be nullptr"
 	);
 
 	static_assert(
 		!std::is_convertible_v<std::shared_ptr<std::string>, utki::shared_ref<std::string>>,
 		"shared_ptr must not be convertible to shared_ref"
-		// because shared_ptr can be nullptr, but shared_ref cannot
+		" because shared_ptr can be nullptr, but shared_ref cannot"
 	);
 
 	static_assert(std::is_move_constructible_v<utki::shared_ref<std::string>>, "shared_ref must be move constructible");
+
+	suite.add("constructor__shared_ptr", []() {
+		auto sp = std::make_shared<a1>(3);
+
+		auto sr1 = utki::shared_ref(sp);
+
+		tst::check(sp, SL);
+		tst::check(sr1.to_shared_ptr(), SL);
+		tst::check(sp == sr1.to_shared_ptr(), SL);
+
+		auto sr2 = utki::shared_ref(std::move(sp));
+
+		tst::check(!sp, SL);
+		tst::check(sr2.to_shared_ptr(), SL);
+		tst::check(sr2.to_shared_ptr() == sr1.to_shared_ptr(), SL);
+	});
 
 	suite.add("copy_constructor", []() {
 		utki::shared_ref<a1> sr = utki::make_shared<a1>(3);
