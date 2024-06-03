@@ -1,3 +1,9 @@
+libutki (1.1.244) unstable; urgency=medium
+
+  * shared_ref constructor from shared_ptr by value
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 03 Jun 2024 10:50:49 +0300
+
 libutki (1.1.243) unstable; urgency=medium
 
   * build for ubuntu:noble
