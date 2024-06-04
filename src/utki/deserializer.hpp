@@ -64,6 +64,8 @@ public:
 	uint32_t read_uint32_be();
 	uint64_t read_uint64_be();
 	float read_float_be();
+
+	void skip(size_t length);
 };
 
 } // namespace utki

@@ -155,3 +155,12 @@ float deserializer::read_float_be()
 	this->data = this->data.subspan(sizeof(float));
 	return ret;
 }
+
+void deserializer::skip(size_t length)
+{
+	if (this->size() < length) {
+		throw std::invalid_argument(utki::cat("deserializer::skip(", length, "): buffer size is only ", this->size()));
+	}
+
+	this->data = this->data.subspan(length);
+}

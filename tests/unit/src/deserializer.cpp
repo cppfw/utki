@@ -202,5 +202,18 @@ const tst::set set("deserializer", [](tst::suite& suite) {
 			tst::check_eq(d.size(), size_t(0), SL);
 		}
 	);
+
+	suite.add("skip", []() {
+		auto str = "bbbHello world!ccc"sv;
+
+		utki::deserializer d(utki::to_uint8_t(str));
+
+		d.skip(3);
+		auto hw = d.read_span(12);
+		d.skip(3);
+
+		tst::check_eq(utki::make_string_view(hw), "Hello world!"sv, SL);
+		tst::check(d.empty(), SL);
+	});
 });
 } // namespace
