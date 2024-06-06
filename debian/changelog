@@ -1,3 +1,9 @@
+libutki (1.1.245) unstable; urgency=medium
+
+  * add deserializer::skip()
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 06 Jun 2024 20:08:44 +0300
+
 libutki (1.1.244) unstable; urgency=medium
 
   * shared_ref constructor from shared_ptr by value
