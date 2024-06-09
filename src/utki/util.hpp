@@ -175,6 +175,25 @@ std::map<value_type, key_type, new_comparator_type> flip_map(const std::map<key_
 }
 
 /**
+ * @brief Check if container contains value.
+ * Uses operator==().
+ *
+ * @tparam container_type - type of the container.
+ * @tparam value_type - type of the value.
+ * @param container - container to check for containing the value.
+ * @param value - value to check for.
+ * @return true if the container contains the value.
+ * @return false otherwise.
+ */
+template <typename container_type, typename value_type>
+bool contains(const container_type& container, const value_type& value)
+{
+	using std::cbegin;
+	using std::cend;
+	return std::find(cbegin(container), cend(container), value) != cend(container);
+}
+
+/**
  * @brief Execute a function on scope exit.
  * This class can be used to perform some function when the object of this class
  * is destroyed due to leave of the scope where it was created.
