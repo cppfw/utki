@@ -1,3 +1,9 @@
+libutki (1.1.246) unstable; urgency=medium
+
+  * add contains()
+
+ -- Ivan Gagis <igagis@gmail.com>  Sun, 09 Jun 2024 23:30:21 +0300
+
 libutki (1.1.245) unstable; urgency=medium
 
   * add deserializer::skip()
