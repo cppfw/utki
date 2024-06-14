@@ -285,6 +285,31 @@ const tst::set set("util", [](tst::suite& suite) {
 		tst::check(!utki::contains(v, "c"sv), SL);
 	});
 
+	suite.add("contains__map", []() {
+		std::map<std::string, std::u32string, std::less<>> v = {
+			{"aaa", U"aaav"},
+			{"bbb", U"bbbv"},
+			{"ccc", U"cccv"}
+		};
+
+		tst::check(utki::contains(v, "aaa"), SL);
+		tst::check(utki::contains(v, "bbb"), SL);
+		tst::check(utki::contains(v, "ccc"), SL);
+		tst::check(utki::contains(v, "aaa"s), SL);
+		tst::check(utki::contains(v, "bbb"s), SL);
+		tst::check(utki::contains(v, "ccc"s), SL);
+		tst::check(utki::contains(v, "aaa"sv), SL);
+		tst::check(utki::contains(v, "bbb"sv), SL);
+		tst::check(utki::contains(v, "ccc"sv), SL);
+
+		tst::check(!utki::contains(v, ""), SL);
+		tst::check(!utki::contains(v, ""s), SL);
+		tst::check(!utki::contains(v, ""sv), SL);
+		tst::check(!utki::contains(v, "a"), SL);
+		tst::check(!utki::contains(v, "b"s), SL);
+		tst::check(!utki::contains(v, "c"sv), SL);
+	});
+
 	// TODO: test utki::next() and utki::prev()
 });
 } // namespace

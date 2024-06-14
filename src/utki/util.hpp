@@ -177,6 +177,8 @@ std::map<value_type, key_type, new_comparator_type> flip_map(const std::map<key_
 /**
  * @brief Check if container contains value.
  * Uses operator==().
+ * Also works with std::map and std::unordered_map, in which case it checks
+ * for containment of a key.
  *
  * @tparam container_type - type of the container.
  * @tparam value_type - type of the value.
@@ -188,9 +190,17 @@ std::map<value_type, key_type, new_comparator_type> flip_map(const std::map<key_
 template <typename container_type, typename value_type>
 bool contains(const container_type& container, const value_type& value)
 {
-	using std::cbegin;
-	using std::cend;
-	return std::find(cbegin(container), cend(container), value) != cend(container);
+	if constexpr (//
+		utki::is_specialization_of_v<std::map, container_type> ||
+		utki::is_specialization_of_v<std::unordered_map, container_type>
+	)
+	{
+		return container.find(value) != container.cend();
+	} else {
+		using std::cbegin;
+		using std::cend;
+		return std::find(cbegin(container), cend(container), value) != cend(container);
+	}
 }
 
 /**
