@@ -28,6 +28,8 @@ SOFTWARE.
 
 #include <stdexcept>
 
+#include "config.hpp"
+
 #if CFG_COMPILER == CFG_COMPILER_GCC || CFG_COMPILER == CFG_COMPILER_CLANG
 #	include <cxxabi.h> // for accessing current exception type name
 #endif
