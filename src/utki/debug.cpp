@@ -35,6 +35,10 @@ SOFTWARE.
 #	include <iostream>
 #endif
 
+#if CFG_COMPILER == CFG_COMPILER_GCC || CFG_COMPILER == CFG_COMPILER_CLANG
+#	include <cxxabi.h> // for demangling type names
+#endif
+
 // undefine possibly defined assert macro to avoid macro's name collision
 #ifdef assert
 #	undef assert
@@ -105,5 +109,43 @@ void utki::log(const std::function<void(std::ostream&)>& print)
 #else
 	print(std::cout);
 	std::cout.flush();
+#endif
+}
+
+std::string utki::demangle(const char* name)
+{
+#if CFG_COMPILER == CFG_COMPILER_GCC || CFG_COMPILER == CFG_COMPILER_CLANG
+	// NOLINTNEXTLINE(cppcoreguidelines-init-variables)
+	int status;
+	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-vararg)
+	auto demangled_name = abi::__cxa_demangle(
+		name,
+		nullptr, // let __cxa_demangle() allocate memory buffer for us
+		nullptr, // not interested in allocated memory buffer size
+		&status
+	);
+
+	switch (status) {
+		case 0: // demangling succeeded
+			{
+				utki::scope_exit scope_exit([demangled_name] {
+					// NOLINTNEXTLINE(cppcoreguidelines-no-malloc, cppcoreguidelines-owning-memory)
+					free(demangled_name); // abi::__cxa_demangle requires freeing allocated memory
+				});
+				return {demangled_name};
+			}
+			break;
+		// NOLINTNEXTLINE(bugprone-branch-clone)
+		case -1: // memory allocation failed
+			[[fallthrough]];
+		case -2: // given mangled name is not a valid name under the C++ ABI mangling rules
+			[[fallthrough]];
+		case -3: // one of the arguments is invalid
+			[[fallthrough]];
+		default:
+			return {name};
+	}
+#else
+	return {name};
 #endif
 }

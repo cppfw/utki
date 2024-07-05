@@ -7,6 +7,11 @@
 #	undef assert
 #endif
 
+using namespace std::string_literals;
+
+class test_class
+{};
+
 namespace {
 const tst::set set("debug", [](tst::suite& suite) {
 	suite.add("assert_macro", []() {
@@ -49,6 +54,38 @@ const tst::set set("debug", [](tst::suite& suite) {
 			o << "b = " << b;
 		});
 #endif
+	});
+
+	suite.add("demangle__class", []() {
+		test_class a;
+
+		auto mangled_name = std::string(typeid(a).name());
+
+		auto name = utki::demangle(mangled_name.c_str());
+
+		auto expected =
+#if CFG_COMPILER == CFG_COMPILER_GCC || CFG_COMPILER == CFG_COMPILER_CLANG
+			"test_class"s;
+#else
+		mangled_name;
+#endif
+		tst::check_eq(name, expected, SL);
+	});
+
+	suite.add("demangle__unsigned", []() {
+		unsigned a = 0;
+
+		auto mangled_name = std::string(typeid(a).name());
+
+		auto name = utki::demangle(mangled_name.c_str());
+
+		auto expected =
+#if CFG_COMPILER == CFG_COMPILER_GCC || CFG_COMPILER == CFG_COMPILER_CLANG
+			"unsigned int"s;
+#else
+		mangled_name;
+#endif
+		tst::check_eq(name, expected, SL);
 	});
 });
 } // namespace

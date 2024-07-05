@@ -288,3 +288,24 @@ void assert(
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
 #define ASSERT(...) UTKI_GET_MACRO(__VA_ARGS__, _10, _9, _8, _7, _6, _5, _4, _3, ASSERT2, ASSERT1)(__VA_ARGS__)
+
+namespace utki {
+
+/**
+ * @brief Demangle C++ type name.
+ * Tries to demangle C++ type name.
+ * Implementation us4es compiler specific API for demangling.
+ * For unknown compilers it just returns the name as is.
+ *
+ * Example:
+ * @code{.cpp}
+ * some_class a;
+ * auto name = utki::demangle(typeid(a).name());
+ * @endcode
+ *
+ * @param name - C++ type name to demangle.
+ * @return Demangled name.
+ */
+std::string demangle(const char* name);
+
+} // namespace utki
