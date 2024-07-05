@@ -1,3 +1,9 @@
+libutki (1.1.248) unstable; urgency=medium
+
+  * add exception to string functions
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 05 Jul 2024 17:17:18 +0300
+
 libutki (1.1.247) unstable; urgency=medium
 
   * add utki::contains(map, ...)
