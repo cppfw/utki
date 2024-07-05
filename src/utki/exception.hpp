@@ -28,6 +28,7 @@ SOFTWARE.
 
 #include <exception>
 #include <string>
+#include <string_view>
 
 namespace utki {
 
@@ -56,5 +57,22 @@ public:
 		return this->message.c_str();
 	}
 };
+
+/**
+ * @brief Convert exception object to human readable string.
+ * The resulting string can be multiline.
+ * @param e - exception object to convert to string.
+ * @param indentation - indentation to use for resulting string.
+ * @return String describing the exception object.
+ */
+std::string to_string(const std::exception& e, std::string_view indentation = std::string_view());
+
+/**
+ * @brief Convert currently handled exception object to human readable string.
+ * The resulting string can be multiline.
+ * @param indentation - indentation to use for resulting string.
+ * @return String describing the exception object.
+ */
+std::string current_exception_to_string(std::string_view indentation = std::string_view());
 
 } // namespace utki
