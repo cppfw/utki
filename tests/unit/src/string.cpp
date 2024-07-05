@@ -990,6 +990,24 @@ const tst::set set("string", [](tst::suite& suite) {
 		tst::check_eq(utki::make_indentation(2, 0), "\t\t"s, SL);
 		tst::check_eq(utki::make_indentation(3, 0), "\t\t\t"s, SL);
 	});
+
+	suite.add("starts_with", []() {
+		tst::check(utki::starts_with("asdfghjk", "asd"), SL);
+		tst::check(!utki::starts_with(" s asdfghjk", "  asd"), SL);
+		tst::check(utki::starts_with("asdfghjk", ""), SL);
+		tst::check(!utki::starts_with("", "asd"), SL);
+		tst::check(!utki::starts_with(" asdfghjk", "asd"), SL);
+		tst::check(!utki::starts_with("a", "asd"), SL);
+	});
+
+	suite.add("ends_with", []() {
+		tst::check(utki::ends_with("asdfghjk", "hjk"), SL);
+		tst::check(!utki::ends_with(" s asdfghjk", "  asdfghjk"), SL);
+		tst::check(utki::ends_with("asdfghjk", ""), SL);
+		tst::check(!utki::ends_with("", "asd"), SL);
+		tst::check(!utki::ends_with(" asdfghjk ", "hjk"), SL);
+		tst::check(!utki::ends_with("k", "hjk"), SL);
+	});
 });
 } // namespace
 

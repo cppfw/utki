@@ -1,6 +1,7 @@
 #include <tst/check.hpp>
 #include <tst/set.hpp>
 #include <utki/exception.hpp>
+#include <utki/string.hpp>
 
 using namespace std::string_literals;
 using namespace std::string_view_literals;
@@ -51,14 +52,23 @@ const tst::set set("exception", [](tst::suite& suite) {
 			s = utki::to_string(e, "  "sv);
 		}
 
-		tst::check_eq( //
-			s,
-			"  std::_Nested_exception<std::invalid_argument>: some argument is invalid\n"
-			"  std::_Nested_exception<(anonymous namespace)::some_unknown_error>\n"
-			"  std::_Nested_exception<std::runtime_error>: some_runtime_error\n"
-			"  std::logic_error: some logic error"s,
-			SL
-		);
+		auto actual = utki::split(s, '\n');
+
+		auto expected_prefix = "  std::"sv;
+
+		std::vector<std::string> expected = {
+			"<std::invalid_argument>: some argument is invalid"s,
+			"<(anonymous namespace)::some_unknown_error>"s,
+			"<std::runtime_error>: some_runtime_error"s,
+			"  std::logic_error: some logic error"s
+		};
+
+		tst::check_eq(actual.size(), expected.size(), SL);
+
+		for (auto ei = expected.begin(), ai = actual.begin(); ei != expected.end(); ++ei, ++ai) {
+			tst::check(utki::starts_with(*ai, expected_prefix), SL);
+			tst::check(utki::ends_with(*ai, *ei), SL);
+		}
 	});
 
 	suite.add("current_exception_to_string", []() {

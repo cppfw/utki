@@ -666,4 +666,36 @@ std::basic_string_view<element_type> trim(const std::basic_string<element_type>&
  */
 std::string make_indentation(unsigned depth, unsigned size = 0);
 
+/**
+ * @brief Check if string starts with given substring.
+ * Replacement for std::string_view::starts_with() from C++20.
+ * @param str - string to check.
+ * @param prefix - prefix to check for.
+ * @return true if string str starts with given prefix.
+ * @return false otherwise.
+ */
+inline bool starts_with(std::string_view str, std::string_view prefix)
+{
+	return str.find(prefix) == 0;
+}
+
+/**
+ * @brief Check if string ends with given substring.
+ * Replacement for std::string_view::ends_with() from C++20.
+ * @param str - string to check.
+ * @param suffix - suffix to check for.
+ * @return true if string ends with given suffix.
+ * @return false otherwise.
+ */
+inline bool ends_with(std::string_view str, std::string_view suffix)
+{
+	if (suffix.empty()) {
+		return true;
+	}
+	if (suffix.size() > str.size()) {
+		return false;
+	}
+	return str.find(suffix) == (str.size() - suffix.size());
+}
+
 } // namespace utki
