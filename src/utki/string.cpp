@@ -447,3 +447,13 @@ std::string_view string_parser::read_chars_until(char until_char)
 
 	return ret;
 }
+
+std::string utki::make_indentation(unsigned depth, unsigned size)
+{
+	if (size == 0) {
+		// NOLINTNEXTLINE(modernize-return-braced-init-list)
+		return std::string(depth, '\t');
+	}
+	// NOLINTNEXTLINE(modernize-return-braced-init-list)
+	return std::string(size_t(depth * size), ' ');
+}

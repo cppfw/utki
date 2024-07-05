@@ -974,6 +974,22 @@ const tst::set set("string", [](tst::suite& suite) {
 		tst::check_eq(utki::trim(string), expected, SL);
 		tst::check_eq(utki::trim(string_view), expected, SL);
 	});
+
+	suite.add("indentation", []() {
+		tst::check_eq(utki::make_indentation(0, 1), ""s, SL);
+		tst::check_eq(utki::make_indentation(0, 2), ""s, SL);
+		tst::check_eq(utki::make_indentation(1, 1), " "s, SL);
+		tst::check_eq(utki::make_indentation(2, 1), "  "s, SL);
+		tst::check_eq(utki::make_indentation(1, 2), "  "s, SL);
+		tst::check_eq(utki::make_indentation(2, 2), "    "s, SL);
+		tst::check_eq(utki::make_indentation(3, 2), "      "s, SL);
+		tst::check_eq(utki::make_indentation(2, 3), "      "s, SL);
+		tst::check_eq(utki::make_indentation(2, 3), "      "s, SL);
+		tst::check_eq(utki::make_indentation(0, 0), ""s, SL);
+		tst::check_eq(utki::make_indentation(1, 0), "\t"s, SL);
+		tst::check_eq(utki::make_indentation(2, 0), "\t\t"s, SL);
+		tst::check_eq(utki::make_indentation(3, 0), "\t\t\t"s, SL);
+	});
 });
 } // namespace
 

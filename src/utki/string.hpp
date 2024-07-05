@@ -656,4 +656,14 @@ std::basic_string_view<element_type> trim(const std::basic_string<element_type>&
 	return trim(std::basic_string_view<element_type>(s));
 }
 
+/**
+ * @brief Make indentation string.
+ * Make a string to use as indentation prefix for text.
+ *
+ * @param depth - indentation depth.
+ * @param size - indentation step size in spaces. Zero value means to use tab character as indentation step.
+ * @return Indentation string.
+ */
+std::string make_indentation(unsigned depth, unsigned size = 0);
+
 } // namespace utki
