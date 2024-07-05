@@ -112,14 +112,14 @@ void utki::log(const std::function<void(std::ostream&)>& print)
 #endif
 }
 
-std::string utki::demangle(const char* name)
+std::string utki::demangle(const std::type_info& type_info)
 {
 #if CFG_COMPILER == CFG_COMPILER_GCC || CFG_COMPILER == CFG_COMPILER_CLANG
 	// NOLINTNEXTLINE(cppcoreguidelines-init-variables)
 	int status;
 	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-vararg)
 	auto demangled_name = abi::__cxa_demangle(
-		name,
+		type_info.name(),
 		nullptr, // let __cxa_demangle() allocate memory buffer for us
 		nullptr, // not interested in allocated memory buffer size
 		&status
@@ -143,9 +143,9 @@ std::string utki::demangle(const char* name)
 		case -3: // one of the arguments is invalid
 			[[fallthrough]];
 		default:
-			return {name};
+			return {type_info.name()};
 	}
 #else
-	return {name};
+	return {type_info.name()};
 #endif
 }

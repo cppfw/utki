@@ -59,15 +59,13 @@ const tst::set set("debug", [](tst::suite& suite) {
 	suite.add("demangle__class", []() {
 		test_class a;
 
-		auto mangled_name = std::string(typeid(a).name());
-
-		auto name = utki::demangle(mangled_name.c_str());
+		auto name = utki::demangle(typeid(a));
 
 		auto expected =
 #if CFG_COMPILER == CFG_COMPILER_GCC || CFG_COMPILER == CFG_COMPILER_CLANG
 			"test_class"s;
 #else
-		mangled_name;
+		std::string(typeid(a).name());
 #endif
 		tst::check_eq(name, expected, SL);
 	});
@@ -75,15 +73,13 @@ const tst::set set("debug", [](tst::suite& suite) {
 	suite.add("demangle__unsigned", []() {
 		unsigned a = 0;
 
-		auto mangled_name = std::string(typeid(a).name());
-
-		auto name = utki::demangle(mangled_name.c_str());
+		auto name = utki::demangle(typeid(a));
 
 		auto expected =
 #if CFG_COMPILER == CFG_COMPILER_GCC || CFG_COMPILER == CFG_COMPILER_CLANG
 			"unsigned int"s;
 #else
-		mangled_name;
+		std::string(typeid(a).name());
 #endif
 		tst::check_eq(name, expected, SL);
 	});

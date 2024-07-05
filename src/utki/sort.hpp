@@ -33,8 +33,11 @@ SOFTWARE.
 
 #include <iterator>
 
+#include "config.hpp"
+
 namespace utki {
 
+#if CFG_CPP < 20
 namespace sort_internal {
 
 template <typename random_iter_type>
@@ -107,6 +110,7 @@ constexpr void quick_sort(random_iter_type first, random_iter_type last, compara
 }
 
 } // namespace sort_internal
+#endif // CFG_CPP < 20
 
 /**
  * @brief sort algorithm.
@@ -121,7 +125,11 @@ constexpr void quick_sort(random_iter_type first, random_iter_type last, compara
 template <class random_iter_type, class comparator_type = std::less<>>
 constexpr void sort(random_iter_type first, random_iter_type last, comparator_type comp = comparator_type{})
 {
+#if CFG_CPP >= 20
+	std::sort(first, last, comp);
+#else
 	utki::sort_internal::quick_sort(first, last, comp);
+#endif
 }
 
 } // namespace utki

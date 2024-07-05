@@ -294,18 +294,18 @@ namespace utki {
 /**
  * @brief Demangle C++ type name.
  * Tries to demangle C++ type name.
- * Implementation us4es compiler specific API for demangling.
+ * Implementation uses compiler specific API for demangling.
  * For unknown compilers it just returns the name as is.
  *
  * Example:
  * @code{.cpp}
  * some_class a;
- * auto name = utki::demangle(typeid(a).name());
+ * auto name = utki::demangle(typeid(a));
  * @endcode
  *
- * @param name - C++ type name to demangle.
+ * @param type_info - C++ type info of the type to demangle.
  * @return Demangled name.
  */
-std::string demangle(const char* name);
+std::string demangle(const std::type_info& type_info);
 
 } // namespace utki

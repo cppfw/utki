@@ -49,7 +49,7 @@ std::string utki::current_exception_to_string(std::string_view indentation)
 	std::stringstream ss;
 	ss << indentation <<
 #if CFG_COMPILER == CFG_COMPILER_GCC || CFG_COMPILER == CFG_COMPILER_CLANG
-		demangle(abi::__cxa_current_exception_type()->name());
+		demangle(*abi::__cxa_current_exception_type());
 #else
 		"unknown exception"s;
 #endif
@@ -75,7 +75,7 @@ std::string utki::current_exception_to_string(std::string_view indentation)
 std::string utki::to_string(const std::exception& e, std::string_view indentation)
 {
 	std::stringstream ss;
-	ss << indentation << demangle(typeid(e).name()) << ": " << e.what();
+	ss << indentation << demangle(typeid(e)) << ": " << e.what();
 
 	try {
 		std::rethrow_if_nested(e);

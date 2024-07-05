@@ -119,6 +119,12 @@ public:
 	}
 };
 
+/**
+ * @brief Throw exception with nested current exception.
+ * This is a replacement of std::throw_with_nested() which
+ * prints all nested exceptions information via it's what() member function.
+ * @param exception - exception to throw.
+ */
 template <typename exception_type>
 void throw_with_nested(exception_type exception)
 {
