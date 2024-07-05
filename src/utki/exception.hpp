@@ -30,33 +30,10 @@ SOFTWARE.
 #include <string>
 #include <string_view>
 
+#include "debug.hpp"
+#include "string.hpp"
+
 namespace utki {
-
-/**
- * @brief Generic exception.
- *
- * This class allows throwing an std::exception-derived exception with text message.
- * This class is for the cases when none of the std::logic_error nor the std::runtime_error suits.
- */
-class exception : public std::exception
-{
-	std::string message;
-
-public:
-	/**
-	 * @brief Constructor.
-	 *
-	 * @param message - text message to be stored in the exception object.
-	 */
-	exception(std::string message) :
-		message(std::move(message))
-	{}
-
-	const char* what() const noexcept override
-	{
-		return this->message.c_str();
-	}
-};
 
 /**
  * @brief Convert exception object to human readable string.
@@ -74,5 +51,89 @@ std::string to_string(const std::exception& e, std::string_view indentation = st
  * @return String describing the exception object.
  */
 std::string current_exception_to_string(std::string_view indentation = std::string_view());
+
+/**
+ * @brief Generic exception.
+ */
+class exception : public std::exception
+{
+public:
+	/**
+	 * @brief Convert the exception object to human readable string.
+	 * The string can be multiline.
+	 * @param indentation - indentation to use for conversion.
+	 * @return Human readable string describing the exception object.
+	 */
+	virtual std::string to_string(std::string_view indentation = std::string_view()) const
+	{
+		return utki::to_string(static_cast<const std::exception&>(*this));
+	}
+};
+
+// forward declaration
+template <typename exception_type>
+void throw_with_nested(exception_type exception);
+
+template <typename exception_type>
+class stacked_exception : public exception
+{
+	static_assert(
+		std::is_base_of_v<std::exception, exception_type>,
+		"nesting exception must be derived from std::exception"
+	);
+
+	std::nested_exception nested;
+	exception_type nesting;
+
+	mutable std::string description;
+
+	stacked_exception(exception_type nesting) :
+		nesting(std::move(nesting))
+	{}
+
+	template <typename same_exception_type>
+	friend void utki::throw_with_nested(same_exception_type exception);
+
+public:
+	const char* what() const noexcept override
+	{
+		this->description = utki::cat(std::string_view("exception stack:\n"), this->to_string(std::string_view("- ")));
+		return this->description.c_str();
+	}
+
+	std::string to_string(std::string_view indentation = std::string_view()) const override
+	{
+		std::stringstream ss;
+		ss << indentation << utki::to_string(static_cast<const std::exception&>(this->nesting));
+
+		try {
+			this->nested.rethrow_nested();
+		} catch (exception& e) {
+			ss << "\n" << e.to_string(indentation);
+		} catch (std::exception& e) {
+			ss << "\n" << utki::to_string(e, indentation);
+		} catch (...) {
+			ss << "\n" << utki::current_exception_to_string(indentation);
+		}
+		return ss.str();
+	}
+};
+
+template <typename exception_type>
+void throw_with_nested(exception_type exception)
+{
+	static_assert(
+		std::is_base_of_v<std::exception, exception_type>,
+		"nesting exception must be derived from std::exception"
+	);
+
+	ASSERT( //
+		std::current_exception() != nullptr,
+		[](auto& o) {
+			o << "called not from within 'catch' block";
+		}
+	)
+	throw stacked_exception(std::move(exception));
+}
 
 } // namespace utki
