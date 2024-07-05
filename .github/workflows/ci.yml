@@ -77,7 +77,7 @@ jobs:
           - {os: debian, codename: bookworm, image_owner: , labels: [arm32,docker]}
     runs-on: ${{ (matrix.labels == '' && 'ubuntu-latest') || matrix.labels }}
     container: ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }}
-    name: sanitizer - ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }} | ${{ matrix.labels[0] }}
+    name: sanitizer - ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }} - ${{ matrix.labels[0] }}
     steps:
       - name: add cppfw deb repo
         uses: myci-actions/add-deb-repo@master
@@ -363,7 +363,7 @@ jobs:
         include:
           - {arch: i686, repo: mingw32}
           - {arch: x86_64, repo: mingw64}
-    name: msys2 | ${{ matrix.repo }}
+    name: msys2 - ${{ matrix.repo }}
     steps:
     - name: make msys2 to provide the default shell
       uses: msys2/setup-msys2@v2
