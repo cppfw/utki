@@ -676,7 +676,11 @@ std::string make_indentation(unsigned depth, unsigned size = 0);
  */
 inline bool starts_with(std::string_view str, std::string_view prefix)
 {
+#if CFG_CPP >= 20
+	return str.starts_with(prefix);
+#else
 	return str.find(prefix) == 0;
+#endif
 }
 
 /**
@@ -689,6 +693,9 @@ inline bool starts_with(std::string_view str, std::string_view prefix)
  */
 inline bool ends_with(std::string_view str, std::string_view suffix)
 {
+#if CFG_CPP >= 20
+	return str.ends_with(suffix);
+#else
 	if (suffix.empty()) {
 		return true;
 	}
@@ -696,6 +703,7 @@ inline bool ends_with(std::string_view str, std::string_view suffix)
 		return false;
 	}
 	return str.find(suffix) == (str.size() - suffix.size());
+#endif
 }
 
 } // namespace utki
