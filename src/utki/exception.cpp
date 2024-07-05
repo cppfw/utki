@@ -36,6 +36,8 @@ SOFTWARE.
 
 #include "debug.hpp"
 
+using namespace std::string_literals;
+
 using namespace utki;
 
 std::string utki::current_exception_to_string(std::string_view indentation)
