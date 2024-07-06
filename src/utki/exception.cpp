@@ -51,6 +51,8 @@ std::string utki::current_exception_to_string(std::string_view indentation)
 #if CFG_COMPILER == CFG_COMPILER_GCC || CFG_COMPILER == CFG_COMPILER_CLANG
 		demangle(*abi::__cxa_current_exception_type());
 #else
+		// TODO: For MSVC compiler possible implementation can be found in
+		// http://www.virjacode.com/papers/RTTI_current_exception_latest.pdf
 		"unknown exception"s;
 #endif
 
