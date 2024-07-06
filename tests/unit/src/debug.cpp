@@ -61,12 +61,8 @@ const tst::set set("debug", [](tst::suite& suite) {
 
 		auto name = utki::demangle(typeid(a));
 
-		auto expected =
-#if CFG_COMPILER == CFG_COMPILER_GCC || CFG_COMPILER == CFG_COMPILER_CLANG
-			"test_class"s;
-#else
-		std::string(typeid(a).name());
-#endif
+		auto expected = "test_class"s;
+
 		tst::check_eq(name, expected, SL);
 	});
 
@@ -75,12 +71,8 @@ const tst::set set("debug", [](tst::suite& suite) {
 
 		auto name = utki::demangle(typeid(a));
 
-		auto expected =
-#if CFG_COMPILER == CFG_COMPILER_GCC || CFG_COMPILER == CFG_COMPILER_CLANG
-			"unsigned int"s;
-#else
-		std::string(typeid(a).name());
-#endif
+		auto expected = "unsigned int"s;
+
 		tst::check_eq(name, expected, SL);
 	});
 });
