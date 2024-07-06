@@ -97,8 +97,15 @@ class stacked_exception : public exception
 public:
 	const char* what() const noexcept override
 	{
-		this->description = utki::cat(std::string_view("exception stack:\n"), this->to_string(std::string_view("- ")));
-		return this->description.c_str();
+		try {
+			this->description =
+				utki::cat(std::string_view("exception stack:\n"), this->to_string(std::string_view("- ")));
+			return this->description.c_str();
+		} catch (std::bad_alloc&) {
+			return "std::bad_alloc";
+		} catch (...) {
+			return "error";
+		}
 	}
 
 	std::string to_string(std::string_view indentation = std::string_view()) const override
