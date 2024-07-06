@@ -27,6 +27,7 @@ SOFTWARE.
 #include "debug.hpp"
 
 #include "config.hpp"
+#include "string.hpp"
 #include "util.hpp"
 
 #if CFG_OS_NAME == CFG_OS_NAME_ANDROID
@@ -145,6 +146,13 @@ std::string utki::demangle(const std::type_info& type_info)
 		default:
 			return {type_info.name()};
 	}
+#elif CFG_COMPILER == CFG_COMPILER_MSVC
+	std::string name(type_info.name());
+	constexpr const std::string_view prefix("class ");
+	if (utki::starts_with(name, prefix)) {
+		return name.substr(prefix.size());
+	}
+	return name;
 #else
 	return {type_info.name()};
 #endif
