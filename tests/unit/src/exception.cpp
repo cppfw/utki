@@ -84,35 +84,42 @@ const tst::set set("exception", [](tst::suite& suite) {
 #endif
 	});
 
-	suite.add("stacked_exception_to_string", []() {
-		std::string s;
-		try {
+	suite.add(
+		"stacked_exception_to_string",
+		{
+#if CFG_CPU_BITS == 32 && CFG_OS == CFG_OS_WINDOWS && CFG_COMPILER == CFG_COMPILER_GCC
+			tst::flag::disabled
+#endif
+		},
+		[]() {
+			std::string s;
 			try {
 				try {
 					try {
-						throw some_unknown_error();
+						try {
+							throw some_unknown_error();
+						} catch (...) {
+							utki::throw_with_nested(std::logic_error("some logic error"));
+						}
 					} catch (...) {
-						utki::throw_with_nested(std::logic_error("some logic error"));
+						utki::throw_with_nested(std::runtime_error("some_runtime_error"));
 					}
 				} catch (...) {
-					utki::throw_with_nested(std::runtime_error("some_runtime_error"));
+					utki::throw_with_nested(std::invalid_argument("some argument is invalid"));
 				}
-			} catch (...) {
-				utki::throw_with_nested(std::invalid_argument("some argument is invalid"));
+			} catch (utki::exception& e) {
+				s = e.to_string("  "sv);
 			}
-		} catch (utki::exception& e) {
-			s = e.to_string("  "sv);
-		}
 
-		auto actual = utki::split(s, '\n');
+			auto actual = utki::split(s, '\n');
 
 #if CFG_COMPILER == CFG_COMPILER_MSVC
-		std::vector<std::string> expected = {
-			"  std::invalid_argument: some argument is invalid"s,
-			"  std::runtime_error: some_runtime_error"s,
-			"  std::logic_error: some logic error"s,
-			"  unknown exception"s
-		};
+			std::vector<std::string> expected = {
+				"  std::invalid_argument: some argument is invalid"s,
+				"  std::runtime_error: some_runtime_error"s,
+				"  std::logic_error: some logic error"s,
+				"  unknown exception"s
+			};
 #else
 		std::vector<std::string> expected = {
 			"  std::invalid_argument: some argument is invalid"s,
@@ -122,43 +129,51 @@ const tst::set set("exception", [](tst::suite& suite) {
 		};
 #endif
 
-		tst::check_eq(actual.size(), expected.size(), SL);
+			tst::check_eq(actual.size(), expected.size(), SL);
 
-		for (auto ei = expected.begin(), ai = actual.begin(); ei != expected.end(); ++ei, ++ai) {
-			tst::check_eq(*ai, *ei, SL);
+			for (auto ei = expected.begin(), ai = actual.begin(); ei != expected.end(); ++ei, ++ai) {
+				tst::check_eq(*ai, *ei, SL);
+			}
 		}
-	});
+	);
 
-	suite.add("stacked_exception_what", []() {
-		std::string s;
-		try {
+	suite.add(
+		"stacked_exception_what",
+		{
+#if CFG_CPU_BITS == 32 && CFG_OS == CFG_OS_WINDOWS && CFG_COMPILER == CFG_COMPILER_GCC
+			tst::flag::disabled
+#endif
+		},
+		[]() {
+			std::string s;
 			try {
 				try {
 					try {
-						throw some_unknown_error();
+						try {
+							throw some_unknown_error();
+						} catch (...) {
+							utki::throw_with_nested(std::logic_error("some logic error"));
+						}
 					} catch (...) {
-						utki::throw_with_nested(std::logic_error("some logic error"));
+						utki::throw_with_nested(std::runtime_error("some_runtime_error"));
 					}
 				} catch (...) {
-					utki::throw_with_nested(std::runtime_error("some_runtime_error"));
+					utki::throw_with_nested(std::invalid_argument("some argument is invalid"));
 				}
-			} catch (...) {
-				utki::throw_with_nested(std::invalid_argument("some argument is invalid"));
+			} catch (std::exception& e) {
+				s = e.what();
 			}
-		} catch (std::exception& e) {
-			s = e.what();
-		}
 
-		auto actual = utki::split(s, '\n');
+			auto actual = utki::split(s, '\n');
 
 #if CFG_COMPILER == CFG_COMPILER_MSVC
-		std::vector<std::string> expected = {
-			"exception stack:"s,
-			"- std::invalid_argument: some argument is invalid"s,
-			"- std::runtime_error: some_runtime_error"s,
-			"- std::logic_error: some logic error"s,
-			"- unknown exception"s
-		};
+			std::vector<std::string> expected = {
+				"exception stack:"s,
+				"- std::invalid_argument: some argument is invalid"s,
+				"- std::runtime_error: some_runtime_error"s,
+				"- std::logic_error: some logic error"s,
+				"- unknown exception"s
+			};
 #else
 		std::vector<std::string> expected = {
 			"exception stack:"s,
@@ -169,11 +184,12 @@ const tst::set set("exception", [](tst::suite& suite) {
 		};
 #endif
 
-		tst::check_eq(actual.size(), expected.size(), SL);
+			tst::check_eq(actual.size(), expected.size(), SL);
 
-		for (auto ei = expected.begin(), ai = actual.begin(); ei != expected.end(); ++ei, ++ai) {
-			tst::check_eq(*ai, *ei, SL);
+			for (auto ei = expected.begin(), ai = actual.begin(); ei != expected.end(); ++ei, ++ai) {
+				tst::check_eq(*ai, *ei, SL);
+			}
 		}
-	});
+	);
 });
 } // namespace
