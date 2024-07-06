@@ -1,3 +1,9 @@
+libutki (1.1.249) unstable; urgency=medium
+
+  * add throw_with_nested
+
+ -- Ivan Gagis <igagis@gmail.com>  Sun, 07 Jul 2024 00:26:18 +0300
+
 libutki (1.1.248) unstable; urgency=medium
 
   * add exception to string functions
