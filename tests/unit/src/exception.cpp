@@ -46,6 +46,12 @@ const tst::set set("exception", [](tst::suite& suite) {
 
 		auto actual = utki::split(s, '\n');
 
+		constexpr size_t expected_size = 4;
+
+		tst::check_eq(actual.size(), expected_size, SL);
+
+#if CFG_COMPILER == CFG_COMPILER_MSVC
+#else
 		auto expected_prefix = "  std::"sv;
 
 		std::vector<std::string> expected = {
@@ -55,12 +61,11 @@ const tst::set set("exception", [](tst::suite& suite) {
 			"  std::logic_error: some logic error"s
 		};
 
-		tst::check_eq(actual.size(), expected.size(), SL);
-
 		for (auto ei = expected.begin(), ai = actual.begin(); ei != expected.end(); ++ei, ++ai) {
 			tst::check(utki::starts_with(*ai, expected_prefix), SL);
 			tst::check(utki::ends_with(*ai, *ei), SL);
 		}
+#endif
 	});
 
 	suite.add("current_exception_to_string", []() {
@@ -72,7 +77,11 @@ const tst::set set("exception", [](tst::suite& suite) {
 			s = utki::current_exception_to_string("  "sv);
 		}
 
+#if CFG_COMPILER == CFG_COMPILER_MSVC
+		tst::check_eq(s, "  unknown exception"s, SL);
+#else
 		tst::check_eq(s, "  (anonymous namespace)::some_unknown_error"s, SL);
+#endif
 	});
 
 	suite.add("stacked_exception_to_string", []() {
@@ -97,12 +106,21 @@ const tst::set set("exception", [](tst::suite& suite) {
 
 		auto actual = utki::split(s, '\n');
 
+#if CFG_COMPILER == CFG_COMPILER_MSVC
+		std::vector<std::string> expected = {
+			"  std::invalid_argument: some argument is invalid"s,
+			"  std::runtime_error: some_runtime_error"s,
+			"  std::logic_error: some logic error"s,
+			"  unknown exception"s
+		};
+#else
 		std::vector<std::string> expected = {
 			"  std::invalid_argument: some argument is invalid"s,
 			"  std::runtime_error: some_runtime_error"s,
 			"  std::logic_error: some logic error"s,
 			"  (anonymous namespace)::some_unknown_error"s
 		};
+#endif
 
 		tst::check_eq(actual.size(), expected.size(), SL);
 
@@ -133,6 +151,15 @@ const tst::set set("exception", [](tst::suite& suite) {
 
 		auto actual = utki::split(s, '\n');
 
+#if CFG_COMPILER == CFG_COMPILER_MSVC
+		std::vector<std::string> expected = {
+			"exception stack:"s,
+			"- std::invalid_argument: some argument is invalid"s,
+			"- std::runtime_error: some_runtime_error"s,
+			"- std::logic_error: some logic error"s,
+			"- unknown exception"s
+		};
+#else
 		std::vector<std::string> expected = {
 			"exception stack:"s,
 			"- std::invalid_argument: some argument is invalid"s,
@@ -140,6 +167,7 @@ const tst::set set("exception", [](tst::suite& suite) {
 			"- std::logic_error: some logic error"s,
 			"- (anonymous namespace)::some_unknown_error"s
 		};
+#endif
 
 		tst::check_eq(actual.size(), expected.size(), SL);
 
