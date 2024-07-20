@@ -196,6 +196,7 @@ SOFTWARE.
 #define CFG_OS_NAME_IOS 2 // NOLINT(cppcoreguidelines-macro-usage)
 #define CFG_OS_NAME_ANDROID 3 // NOLINT(cppcoreguidelines-macro-usage)
 #define CFG_OS_NAME_SOLARIS 4 // NOLINT(cppcoreguidelines-macro-usage)
+#define CFG_OS_NAME_FREEBSD 5 // NOLINT(cppcoreguidelines-macro-usage)
 
 // NOLINTEND(modernize-macro-to-enum, cppcoreguidelines-macro-to-enum)
 
