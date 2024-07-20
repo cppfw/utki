@@ -225,6 +225,8 @@ SOFTWARE.
 #	define CFG_OS CFG_OS_UNIX // NOLINT(cppcoreguidelines-macro-usage)
 #	if defined(sun) || defined(__sun)
 #		define CFG_OS_NAME CFG_OS_NAME_SOLARIS // NOLINT(cppcoreguidelines-macro-usage)
+#	elif defined(__FreeBSD__)
+#		define CFG_OS_NAME CFG_OS_NAME_FREEBSD // NOLINT(cppcoreguidelines-macro-usage)
 #	else
 #		define CFG_OS_NAME CFG_OS_NAME_UNKNOWN // NOLINT(cppcoreguidelines-macro-usage)
 #	endif
