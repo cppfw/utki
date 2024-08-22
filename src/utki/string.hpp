@@ -234,6 +234,24 @@ std::basic_string<typename strings_collection_type::value_type::value_type> join
 }
 
 /**
+ * @brief Concatenate strings.
+ * Concatenates values which can be streamed to an std::ostream using operator<<().
+ * @tparam streamable_type - parameter pack of types of values to concatenate.
+ * @param s - parameter pack of values to concatenate.
+ * @return std::string of concatenated values.
+ */
+template <typename... streamable_type>
+std::string cat(const streamable_type&... s)
+{
+	std::stringstream ss;
+
+	// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-array-to-pointer-decay, "false positive")
+	(ss << ... << s);
+
+	return ss.str();
+}
+
+/**
  * @brief Word wrap string.
  * @param str - string to word wrap.
  * @param width - maximum number of characters per line.
@@ -420,15 +438,21 @@ public:
 			throw std::invalid_argument("string_parser::read_integer(): could not parse number");
 		}
 
+		ASSERT(res.ptr > this->view.data())
+
+		size_t parsed_length = res.ptr - this->view.data();
+
 		if (res.ec == std::errc::result_out_of_range) {
 			throw std::invalid_argument(
-				"string_parser::read_integer(): parsed number does not fit into requested type"
+				utki::cat(
+					"string_parser::read_integer(): parsed number (",
+					this->view.substr(0, parsed_length),
+					") does not fit into requested type"
+				)
 			);
 		}
 
-		ASSERT(this->view.data() != res.ptr)
-
-		this->view = this->view.substr(res.ptr - this->view.data());
+		this->view = this->view.substr(parsed_length);
 
 		return ret;
 	}
@@ -545,24 +569,6 @@ std::string to_string(number_type value, integer_base conversion_base = integer_
 	ASSERT(res.ptr <= &*end)
 
 	return std::string(buf.data(), res.ptr - buf.data());
-}
-
-/**
- * @brief Concatenate strings.
- * Concatenates values which can be streamed to an std::ostream using operator<<().
- * @tparam streamable_type - parameter pack of types of values to concatenate.
- * @param s - parameter pack of values to concatenate.
- * @return std::string of concatenated values.
- */
-template <typename... streamable_type>
-std::string cat(const streamable_type&... s)
-{
-	std::stringstream ss;
-
-	// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-array-to-pointer-decay, "false positive")
-	(ss << ... << s);
-
-	return ss.str();
 }
 
 /**

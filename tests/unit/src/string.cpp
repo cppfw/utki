@@ -7,6 +7,8 @@
 #	include <tst/set.hpp>
 #	include <utki/string.hpp>
 
+#	include "../../../src_deps/fast_float/fast_float.h"
+
 using namespace std::string_literals;
 using namespace std::string_view_literals;
 
@@ -917,6 +919,29 @@ const tst::set set("string", [](tst::suite& suite) {
 			tst::check(p.empty(), SL);
 			tst::check_eq(c, '\0', SL);
 		}
+	});
+
+	suite.add("string_parser_parse_float_close_to_zero_with_exponent", []() {
+		auto str = "5.47382e-48";
+
+		utki::string_parser p(str);
+
+		auto num = p.read_number<float>();
+
+		tst::check_lt(num, 0.00001f, SL);
+		tst::check(p.empty(), SL);
+	});
+
+	suite.add("fast_float_small_float", []() {
+		std::string_view str = "5.47382e-48";
+		float val = 100.0f;
+		auto res = fast_float::from_chars(str.data(), str.data() + str.size(), val, fast_float::general);
+
+		std::cout << "val = " << val << std::endl;
+
+		tst::check(res.ptr == str.data() + str.size(), SL);
+
+		tst::check(res.ec != std::errc::result_out_of_range, SL);
 	});
 
 	suite.add<std::pair<size_t, std::string>>(
