@@ -937,8 +937,6 @@ const tst::set set("string", [](tst::suite& suite) {
 		float val = 100.0f;
 		auto res = fast_float::from_chars(str.data(), str.data() + str.size(), val, fast_float::general);
 
-		std::cout << "val = " << val << std::endl;
-
 		tst::check(res.ptr == str.data() + str.size(), SL);
 
 		tst::check_eq(val, 0.0f, SL);
