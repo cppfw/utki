@@ -138,6 +138,45 @@ auto skip_front(collection_type& collection)
 }
 
 /**
+ * @brief Not to be used directly.
+ * Use reverse_range(<collection>) function.
+ */
+template <typename collection_type>
+struct reverse_range_collection_wrapper {
+	collection_type& collection;
+
+	reverse_range_collection_wrapper(collection_type& collection) :
+		collection(collection)
+	{}
+
+	auto begin()
+	{
+		using std::rbegin;
+		return rbegin(this->collection);
+	}
+
+	auto end()
+	{
+		using std::rend;
+		return rend(this->collection);
+	}
+};
+
+/**
+ * @brief Create collection wrapper which reverses order of elements.
+ * The collection wrapper returns reverse iterators for begin() and end().
+ * @tparam collection_type - collection type.
+ * @param collection - collection with reversed elements order.
+ * @return A special wrapper class which provides begin() and end() methods
+ *         returning collection iterators.
+ */
+template <typename collection_type>
+auto reverse_range(collection_type& collection)
+{
+	return reverse_range_collection_wrapper<collection_type>(collection);
+}
+
+/**
  * @brief Construct std::pair with swapped components.
  * @param p - initial std::pair.
  * @return a new std::pair with swapped component.

@@ -421,7 +421,8 @@ public:
 		}
 
 		if (res.ec == std::errc::result_out_of_range) {
-			throw std::invalid_argument("string_parser::read_integer(): parsed number does not fit into requested type"
+			throw std::invalid_argument(
+				"string_parser::read_integer(): parsed number does not fit into requested type"
 			);
 		}
 

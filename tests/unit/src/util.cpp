@@ -310,6 +310,20 @@ const tst::set set("util", [](tst::suite& suite) {
 		tst::check(!utki::contains(v, "c"sv), SL);
 	});
 
+	suite.add("reverse_range", []() {
+		std::array<int, 10> arr{0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+
+		std::vector<int> result;
+
+		for (const auto& i : utki::reverse_range(arr)) {
+			result.push_back(i);
+		}
+
+		std::vector<int> expected = {9, 8, 7, 6, 5, 4, 3, 2, 1, 0};
+
+		tst::check(result == expected, SL);
+	});
+
 	// TODO: test utki::next() and utki::prev()
 });
 } // namespace
