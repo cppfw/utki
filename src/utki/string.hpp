@@ -333,6 +333,22 @@ std::from_chars_result from_chars( //
 	chars_format fmt = chars_format::general
 ) noexcept;
 
+/**
+ * @brief Convert chars to long double.
+ * This is to be removed when std::from_chars(double) is widely supported by compilers.
+ * @param first - chars start.
+ * @param last - chars end.
+ * @param value - the output value.
+ * @param fmt - conversion format.
+ * @return covnersion result.
+ */
+std::from_chars_result from_chars( //
+	const char* first,
+	const char* last,
+	long double& value,
+	chars_format fmt = chars_format::general
+) noexcept;
+
 class string_parser
 {
 	std::string_view view;
@@ -377,13 +393,8 @@ public:
 		std::from_chars_result res;
 
 		if constexpr (std::is_floating_point_v<number_type>) {
-			// TODO: use std::from_chars for floats when it is widely supported by C++17 compilers,
-			// so if constexpr will not be needed.
-			if constexpr (std::is_same_v<long double, number_type>) {
-				return number_type(this->read_number<double>());
-			} else {
-				res = utki::from_chars(this->view.data(), this->view.data() + this->view.size(), ret);
-			}
+			// TODO: use std::from_chars() when float/double/long double versions of it are well supported by compilers
+			res = utki::from_chars(this->view.data(), this->view.data() + this->view.size(), ret);
 		} else {
 			int base = to_int(integer_base::dec);
 

@@ -279,6 +279,24 @@ std::from_chars_result utki::from_chars( //
 	return ret;
 }
 
+std::from_chars_result utki::from_chars( //
+	const char* first,
+	const char* last,
+	long double& value,
+	chars_format fmt
+) noexcept
+{
+	double val{};
+
+	auto ret = from_chars(first, last, val, fmt);
+
+	if (ret.ec == std::errc()) {
+		value = (long double)(val);
+	}
+
+	return ret;
+}
+
 bool string_parser::is_space(char c)
 {
 	// space characters of the default locale
