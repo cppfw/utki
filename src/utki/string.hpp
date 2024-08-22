@@ -435,7 +435,7 @@ public:
 		}
 
 		if (res.ec == std::errc::invalid_argument) {
-			throw std::invalid_argument("string_parser::read_integer(): could not parse number");
+			throw std::invalid_argument("string_parser::read_integer(): input string does not start with a number");
 		}
 
 		ASSERT(res.ptr > this->view.data())
@@ -450,6 +450,10 @@ public:
 					") does not fit into requested type"
 				)
 			);
+		}
+
+		if (res.ec != std::errc()) {
+			throw std::runtime_error("string_parser::read_integer(): unknown error");
 		}
 
 		this->view = this->view.substr(parsed_length);

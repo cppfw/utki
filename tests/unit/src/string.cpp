@@ -941,9 +941,9 @@ const tst::set set("string", [](tst::suite& suite) {
 
 		tst::check(res.ptr == str.data() + str.size(), SL);
 
-		tst::check_eq(val, 0.0f, SL) << "val = " << val;
+		tst::check_eq(val, 0.0f, SL);
 
-		tst::check(res.ec != std::errc::result_out_of_range, SL);
+		tst::check(res.ec == std::errc(), SL);
 	});
 
 	suite.add<std::pair<size_t, std::string>>(
