@@ -17,7 +17,7 @@ this_libutki := ../../src/out/$(c)/libutki$(dot_so)
 
 this_harness_ld_paths := $(abspath $(d)../harness/tst/src/out/$(tst_cfg) $(d)../harness/clargs/src/out/$(clargs_cfg))
 
-this_cxxflags += -isystem ../harness/tst/src -isystem ../../src
+this_cxxflags += -isystem ../harness/tst/src -isystem ../../src -isystem ../../src_deps
 this_ldflags += $(addprefix -L,$(this_harness_ld_paths))
 this_ldlibs += $(this_libutki) -l tst -l clargs -l m
 
