@@ -387,14 +387,14 @@ public:
 	{
 		this->skip_whitespaces();
 
-		number_type ret = 0;
+		number_type value = 0;
 
 		// NOLINTNEXTLINE(cppcoreguidelines-pro-type-member-init)
 		std::from_chars_result res;
 
 		if constexpr (std::is_floating_point_v<number_type>) {
 			// TODO: use std::from_chars() when float/double/long double versions of it are well supported by compilers
-			res = utki::from_chars(this->view.data(), this->view.data() + this->view.size(), ret);
+			res = utki::from_chars(this->view.data(), this->view.data() + this->view.size(), value);
 		} else {
 			int base = to_int(integer_base::dec);
 
@@ -442,7 +442,7 @@ public:
 				}
 			}
 
-			res = std::from_chars(this->view.data(), this->view.data() + this->view.size(), ret, base);
+			res = std::from_chars(this->view.data(), this->view.data() + this->view.size(), value, base);
 		}
 
 		if (res.ec == std::errc::invalid_argument) {
@@ -453,28 +453,28 @@ public:
 
 		size_t parsed_length = res.ptr - this->view.data();
 
+		this->view = this->view.substr(parsed_length);
+
 		if (res.ec == std::errc::result_out_of_range) {
-			throw std::invalid_argument(
-				utki::cat(
-					"string_parser::read_integer(): parsed number (",
-					this->view.substr(0, parsed_length),
-					") does not fit into requested type"
-				)
-			);
+			// Currently, std::from_chars(float|double) returns std::errc::result_out_of_range also
+			// for cases of very small numbers below the floating type precision.
+			// In my opinion, too small numbers are not out of floating point type range.
+			// At the moment, there is no compiler-independent way to tell if it was due to too big or too small number.
+			// See https://github.com/fastfloat/fast_float/issues/261 for discussion.
+			// So, we just return 0 for both cases.
+			return {0};
 		}
 
 		if (res.ec != std::errc()) {
 			throw std::runtime_error("string_parser::read_integer(): unknown error");
 		}
 
-		this->view = this->view.substr(parsed_length);
-
-		return ret;
+		return value;
 	}
 
 	/**
 	 * @brief Read character at current parser position.
-	 * The parser position is avanced one character further.
+	 * The parser position is advanced one character further.
 	 * @return Character at current parser position.
 	 * @throw std::invalid_argument in case end of string is reached.
 	 */

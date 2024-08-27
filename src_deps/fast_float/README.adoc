@@ -1,6 +1,3 @@
-fast_float library version 3.11.0
-
-WARNING: There is a preoblem https://github.com/fastfloat/fast_float/issues/261
-in newer versions, so do not upgrade until it is fixed.
+fast_float library version 6.4.1
 
 https://github.com/fastfloat/fast_float
