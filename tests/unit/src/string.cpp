@@ -920,13 +920,13 @@ const tst::set set("string", [](tst::suite& suite) {
 	});
 
 	suite.add("string_parser_parse_float_close_to_zero_with_exponent", []() {
-		auto str = "5.47382e-48";
+		auto str = "5.47382e-48"; // this number is below the float-precision
 
 		utki::string_parser p(str);
 
 		auto num = p.read_number<float>();
 
-		tst::check_lt(num, 0.00001f, SL);
+		tst::check_eq(num, 0.0f, SL);
 		tst::check(p.empty(), SL);
 	});
 
