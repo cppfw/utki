@@ -1,3 +1,9 @@
+libutki (1.1.253) unstable; urgency=medium
+
+  * add CFG_IOS_DEPLOYMENT_TARGET
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 29 Aug 2024 23:28:58 +0300
+
 libutki (1.1.252) unstable; urgency=medium
 
   * update fast_float to version 6.1.4
