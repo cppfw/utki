@@ -215,10 +215,17 @@ SOFTWARE.
 #elif defined(__APPLE__)
 #	define CFG_OS CFG_OS_MACOSX // NOLINT(cppcoreguidelines-macro-usage)
 #	include <TargetConditionals.h>
+#	include <Availability.h>
 #	if TARGET_OS_IPHONE == 1 || TARGET_IPHONE_SIMULATOR == 1
 #		define CFG_OS_NAME CFG_OS_NAME_IOS // NOLINT(cppcoreguidelines-macro-usage)
+
+// IOS deployment target, e.g. value of 60100 means IOS 6.1
+#		define CFG_IOS_DEPLOYMENT_TARGET __IPHONE_OS_VERSION_MIN_REQUIRED
 #	else
 #		define CFG_OS_NAME CFG_OS_NAME_MACOSX // NOLINT(cppcoreguidelines-macro-usage)
+
+// macosx deployment target, e.g. value of 1090 means MacOS X 10.9
+#		define CFG_MACOSX_DEPLOYMENT_TARGET __MAC_OS_X_VERSION_MIN_REQUIRED
 #	endif
 
 // check for UNIX should go after check for Linux, because on Linux the __unix macro is also defined
