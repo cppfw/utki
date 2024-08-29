@@ -219,7 +219,10 @@ SOFTWARE.
 #	if TARGET_OS_IPHONE == 1 || TARGET_IPHONE_SIMULATOR == 1
 #		define CFG_OS_NAME CFG_OS_NAME_IOS // NOLINT(cppcoreguidelines-macro-usage)
 
-// IOS deployment target, e.g. value of 60100 means IOS 6.1
+// IOS deployment target example values:
+// - iOS 6.1 = 60100
+// - iOS 12.3 = 120300
+// - iOS 13.0 = 130000
 #		define CFG_IOS_DEPLOYMENT_TARGET __IPHONE_OS_VERSION_MIN_REQUIRED
 #	else
 #		define CFG_OS_NAME CFG_OS_NAME_MACOSX // NOLINT(cppcoreguidelines-macro-usage)
