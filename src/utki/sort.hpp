@@ -1,6 +1,8 @@
 /*
 The MIT License (MIT)
 
+utki - Utility Kit for C++.
+
 Copyright (c) 2015-2024 Ivan Gagis <igagis@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
