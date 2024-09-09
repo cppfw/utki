@@ -73,7 +73,7 @@ public:
 	 * @brief Disconnect a callback from the signal.
 	 * @param conn - connection id of the callback to disconnect.
 	 */
-	void disconnect(connection conn)
+	void disconnect(connection conn) noexcept
 	{
 		this->callbacks.erase(conn);
 	}
