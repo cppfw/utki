@@ -680,4 +680,38 @@ struct version_duplet {
 	}
 };
 
+/**
+ * @brief Version triplet.
+ * Version of the form "MAJOR.MINOR.REVISON".
+ */
+struct version_triplet {
+	/**
+	 * @brief Version duplet.
+	 * Major and minor versions.
+	 */
+	version_duplet duplet;
+
+	/**
+	 * @brief Revision.
+	 */
+	uint32_t revision;
+
+	/**
+	 * @brief Parse version triplet from string.
+	 * The input string is supposed to contain version triplet at its beginning.
+	 * Parsing will stop on the first character right after the version triplet, or at the end of the string.
+	 * @param str - string to parse.
+	 * @return Parsed version triplet.
+	 * @throw std::invalid_argument in case input string does not represent a version triplet.
+	 */
+	version_triplet from(std::string_view str);
+	// TODO: implement
+
+	// TODO: add stream output operator
+
+	// TODO: add unit tests
+
+	// TODO: move out to version.hpp
+};
+
 } // namespace utki
