@@ -33,6 +33,7 @@ SOFTWARE.
 
 #pragma once
 
+#include <algorithm>
 #include <iterator>
 
 #include "config.hpp"

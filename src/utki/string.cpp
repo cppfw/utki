@@ -34,6 +34,7 @@ SOFTWARE.
 
 #include <fast_float/fast_float.h>
 
+#include "config.hpp"
 #include "debug.hpp"
 #include "util.hpp"
 
@@ -357,7 +358,11 @@ void string_parser::skip_inclusive_until(char c)
 char string_parser::skip_inclusive_until_one_of(utki::span<const char> c)
 {
 	for (; !this->view.empty(); this->view = this->view.substr(1)) {
+#if CFG_CPP >= 20
+		auto i = std::ranges::find(c, this->view.front());
+#else
 		auto i = std::find(c.begin(), c.end(), this->view.front());
+#endif
 		if (i != c.end()) {
 			this->view = this->view.substr(1);
 			return *i;
