@@ -2,6 +2,7 @@
 
 #include <tst/check.hpp>
 #include <tst/set.hpp>
+#include <utki/config.hpp>
 #include <utki/shared_ref.hpp>
 
 namespace {
@@ -181,7 +182,11 @@ const tst::set set("shared_ref", [](tst::suite& suite) {
 
 		// std::rotate requires container element type to be
 		// MoveAssignable and MoveConstructible
+#if CFG_CPP >= 20
+		std::ranges::rotate(vec.begin(), std::next(vec.begin()), vec.end());
+#else
 		std::rotate(vec.begin(), std::next(vec.begin()), vec.end());
+#endif
 
 		tst::check_eq(vec[0].get().a_0, 2, SL);
 		tst::check_eq(vec[1].get().a_0, 3, SL);

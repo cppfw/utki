@@ -330,7 +330,7 @@ uint8_t* serialize_le(unsigned_type value, uint8_t* out_buf) noexcept
 		++index;
 	}
 
-	return span.end_pointer();
+	return &*span.end();
 }
 
 /**
@@ -479,7 +479,7 @@ uint8_t* serialize_be(unsigned_type value, uint8_t* out_buf) noexcept
 		b = uint8_t((value >> num_bits_to_shift) & byte_mask);
 	}
 
-	return span.end_pointer();
+	return &*span.end();
 }
 
 /**

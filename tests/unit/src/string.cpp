@@ -719,7 +719,7 @@ const tst::set set("string", [](tst::suite& suite) {
 
 		tst::check_ne(r.ptr, str.data(), SL);
 		tst::check(r.ec == std::errc(), SL);
-		tst::check_eq(v, 3.14159f, SL);
+		tst::check_eq(v, 3.14159f, SL); // NOLINT(modernize-use-std-numbers, "false positive")
 	});
 
 	suite.add("from_chars_double", []() {
@@ -732,7 +732,7 @@ const tst::set set("string", [](tst::suite& suite) {
 
 		tst::check_ne(r.ptr, str.data(), SL);
 		tst::check(r.ec == std::errc(), SL);
-		tst::check_eq(v, 3.14159, SL);
+		tst::check_eq(v, 3.14159, SL); // NOLINT(modernize-use-std-numbers, "false positive")
 	});
 
 	suite.add("string_parser", []() {
@@ -752,7 +752,7 @@ const tst::set set("string", [](tst::suite& suite) {
 		tst::check(!p.empty(), SL);
 
 		auto pi = p.read_number<float>();
-		tst::check_eq(pi, 3.14159f, SL);
+		tst::check_eq(pi, 3.14159f, SL); // NOLINT(modernize-use-std-numbers, "false positive")
 		tst::check(!p.empty(), SL);
 		tst::check_eq(p.peek_char(), ',', SL);
 
@@ -913,7 +913,7 @@ const tst::set set("string", [](tst::suite& suite) {
 		tst::check_eq(p.peek_char(), 'H', SL);
 
 		{
-			auto c = p.skip_inclusive_until_one_of(nullptr);
+			auto c = p.skip_inclusive_until_one_of({});
 			tst::check(p.empty(), SL);
 			tst::check_eq(c, '\0', SL);
 		}

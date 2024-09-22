@@ -5,6 +5,7 @@
 #	include <tst/check.hpp>
 #	include <tst/set.hpp>
 #	include <utki/unicode.hpp>
+#	include <utki/config.hpp>
 
 using namespace std::string_literals;
 using namespace std::string_view_literals;
@@ -16,7 +17,11 @@ const tst::set set("unicode", [](tst::suite& suite) {
 		std::vector<uint8_t> buf = {0x61, 0xd0, 0x91, 0xd1, 0x86, 0xef, 0xba, 0xb6, 0xf0, 0xa0, 0x80, 0x8b};
 
 		std::vector<uint8_t> str(buf.size() + 1);
+#	if CFG_CPP >= 20
+		std::ranges::copy(buf, str.begin());
+#	else
 		std::copy(buf.begin(), buf.end(), str.begin());
+#	endif
 		str.back() = 0; // null-terminate
 
 		// NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast)

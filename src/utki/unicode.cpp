@@ -34,7 +34,7 @@ using namespace utki;
 
 utf8_iterator::utf8_iterator(utki::span<const uint8_t> str) :
 	p(str.data()),
-	end(str.end_pointer())
+	end(&*str.end())
 {
 	this->operator++();
 }

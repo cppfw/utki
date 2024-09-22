@@ -41,7 +41,12 @@ SOFTWARE.
 #	include <iostream>
 #endif
 
+#include "config.hpp"
 #include "debug.hpp"
+
+#if CFG_CPP >= 20
+#	include <span>
+#endif
 
 // undefine the max macro in case it is defined (e.g. by windows.h)
 #ifdef max
@@ -50,6 +55,11 @@ SOFTWARE.
 
 namespace utki {
 
+#if CFG_CPP >= 26
+// std::span becomes constructible from initializer_list onle from C++26, and we want that
+template <typename element_type>
+using span = std::span<element_type, std::dynamic_extent>;
+#else
 /**
  * @brief span template class.
  * This class is a wrapper of continuous memory span, it encapsulates pointer to memory block and size of that memory
@@ -96,11 +106,6 @@ public:
 	{}
 
 	span() noexcept = default;
-
-	/**
-	 * @brief Constructor for automatic conversion from nullptr.
-	 */
-	span(std::nullptr_t) noexcept {}
 
 	/**
 	 * @brief Constructor for automatic conversion to span<const element_type> or other convertible type.
@@ -356,78 +361,87 @@ public:
 		size_type count = std::numeric_limits<size_type>::max()
 	) const noexcept
 	{
-		pointer new_p = offset > this->size() ? this->end() : this->data() + offset;
+		pointer new_p = this->data() + offset;
 		ASSERT(new_p <= this->end())
-		size_type max_new_s = this->end() - new_p;
-		size_type new_s = count > max_new_s ? max_new_s : count;
+		size_type new_s = count == std::numeric_limits<size_type>::max() ? this->end() - new_p : count;
 		ASSERT(new_p + new_s <= this->end())
 		return span(new_p, new_s);
 	}
-
-	/**
-	 * @brief Checks if pointer points somewhere within the span.
-	 * @param p - pointer to check.
-	 * @return true - if pointer passed as argument points somewhere within the span.
-	 * @return false otherwise.
-	 */
-	bool overlaps(const_pointer p) const noexcept
-	{
-		return this->begin() <= p && p <= (this->end() - 1);
-	}
-
-	friend std::ostream& operator<<(std::ostream& s, const span<element_type>& buf)
-	{
-		// TODO: some old clang-tidy mistakingly complains about this string,
-		//    remove this lint suppression when newer clang-tidy is available
-		//    on ARM linuxes
-		// NOLINTNEXTLINE(cppcoreguidelines-pro-type-vararg)
-		for (auto& e : buf) {
-			s << e;
-		}
-		return s;
-	}
-
-	constexpr bool operator==(const span<const element_type>& s) const noexcept
-	{
-		return std::equal(this->begin(), this->end(), s.begin(), s.end());
-	}
-
-	constexpr bool operator!=(const span<const element_type>& s) const noexcept
-	{
-		return !this->operator==(s);
-	}
-
-	constexpr bool operator<(const span<const element_type>& s) const noexcept
-	{
-		return std::lexicographical_compare(this->begin(), this->end(), s.begin(), s.end());
-	}
-
-	constexpr bool operator>=(const span<const element_type>& s) const noexcept
-	{
-		return !this->operator<(s);
-	}
-
-	constexpr bool operator>(const span<const element_type>& s) const noexcept
-	{
-		return s.operator<(*this);
-	}
-
-	constexpr bool operator<=(const span<const element_type>& s) const noexcept
-	{
-		return !this->operator>(s);
-	}
 };
+#endif // CFG_CPP < 20
 
-template <class element_type>
-inline utki::span<element_type> make_span(std::nullptr_t)
+/**
+ * @brief Checks if pointer points somewhere within the span.
+ * @param s - span to check.
+ * @param p - pointer to check.
+ * @return true - if pointer passed as argument points somewhere within the span.
+ * @return false otherwise.
+ */
+template <typename element_type>
+bool overlaps(const span<element_type>& s, typename span<element_type>::const_pointer p)
 {
-	return utki::span<element_type>(nullptr);
+	return (&*s.begin()) <= p && p <= (&*std::prev(s.end()));
+}
+
+template <typename lhs_element_type, typename rhs_element_type>
+constexpr bool deep_equals(const span<lhs_element_type>& lhs, const span<rhs_element_type>& rhs)
+{
+	return std::equal(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
+}
+
+template <typename lhs_element_type, typename rhs_element_type>
+constexpr bool deep_not_equals(const span<lhs_element_type>& lhs, const span<rhs_element_type>& rhs)
+{
+	return !deep_equals(lhs, rhs);
+}
+
+template <typename lhs_element_type, typename rhs_element_type>
+constexpr bool deep_less_than(const span<lhs_element_type>& lhs, const span<rhs_element_type>& rhs)
+{
+	return std::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
+}
+
+template <typename lhs_element_type, typename rhs_element_type>
+constexpr bool deep_greater_or_equals(const span<lhs_element_type>& lhs, const span<rhs_element_type>& rhs)
+{
+	return !deep_less_than(lhs, rhs);
+}
+
+template <typename lhs_element_type, typename rhs_element_type>
+constexpr bool deep_greater_than(const span<lhs_element_type>& lhs, const span<rhs_element_type>& rhs)
+{
+	return deep_less_than(rhs, lhs);
+}
+
+template <typename lhs_element_type, typename rhs_element_type>
+constexpr bool deep_less_or_equals(const span<lhs_element_type>& lhs, const span<rhs_element_type>& rhs)
+{
+	return !deep_greater_than(lhs, rhs);
+}
+
+template <typename element_type>
+std::ostream& operator<<(std::ostream& s, const span<element_type>& buf)
+{
+	// TODO: some old clang-tidy mistakingly complains about this string,
+	//    remove this lint suppression when newer clang-tidy is available
+	//    on ARM linuxes
+	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-vararg)
+	for (auto& e : buf) {
+		s << e;
+	}
+	return s;
 }
 
 template <class element_type>
 inline utki::span<element_type> make_span(element_type* buf, size_t size)
 {
 	return utki::span<element_type>(buf, size);
+}
+
+template <class element_type>
+inline utki::span<const element_type> make_span(std::initializer_list<element_type> l)
+{
+	return span<const element_type>(l.begin(), l.size());
 }
 
 template <class element_type, std::size_t array_size>

@@ -2,6 +2,7 @@
 
 #include <tst/check.hpp>
 #include <tst/set.hpp>
+#include <utki/config.hpp>
 #include <utki/span.hpp>
 
 // undefine possibly defined macro
@@ -10,24 +11,15 @@
 #endif
 
 using namespace std::string_literals;
+using namespace std::string_view_literals;
 
 // declare templates to instantiate all template methods to include all methods to gcov coverage
+#if CFG_CPP < 20 // for cpp >= 20, utki::span = std::span
 template class utki::span<const int>;
+#endif
 
 namespace {
 const tst::set set("span", [](tst::suite& suite) {
-	suite.add("output_to_stream_operator", []() {
-		std::array<char, 12> buf = {
-			{'H', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', '!'}
-		};
-
-		std::stringstream ss;
-
-		ss << utki::make_span(buf);
-
-		tst::check_eq(ss.str(), "Hello world!"s, SL);
-	});
-
 	suite.add("make_span_from_const_string", []() {
 		std::string str = "Hello world!";
 
@@ -45,21 +37,15 @@ const tst::set set("span", [](tst::suite& suite) {
 		tst::check_eq(s.data(), str, SL);
 	});
 
-	suite.add("constructor_from_initializer_list", []() {
+	suite.add("make_span_from_initializer_list", []() {
 		std::vector<int> v = {10, 13, 14};
 
-		utki::span<const int> cs({10, 13, 14});
-
-		auto f = [&](utki::span<int> s) {
-			tst::check(s == v, SL);
-		};
-
-		f(v);
+		using utki::deep_equals;
 
 		auto cf = [&](utki::span<const int> s) {
-			tst::check(s == v, SL);
+			tst::check(deep_equals(s, utki::make_span(v)), SL);
 		};
-		cf(v);
+		cf({10, 13, 14});
 	});
 
 	suite.add("initializer_list_downcast", []() {
@@ -95,20 +81,22 @@ const tst::set set("span", [](tst::suite& suite) {
 	suite.add("constructor_from_vector", []() {
 		std::vector<int> v = {10, 13, 14};
 
+		using utki::deep_equals;
+
 		utki::span<int> s(v);
-		tst::check_eq(s, utki::make_span(v), SL);
+		tst::check(deep_equals(s, utki::make_span(v)), SL);
 
 		utki::span<const int> cs(v);
-		tst::check_eq(s, utki::make_span(v), SL);
+		tst::check(deep_equals(s, utki::make_span(v)), SL);
 
 		auto f = [&](utki::span<int> s) {
-			tst::check(s == v, SL);
+			tst::check(deep_equals(s, utki::make_span(v)), SL);
 		};
 
 		f(v);
 
 		auto cf = [&](utki::span<const int> s) {
-			tst::check(s == v, SL);
+			tst::check(deep_equals(s, utki::make_span(v)), SL);
 		};
 		cf(v);
 		cf(s);
@@ -117,11 +105,13 @@ const tst::set set("span", [](tst::suite& suite) {
 	suite.add("constructor_from_const_vector", []() {
 		const std::vector<int> v = {10, 13, 14};
 
+		using utki::deep_equals;
+
 		utki::span<const int> cs(v);
-		tst::check_eq(cs, utki::make_span(v), SL);
+		tst::check(deep_equals(cs, utki::make_span(v)), SL);
 
 		auto cf = [&](utki::span<const int> s) {
-			tst::check(s == v, SL);
+			tst::check(deep_equals(s, utki::make_span(v)), SL);
 		};
 		cf(v);
 	});
@@ -129,20 +119,22 @@ const tst::set set("span", [](tst::suite& suite) {
 	suite.add("constructor_from_array", []() {
 		std::array<int, 3> v = {10, 13, 14};
 
+		using utki::deep_equals;
+
 		utki::span<int> s(v);
-		tst::check_eq(s, utki::make_span(v), SL);
+		tst::check(deep_equals(s, utki::make_span(v)), SL);
 
 		utki::span<const int> cs(v);
-		tst::check_eq(s, utki::make_span(v), SL);
+		tst::check(deep_equals(s, utki::make_span(v)), SL);
 
 		auto f = [&](utki::span<int> s) {
-			tst::check(s == v, SL);
+			tst::check(deep_equals(s, utki::make_span(v)), SL);
 		};
 
 		f(v);
 
 		auto cf = [&](utki::span<const int> s) {
-			tst::check(s == v, SL);
+			tst::check(deep_equals(s, utki::make_span(v)), SL);
 		};
 		cf(v);
 		cf(s);
@@ -151,11 +143,13 @@ const tst::set set("span", [](tst::suite& suite) {
 	suite.add("constructor_from_const_array", []() {
 		const std::array<int, 3> v = {10, 13, 14};
 
+		using utki::deep_equals;
+
 		utki::span<const int> cs(v);
-		tst::check_eq(cs, utki::make_span(v), SL);
+		tst::check(deep_equals(cs, utki::make_span(v)), SL);
 
 		auto cf = [&](utki::span<const int> s) {
-			tst::check(s == v, SL);
+			tst::check(deep_equals(s, utki::make_span(v)), SL);
 		};
 		cf(v);
 	});
@@ -163,111 +157,84 @@ const tst::set set("span", [](tst::suite& suite) {
 	suite.add("constructor_from_string", []() {
 		std::string v = "hello world!";
 
+		using utki::deep_equals;
+
 		utki::span<char> s(v);
-		tst::check_eq(s, utki::make_span(v), SL);
+		tst::check(deep_equals(s, utki::make_span(v)), SL);
 
 		utki::span<const char> cs(v);
-		tst::check_eq(s, utki::make_span(v), SL);
+		tst::check(deep_equals(s, utki::make_span(v)), SL);
 
 		auto f = [&](utki::span<char> s) {
-			tst::check(s == v, SL);
+			tst::check(deep_equals(s, utki::make_span(v)), SL);
 		};
 
 		f(v);
 
 		auto cf = [&](utki::span<const char> s) {
-			tst::check(s == v, SL);
+			tst::check(deep_equals(s, utki::make_span(v)), SL);
 		};
 		cf(v);
 		cf(s);
 	});
 
-	suite.add("constructor_from_const_string", []() {
-		const std::string v = "hello world!";
-
-		utki::span<const char> cs(v);
-		tst::check_eq(cs, utki::make_span(v), SL);
-
-		auto cf = [&](utki::span<const char> s) {
-			tst::check_eq(s, utki::make_span(v), SL);
-		};
-		cf(v);
-	});
-
-	suite.add("constructor_from_string_view", []() {
-		std::string_view v = "hello world!";
-
-		utki::span<const char> cs(v);
-		tst::check_eq(cs, utki::make_span(v), SL);
-
-		auto cf = [&](utki::span<const char> s) {
-			tst::check(s == v, SL);
-		};
-		cf(v);
-	});
-
-	suite.add("constructor_from_const_char_ptr", []() {
-		const char* v = "hello world!";
-
-		utki::span<const char> cs(v);
-		tst::check_eq(cs, utki::make_span(v), SL);
-
-		auto cf = [&](utki::span<const char> s) {
-			tst::check(s == v, SL);
-		};
-		cf(v);
-	});
-
 	suite.add("constructor_copy", []() {
 		const char* v = "hello world!";
 
-		utki::span<const char> cs(v);
+		utki::span<const char> cs(utki::make_span(v));
 
 		utki::span<const char> cs2(cs);
 
-		tst::check_eq(cs, utki::make_span(v), SL);
-		tst::check_eq(cs, cs2, SL);
+		using utki::deep_equals;
+
+		tst::check(deep_equals(cs, utki::make_span(v)), SL);
+		tst::check(deep_equals(cs, cs2), SL);
 	});
 
 	suite.add("operator_assign_copy", []() {
 		const char* v = "hello world!";
 
-		utki::span<const char> cs(v);
+		utki::span<const char> cs(utki::make_span(v));
 
 		utki::span<const char> cs2;
 
 		cs2 = cs;
 
-		tst::check_eq(cs, utki::make_span(v), SL);
-		tst::check_eq(cs, cs2, SL);
+		using utki::deep_equals;
+
+		tst::check(deep_equals(cs, utki::make_span(v)), SL);
+		tst::check(deep_equals(cs, cs2), SL);
 	});
 
 	suite.add("constructor_move", []() {
 		const char* v = "hello world!";
 
-		utki::span<const char> cs(v);
+		utki::span<const char> cs(utki::make_span(v));
 
 		utki::span<const char> cs2(std::move(cs));
 
+		using utki::deep_equals;
+
 		// moved from span should remain valid
 		// NOLINTNEXTLINE(bugprone-use-after-move)
-		tst::check_eq(cs, utki::make_span(v), SL);
-		tst::check_eq(cs, cs2, SL);
+		tst::check(deep_equals(cs, utki::make_span(v)), SL);
+		tst::check(deep_equals(cs, cs2), SL);
 	});
 
 	suite.add("operator_assign_move", []() {
 		const char* v = "hello world!";
 
-		utki::span<const char> cs(v);
+		utki::span<const char> cs(utki::make_span(v));
 
 		utki::span<const char> cs2;
 
 		cs2 = std::move(cs);
 
-		// moved from span should remain valid
-		// NOLINTNEXTLINE(bugprone-use-after-move)
-		tst::check_eq(cs, utki::make_span(v), SL);
-		tst::check_eq(cs, cs2, SL);
+		using utki::deep_equals;
+
+		// NOLINTNEXTLINE(bugprone-use-after-move, "moved from span should remain valid")
+		tst::check(deep_equals(cs, utki::make_span(v)), SL);
+		tst::check(deep_equals(cs, cs2), SL);
 	});
 
 	struct subspan_fixture {
@@ -298,21 +265,6 @@ const tst::set set("span", [](tst::suite& suite) {
 		subspan_fixture f;
 
 		auto ss = f.s.subspan(f.s.size());
-
-		tst::check_eq(
-			ss.size(),
-			size_t(0),
-			[&](auto& o) {
-				o << "ss.size() = " << ss.size();
-			},
-			SL
-		);
-	});
-
-	suite.add("subspan_offset_greater_than_size", []() {
-		subspan_fixture f;
-
-		auto ss = f.s.subspan(1000);
 
 		tst::check_eq(
 			ss.size(),
@@ -363,74 +315,94 @@ const tst::set set("span", [](tst::suite& suite) {
 		tst::check(in == out, SL);
 	});
 
-	suite.add("operators_equals_and_not_equals", []() {
+	suite.add("comparisons_equals_and_not_equals", []() {
 		std::vector<size_t> v1 = {10, 20, 13, 65};
 		std::array<size_t, 6> v2 = {3, 10, 20, 13, 65, 73};
 
-		tst::check(utki::make_span(v1) != utki::make_span(v2), SL);
-		tst::check(utki::make_span(v1) == utki::make_span(v2).subspan(1, 4), SL);
+		using utki::deep_equals;
+		using utki::deep_not_equals;
+
+		tst::check(deep_not_equals(utki::make_span(v1), utki::make_span(v2)), SL);
+		tst::check(deep_equals(utki::make_span(v1), utki::make_span(v2).subspan(1, 4)), SL);
 	});
 
-	suite.add("const_operators_equals_and_not_equals", []() {
+	suite.add("const_comparison_equals_and_not_equals", []() {
 		const std::vector<size_t> v1 = {10, 20, 13, 65};
 		const std::array<size_t, 6> v2 = {3, 10, 20, 13, 65, 73};
 
-		tst::check(utki::make_span(v1) != utki::make_span(v2), SL);
-		tst::check(utki::make_span(v1) == utki::make_span(v2).subspan(1, 4), SL);
+		using utki::deep_equals;
+		using utki::deep_not_equals;
+
+		tst::check(deep_not_equals(utki::make_span(v1), utki::make_span(v2)), SL);
+		tst::check(deep_equals(utki::make_span(v1), utki::make_span(v2).subspan(1, 4)), SL);
 	});
 
-	suite.add("semiconst_operaots_equals_and_not_equals", []() {
+	suite.add("semiconst_comparison_equals_and_not_equals", []() {
 		const std::vector<size_t> v1 = {10, 20, 13, 65};
 		std::array<size_t, 6> v2 = {3, 10, 20, 13, 65, 73};
 
-		tst::check(utki::make_span(v1) != utki::make_span(v2), SL);
-		tst::check(utki::make_span(v1) == utki::make_span(v2).subspan(1, 4), SL);
+		using utki::deep_equals;
+		using utki::deep_not_equals;
+
+		tst::check(deep_not_equals(utki::make_span(v1), utki::make_span(v2)), SL);
+		tst::check(deep_equals(utki::make_span(v1), utki::make_span(v2).subspan(1, 4)), SL);
 	});
 
-	suite.add("another_semiconst_operaots_equals_and_not_equals", []() {
+	suite.add("another_semiconst_comparison_equals_and_not_equals", []() {
 		std::vector<size_t> v1 = {10, 20, 13, 65};
 		const std::array<size_t, 6> v2 = {3, 10, 20, 13, 65, 73};
 
-		tst::check(utki::make_span(v1) != utki::make_span(v2), SL);
-		tst::check(utki::make_span(v1) == utki::make_span(v2).subspan(1, 4), SL);
+		using utki::deep_equals;
+		using utki::deep_not_equals;
+
+		tst::check(deep_not_equals(utki::make_span(v1), utki::make_span(v2)), SL);
+		tst::check(deep_equals(utki::make_span(v1), utki::make_span(v2).subspan(1, 4)), SL);
 	});
 
-	suite.add("operator_less_than", []() {
+	suite.add("less_than", []() {
 		std::vector<size_t> v1 = {10, 20, 13, 65};
 		std::array<size_t, 6> v2 = {3, 10, 20, 13, 65, 73};
 
-		tst::check(utki::make_span(v2) < utki::make_span(v1), SL);
-		tst::check(!(utki::make_span(v1) < utki::make_span(v2).subspan(1, 4)), SL);
-		tst::check(utki::make_span(v1) < utki::make_span(v2).subspan(1, 5), SL);
+		using utki::deep_less_than;
+
+		tst::check(deep_less_than(utki::make_span(v2), utki::make_span(v1)), SL);
+		tst::check(!deep_less_than(utki::make_span(v1), utki::make_span(v2).subspan(1, 4)), SL);
+		tst::check(deep_less_than(utki::make_span(v1), utki::make_span(v2).subspan(1, 5)), SL);
 	});
 
-	suite.add("operator_greater_than_or_equals", []() {
+	suite.add("greater_than_or_equals", []() {
 		std::vector<size_t> v1 = {10, 20, 13, 65};
 		std::array<size_t, 6> v2 = {3, 10, 20, 13, 65, 73};
 
-		tst::check(utki::make_span(v1) >= utki::make_span(v2), SL);
-		tst::check(!(utki::make_span(v2) >= utki::make_span(v1).subspan(1, 4)), SL);
-		tst::check(utki::make_span(v1) >= utki::make_span(v2).subspan(1, 4), SL);
-		tst::check(utki::make_span(v2).subspan(1, 5) >= utki::make_span(v1), SL);
+		using utki::deep_greater_or_equals;
+
+		tst::check(deep_greater_or_equals(utki::make_span(v1), utki::make_span(v2)), SL);
+		tst::check(!deep_greater_or_equals(utki::make_span(v2), utki::make_span(v1).subspan(1, 3)), SL);
+		tst::check(deep_greater_or_equals(utki::make_span(v1), utki::make_span(v2).subspan(1, 4)), SL);
+		tst::check(deep_greater_or_equals(utki::make_span(v2).subspan(1, 5), utki::make_span(v1)), SL);
 	});
 
-	suite.add("operator_greater_than", []() {
+	suite.add("greater_than", []() {
 		std::vector<size_t> v1 = {10, 20, 13, 65};
 		std::array<size_t, 6> v2 = {3, 10, 20, 13, 65, 73};
 
-		tst::check(utki::make_span(v1) > utki::make_span(v2), SL);
-		tst::check(!(utki::make_span(v1) > utki::make_span(v2).subspan(1, 4)), SL);
-		tst::check(utki::make_span(v2).subspan(1, 5) > utki::make_span(v1), SL);
+		using utki::deep_greater_than;
+
+		tst::check(deep_greater_than(utki::make_span(v1), utki::make_span(v2)), SL);
+		tst::check(!deep_greater_than(utki::make_span(v1), utki::make_span(v2).subspan(1, 4)), SL);
+		tst::check(deep_greater_than(utki::make_span(v2).subspan(1, 5), utki::make_span(v1)), SL);
 	});
 
-	suite.add("operator_less_than_or_equals", []() {
+	suite.add("less_than_or_equals", []() {
 		std::vector<size_t> v1 = {10, 20, 13, 65};
 		std::array<size_t, 6> v2 = {3, 10, 20, 13, 65, 73};
 
-		tst::check(utki::make_span(v2) <= utki::make_span(v1), SL);
-		tst::check(utki::make_span(v1) <= utki::make_span(v2).subspan(1, 4), SL);
-		tst::check(utki::make_span(v2).subspan(1, 4) <= utki::make_span(v1), SL);
-		tst::check(utki::make_span(v1) <= utki::make_span(v2).subspan(1, 5), SL);
+		using utki::deep_less_or_equals;
+
+		tst::check(deep_less_or_equals(utki::make_span(v2), utki::make_span(v1)), SL);
+		tst::check(deep_less_or_equals(utki::make_span(v1), utki::make_span(v2).subspan(1, 4)), SL);
+		tst::check(deep_less_or_equals(utki::make_span(v2).subspan(1, 4), utki::make_span(v1)), SL);
+		tst::check(deep_less_or_equals(utki::make_span(v1), utki::make_span(v2).subspan(1, 5)), SL);
 	});
 
 	suite.add("method_empty", [] {
@@ -443,6 +415,8 @@ const tst::set set("span", [](tst::suite& suite) {
 	suite.add("to_uint8_t__and__to_char", []() {
 		std::string str = "abcd";
 
+		using utki::to_uint8_t;
+
 		auto s = to_uint8_t(utki::make_span(str));
 
 		tst::check_eq(s.size(), str.size(), SL);
@@ -450,6 +424,8 @@ const tst::set set("span", [](tst::suite& suite) {
 		tst::check_eq(s[1], uint8_t(str[1]), SL);
 		tst::check_eq(s[2], uint8_t(str[2]), SL);
 		tst::check_eq(s[3], uint8_t(str[3]), SL);
+
+		using utki::to_char;
 
 		auto cs = to_char(s);
 
@@ -463,6 +439,8 @@ const tst::set set("span", [](tst::suite& suite) {
 	suite.add("to_uint8_t__and__to_char__const", []() {
 		const std::string str = "abcd";
 
+		using utki::to_uint8_t;
+
 		auto s = to_uint8_t(utki::make_span(str));
 
 		tst::check_eq(s.size(), str.size(), SL);
@@ -471,6 +449,8 @@ const tst::set set("span", [](tst::suite& suite) {
 		tst::check_eq(s[2], uint8_t(str[2]), SL);
 		tst::check_eq(s[3], uint8_t(str[3]), SL);
 
+		using utki::to_char;
+
 		auto cs = to_char(s);
 
 		tst::check_eq(cs.size(), str.size(), SL);
@@ -478,6 +458,23 @@ const tst::set set("span", [](tst::suite& suite) {
 		tst::check_eq(cs[1], str[1], SL);
 		tst::check_eq(cs[2], str[2], SL);
 		tst::check_eq(cs[3], str[3], SL);
+	});
+
+	suite.add("overlaps", []() {
+		auto str = "hello wolrd!"sv;
+
+		auto s = utki::make_span(str);
+
+		using utki::overlaps;
+
+		tst::check(!overlaps(s, str.data() - 1), SL);
+		// NOLINTNEXTLINE(bugprone-suspicious-stringview-data-usage, "false positive")
+		tst::check(overlaps(s, str.data()), SL);
+		tst::check(overlaps(s, str.data() + 1), SL);
+		tst::check(overlaps(s, str.data() + 2), SL);
+		tst::check(overlaps(s, str.data() + str.size() - 1), SL);
+		tst::check(!overlaps(s, str.data() + str.size()), SL);
+		tst::check(!overlaps(s, str.data() + str.size() + 1), SL);
 	});
 });
 } // namespace

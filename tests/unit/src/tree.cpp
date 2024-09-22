@@ -1100,7 +1100,7 @@ const tst::set set("tree", [](tst::suite& suite) {
 
 		const auto traversal = utki::make_traversal(roots);
 
-		tst::check(!traversal.is_valid(utki::make_span<size_t>(nullptr)), SL);
+		tst::check(!traversal.is_valid(utki::span<size_t>()), SL);
 		tst::check(traversal.is_valid({0}), SL);
 		tst::check(traversal.is_valid({0, 0}), SL);
 		tst::check(traversal.is_valid({0, 1}), SL);
