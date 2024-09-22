@@ -44,7 +44,7 @@ SOFTWARE.
 #include "config.hpp"
 #include "debug.hpp"
 
-#if CFG_CPP >= 20
+#if CFG_CPP >= 26
 #	include <span>
 #endif
 
