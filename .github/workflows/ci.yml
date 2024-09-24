@@ -147,7 +147,7 @@ jobs:
           repo: deb https://gagis.hopto.org/repo/cppfw/${{ matrix.os }} ${{ matrix.codename }} main
           repo-name: cppfw
           keys-asc: https://gagis.hopto.org/repo/cppfw/pubkey.gpg
-          install: myci locales git devscripts equivs
+          install: myci locales git devscripts equivs nodejs
       - name: add llvm repo (for clang-format)
         uses: myci-actions/add-deb-repo@master
         with:
@@ -170,13 +170,11 @@ jobs:
           locale-gen
       - name: build
         run: dpkg-buildpackage --unsigned-source --unsigned-changes
-      # - name: upload binaries to artifacts
-      #   uses: actions/upload-artifact@v3.1.2
-      #   with:
-      #     name: binaries-${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }}
-      #     path: |
-      #       src/out/rel/*.so.*
-      #       src/out/rel/*.a
+      - name: upload deb packages to artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.os }}_${{ matrix.codename }}_${{ matrix.labels[0] }}_debs
+          path: "*.*deb"
       - name: deploy deb packages
         run: |
           echo "${{ secrets.MYCI_REPO_SSH_KEY }}" > repo_key_rsa && chmod 600 repo_key_rsa
