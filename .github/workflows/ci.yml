@@ -169,7 +169,9 @@ jobs:
           echo "de_DE.UTF-8 UTF-8" >> /etc/locale.gen
           locale-gen
       - name: build
-        run: dpkg-buildpackage --unsigned-source --unsigned-changes
+        run: |
+          dpkg-buildpackage --unsigned-source --unsigned-changes
+          mv ../*.*deb .
       - name: upload deb packages to artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -178,7 +180,7 @@ jobs:
       - name: deploy deb packages
         run: |
           echo "${{ secrets.MYCI_REPO_SSH_KEY }}" > repo_key_rsa && chmod 600 repo_key_rsa
-          myci-deploy-apt-ssh.sh --key repo_key_rsa --server gagis.hopto.org --repo cppfw/${{ matrix.os }} --distro ${{ matrix.codename }} --component main ../lib${PACKAGE_NAME}*_${PACKAGE_VERSION}_*.deb
+          myci-deploy-apt-ssh.sh --key repo_key_rsa --server gagis.hopto.org --repo cppfw/${{ matrix.os }} --distro ${{ matrix.codename }} --component main lib${PACKAGE_NAME}*_${PACKAGE_VERSION}_*.deb
         if: startsWith(github.ref, 'refs/tags/')
 ##### archlinux #####
   # archlinux:
