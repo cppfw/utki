@@ -1,3 +1,9 @@
+libutki (1.1.255) unstable; urgency=medium
+
+  * span conform to std
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 24 Sep 2024 13:24:15 +0300
+
 libutki (1.1.254) unstable; urgency=medium
 
   * add signal
