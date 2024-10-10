@@ -112,6 +112,54 @@ jobs:
         run: make config=asan
       - name: test
         run: make config=asan test
+##### cpp20 #####
+  cpp20:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {os: debian, codename: bookworm, image_owner: }
+    runs-on: ${{ (matrix.labels == '' && 'ubuntu-latest') || matrix.labels }}
+    container: ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }}
+    name: linux - ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }} | ${{ matrix.labels[0] }}
+    steps:
+      - name: set TZ for ubuntu:focal
+        run: |
+          # configure timezone to avoid 'tzdata' package to require user interaction during installation (needed for ubuntu:focal)
+          TZ=Europe/Helsinki ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+      - name: add cppfw deb repo
+        uses: myci-actions/add-deb-repo@master
+        with:
+          repo: deb https://gagis.hopto.org/repo/cppfw/${{ matrix.os }} ${{ matrix.codename }} main
+          repo-name: cppfw
+          keys-asc: https://gagis.hopto.org/repo/cppfw/pubkey.gpg
+          install: myci locales git devscripts equivs nodejs
+      - name: add llvm repo (for clang-format)
+        uses: myci-actions/add-deb-repo@master
+        with:
+          repo: deb https://apt.llvm.org/${{ matrix.codename }} llvm-toolchain-${{ matrix.codename }} main
+          repo-name: llvm
+          keys-asc: https://apt.llvm.org/llvm-snapshot.gpg.key
+      - name: git clone
+        uses: myci-actions/checkout@master
+      - name: set PACKAGE_VERSION
+        uses: myci-actions/export-env-var@master
+        with: {name: PACKAGE_VERSION, value: $(myci-deb-version.sh debian/changelog)}
+      - name: prepare debian package
+        run: myci-deb-prepare.sh
+      - name: install deps
+        run: myci-deb-install-build-deps.sh
+      - name: add DE locale
+        # needed for testing that locale with "," as decimal delimiter does not break the parsing with string_parser
+        run: |
+          echo "de_DE.UTF-8 UTF-8" >> /etc/locale.gen
+          locale-gen
+      - name: build
+        run: |
+          make config=cpp20
+      - name: test
+        run: |
+          make config=cpp20 test
 ##### deb linux #####
   deb:
     strategy:
