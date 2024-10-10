@@ -224,6 +224,8 @@ jobs:
           mv ../*.*deb .
       - name: upload deb packages to artifacts
         uses: actions/upload-artifact@v4
+        # do not fail the job if the step fails
+        continue-on-error: true
         with:
           name: ${{ matrix.os }}_${{ matrix.codename }}_${{ matrix.labels[0] }}_debs
           path: "*.*deb"
