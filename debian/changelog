@@ -1,3 +1,9 @@
+libutki (1.1.256) unstable; urgency=medium
+
+  * add span::at()
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 10 Oct 2024 16:11:38 +0300
+
 libutki (1.1.255) unstable; urgency=medium
 
   * span conform to std
