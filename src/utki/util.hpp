@@ -274,7 +274,7 @@ public:
 	 * @brief Constructor.
 	 * @param f - function to call on object destruction.
 	 */
-	scope_exit(decltype(f)&& f) :
+	scope_exit(decltype(f) && f) :
 		f(std::move(f))
 	{}
 
