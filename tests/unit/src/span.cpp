@@ -476,5 +476,45 @@ const tst::set set("span", [](tst::suite& suite) {
 		tst::check(!overlaps(s, str.data() + str.size()), SL);
 		tst::check(!overlaps(s, str.data() + str.size() + 1), SL);
 	});
+
+	suite.add("at_const", []() {
+		auto str = "hello wolrd!"sv;
+
+		auto s = utki::make_span(str);
+
+		for (size_t i = 0; i != str.size(); ++i) {
+			tst::check_eq(s.at(i), str.at(i), SL);
+		}
+
+		bool thrown = false;
+		try {
+			s.at(str.size());
+			tst::check(false, SL);
+		} catch (std::out_of_range&) {
+			thrown = true;
+		}
+		tst::check(thrown, SL);
+	});
+
+	suite.add("at", []() {
+		auto str = "hello wolrd!"s;
+
+		auto s = utki::make_span(str);
+
+		s.at(0) = 'H';
+
+		for (size_t i = 0; i != str.size(); ++i) {
+			tst::check_eq(s.at(i), str.at(i), SL);
+		}
+
+		bool thrown = false;
+		try {
+			s.at(str.size());
+			tst::check(false, SL);
+		} catch (std::out_of_range&) {
+			thrown = true;
+		}
+		tst::check(thrown, SL);
+	});
 });
 } // namespace

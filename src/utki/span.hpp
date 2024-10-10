@@ -56,7 +56,8 @@ SOFTWARE.
 namespace utki {
 
 #if CFG_CPP >= 26
-// std::span becomes constructible from initializer_list onle from C++26, and we want that
+// std::span becomes constructible from initializer_list only from C++26, and we want that,
+// also std::span::at(size_type) is only in C++26
 template <typename element_type>
 using span = std::span<element_type, std::dynamic_extent>;
 #else
@@ -263,6 +264,22 @@ public:
 		ASSERT(i < this->size(), [&](auto& o) {
 			o << "operator[](" << i << "): index out of bounds";
 		})
+		return this->buf[i];
+	}
+
+	const_reference at(size_type i) const
+	{
+		if (i >= this->size()) {
+			throw std::out_of_range("span::at(): index is out of range");
+		}
+		return this->buf[i];
+	}
+
+	reference at(size_type i)
+	{
+		if (i >= this->size()) {
+			throw std::out_of_range("span::at(): index is out of range");
+		}
 		return this->buf[i];
 	}
 
