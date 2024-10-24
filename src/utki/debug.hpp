@@ -94,42 +94,46 @@ struct source_location {
 		uint_least32_t column = 0,
 		const char* file_name = nullptr
 	) noexcept :
-		line_{line},
-		column_{column},
-		file_name_{file_name}
+		line_v(line),
+		column_v(column),
+		file_name_v(file_name)
 	{}
 
 #if CFG_CPP >= 20
-	constexpr source_location(const std_source_location& sl) :
-		source_location(sl.line(), sl.column(), sl.file_name())
+	constexpr source_location(const utki::std_source_location& sl) :
+		source_location(
+			sl.line(), //
+			sl.column(),
+			sl.file_name()
+		)
 	{}
 #endif
 
 	constexpr auto line() const noexcept -> uint_least32_t
 	{
-		return this->line_;
+		return this->line_v;
 	}
 
 	constexpr auto column() const noexcept -> uint_least32_t
 	{
-		return this->column_;
+		return this->column_v;
 	}
 
 	constexpr auto file_name() const noexcept -> char const*
 	{
-		return this->file_name_;
+		return this->file_name_v;
 	}
 
 	constexpr auto function_name() const noexcept -> char const*
 	{
-		return this->function_name_;
+		return this->function_name_v;
 	}
 
 private:
-	uint_least32_t line_;
-	uint_least32_t column_;
-	const char* file_name_;
-	const char* function_name_ = nullptr;
+	uint_least32_t line_v;
+	uint_least32_t column_v;
+	const char* file_name_v;
+	const char* function_name_v = nullptr;
 };
 } // namespace utki
 
