@@ -158,6 +158,7 @@ jobs:
           locale-gen
       - name: build
         run: |
+          # clang-tidy is too old on arm32/arm64, disable the lint
           make config=cpp20 ${{ ((matrix.labels[0] == 'arm32' || matrix.labels[0] == 'arm64') && 'lint=off') || '' }}
       - name: test
         run: |
