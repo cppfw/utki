@@ -119,6 +119,8 @@ jobs:
       matrix:
         include:
           - {os: debian, codename: bookworm, image_owner: }
+          - {os: debian, codename: bookworm, image_owner: , labels: [arm32,docker]}
+          - {os: debian, codename: bookworm, image_owner: , labels: [arm64,docker]}
     runs-on: ${{ (matrix.labels == '' && 'ubuntu-latest') || matrix.labels }}
     container: ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }}
     name: C++20
