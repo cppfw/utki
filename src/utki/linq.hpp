@@ -163,7 +163,7 @@ public:
 		);
 
 		static_assert(
-			std::is_same<bool, std::invoke_result_t<func_type, const value_type&>>::value,
+			std::is_same_v<bool, std::invoke_result_t<func_type, const value_type&>>,
 			"functor must return bool"
 		);
 
