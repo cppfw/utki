@@ -1,3 +1,9 @@
+libutki (1.1.257) unstable; urgency=medium
+
+  * modernize code
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 29 Oct 2024 16:31:10 +0200
+
 libutki (1.1.256) unstable; urgency=medium
 
   * add span::at()
