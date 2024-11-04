@@ -230,20 +230,28 @@ struct zip_view {
 		}
 	};
 
-	template <std::size_t... index>
-	std::tuple<typename collection_type::iterator...> make_iterators_tuple(std::index_sequence<index...>, size_t next)
-	{
-		return std::make_tuple(utki::next(std::get<index>(this->collection).begin(), next)...);
-	}
-
 	auto begin()
 	{
-		return iterator(this->make_iterators_tuple(std::index_sequence_for<collection_type...>(), 0));
+		return iterator(
+			std::apply(
+				[](auto&... c) {
+					return std::make_tuple(c.begin()...);
+				},
+				this->collection
+			)
+		);
 	}
 
 	auto end()
 	{
-		return iterator(this->make_iterators_tuple(std::index_sequence_for<collection_type...>(), this->min_size));
+		return iterator(
+			std::apply(
+				[this](auto&... c) {
+					return std::make_tuple(utki::next(c.begin(), this->min_size)...);
+				},
+				this->collection
+			)
+		);
 	}
 };
 
