@@ -195,10 +195,15 @@ struct zip_view {
 
 	class iterator
 	{
-		std::tuple<typename collection_type::iterator...> iters;
+		std::tuple< //
+			std::conditional_t<
+				std::is_const_v<collection_type>,
+				typename collection_type::const_iterator,
+				typename collection_type::iterator>...>
+			iters;
 
 	public:
-		iterator(std::tuple<typename collection_type::iterator...> iters) :
+		iterator(decltype(iters) iters) :
 			iters(iters)
 		{}
 
@@ -219,11 +224,15 @@ struct zip_view {
 			return *this;
 		}
 
-		std::tuple<typename collection_type::value_type&...> operator*() noexcept
+		auto operator*() noexcept
 		{
 			return std::apply(
 				[](auto&... i) {
-					return std::tuple<typename collection_type::value_type&...>((*i)...);
+					return std::tuple< //
+						std::conditional_t<
+							std::is_const_v<std::remove_reference_t<decltype(*i)>>,
+							const typename collection_type::value_type,
+							typename collection_type::value_type>&...>((*i)...);
 				},
 				this->iters
 			);
@@ -235,7 +244,13 @@ struct zip_view {
 		return iterator(
 			std::apply(
 				[](auto&... c) {
-					return std::make_tuple(c.begin()...);
+					return std::make_tuple([&]() {
+						if constexpr (std::is_const_v<std::remove_reference_t<decltype(c)>>) {
+							return c.cbegin();
+						} else {
+							return c.begin();
+						}
+					}()...);
 				},
 				this->collection
 			)
