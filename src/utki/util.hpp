@@ -179,6 +179,85 @@ auto reverse_range(collection_type& collection)
 }
 
 /**
+ * @brief Drop-in replacement for std::ranges::zip_view from C++23.
+ * C++17 compatible.
+ */
+template <typename... collection_type>
+struct zip_view {
+	std::tuple<collection_type&...> collection;
+
+	size_t min_size;
+
+	zip_view(collection_type&... collection) :
+		collection(std::tuple<collection_type&...>(collection...)),
+		min_size(std::min({collection.size()...}))
+	{}
+
+	class iterator
+	{
+		std::tuple<typename collection_type::iterator...> iters;
+
+	public:
+		iterator(std::tuple<typename collection_type::iterator...> iters) :
+			iters(iters)
+		{}
+
+		bool operator!=(const iterator& i) const noexcept
+		{
+			return std::get<0>(iters) != std::get<0>(i.iters);
+		}
+
+		iterator& operator++() noexcept
+		{
+			this->iters = std::apply(
+				[](auto&... i) {
+					return std::make_tuple(std::next(i)...);
+				},
+				this->iters
+			);
+
+			return *this;
+		}
+
+		std::tuple<typename collection_type::value_type&...> operator*() noexcept
+		{
+			return std::apply(
+				[](auto&... i) {
+					return std::tuple<typename collection_type::value_type&...>((*i)...);
+				},
+				this->iters
+			);
+		}
+	};
+
+	template <std::size_t... index>
+	std::tuple<typename collection_type::iterator...> make_iterators_tuple(std::index_sequence<index...>, size_t next)
+	{
+		return std::make_tuple(utki::next(std::get<index>(this->collection).begin(), next)...);
+	}
+
+	auto begin()
+	{
+		return iterator(this->make_iterators_tuple(std::index_sequence_for<collection_type...>(), 0));
+	}
+
+	auto end()
+	{
+		return iterator(this->make_iterators_tuple(std::index_sequence_for<collection_type...>(), this->min_size));
+	}
+};
+
+/**
+ * @brief Drop-in replacement for std::views::zip from C++23.
+ * C++17 compatible.
+ */
+template <typename... collection_type>
+zip_view<collection_type...> zip(collection_type&... collection)
+{
+	return zip_view<collection_type...>(collection...);
+}
+
+/**
  * @brief Construct std::pair with swapped components.
  * @param p - initial std::pair.
  * @return a new std::pair with swapped component.
