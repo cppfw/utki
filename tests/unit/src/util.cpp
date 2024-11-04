@@ -366,5 +366,25 @@ const tst::set set("util", [](tst::suite& suite) {
 		tst::check(result == expected, SL)
 			<< "[0] = " << result[0] << ", [1] = " << result[1] << ", [2] = " << result[2];
 	});
+
+	suite.add("zip_const_non_const_mix", []() {
+		const std::vector<int> vec = {0, 1, 2, 3, 4, 5, 6};
+		const std::array<float, 3> arr = {
+			{3.0f, 4.0f, 5.0f}
+		};
+		std::vector<std::string> vecstr = {"1"s, "2"s, "3"s, "4"s};
+
+		std::vector<std::string> result;
+
+		for (const auto& [a, b, c] : utki::zip(vec, arr, vecstr)) {
+			result.push_back(utki::cat(a, b, c));
+		}
+
+		std::vector<std::string> expected = {"031"s, "142"s, "253"s};
+
+		tst::check_eq(result.size(), expected.size(), SL);
+		tst::check(result == expected, SL)
+			<< "[0] = " << result[0] << ", [1] = " << result[1] << ", [2] = " << result[2];
+	});
 });
 } // namespace
