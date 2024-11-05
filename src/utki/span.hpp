@@ -331,7 +331,9 @@ public:
 	 */
 	const_reference operator[](size_type i) const noexcept
 	{
-		ASSERT(i < this->size())
+		ASSERT(i < this->size(), [&](auto& o) {
+			o << "operator[](" << i << "): index out of bounds, this->size() = " << this->size();
+		})
 		return this->buf[i];
 	}
 
@@ -343,7 +345,7 @@ public:
 	reference operator[](size_type i) noexcept
 	{
 		ASSERT(i < this->size(), [&](auto& o) {
-			o << "operator[](" << i << "): index out of bounds";
+			o << "operator[](" << i << "): index out of bounds, this->size() = " << this->size();
 		})
 		return this->buf[i];
 	}
