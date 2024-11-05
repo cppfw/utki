@@ -178,6 +178,7 @@ auto reverse_range(collection_type& collection)
 	return reverse_range_collection_wrapper<collection_type>(collection);
 }
 
+namespace views {
 /**
  * @brief Drop-in replacement for std::ranges::zip_view from C++23.
  * C++17 compatible.
@@ -279,6 +280,8 @@ zip_view<collection_type...> zip(collection_type&... collection)
 {
 	return zip_view<collection_type...>(collection...);
 }
+
+} // namespace views
 
 /**
  * @brief Construct std::pair with swapped components.

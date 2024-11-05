@@ -336,7 +336,7 @@ const tst::set set("util", [](tst::suite& suite) {
 
 		std::vector<std::string> result;
 
-		for (const auto& [a, b, c] : utki::zip(vec, arr, vecstr)) {
+		for (const auto& [a, b, c] : utki::views::zip(vec, arr, vecstr)) {
 			result.push_back(utki::cat(a, b, c));
 		}
 
@@ -356,7 +356,7 @@ const tst::set set("util", [](tst::suite& suite) {
 
 		std::vector<std::string> result;
 
-		for (const auto& [a, b, c] : utki::zip(vec, arr, vecstr)) {
+		for (const auto& [a, b, c] : utki::views::zip(vec, arr, vecstr)) {
 			result.push_back(utki::cat(a, b, c));
 		}
 
@@ -376,7 +376,7 @@ const tst::set set("util", [](tst::suite& suite) {
 
 		std::vector<std::string> result;
 
-		for (const auto& [a, b, c] : utki::zip(vec, arr, vecstr)) {
+		for (const auto& [a, b, c] : utki::views::zip(vec, arr, vecstr)) {
 			result.push_back(utki::cat(a, b, c));
 		}
 
