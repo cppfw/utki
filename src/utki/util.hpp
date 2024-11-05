@@ -215,7 +215,7 @@ struct zip_view {
 		iterator& operator++() noexcept
 		{
 			this->iters = std::apply(
-				[](auto&&... i) {
+				[](auto&... i) {
 					return std::make_tuple(std::next(i)...);
 				},
 				this->iters
@@ -227,7 +227,7 @@ struct zip_view {
 		auto operator*() noexcept
 		{
 			return std::apply(
-				[](auto&&... i) {
+				[](auto&... i) {
 					return std::tuple< //
 						std::conditional_t<
 							std::is_const_v<std::remove_reference_t<decltype(*i)>>,
@@ -243,7 +243,7 @@ struct zip_view {
 	{
 		return iterator(
 			std::apply(
-				[](auto&&... c) {
+				[](auto&... c) {
 					return std::make_tuple([&]() {
 						if constexpr (std::is_const_v<std::remove_reference_t<decltype(c)>>) {
 							return c.cbegin();
@@ -261,7 +261,7 @@ struct zip_view {
 	{
 		return iterator(
 			std::apply(
-				[this](auto&&... c) {
+				[this](auto&... c) {
 					return std::make_tuple(utki::next(c.begin(), this->min_size)...);
 				},
 				this->collection
