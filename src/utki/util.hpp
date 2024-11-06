@@ -139,15 +139,17 @@ auto skip_front(collection_type& collection)
 	return skip_front_collection_wrapper<num_to_skip, collection_type>(collection);
 }
 
+namespace views {
+
 /**
  * @brief Not to be used directly.
- * Use reverse_range(<collection>) function.
+ * Use utki::views::reverse(<collection>) function.
  */
 template <typename collection_type>
-struct reverse_range_collection_wrapper {
+struct reverse_view {
 	collection_type& collection;
 
-	reverse_range_collection_wrapper(collection_type& collection) :
+	reverse_view(collection_type& collection) :
 		collection(collection)
 	{}
 
@@ -165,20 +167,19 @@ struct reverse_range_collection_wrapper {
 };
 
 /**
- * @brief Create collection wrapper which reverses order of elements.
- * The collection wrapper returns reverse iterators for begin() and end().
+ * @brief Drop-in replacement for std::views::reverse.
+ * The reverse_view returns reverse iterators for begin() and end().
  * @tparam collection_type - collection type.
  * @param collection - collection with reversed elements order.
  * @return A special wrapper class which provides begin() and end() methods
  *         returning collection iterators.
  */
 template <typename collection_type>
-auto reverse_range(collection_type& collection)
+auto reverse(collection_type& collection)
 {
-	return reverse_range_collection_wrapper<collection_type>(collection);
+	return reverse_view<collection_type>(collection);
 }
 
-namespace views {
 /**
  * @brief Drop-in replacement for std::ranges::zip_view from C++23.
  * C++17 compatible.

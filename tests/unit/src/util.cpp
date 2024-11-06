@@ -311,12 +311,12 @@ const tst::set set("util", [](tst::suite& suite) {
 		tst::check(!utki::contains(v, "c"sv), SL);
 	});
 
-	suite.add("reverse_range", []() {
+	suite.add("reverse_view", []() {
 		std::array<int, 10> arr{0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 
 		std::vector<int> result;
 
-		for (const auto& i : utki::reverse_range(arr)) {
+		for (const auto& i : utki::views::reverse(arr)) {
 			result.push_back(i);
 		}
 
@@ -327,7 +327,7 @@ const tst::set set("util", [](tst::suite& suite) {
 
 	// TODO: test utki::next() and utki::prev()
 
-	suite.add("zip", []() {
+	suite.add("zip_view", []() {
 		std::vector<int> vec = {0, 1, 2, 3, 4, 5, 6};
 		std::array<float, 3> arr = {
 			{3.0f, 4.0f, 5.0f}
@@ -347,7 +347,7 @@ const tst::set set("util", [](tst::suite& suite) {
 			<< "[0] = " << result[0] << ", [1] = " << result[1] << ", [2] = " << result[2];
 	});
 
-	suite.add("zip_const", []() {
+	suite.add("zip_view__const", []() {
 		const std::vector<int> vec = {0, 1, 2, 3, 4, 5, 6};
 		const std::array<float, 3> arr = {
 			{3.0f, 4.0f, 5.0f}
@@ -367,7 +367,7 @@ const tst::set set("util", [](tst::suite& suite) {
 			<< "[0] = " << result[0] << ", [1] = " << result[1] << ", [2] = " << result[2];
 	});
 
-	suite.add("zip_const_non_const_mix", []() {
+	suite.add("zip_view__const_non_const_mix", []() {
 		const std::vector<int> vec = {0, 1, 2, 3, 4, 5, 6};
 		const std::array<float, 3> arr = {
 			{3.0f, 4.0f, 5.0f}
