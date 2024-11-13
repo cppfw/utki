@@ -518,7 +518,7 @@ jobs:
           keys-asc: https://gagis.hopto.org/repo/cppfw/pubkey.gpg
           install: devscripts equivs myci prorab prorab-extra python3-pip cmake git
       - name: install conan
-        run: pip3 --quiet install conan
+        run: pipx install conan
       - name: create default conan profile
         run: |
           conan profile detect --name default
