@@ -519,7 +519,7 @@ jobs:
           install: devscripts equivs myci prorab prorab-extra pipx cmake git
       - name: add ~/.local/bin to PATH
         uses: myci-actions/export-env-var@master
-        with: {name: PATH, value: $PATH:~/.local/bin}
+        with: {name: PATH, value: "$PATH:~/.local/bin"}
       - name: install conan
         run: pipx install conan
       - name: create default conan profile
