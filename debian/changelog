@@ -1,3 +1,9 @@
+libutki (1.1.258) unstable; urgency=medium
+
+  * add zip_view
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 13 Nov 2024 16:02:26 +0200
+
 libutki (1.1.257) unstable; urgency=medium
 
   * modernize code
