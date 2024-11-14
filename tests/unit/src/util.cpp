@@ -336,8 +336,9 @@ const tst::set set("util", [](tst::suite& suite) {
 
 		std::vector<std::string> result;
 
-		for (const auto& [a, b, c] : utki::views::zip(vec, arr, vecstr)) {
+		for (auto [a, b, c] : utki::views::zip(vec, arr, vecstr)) {
 			result.push_back(utki::cat(a, b, c));
+			a += 1;
 		}
 
 		std::vector<std::string> expected = {"031"s, "142"s, "253"s};
@@ -345,6 +346,9 @@ const tst::set set("util", [](tst::suite& suite) {
 		tst::check_eq(result.size(), expected.size(), SL);
 		tst::check(result == expected, SL)
 			<< "[0] = " << result[0] << ", [1] = " << result[1] << ", [2] = " << result[2];
+
+		std::vector<int> vec_expected = {1, 2, 3, 3, 4, 5, 6};
+		tst::check(vec == vec_expected, SL) << vec[0] << vec[1] << vec[2] << vec[3] << vec[4] << vec[5] << vec[6];
 	});
 
 	suite.add("zip_view__const", []() {
@@ -356,7 +360,7 @@ const tst::set set("util", [](tst::suite& suite) {
 
 		std::vector<std::string> result;
 
-		for (const auto& [a, b, c] : utki::views::zip(vec, arr, vecstr)) {
+		for (auto [a, b, c] : utki::views::zip(vec, arr, vecstr)) {
 			result.push_back(utki::cat(a, b, c));
 		}
 

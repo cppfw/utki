@@ -230,11 +230,7 @@ struct zip_view {
 		{
 			return std::apply(
 				[](auto&... i) {
-					return std::tuple< //
-						std::conditional_t<
-							std::is_const_v<std::remove_reference_t<decltype(*i)>>,
-							const typename collection_type::value_type,
-							typename collection_type::value_type>&...>((*i)...);
+					return std::tuple<decltype(*i)...>((*i)...);
 				},
 				this->iters
 			);
