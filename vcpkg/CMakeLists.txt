@@ -23,11 +23,20 @@ target_include_directories(
     PRIVATE "../src_deps"
 )
 
-install(TARGETS ${name})
-
 # install library header files preserving directory hierarchy
 install(
     DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../src/${name}"
     DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
     FILES_MATCHING PATTERN "*.hpp"
+)
+
+install(
+    TARGETS ${name}
+    EXPORT ${name}Targets # generate cmake configs
+)
+
+# install cmake configs
+install(EXPORT ${name}Targets
+    FILE ${name}Targets.cmake
+    DESTINATION lib/cmake/${name}
 )
