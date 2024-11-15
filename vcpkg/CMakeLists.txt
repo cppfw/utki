@@ -15,6 +15,8 @@ add_library(
 )
 
 target_compile_features(${name} PUBLIC cxx_std_17)
+set_target_properties(${name} PROPERTIES CXX_STANDARD_REQUIRED ON)
+set_target_properties(${name} PROPERTIES CXX_EXTENSIONS OFF)
 
 target_include_directories(
     ${name}
