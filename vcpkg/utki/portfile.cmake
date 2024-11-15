@@ -3,9 +3,9 @@ vcpkg_check_linkage(ONLY_STATIC_LIBRARY)
 vcpkg_from_github(
     OUT_SOURCE_PATH SOURCE_PATH
     REPO cppfw/utki
-    REF "${VERSION}"
-    SHA512 b315be256b0fbd7a9be2e8db894381d1270ecc8701a53ca04d5741d1a4d5e01e3a7f30f441601abc023d58e2fd0b1dfb9f88b865267188de85f88c01dc91fa6f
-    HEAD_REF latest
+    #REF "${VERSION}"
+    #SHA512 b315be256b0fbd7a9be2e8db894381d1270ecc8701a53ca04d5741d1a4d5e01e3a7f30f441601abc023d58e2fd0b1dfb9f88b865267188de85f88c01dc91fa6f
+    HEAD_REF master
 )
 
 vcpkg_cmake_configure(
