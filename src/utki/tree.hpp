@@ -560,7 +560,7 @@ public:
 	 */
 	iterator make_iterator(utki::span<const size_type> index)
 	{
-		return this->make_iterator_internal<std::is_const<collection_type>::value>(index);
+		return this->make_iterator_internal<std::is_const_v<collection_type>>(index);
 	}
 
 	/**
