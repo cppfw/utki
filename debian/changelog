@@ -1,3 +1,9 @@
+libutki (1.1.260) unstable; urgency=medium
+
+  * conan: rebuild
+
+ -- Ivan Gagis <igagis@gmail.com>  Sun, 17 Nov 2024 17:48:23 +0200
+
 libutki (1.1.259) unstable; urgency=medium
 
   * rewrite zip_view
