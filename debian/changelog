@@ -1,3 +1,9 @@
+libutki (1.1.261) unstable; urgency=medium
+
+  * fix lint
+
+ -- Ivan Gagis <igagis@gmail.com>  Sun, 17 Nov 2024 21:56:31 +0200
+
 libutki (1.1.260) unstable; urgency=medium
 
   * conan: rebuild
