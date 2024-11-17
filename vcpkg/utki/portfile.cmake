@@ -5,7 +5,7 @@ vcpkg_from_github(
     REPO cppfw/${PORT}
     #REF "${VERSION}"
     #SHA512 b315be256b0fbd7a9be2e8db894381d1270ecc8701a53ca04d5741d1a4d5e01e3a7f30f441601abc023d58e2fd0b1dfb9f88b865267188de85f88c01dc91fa6f
-    HEAD_REF master
+    HEAD_REF main
 )
 
 vcpkg_cmake_configure(

@@ -18,9 +18,9 @@ nuget{
 		title: C++ utility library;
 		authors: {Ivan Gagis};
 		owners: {Ivan Gagis};
-		licenseUrl: "https://raw.githubusercontent.com/cppfw/utki/master/LICENSE";
+		licenseUrl: "https://raw.githubusercontent.com/cppfw/utki/main/LICENSE";
 		projectUrl: "https://github.com/cppfw/utki";
-		iconUrl: "https://github.com/cppfw/utki/blob/master/logo.svg";
+		iconUrl: "https://github.com/cppfw/utki/blob/main/logo.svg";
 		requireLicenseAcceptance:false;
 		summary: C++ utility library. Stuff missing from std:: namespace;
 

@@ -1,14 +1,14 @@
 [submodule "tests/harness/clargs"]
 	path = tests/harness/clargs
 	url = ../../cppfw/clargs
-	branch = master
+	branch = main
 #	ignore = dirty
 [submodule "tests/harness/tst"]
 	path = tests/harness/tst
 	url = ../../cppfw/tst
-	branch = master
+	branch = main
 #	ignore = dirty
 [submodule "tool-configs"]
 	path = tool-configs
 	url = ../../cppfw/tool-configs
-	branch = master
+	branch = main
