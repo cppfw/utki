@@ -1,3 +1,9 @@
+libutki (1.1.262) unstable; urgency=medium
+
+  * msvs: undef min macro
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 18 Nov 2024 12:22:57 +0200
+
 libutki (1.1.261) unstable; urgency=medium
 
   * fix lint
