@@ -39,6 +39,10 @@ SOFTWARE.
 #include "span.hpp"
 #include "types.hpp"
 
+#ifdef min
+#	undef min
+#endif
+
 namespace utki {
 
 /**
