@@ -266,7 +266,7 @@ jobs:
           git clone https://github.com/microsoft/vcpkg.git vcpkg-installation
           (cd vcpkg-installation; ./bootstrap-vcpkg.sh)
       - name: prepare vcpkg port
-        run:|
+        run: |
           myci-vcpkg-prepare.sh --git-ref ${PACKAGE_VERSION}
       - name: deploy vcpkg port
         run: |
