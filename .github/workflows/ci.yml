@@ -275,7 +275,6 @@ jobs:
         run: |
           myci-deploy-vcpkg.sh --repo cppfw/vcpkg-repo --port-dir vcpkg/overlay/${PACKAGE_NAME}
         if: startsWith(github.ref, 'refs/tags/')
-
 ##### archlinux #####
   # archlinux:
   #   strategy:
