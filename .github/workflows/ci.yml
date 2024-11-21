@@ -265,6 +265,9 @@ jobs:
         run: |
           git clone https://github.com/microsoft/vcpkg.git vcpkg-installation
           (cd vcpkg-installation; ./bootstrap-vcpkg.sh)
+      - name: add vcpkg to PATH
+        uses: myci-actions/export-env-var@main
+        with: {name: PATH, value: "$PATH:$(pwd)/vcpkg-installation"}
       - name: prepare vcpkg port
         run: |
           myci-vcpkg-prepare.sh --git-ref ${PACKAGE_VERSION}
