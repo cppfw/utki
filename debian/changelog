@@ -1,3 +1,9 @@
+libutki (1.1.264) unstable; urgency=medium
+
+  * cmake: config file naming
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 21 Nov 2024 22:12:11 +0200
+
 libutki (1.1.263) unstable; urgency=medium
 
   * vcpkg
