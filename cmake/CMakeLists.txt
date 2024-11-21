@@ -32,11 +32,11 @@ install(
 
 install(
     TARGETS ${name}
-    EXPORT ${name}Targets # generate cmake configs
+    EXPORT ${name}-config # generate cmake configs
 )
 
 # install cmake configs
 install(EXPORT ${name}Targets
-    FILE ${name}Targets.cmake
+    FILE ${name}-config.cmake
     DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/${name}
 )
