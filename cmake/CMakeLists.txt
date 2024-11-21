@@ -36,7 +36,7 @@ install(
 )
 
 # install cmake configs
-install(EXPORT ${name}Targets
+install(EXPORT ${name}-config
     FILE ${name}-config.cmake
     DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/${name}
 )
