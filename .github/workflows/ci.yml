@@ -238,6 +238,41 @@ jobs:
           echo "${{ secrets.MYCI_REPO_SSH_KEY }}" > repo_key_rsa && chmod 600 repo_key_rsa
           myci-deploy-apt-ssh.sh --key repo_key_rsa --server gagis.hopto.org --repo cppfw/${{ matrix.os }} --distro ${{ matrix.codename }} --component main lib${PACKAGE_NAME}*_${PACKAGE_VERSION}_*.deb
         if: startsWith(github.ref, 'refs/tags/')
+##### vcpkg #####
+  vcpkg:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {os: debian, codename: bookworm, image_owner: }
+          # - {os: debian, codename: bookworm, image_owner: i386/, labels: [i386,docker]}
+          # - {os: debian, codename: bookworm, image_owner: , labels: [arm32,docker]}
+          # - {os: debian, codename: bookworm, image_owner: , labels: [arm64,docker]}
+    runs-on: ${{ (matrix.labels == '' && 'ubuntu-latest') || matrix.labels }}
+    container: ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }}
+    name: vcpkg - linux | ${{ matrix.labels[0] }}
+    steps:
+      - name: add cppfw deb repo
+        uses: myci-actions/add-deb-repo@main
+        with:
+          repo: deb https://gagis.hopto.org/repo/cppfw/${{ matrix.os }} ${{ matrix.codename }} main
+          repo-name: cppfw
+          keys-asc: https://gagis.hopto.org/repo/cppfw/pubkey.gpg
+          install: myci cmake git
+      - name: git clone
+        uses: myci-actions/checkout@main
+      - name: install vcpkg
+        run:
+          git clone https://github.com/microsoft/vcpkg.git vcpkg-installation
+          (cd vcpkg-installation; ./bootstrap-vcpkg.sh)
+      - name: prepare vcpkg port
+        run:
+          myci-vcpkg-prepare.sh --git-ref ${PACKAGE_VERSION}
+      - name: deploy vcpkg port
+        run:
+          myci-deploy-vcpkg.sh --repo cppfw/vcpkg-repo --port-dir vcpkg/overlay/${PACKAGE_NAME}
+        if: startsWith(github.ref, 'refs/tags/')
+
 ##### archlinux #####
   # archlinux:
   #   strategy:
