@@ -25,7 +25,9 @@ target_include_directories(
 
 target_include_directories(
     ${name}
-    INTERFACE "include"
+    INTERFACE
+    $<BUILD_INTERFACE:>
+    $<INSTALL_INTERFACE:include>
 )
 
 # install library header files preserving directory hierarchy
