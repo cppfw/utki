@@ -1,3 +1,9 @@
+libutki (1.1.267) unstable; urgency=medium
+
+  * vcpkg: install interface
+
+ -- Ivan Gagis <igagis@gmail.com>  Sat, 23 Nov 2024 01:54:08 +0200
+
 libutki (1.1.266) unstable; urgency=medium
 
   * vcpkg: add interface
