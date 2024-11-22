@@ -1,3 +1,9 @@
+libutki (1.1.265) unstable; urgency=medium
+
+  * cmake: add namespace to target
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 22 Nov 2024 11:33:37 +0200
+
 libutki (1.1.264) unstable; urgency=medium
 
   * cmake: config file naming
