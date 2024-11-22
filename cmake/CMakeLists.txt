@@ -39,4 +39,5 @@ install(
 install(EXPORT ${name}-config
     FILE ${name}-config.cmake
     DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/${name}
+    NAMESPACE ${name}::
 )
