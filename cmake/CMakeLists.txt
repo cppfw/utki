@@ -11,7 +11,7 @@ file(GLOB_RECURSE srcs "../src/${name}/*.cpp")
 add_library(
     ${name}
     STATIC
-    ${srcs}
+        ${srcs}
 )
 
 target_compile_features(${name} PUBLIC cxx_std_17)
@@ -20,31 +20,38 @@ set_target_properties(${name} PROPERTIES CXX_EXTENSIONS OFF)
 
 target_include_directories(
     ${name}
-    PRIVATE "../src_deps"
-)
-
-target_include_directories(
-    ${name}
+    PRIVATE
+        "../src_deps"
     INTERFACE
-    $<BUILD_INTERFACE:>
-    $<INSTALL_INTERFACE:include>
+        $<BUILD_INTERFACE:>
+        $<INSTALL_INTERFACE:include>
 )
 
 # install library header files preserving directory hierarchy
 install(
-    DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../src/${name}"
-    DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
-    FILES_MATCHING PATTERN "*.hpp"
+    DIRECTORY
+        "${CMAKE_CURRENT_SOURCE_DIR}/../src/${name}"
+    DESTINATION
+        "${CMAKE_INSTALL_INCLUDEDIR}"
+    FILES_MATCHING PATTERN
+        "*.hpp"
 )
 
 install(
-    TARGETS ${name}
-    EXPORT ${name}-config # generate cmake configs
+    TARGETS
+        ${name}
+    EXPORT # generate cmake configs
+        ${name}-config
 )
 
 # install cmake configs
-install(EXPORT ${name}-config
-    FILE ${name}-config.cmake
-    DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/${name}
-    NAMESPACE ${name}::
+install(
+    EXPORT
+        ${name}-config
+    FILE
+        ${name}-config.cmake
+    DESTINATION
+        ${CMAKE_INSTALL_DATAROOTDIR}/${name}
+    NAMESPACE
+        ${name}::
 )
