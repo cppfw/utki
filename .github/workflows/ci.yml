@@ -528,6 +528,7 @@ jobs:
           cd vcpkg/test
           cmake .
           make
+          ./test
       - name: upload vcpkg logs to artifacts
         if: always() # even if previous steps fail, this one needs to be run
         uses: actions/upload-artifact@v4
