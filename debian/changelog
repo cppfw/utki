@@ -1,3 +1,9 @@
+libutki (1.1.268) unstable; urgency=medium
+
+  * conan: macos
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 03 Dec 2024 00:58:10 +0200
+
 libutki (1.1.267) unstable; urgency=medium
 
   * vcpkg: install interface
