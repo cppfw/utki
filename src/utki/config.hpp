@@ -28,7 +28,7 @@ SOFTWARE.
 
 #pragma once
 
-// NOLINTBEGIN(cppcoreguidelines-macro-usage)
+// NOLINTBEGIN
 
 //====================================================|
 //            C++ standard                            |
@@ -46,6 +46,93 @@ SOFTWARE.
 #	define CFG_CPP 3 // NOLINT(cppcoreguidelines-macro-usage)
 #endif
 
+//======================================|
+//            OS definitions            |
+//                                      |
+
+// NOLINTBEGIN(modernize-macro-to-enum, cppcoreguidelines-macro-to-enum)
+
+// OS family
+#define CFG_OS_UNKNOWN 0 // NOLINT(cppcoreguidelines-macro-usage)
+#define CFG_OS_LINUX 1 // NOLINT(cppcoreguidelines-macro-usage)
+#define CFG_OS_WINDOWS 2 // NOLINT(cppcoreguidelines-macro-usage)
+#define CFG_OS_MACOSX 3 // NOLINT(cppcoreguidelines-macro-usage)
+#define CFG_OS_UNIX 4 // NOLINT(cppcoreguidelines-macro-usage)
+
+// OS name
+#define CFG_OS_NAME_UNKNOWN 0 // NOLINT(cppcoreguidelines-macro-usage)
+
+// when CFG_OS == CFG_OS_MACOSX
+#define CFG_OS_NAME_MACOSX 1 // NOLINT(cppcoreguidelines-macro-usage)
+
+// when CFG_OS == CFG_OS_MACOSX
+#define CFG_OS_NAME_IOS 2 // NOLINT(cppcoreguidelines-macro-usage)
+
+// when CFG_OS == CFG_OS_LINUX
+#define CFG_OS_NAME_ANDROID 3 // NOLINT(cppcoreguidelines-macro-usage)
+
+// when CFG_OS == CFG_OS_UNIX
+#define CFG_OS_NAME_SOLARIS 4 // NOLINT(cppcoreguidelines-macro-usage)
+
+// when CFG_OS == CFG_OS_UNIX
+#define CFG_OS_NAME_FREEBSD 5 // NOLINT(cppcoreguidelines-macro-usage)
+
+// when CFG_OS == CFG_OS_UNIX
+#define CFG_OS_NAME_EMSCRIPTEN 6 // NOLINT(cppcoreguidelines-macro-usage)
+
+// NOLINTEND(modernize-macro-to-enum, cppcoreguidelines-macro-to-enum)
+
+#if defined(__linux__)
+#	define CFG_OS CFG_OS_LINUX // NOLINT(cppcoreguidelines-macro-usage)
+#	if defined(__ANDROID__)
+#		define CFG_OS_NAME CFG_OS_NAME_ANDROID // NOLINT(cppcoreguidelines-macro-usage)
+#	else
+#		define CFG_OS_NAME CFG_OS_NAME_UNKNOWN // NOLINT(cppcoreguidelines-macro-usage)
+#	endif
+
+// _WIN32 macro is defined for both win32 and win64. _WIN32 is the correct one, WIN32 is not always defined.
+#elif defined(_WIN32) || defined(WIN32)
+#	define CFG_OS CFG_OS_WINDOWS // NOLINT(cppcoreguidelines-macro-usage)
+#	define CFG_OS_NAME CFG_OS_NAME_UNKNOWN // NOLINT(cppcoreguidelines-macro-usage)
+#elif defined(__APPLE__)
+#	define CFG_OS CFG_OS_MACOSX // NOLINT(cppcoreguidelines-macro-usage)
+#	include <TargetConditionals.h>
+#	include <Availability.h>
+#	if TARGET_OS_IPHONE == 1 || TARGET_IPHONE_SIMULATOR == 1
+#		define CFG_OS_NAME CFG_OS_NAME_IOS // NOLINT(cppcoreguidelines-macro-usage)
+
+/**
+ * @brief IOS deployment target.
+ * Example values:
+ * - iOS 6.1 = 60100
+ * - iOS 12.3 = 120300
+ * - iOS 13.0 = 130000
+ */
+#		define CFG_IOS_DEPLOYMENT_TARGET __IPHONE_OS_VERSION_MIN_REQUIRED
+#	else
+#		define CFG_OS_NAME CFG_OS_NAME_MACOSX // NOLINT(cppcoreguidelines-macro-usage)
+
+// macosx deployment target, e.g. value of 1090 means MacOS X 10.9
+#		define CFG_MACOSX_DEPLOYMENT_TARGET __MAC_OS_X_VERSION_MIN_REQUIRED
+#	endif
+
+// check for UNIX should go after check for Linux, because on Linux the __unix macro is also defined
+#elif defined(__unix) || defined(__unix__)
+#	define CFG_OS CFG_OS_UNIX // NOLINT(cppcoreguidelines-macro-usage)
+#	if defined(sun) || defined(__sun)
+#		define CFG_OS_NAME CFG_OS_NAME_SOLARIS // NOLINT(cppcoreguidelines-macro-usage)
+#	elif defined(__FreeBSD__)
+#		define CFG_OS_NAME CFG_OS_NAME_FREEBSD // NOLINT(cppcoreguidelines-macro-usage)
+#	elif defined(__EMSCRIPTEN__)
+#		define CFG_OS_NAME CFG_OS_NAME_EMSCRIPTEN // NOLINT(cppcoreguidelines-macro-usage)
+#	else
+#		define CFG_OS_NAME CFG_OS_NAME_UNKNOWN // NOLINT(cppcoreguidelines-macro-usage)
+#	endif
+#else
+#	define CFG_OS CFG_OS_UNKNOWN // NOLINT(cppcoreguidelines-macro-usage)
+#	define CFG_OS_NAME CFG_OS_NAME_UNKNOWN // NOLINT(cppcoreguidelines-macro-usage)
+#endif
+
 //====================================================|
 //            Compiler definitions                    |
 //                                                    |
@@ -57,13 +144,7 @@ SOFTWARE.
 #define CFG_COMPILER_CLANG 3 // NOLINT(cppcoreguidelines-macro-usage)
 // NOLINTEND(modernize-macro-to-enum, cppcoreguidelines-macro-to-enum)
 
-#if defined(__GNUC__) || defined(__GNUG__)
-#	define CFG_COMPILER CFG_COMPILER_GCC // NOLINT(cppcoreguidelines-macro-usage)
-#	define CFG_COMPILER_VERSION_MAJOR __GNUC__ // NOLINT(cppcoreguidelines-macro-usage)
-#	define CFG_COMPILER_VERSION_MINOR __GNUC_MINOR__ // NOLINT(cppcoreguidelines-macro-usage)
-#	define CFG_COMPILER_VERSION_PATCH __GNUC_PATCHLEVEL__ // NOLINT(cppcoreguidelines-macro-usage)
-
-#elif defined(_MSC_VER)
+#if defined(_MSC_VER)
 #	define CFG_COMPILER CFG_COMPILER_MSVC // NOLINT(cppcoreguidelines-macro-usage)
 #	if _MSC_VER < 1916
 #		define CFG_COMPILER_MSVC_TOOLS_V 140 // NOLINT(cppcoreguidelines-macro-usage)
@@ -74,8 +155,18 @@ SOFTWARE.
 #	else
 #		define CFG_COMPILER_MSVC_TOOLS_V 143 // NOLINT(cppcoreguidelines-macro-usage)
 #	endif
+
+// NOTE: clang check should go before GCC check because some clang-based copmilers
+// (e.g. emscripten) define both macros due to compatibility with GCC.
 #elif defined(__clang__)
 #	define CFG_COMPILER CFG_COMPILER_CLANG // NOLINT(cppcoreguidelines-macro-usage)
+
+#elif defined(__GNUC__) || defined(__GNUG__)
+#	define CFG_COMPILER CFG_COMPILER_GCC // NOLINT(cppcoreguidelines-macro-usage)
+#	define CFG_COMPILER_VERSION_MAJOR __GNUC__ // NOLINT(cppcoreguidelines-macro-usage)
+#	define CFG_COMPILER_VERSION_MINOR __GNUC_MINOR__ // NOLINT(cppcoreguidelines-macro-usage)
+#	define CFG_COMPILER_VERSION_PATCH __GNUC_PATCHLEVEL__ // NOLINT(cppcoreguidelines-macro-usage)
+
 #else
 #	define CFG_COMPILER CFG_COMPILER_UNKNOWN // NOLINT(cppcoreguidelines-macro-usage)
 #endif
@@ -89,9 +180,14 @@ SOFTWARE.
 #define CFG_CPU_X86 1 // NOLINT(cppcoreguidelines-macro-usage)
 #define CFG_CPU_X86_64 2 // NOLINT(cppcoreguidelines-macro-usage)
 #define CFG_CPU_ARM 3 // NOLINT(cppcoreguidelines-macro-usage)
+#define CFG_CPU_WASM 4 // NOLINT(cppcoreguidelines-macro-usage)
 // NOLINTEND(modernize-macro-to-enum, cppcoreguidelines-macro-to-enum)
 
-#if CFG_COMPILER == CFG_COMPILER_GCC
+#if CFG_OS_NAME == CFG_OS_NAME_EMSCRIPTEN
+#	define CFG_CPU CFG_CPU_WASM
+#	define CFG_CPU_BITS 32
+
+#elif CFG_COMPILER == CFG_COMPILER_GCC
 #	if defined(__i386__) // __i386__ is defined for any x86 processor
 #		define CFG_CPU CFG_CPU_X86 // NOLINT(cppcoreguidelines-macro-usage)
 #		define CFG_CPU_BITS 32 // NOLINT(cppcoreguidelines-macro-usage)
@@ -179,77 +275,9 @@ SOFTWARE.
 #	define CFG_CPU_VERSION 0 // NOLINT(cppcoreguidelines-macro-usage)
 #endif
 
-//======================================|
-//            OS definitions            |
-//                                      |
-
-// NOLINTBEGIN(modernize-macro-to-enum, cppcoreguidelines-macro-to-enum)
-
-// OS family
-#define CFG_OS_UNKNOWN 0 // NOLINT(cppcoreguidelines-macro-usage)
-#define CFG_OS_LINUX 1 // NOLINT(cppcoreguidelines-macro-usage)
-#define CFG_OS_WINDOWS 2 // NOLINT(cppcoreguidelines-macro-usage)
-#define CFG_OS_MACOSX 3 // NOLINT(cppcoreguidelines-macro-usage)
-#define CFG_OS_UNIX 4 // NOLINT(cppcoreguidelines-macro-usage)
-
-// OS name
-#define CFG_OS_NAME_UNKNOWN 0 // NOLINT(cppcoreguidelines-macro-usage)
-#define CFG_OS_NAME_MACOSX 1 // NOLINT(cppcoreguidelines-macro-usage)
-#define CFG_OS_NAME_IOS 2 // NOLINT(cppcoreguidelines-macro-usage)
-#define CFG_OS_NAME_ANDROID 3 // NOLINT(cppcoreguidelines-macro-usage)
-#define CFG_OS_NAME_SOLARIS 4 // NOLINT(cppcoreguidelines-macro-usage)
-#define CFG_OS_NAME_FREEBSD 5 // NOLINT(cppcoreguidelines-macro-usage)
-
-// NOLINTEND(modernize-macro-to-enum, cppcoreguidelines-macro-to-enum)
-
-#if defined(__linux__)
-#	define CFG_OS CFG_OS_LINUX // NOLINT(cppcoreguidelines-macro-usage)
-#	if defined(__ANDROID__)
-#		define CFG_OS_NAME CFG_OS_NAME_ANDROID // NOLINT(cppcoreguidelines-macro-usage)
-#	else
-#		define CFG_OS_NAME CFG_OS_NAME_UNKNOWN // NOLINT(cppcoreguidelines-macro-usage)
-#	endif
-
-// _WIN32 macro is defined for both win32 and win64. _WIN32 is the correct one, WIN32 is not always defined.
-#elif defined(_WIN32) || defined(WIN32)
-#	define CFG_OS CFG_OS_WINDOWS // NOLINT(cppcoreguidelines-macro-usage)
-#	define CFG_OS_NAME CFG_OS_NAME_UNKNOWN // NOLINT(cppcoreguidelines-macro-usage)
-#elif defined(__APPLE__)
-#	define CFG_OS CFG_OS_MACOSX // NOLINT(cppcoreguidelines-macro-usage)
-#	include <TargetConditionals.h>
-#	include <Availability.h>
-#	if TARGET_OS_IPHONE == 1 || TARGET_IPHONE_SIMULATOR == 1
-#		define CFG_OS_NAME CFG_OS_NAME_IOS // NOLINT(cppcoreguidelines-macro-usage)
-
-/**
- * @brief IOS deployment target.
- * Example values:
- * - iOS 6.1 = 60100
- * - iOS 12.3 = 120300
- * - iOS 13.0 = 130000
- */
-#		define CFG_IOS_DEPLOYMENT_TARGET __IPHONE_OS_VERSION_MIN_REQUIRED
-#	else
-#		define CFG_OS_NAME CFG_OS_NAME_MACOSX // NOLINT(cppcoreguidelines-macro-usage)
-
-// macosx deployment target, e.g. value of 1090 means MacOS X 10.9
-#		define CFG_MACOSX_DEPLOYMENT_TARGET __MAC_OS_X_VERSION_MIN_REQUIRED
-#	endif
-
-// check for UNIX should go after check for Linux, because on Linux the __unix macro is also defined
-#elif defined(__unix) || defined(__unix__)
-#	define CFG_OS CFG_OS_UNIX // NOLINT(cppcoreguidelines-macro-usage)
-#	if defined(sun) || defined(__sun)
-#		define CFG_OS_NAME CFG_OS_NAME_SOLARIS // NOLINT(cppcoreguidelines-macro-usage)
-#	elif defined(__FreeBSD__)
-#		define CFG_OS_NAME CFG_OS_NAME_FREEBSD // NOLINT(cppcoreguidelines-macro-usage)
-#	else
-#		define CFG_OS_NAME CFG_OS_NAME_UNKNOWN // NOLINT(cppcoreguidelines-macro-usage)
-#	endif
-#else
-#	define CFG_OS CFG_OS_UNKNOWN // NOLINT(cppcoreguidelines-macro-usage)
-#	define CFG_OS_NAME CFG_OS_NAME_UNKNOWN // NOLINT(cppcoreguidelines-macro-usage)
-#endif
+//====================================================|
+//                DLL Export definitions              |
+//                                                    |
 
 #if CFG_OS == CFG_OS_WINDOWS
 #	if CFG_COMPILER == CFG_COMPILER_MSVC
@@ -278,9 +306,13 @@ SOFTWARE.
 #define CFG_ENDIANNESS_BIG 2 // NOLINT(cppcoreguidelines-macro-usage)
 // NOLINTEND(modernize-macro-to-enum, cppcoreguidelines-macro-to-enum)
 
-#if CFG_OS == CFG_OS_WINDOWS
+#if CFG_OS_NAME == CFG_OS_NAME_EMSCRIPTEN
+#	define CFG_ENDIANNESS CFG_ENDIANNESS_LITTLE
+
+#elif CFG_OS == CFG_OS_WINDOWS
 // Windows 32/64 bit is always little endian
 #	define CFG_ENDIANNESS CFG_ENDIANNESS_LITTLE // NOLINT(cppcoreguidelines-macro-usage)
+
 #else
 // clang-format off
 #	if (defined(__ORDER_BIG_ENDIAN__) && \
@@ -301,4 +333,4 @@ SOFTWARE.
 // clang-format on
 #endif
 
-// NOLINTEND(cppcoreguidelines-macro-usage)
+// NOLINTEND
