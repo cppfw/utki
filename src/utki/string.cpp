@@ -84,7 +84,11 @@ std::string utki::make_string_va_list(const char* format, va_list args)
 			throw std::logic_error("snprintf() failed");
 		}
 
-		if (decltype(buf_size)(size) >= buf_size) {
+#if CFG_CPP >= 20
+		if (std::cmp_greater_equal(size, buf_size)) {
+#else
+		if (size_t(size) >= buf_size) {
+#endif
 			// resulting string takes more than we have first guessed, allocate enough memory and try again
 			ret.resize(size);
 
@@ -161,7 +165,14 @@ std::vector<std::string> utki::word_wrap(std::string_view str, unsigned width)
 	unsigned word_ended = false; // indicates that at least one word in the current line has ended
 	for (auto i = str.begin(); i != str.end(); ++i) {
 		ASSERT(std::distance(line_begin, i) >= 0)
-		if (*i != '\n' && unsigned(std::distance(line_begin, i)) == width) {
+		if (*i != '\n' &&
+#if CFG_CPP >= 20
+			std::cmp_equal(std::distance(line_begin, i), width)
+#else
+			unsigned(std::distance(line_begin, i)) == width
+#endif
+		)
+		{
 			if (*span_begin == ' ') { // span of spaces
 				if (word_ended) {
 					ret.emplace_back(str.substr( //
