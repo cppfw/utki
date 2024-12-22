@@ -53,9 +53,9 @@ class UtkiConan(ConanFile):
 
 	def package(self):
 		if self.settings.os == "Emscripten":
-			src_rel_dir = os.path.join(self.build_folder, "src/out/rel")
-		else:
 			src_rel_dir = os.path.join(self.build_folder, "src/out/wasm")
+		else:
+			src_rel_dir = os.path.join(self.build_folder, "src/out/rel")
 
 		src_dir = os.path.join(self.build_folder, "src")
 		dst_include_dir = os.path.join(self.package_folder, "include")
