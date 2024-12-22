@@ -45,12 +45,19 @@ class UtkiConan(ConanFile):
 		git.run("submodule update --init --remote --depth 1")
 
 	def build(self):
-		self.run("make $MAKE_INCLUDE_DIRS_ARG lint=off")
-		self.run("make $MAKE_INCLUDE_DIRS_ARG lint=off test")
+		if self.settings.os == "Emscripten":
+			self.run("make $MAKE_INCLUDE_DIRS_ARG config=wasm")
+		else:
+			self.run("make $MAKE_INCLUDE_DIRS_ARG lint=off")
+			self.run("make $MAKE_INCLUDE_DIRS_ARG lint=off test")
 
 	def package(self):
+		if self.settings.os == "Emscripten":
+			src_rel_dir = os.path.join(self.build_folder, "src/out/rel")
+		else:
+			src_rel_dir = os.path.join(self.build_folder, "src/out/wasm")
+
 		src_dir = os.path.join(self.build_folder, "src")
-		src_rel_dir = os.path.join(self.build_folder, "src/out/rel")
 		dst_include_dir = os.path.join(self.package_folder, "include")
 		dst_lib_dir = os.path.join(self.package_folder, "lib")
 		dst_bin_dir = os.path.join(self.package_folder, "bin")
@@ -71,6 +78,5 @@ class UtkiConan(ConanFile):
 		self.cpp_info.libs = [self.name]
 
 	def package_id(self):
-		
 		# change package id only when minor or major version changes, i.e. when ABI breaks
 		self.info.requires.minor_mode()
