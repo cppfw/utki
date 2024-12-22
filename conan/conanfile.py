@@ -46,7 +46,7 @@ class UtkiConan(ConanFile):
 
 	def build(self):
 		if self.settings.os == "Emscripten":
-			self.run("make $MAKE_INCLUDE_DIRS_ARG config=wasm")
+			self.run("make $MAKE_INCLUDE_DIRS_ARG config=wasm --directory=src")
 		else:
 			self.run("make $MAKE_INCLUDE_DIRS_ARG lint=off")
 			self.run("make $MAKE_INCLUDE_DIRS_ARG lint=off test")
