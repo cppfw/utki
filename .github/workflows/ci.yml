@@ -656,7 +656,7 @@ jobs:
           conan upload --check --remote cppfw $PACKAGE_NAME/$PACKAGE_VERSION@$MYCI_CONAN_USER/main
         if: startsWith(github.ref, 'refs/tags/')
 ##### conan - emscripten #####
-  conan-linux:
+  conan-emscripten:
     strategy:
       fail-fast: false
       matrix:
