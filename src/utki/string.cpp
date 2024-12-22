@@ -38,6 +38,10 @@ SOFTWARE.
 #include "debug.hpp"
 #include "util.hpp"
 
+#if CFG_CPP >= 20
+#	include <utility>
+#endif
+
 #ifdef assert
 #	undef assert
 #endif
