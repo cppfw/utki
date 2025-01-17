@@ -8,6 +8,8 @@ this_ar := emar
 
 this_static_lib_only = : true
 
+this_cxxflags += -Wno-version-check
+
 this_cxxflags += -fwasm-exceptions
 this_ldflags += -fwasm-exceptions
 
