@@ -26,7 +26,9 @@ SOFTWARE.
 
 /* ================ LICENSE END ================ */
 
-#include "util.hpp"
+#include "utility.hpp"
+
+#include "config.hpp"
 
 #if CFG_OS == CFG_OS_WINDOWS
 #	include <io.h>

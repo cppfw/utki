@@ -30,7 +30,7 @@ SOFTWARE.
 
 #include "config.hpp"
 #include "string.hpp"
-#include "util.hpp"
+#include "utility.hpp"
 
 #if CFG_OS_NAME == CFG_OS_NAME_ANDROID
 #	include <android/log.h>

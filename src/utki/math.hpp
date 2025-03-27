@@ -30,7 +30,7 @@ SOFTWARE.
 
 #include <cmath>
 
-#include "util.hpp"
+#include "utility.hpp"
 
 namespace utki {
 

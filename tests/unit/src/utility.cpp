@@ -6,7 +6,7 @@
 #include <tst/set.hpp>
 #include <utki/string.hpp>
 #include <utki/type_traits.hpp>
-#include <utki/util.hpp>
+#include <utki/utility.hpp>
 
 using namespace std::string_literals;
 using namespace std::string_view_literals;
