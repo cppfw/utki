@@ -37,6 +37,7 @@ SOFTWARE.
 #include "config.hpp"
 #include "span.hpp"
 #include "util.hpp"
+#include "views.hpp"
 
 namespace utki {
 
