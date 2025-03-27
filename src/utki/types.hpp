@@ -193,24 +193,6 @@ inline const object_type* make_pointer_to_const(object_type* p)
 class dummy_class
 {};
 
-template <typename>
-struct tag {};
-
-/**
- * @brief Get variant's alternative index by its type in compile time.
- * @tparam indexed_type - type to get index of.
- * @tparam variant_type - std::variant type to get index from.
- */
-template <typename indexed_type, typename variant_type>
-struct get_index;
-
-// MSVC compiler prior to tools v142 doesn't compile this
-#if CFG_COMPILER != CFG_COMPILER_MSVC || CFG_COMPILER_MSVC_TOOLS_V >= 142
-template <typename indexed_type, typename... variant_item_type>
-struct get_index<indexed_type, std::variant<variant_item_type...>> :
-	std::integral_constant<size_t, std::variant<tag<variant_item_type>...>(tag<indexed_type>()).index()> {};
-#endif
-
 /**
  * @brief Check if owner_type::type is defined.
  * Defines bool 'value' which is true if owner_type::type is defined and false otherwise.
@@ -263,22 +245,5 @@ struct is_specialization_of<template_templ, template_templ<args_type...>> : std:
 
 template <template <typename...> class template_templ, typename checked_type>
 constexpr static bool is_specialization_of_v = is_specialization_of<template_templ, checked_type>::value;
-
-/**
- * @brief Offset std::index_sequence by constant value.
- * Adds constant value to each index of a given std::index_sequence type.
- * @tparam offset - index offset to add.
- * @tparam sequence_type - original std::index_sequence to add offset to.
- */
-template <std::size_t offset, typename sequence_type>
-struct offset_sequence;
-
-template <std::size_t offset, std::size_t... indices>
-struct offset_sequence<offset, std::index_sequence<indices...>> {
-	using type = std::index_sequence<indices + offset...>;
-};
-
-template <std::size_t offset, typename sequence_type>
-using offset_sequence_t = typename offset_sequence<offset, sequence_type>::type;
 
 } // namespace utki

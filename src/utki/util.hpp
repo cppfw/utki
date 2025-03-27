@@ -104,6 +104,23 @@ iterator_type prev(iterator_type iter, size_t n)
 }
 
 /**
+ * @brief Offset std::index_sequence by constant value.
+ * Adds constant value to each index of a given std::index_sequence type.
+ * @tparam offset - index offset to add.
+ * @tparam sequence_type - original std::index_sequence to add offset to.
+ */
+template <size_t offset, typename sequence_type>
+struct offset_sequence;
+
+template <size_t offset, size_t... indices>
+struct offset_sequence<offset, std::index_sequence<indices...>> {
+	using type = std::index_sequence<indices + offset...>;
+};
+
+template <size_t offset, typename sequence_type>
+using offset_sequence_t = typename offset_sequence<offset, sequence_type>::type;
+
+/**
  * @brief Not to be used directly.
  * Use skip_front<num_to_skip>(<collection>) function.
  */
@@ -137,6 +154,7 @@ struct skip_front_collection_wrapper {
  * @return A special wrapper class which provides begin() and end() methods
  *         returning collection iterators.
  */
+// TODO: rename to views::drop as in std::
 template <size_t num_to_skip, typename collection_type>
 auto skip_front(collection_type& collection)
 {
@@ -380,7 +398,7 @@ public:
 	 * @brief Constructor.
 	 * @param f - function to call on object destruction.
 	 */
-	scope_exit(decltype(f) && f) :
+	scope_exit(decltype(f)&& f) :
 		f(std::move(f))
 	{}
 
@@ -410,8 +428,7 @@ public:
 	}
 
 	[[deprecated("use scope_exit::release()")]] //
-	decltype(f)
-	reset() noexcept
+	decltype(f) reset() noexcept
 	{
 		return this->release();
 	}
@@ -722,8 +739,7 @@ bool is_terminal_cerr();
 
 // TODO: remove deprecated stuff
 [[deprecated("use is_terminal_cerr()")]] //
-inline bool
-is_cerr_terminal()
+inline bool is_cerr_terminal()
 {
 	return is_terminal_cerr();
 }
@@ -737,8 +753,7 @@ bool is_terminal_cout();
 
 // TODO: remove deprecated stuff
 [[deprecated("use is_terminal_cout()")]] //
-inline bool
-is_cout_terminal()
+inline bool is_cout_terminal()
 {
 	return is_terminal_cout();
 }
@@ -752,8 +767,7 @@ bool is_terminal_cin();
 
 // TODO: remove deprecated stuff
 [[deprecated("use is_terminal_cin()")]] //
-inline bool
-is_cin_terminal()
+inline bool is_cin_terminal()
 {
 	return is_terminal_cin();
 }

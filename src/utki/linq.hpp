@@ -121,7 +121,7 @@ public:
 			}
 		}
 
-		return linq_collection_aggregator<decltype(ret) &&>(std::move(ret));
+		return linq_collection_aggregator<decltype(ret)&&>(std::move(ret));
 	}
 
 	template <typename func_type>
@@ -149,7 +149,7 @@ public:
 			ret[func(v)].push_back(std::move(v));
 		}
 
-		return linq_collection_aggregator<decltype(ret) &&>(std::move(ret));
+		return linq_collection_aggregator<decltype(ret)&&>(std::move(ret));
 	}
 
 	template <typename func_type>
@@ -176,7 +176,7 @@ public:
 			func
 		);
 
-		return linq_collection_aggregator<decltype(ret) &&>(std::move(ret));
+		return linq_collection_aggregator<decltype(ret)&&>(std::move(ret));
 	}
 
 	template <typename func_type>
@@ -202,13 +202,13 @@ public:
 
 		if constexpr (std::is_rvalue_reference_v<collection_type>) {
 			std::sort(this->collection.begin(), this->collection.end(), comparer);
-			return linq_collection_aggregator<decltype(this->collection) &&>(std::move(this->collection));
+			return linq_collection_aggregator<decltype(this->collection)&&>(std::move(this->collection));
 		} else {
 			std::vector<value_type> ret;
 			std::copy(this->collection.begin(), this->collection.end(), std::back_inserter(ret));
 
 			std::sort(ret.begin(), ret.end(), comparer);
-			return linq_collection_aggregator<decltype(ret) &&>(std::move(ret));
+			return linq_collection_aggregator<decltype(ret)&&>(std::move(ret));
 		}
 	}
 };

@@ -367,8 +367,7 @@ typename std::enable_if_t<
 		// TODO: add std::is_scoped_enum check when C++'23 is widely available
 		// check that enum has enum_size item. Note, that this is the only way to do it for MSVC compiler at the moment.
 		&& enum_type::enum_size == enum_type::enum_size,
-	utki::flags<enum_type>>
-operator|(enum_type e1, enum_type e2)
+	utki::flags<enum_type>> operator|(enum_type e1, enum_type e2)
 {
 	return {e1, e2};
 }

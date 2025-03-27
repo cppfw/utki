@@ -48,8 +48,7 @@ namespace utki {
 #if CFG_COMPILER != CFG_COMPILER_MSVC
 __attribute__((format(printf, 1, 2)))
 #endif
-std::string
-make_string(const char* format, ...);
+std::string make_string(const char* format, ...);
 
 /**
  * @brief Format string.

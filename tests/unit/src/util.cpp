@@ -175,53 +175,6 @@ const tst::set set("util", [](tst::suite& suite) {
 		tst::check_eq(fm.find("42"sv)->second, 42, SL);
 	});
 
-#if CFG_COMPILER != CFG_COMPILER_MSVC || CFG_COMPILER_MSVC_TOOLS_V >= 142
-	suite.add("variant_get_index", []() {
-		using variant_type = std::variant<int, const char*, std::string, std::pair<bool, int>>;
-
-		std::array<variant_type, std::variant_size<variant_type>::value> variants = {
-			{std::string("hello world!"), int(123), "const char*", std::make_pair(true, 45)}
-		};
-
-		tst::check_eq(variants.size(), size_t(4), SL);
-
-		std::vector<std::string> res;
-
-		for (auto& v : variants) {
-			switch (v.index()) {
-				case utki::get_index<int, decltype(variants)::value_type>::value:
-					res.emplace_back("int");
-					break;
-				case utki::get_index<std::pair<bool, int>, decltype(variants)::value_type>::value:
-					res.emplace_back("pair");
-					break;
-				case utki::get_index<std::string, decltype(variants)::value_type>::value:
-					res.emplace_back("string");
-					break;
-				case utki::get_index<const char*, decltype(variants)::value_type>::value:
-					res.emplace_back("const char*");
-					break;
-				default:
-					break;
-			}
-		}
-
-#	ifdef DEBUG
-		for (auto& r : res) {
-			utki::log([&](auto& o) {
-				o << "r = " << r << std::endl;
-			});
-		}
-#	endif
-
-		std::vector<std::string> expected = {
-			{"string", "int", "const char*", "pair"}
-		};
-
-		tst::check(res == expected, SL);
-	});
-#endif // ~ non-MSVC compiler or MSVC compiler tools >= v142
-
 	suite.add("skip_front", []() {
 		std::array<int, 10> arr{0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 
