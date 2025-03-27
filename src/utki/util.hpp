@@ -183,7 +183,14 @@ bool contains(const container_type& container, const value_type& value)
 	} else {
 		using std::cbegin;
 		using std::cend;
-		return std::find(cbegin(container), cend(container), value) != cend(container);
+
+		auto i = std::find(
+			cbegin(container), //
+			cend(container),
+			value
+		);
+
+		return i != cend(container);
 	}
 }
 
