@@ -56,6 +56,10 @@ constexpr auto bit_5_mask = 0x20;
 constexpr auto bit_6_mask = 0x40;
 constexpr auto bit_7_mask = 0x80;
 
+/**
+ * @brief Smallest unsigned integer type to hold specified number of bytes.
+ * @tparam type_size - number of bytes to store.
+ */
 template <size_t type_size>
 struct uint_size;
 
@@ -103,6 +107,10 @@ struct uint_size<8> {
 	using type = uint64_t;
 };
 
+/**
+ * @brief Smallest signed integer type to hold specified number of bytes.
+ * @tparam type_size - number of bytes to store.
+ */
 template <size_t type_size>
 struct int_size;
 
@@ -171,18 +179,6 @@ using remove_const_reference_t = typename remove_const_reference<in_type>::type;
 
 // test remove_const_reference_t
 static_assert(std::is_same_v<remove_const_reference_t<const char&>, char>, "remove_const_reference_t test failed");
-
-/**
- * @brief Cast pointer to pointer-to-const.
- * @param p - pointer to cast.
- * @return Pointer to const.
- */
-template <class object_type>
-inline const object_type* make_pointer_to_const(object_type* p)
-{
-	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-const-cast)
-	return const_cast<const object_type*>(p);
-}
 
 /**
  * @brief Dummy class.
