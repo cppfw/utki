@@ -37,7 +37,7 @@ SOFTWARE.
 
 #include "debug.hpp"
 #include "span.hpp"
-#include "types.hpp"
+#include "type_traits.hpp"
 
 #ifdef min
 #	undef min

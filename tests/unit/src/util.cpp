@@ -5,7 +5,7 @@
 #include <tst/check.hpp>
 #include <tst/set.hpp>
 #include <utki/string.hpp>
-#include <utki/types.hpp>
+#include <utki/type_traits.hpp>
 #include <utki/util.hpp>
 
 using namespace std::string_literals;
