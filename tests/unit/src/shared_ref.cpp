@@ -74,9 +74,11 @@ const tst::set set("shared_ref", [](tst::suite& suite) {
 		tst::check_eq(sr.get().a_0, mr.get().a_0, SL);
 	});
 
-	suite.add("operator_equals", []() {
+	suite.add("operator_assignment", []() {
 		utki::shared_ref<a1> sr1 = utki::make_shared<a1>(3);
 		utki::shared_ref<a1> sr2 = utki::make_shared<a1>(4);
+
+		tst::check(!(sr1.to_shared_ptr() == sr2.to_shared_ptr()), SL);
 
 		sr2 = sr1;
 
@@ -219,6 +221,28 @@ const tst::set set("shared_ref", [](tst::suite& suite) {
 
 		tst::check(cp2, SL);
 		tst::check_eq(cp2, ca.to_shared_ptr(), SL);
+	});
+
+	suite.add("operator_equals", []() {
+		auto r1 = utki::make_shared<a1>(13);
+		auto r2 = utki::make_shared<a1>(13);
+
+		tst::check(!(r1 == r2), SL);
+
+		r2 = r1;
+
+		tst::check(r1 == r2, SL);
+	});
+
+	suite.add("operator_not_equals", []() {
+		auto r1 = utki::make_shared<a1>(13);
+		auto r2 = utki::make_shared<a1>(13);
+
+		tst::check(r1 != r2, SL);
+
+		r2 = r1;
+
+		tst::check(!(r1 != r2), SL);
 	});
 });
 
