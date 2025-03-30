@@ -29,7 +29,8 @@ SOFTWARE.
 #pragma once
 
 #include <iterator>
-#include <type_traits>
+
+#include "type_traits.hpp"
 
 namespace utki {
 
@@ -37,7 +38,7 @@ namespace utki {
 template <typename enum_type>
 class enum_iterable
 {
-	static_assert(std::is_enum_v<enum_type>, "enum type expected");
+	static_assert(utki::is_scoped_enum_v<enum_type>, "enum_type must be a scoped enumeration type");
 
 	// check that enum has enum_size item. Note, that this is the only way to do it for MSVC compiler at the moment.
 	static_assert(

@@ -2,10 +2,12 @@
 #include <tst/set.hpp>
 #include <utki/enum_array.hpp>
 
+using namespace std::string_literals;
+
 namespace {
 const tst::set set("enum_array", [](tst::suite& suite) {
 	suite.add("zip_with_enum", []() {
-		enum en {
+		enum class en {
 			a,
 			b,
 			c,
@@ -43,7 +45,7 @@ const tst::set set("enum_array", [](tst::suite& suite) {
 	});
 
 	suite.add("zip_with_enum__const", []() {
-		enum en {
+		enum class en {
 			a,
 			b,
 			c,
@@ -70,6 +72,56 @@ const tst::set set("enum_array", [](tst::suite& suite) {
 		}
 
 		tst::check(actual == expected, SL);
+	});
+
+	suite.add("operator_subscript", []() {
+		enum class en {
+			a,
+			b,
+			c,
+			d,
+
+			enum_size
+		};
+
+		utki::enum_array<std::string, en> arr = {"a", "b", "c", "d"};
+
+		tst::check_eq(arr[0], "a"s, SL);
+		tst::check_eq(arr[1], "b"s, SL);
+		tst::check_eq(arr[2], "c"s, SL);
+		tst::check_eq(arr[3], "d"s, SL);
+
+		tst::check_eq(arr[en::a], "a"s, SL);
+		tst::check_eq(arr[en::b], "b"s, SL);
+		tst::check_eq(arr[en::c], "c"s, SL);
+		tst::check_eq(arr[en::d], "d"s, SL);
+
+		arr[en::a].append("!");
+
+		tst::check_eq(arr[en::a], "a!"s, SL);
+	});
+
+	suite.add("operator_subscript__const", []() {
+		enum class en {
+			a,
+			b,
+			c,
+			d,
+
+			enum_size
+		};
+
+		const utki::enum_array<std::string, en> arr = {"a", "b", "c", "d"};
+
+		tst::check_eq(arr[0], "a"s, SL);
+		tst::check_eq(arr[1], "b"s, SL);
+		tst::check_eq(arr[2], "c"s, SL);
+		tst::check_eq(arr[3], "d"s, SL);
+
+		tst::check_eq(arr[en::a], "a"s, SL);
+		tst::check_eq(arr[en::b], "b"s, SL);
+		tst::check_eq(arr[en::c], "c"s, SL);
+		tst::check_eq(arr[en::d], "d"s, SL);
 	});
 });
 } // namespace

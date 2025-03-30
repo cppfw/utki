@@ -169,6 +169,9 @@ using remove_const_pointer_t = typename remove_const_pointer<in_type>::type;
 // test remove_const_pointer_t
 static_assert(std::is_same_v<remove_const_pointer_t<const char*>, char>, "remove_const_pointer_t test failed");
 
+/**
+ * @brief Drop-in replacement for std::remove_cvref from C++20.
+ */
 template <typename in_type>
 struct remove_const_reference {
 	using type = typename std::remove_const_t<typename std::remove_reference_t<in_type>>;
@@ -186,6 +189,7 @@ static_assert(std::is_same_v<remove_const_reference_t<const char&>, char>, "remo
  * is a desire to avoid function overload matching.
  * For example, see utki::span class implementation.
  */
+// TODO: is needed?
 class dummy_class
 {};
 
@@ -239,7 +243,39 @@ struct is_specialization_of<template_templ, template_templ<args_type...>> : std:
 
 // clang-format on
 
+/**
+ * @brief Variable alias for is_specialization_of.
+ */
 template <template <typename...> class template_templ, typename checked_type>
 constexpr static bool is_specialization_of_v = is_specialization_of<template_templ, checked_type>::value;
+
+/**
+ * @brief Drop-in replacement for std::is_scoped_enum from C++23.
+ * Check if enumeration type is a scoped enum.
+ * C++17 compatible.
+ * 
+ * Example:
+ * @code
+ * enum unscoped{a ,b, c};
+ * enum class scoped{a, b, c};
+ * 
+ * static_assert(!is_scoped_enum<unscoped>::value)
+ * static_assert(is_scoped_enum<scoped>::value)
+ * @endcode
+ * 
+ * @tparam enum_type - enum to check for being scoped.
+ */
+template <typename enum_type, bool = std::is_enum_v<enum_type>>
+struct is_scoped_enum : std::false_type {};
+
+template <typename enum_type>
+struct is_scoped_enum<enum_type, true> :
+	std::bool_constant<!std::is_convertible_v<enum_type, typename std::underlying_type_t<enum_type>>> {};
+
+/**
+ * @brief Variable alias for is_scoped_enum.
+ */
+template <typename enum_type>
+constexpr bool is_scoped_enum_v = is_scoped_enum<enum_type>::value;
 
 } // namespace utki
