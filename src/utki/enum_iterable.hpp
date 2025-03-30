@@ -80,7 +80,14 @@ public:
 		}
 	};
 
+	using const_iterator = iterator;
+
 	using reverse_iterator = std::reverse_iterator<iterator>;
+
+	constexpr size_t size() const noexcept
+	{
+		return size_t(enum_type::enum_size);
+	}
 
 	constexpr iterator begin() const noexcept
 	{
