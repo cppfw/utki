@@ -1,3 +1,9 @@
+libutki (1.1.272) unstable; urgency=medium
+
+  * add enum_array
+
+ -- Ivan Gagis <igagis@gmail.com>  Sun, 30 Mar 2025 05:11:34 +0300
+
 libutki (1.1.271) unstable; urgency=medium
 
   * add shared_ref::operator== and !=
