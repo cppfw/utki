@@ -70,14 +70,14 @@ constexpr auto mm_per_inch = cm_per_inch * 10;
 template <typename iterator_type>
 iterator_type next(iterator_type iter, size_t n)
 {
-	constexpr auto max_advance =
-		std::numeric_limits<typename std::iterator_traits<iterator_type>::difference_type>::max();
+	using difference_type = typename std::iterator_traits<iterator_type>::difference_type;
+	constexpr auto max_advance = std::numeric_limits<difference_type>::max();
 	for (size_t num_left = n;;) {
 		if (num_left > size_t(max_advance)) {
 			num_left -= max_advance;
 			iter = std::next(iter, max_advance);
 		} else {
-			return std::next(iter, num_left);
+			return std::next(iter, difference_type(num_left));
 		}
 	}
 }
@@ -93,13 +93,14 @@ iterator_type next(iterator_type iter, size_t n)
 template <typename iterator_type>
 iterator_type prev(iterator_type iter, size_t n)
 {
-	const auto max_advance = std::numeric_limits<typename std::iterator_traits<iterator_type>::difference_type>::max();
+	using difference_type = typename std::iterator_traits<iterator_type>::difference_type;
+	const auto max_advance = std::numeric_limits<difference_type>::max();
 	for (size_t num_left = n;;) {
 		if (num_left > size_t(max_advance)) {
 			num_left -= max_advance;
 			iter = std::prev(iter, max_advance);
 		} else {
-			return std::prev(iter, num_left);
+			return std::prev(iter, difference_type(num_left));
 		}
 	}
 }
