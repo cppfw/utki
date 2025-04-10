@@ -160,14 +160,23 @@ public:
 	}
 
 	/**
-	 * @brief Get reference to the pointed type.
+	 * @brief Get reference to the object.
 	 *
-	 * @return Const reference to the pointed type.
+	 * @return Reference to the object.
 	 */
-	object_type& get() const noexcept
+	constexpr object_type& get() const noexcept
 	{
 		ASSERT(this->p)
 		return *this->p;
+	}
+
+	/**
+	 * @brief Convert to the reference to the object.
+	 * @return Reference to the object.
+	 */
+	constexpr operator object_type&() const noexcept
+	{
+		return this->get();
 	}
 };
 

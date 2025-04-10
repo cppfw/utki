@@ -103,6 +103,26 @@ const tst::set set("shared_ref", [](tst::suite& suite) {
 		tst::check_eq(etalon + "!", sr.get(), SL);
 	});
 
+	suite.add("operator_convert_to_reference", []() {
+		utki::shared_ref<std::string> sr = utki::make_shared<std::string>(etalon);
+
+		[](std::string& s) {
+			tst::check_eq(s, etalon, SL);
+		}(sr);
+
+		[](const std::string& s) {
+			tst::check_eq(s, etalon, SL);
+		}(sr);
+	});
+
+	suite.add("operator_convert_to_reference_const", []() {
+		utki::shared_ref<const std::string> sr = utki::make_shared<std::string>(etalon);
+
+		[](const std::string& s) {
+			tst::check_eq(s, etalon, SL);
+		}(sr);
+	});
+
 	suite.add("const_autocast", []() {
 		utki::shared_ref<const std::string> sr = utki::make_shared<std::string>(etalon);
 
