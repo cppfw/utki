@@ -242,28 +242,6 @@ const tst::set set("shared_ref", [](tst::suite& suite) {
 		tst::check(cp2, SL);
 		tst::check_eq(cp2, ca.to_shared_ptr(), SL);
 	});
-
-	suite.add("operator_equals", []() {
-		auto r1 = utki::make_shared<a1>(13);
-		auto r2 = utki::make_shared<a1>(13);
-
-		tst::check(!(r1 == r2), SL);
-
-		r2 = r1;
-
-		tst::check(r1 == r2, SL);
-	});
-
-	suite.add("operator_not_equals", []() {
-		auto r1 = utki::make_shared<a1>(13);
-		auto r2 = utki::make_shared<a1>(13);
-
-		tst::check(r1 != r2, SL);
-
-		r2 = r1;
-
-		tst::check(!(r1 != r2), SL);
-	});
 });
 
 } // namespace

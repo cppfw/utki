@@ -136,30 +136,6 @@ public:
 	}
 
 	/**
-	 * @brief Check if two shared_ref's point to the same object.
-	 * @param r - shared reference to compare this one to.
-	 * Effectively compares two underlying std::shared_ptr's using operator==().
-	 * @return true if given shared_ref points to the same object as this one.
-	 * @return false otherwise.
-	 */
-	bool operator==(const shared_ref& r) const noexcept
-	{
-		return this->to_shared_ptr() == r.to_shared_ptr();
-	}
-
-	/**
-	 * @brief Check if two shared_ref's point to different objects.
-	 * Effectively compares two underlying std::shared_ptr's using operator!=().
-	 * @param r - shared reference to compare this one to.
-	 * @return true if given shared_ref points to a differnet object than this one.
-	 * @return false otherwise.
-	 */
-	bool operator!=(const shared_ref& r) const noexcept
-	{
-		return this->to_shared_ptr() != r.to_shared_ptr();
-	}
-
-	/**
 	 * @brief Get reference to the object.
 	 *
 	 * @return Reference to the object.
