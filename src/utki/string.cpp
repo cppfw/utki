@@ -106,6 +106,7 @@ std::string utki::make_string_va_list(const char* format, va_list args)
 			// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-array-to-pointer-decay)
 			va_copy(cur_args, args);
 		} else {
+			// NOLINTNEXTLINE(clang-analyzer-valist.Unterminated, "false-positive")
 			ret = std::string(buf_ptr, size);
 			break;
 		}
