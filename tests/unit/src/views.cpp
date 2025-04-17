@@ -84,5 +84,38 @@ const tst::set set("views", [](tst::suite& suite) {
 		tst::check(result == expected, SL)
 			<< "[0] = " << result[0] << ", [1] = " << result[1] << ", [2] = " << result[2];
 	});
+
+	suite.add("zip_view__iterate_over_span", []() {
+		std::vector<int> vec1 = {1, 2, 3, 4};
+		std::vector<std::string> vec2 = {"a", "b", "c", "d"};
+
+		auto vec1span = utki::make_span(vec1);
+
+		std::vector<std::string> result;
+
+		for (auto [v2, v1span] : utki::views::zip(vec2, vec1span)) {
+			result.push_back(utki::cat(v2, v1span));
+		}
+
+		std::vector<std::string> expected = {"a1", "b2", "c3", "d4"};
+
+		tst::check(result == expected, SL);
+	});
+
+	// TODO:
+	// suite.add("zip_view__iterate_over_temporary_span", []() {
+	// 	std::vector<int> vec1 = {1, 2, 3, 4};
+	// 	std::vector<std::string> vec2 = {"a", "b", "c", "d"};
+
+	// 	std::vector<std::string> result;
+
+	// 	for (auto [v2, v1span] : utki::views::zip(vec2, utki::make_span(vec1))) {
+	// 		result.push_back(utki::cat(v2, v1span));
+	// 	}
+
+	// 	std::vector<std::string> expected = {"a1", "b2", "c3", "d4"};
+
+	// 	tst::check(result == expected, SL);
+	// });
 });
 } // namespace
