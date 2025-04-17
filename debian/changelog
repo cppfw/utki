@@ -1,3 +1,9 @@
+libutki (1.1.274) unstable; urgency=medium
+
+  * add span::const_iterator
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 18 Apr 2025 01:29:14 +0300
+
 libutki (1.1.273) unstable; urgency=medium
 
   * add shared_ref::operator object_type&()
