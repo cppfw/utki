@@ -186,7 +186,7 @@ jobs:
           - {os: ubuntu, codename: noble, image_owner: }
           # - {os: raspbian, codename: buster, image_owner: igagis/, labels: [ubuntu-24.04-arm]}
           # - {os: raspbian, codename: bullseye, image_owner: igagis/, labels: [ubuntu-24.04-arm]}
-          - {os: raspbian, codename: bookworm, image_owner: igagis/, labels: [ubuntu-24.04-arm]}
+          # - {os: raspbian, codename: bookworm, image_owner: igagis/, labels: [ubuntu-24.04-arm]}
     runs-on: ${{ (matrix.labels == '' && 'ubuntu-latest') || matrix.labels }}
     container: ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }}
     name: linux - ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }}
@@ -216,7 +216,9 @@ jobs:
       - name: prepare debian package
         run: myci-deb-prepare.sh
       - name: install deps
-        run: myci-deb-install-build-deps.sh
+        run: |
+          cd build
+          myci-deb-install-build-deps.sh
       - name: add DE locale
         # needed for testing that locale with "," as decimal delimiter does not break the parsing with string_parser
         run: |
@@ -224,8 +226,8 @@ jobs:
           locale-gen
       - name: build
         run: |
+          cd build
           dpkg-buildpackage --unsigned-source --unsigned-changes
-          mv ../*.*deb .
       - name: upload deb packages to artifacts
         uses: actions/upload-artifact@v4
         # do not fail the job if the step fails
