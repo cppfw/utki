@@ -1,6 +1,12 @@
 include prorab.mk
 include prorab-pkg-config.mk
 
-this_version := $(shell myci-deb-version.sh)
+$(eval $(call prorab-config, ../config))
 
-$(eval $(prorab-pkg-config))
+ifneq ($(config),dbg)
+
+    this_version := $(shell myci-deb-version.sh)
+
+    $(eval $(prorab-pkg-config))
+
+endif

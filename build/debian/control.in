@@ -16,20 +16,37 @@ Standards-Version: 3.9.2
 Package: libutki$(soname)
 Section: libs
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends:
+	${shlibs:Depends},
+	${misc:Depends}
 Description: cross-platform C++ file system library.
  Different C++ utility classes and functions.
+
+Package: libutki-dbg$(soname)
+Section: libs
+Architecture: any
+Depends:
+	${shlibs:Depends},
+	${misc:Depends}
+Description: cross-platform C++ file system library.
+ Debug version of libutki.
 
 Package: libutki$(soname)-dbgsrc
 Section: debug
 Architecture: all
-Depends: libutki$(soname)-dbgsym (= ${binary:Version}), ${misc:Depends}
+Depends:
+	libutki$(soname)-dbgsym (= ${binary:Version}),
+	libutki-dbg$(soname)-dbgsym (= ${binary:Version}),
+	${misc:Depends}
 Description: debugging sources for libutki$(soname) package.
 
 Package: libutki-dev
 Section: libdevel
 Architecture: any
-Depends: libutki$(soname) (= ${binary:Version}), ${misc:Depends}
+Depends:
+	libutki$(soname) (= ${binary:Version}),
+	libutki-dbg$(soname) (= ${binary:Version}),
+	${misc:Depends}
 Suggests: libutki-doc
 Description: cross-platform C++ utility library.
  Different C++ utility classes and functions.

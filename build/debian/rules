@@ -14,3 +14,18 @@ export DEB_OBJCXXFLAGS_MAINT_APPEND := $(debug_prefix_map_arg)
 
 %:
 	dh $@
+
+override_dh_auto_build:
+	dh_auto_build
+	@echo ""
+	@echo "|========================================================|"
+	@echo "|========== build debug version of the library ==========|"
+	dh_auto_build -- config=dbg
+
+override_dh_auto_install:
+	dh_auto_install
+	dh_auto_install -- config=dbg
+
+override_dh_auto_clean:
+	dh_auto_clean
+	dh_auto_clean -- config=dbg
