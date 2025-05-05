@@ -10,12 +10,12 @@ $(eval $(call prorab-config, ../../config))
 
 $(eval $(call prorab-depend, \
 		clargs/src/out/$(clargs_cfg)/libclargs$(dot_so), \
-		../../src/out/$(c)/libutki$(dot_so) \
+		../../src/out/$(c)/libutki$(this_dbg)$(dot_so) \
 	))
 $(eval $(call prorab-depend, \
 		tst/src/out/$(tst_cfg)/libtst$(dot_so), \
 		clargs/src/out/$(clargs_cfg)/libclargs$(dot_so) \
-		../../src/out/$(c)/libutki$(dot_so) \
+		../../src/out/$(c)/libutki$(this_dbg)$(dot_so) \
 	))
 
 harness_old_cxxflags := $(CXXFLAGS)

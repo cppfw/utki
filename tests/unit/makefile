@@ -13,13 +13,18 @@ this_name := tests
 
 this_srcs := $(call prorab-src-dir, src)
 
-this_libutki := ../../src/out/$(c)/libutki$(dot_so)
+this_libutki := ../../src/out/$(c)/libutki$(this_dbg)$(dot_so)
 
 this_harness_ld_paths := $(abspath $(d)../harness/tst/src/out/$(tst_cfg) $(d)../harness/clargs/src/out/$(clargs_cfg))
 
 this_cxxflags += -isystem ../harness/tst/src -isystem ../../src
+
 this_ldflags += $(addprefix -L,$(this_harness_ld_paths))
-this_ldlibs += $(this_libutki) -l tst -l clargs -l m
+
+this_ldlibs += $(this_libutki)
+this_ldlibs += -l tst
+this_ldlibs += -l clargs
+this_ldlibs += -l m
 
 $(eval $(prorab-build-app))
 

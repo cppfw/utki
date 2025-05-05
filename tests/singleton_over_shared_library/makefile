@@ -11,13 +11,13 @@ this_srcs += testso.cpp
 this_no_install := true
 
 this_ldflags += -L $(d)../../src/out/$(c)
-this_ldlibs += -lutki
+this_ldlibs += -l utki$(this_dbg)
 
 $(eval $(prorab-build-lib))
 
 lib_target_name := $(prorab_this_name)
 
-$(prorab_this_name): $(abspath $(d)../../src/out/$(c)/libutki$(dot_so))
+$(prorab_this_name): $(abspath $(d)../../src/out/$(c)/libutki$(this_dbg)$(dot_so))
 
 #================================
 $(eval $(prorab-clear-this-vars))
@@ -34,13 +34,13 @@ this_ldlibs += $(lib_target_name)
 this_no_install := true
 
 this_ldflags += -L $(d)../../src/out/$(c)
-this_ldlibs += -lutki
+this_ldlibs += -l utki$(this_dbg)
 
 $(eval $(prorab-build-app))
 
 $(prorab_this_name): $(lib_target_name)
 
-$(eval $(call prorab-depend, $(prorab_this_name), ../../src/out/$(c)/libutki$(dot_so)))
+$(eval $(call prorab-depend, $(prorab_this_name), ../../src/out/$(c)/libutki$(this_dbg)$(dot_so)))
 
 # no test under windows, it fails there
 ifneq ($(os),windows)

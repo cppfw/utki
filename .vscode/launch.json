@@ -8,11 +8,11 @@
 			"name": "unit",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "${workspaceFolder}/tests/unit/out/dbg/tests",
+			"program": "${workspaceFolder}/tests/unit/out/dev/tests",
 			"args": [],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}/tests/unit/",
-			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/out/dbg"}],
+			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/out/dev"}],
 			"externalConsole": false,
 			"MIMode": "gdb",
 			"setupCommands": [
@@ -22,7 +22,7 @@
 					"ignoreFailures": true
 				}
 			],
-			"preLaunchTask": "build-dbg",
+			"preLaunchTask": "build-dev",
 			"miDebuggerPath": "/usr/bin/gdb"
 		},
 		{
