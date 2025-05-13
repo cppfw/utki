@@ -46,14 +46,14 @@ class UtkiConan(ConanFile):
 
 	def build(self):
 		if self.settings.os == "Emscripten":
-			self.run("make $MAKE_INCLUDE_DIRS_ARG config=wasm --directory=src")
+			self.run("make $MAKE_INCLUDE_DIRS_ARG config=emsc --directory=src")
 		else:
 			self.run("make $MAKE_INCLUDE_DIRS_ARG lint=off")
 			self.run("make $MAKE_INCLUDE_DIRS_ARG lint=off test")
 
 	def package(self):
 		if self.settings.os == "Emscripten":
-			src_rel_dir = os.path.join(self.build_folder, "src/out/wasm")
+			src_rel_dir = os.path.join(self.build_folder, "src/out/emsc")
 		else:
 			src_rel_dir = os.path.join(self.build_folder, "src/out/rel")
 
