@@ -13,6 +13,9 @@
       "name" : "vcpkg-cmake-config",
       "host" : true
     },
-    "myci"
+    {
+      "name": "myci",
+      "host": true
+    }
   ]
 }
