@@ -1,3 +1,9 @@
+libutki (1.1.277) unstable; urgency=medium
+
+  * cmake: myci
+
+ -- Ivan Gagis <igagis@gmail.com>  Sat, 17 May 2025 23:29:49 +0300
+
 libutki (1.1.276) unstable; urgency=medium
 
   * debian debug package
