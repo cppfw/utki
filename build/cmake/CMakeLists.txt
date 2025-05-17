@@ -1,5 +1,9 @@
 cmake_minimum_required(VERSION 3.10)
 
+set(name utki)
+
+project(${name})
+
 get_cmake_property(_variableNames VARIABLES)
 list (SORT _variableNames)
 foreach (_variableName ${_variableNames})
@@ -7,10 +11,6 @@ foreach (_variableName ${_variableNames})
 endforeach()
 
 find_package(myci CONFIG REQUIRED)
-
-set(name utki)
-
-project(${name})
 
 set(srcs)
 myci_add_source_files(srcs
