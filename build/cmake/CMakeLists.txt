@@ -12,9 +12,6 @@ set(srcs)
 myci_add_source_files(srcs
     DIRECTORY
         ../../src/${name}
-    PATTERNS
-        *.cpp
-        *.hpp
     RECURSIVE
 )
 
