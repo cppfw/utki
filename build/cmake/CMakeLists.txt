@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
 set(name utki)
-
 project(${name})
 
 # !!! find_package must go after project() declaration !!!
