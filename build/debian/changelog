@@ -1,3 +1,9 @@
+libutki (1.1.278) unstable; urgency=medium
+
+  * vcpkg: update
+
+ -- Ivan Gagis <igagis@gmail.com>  Sat, 07 Jun 2025 23:22:46 +0300
+
 libutki (1.1.277) unstable; urgency=medium
 
   * cmake: myci
