@@ -25,7 +25,7 @@ add_library(
 target_include_directories(
         ${name}
         PRIVATE
-        "../../src_deps"
+        "../../../src_deps"
     )
 
 target_link_libraries(
