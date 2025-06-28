@@ -48,6 +48,7 @@ enum class test_enum {
 } // namespace
 
 namespace {
+// NOLINTNEXTLINE(cppcoreguidelines-use-enum-class, "inentionally testing non-class enum")
 enum non_flag_enum {
 	item1,
 	item2,

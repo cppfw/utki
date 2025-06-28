@@ -5,6 +5,7 @@
 namespace {
 const tst::set set("type_traits", [](tst::suite& suite) {
 	suite.add("is_scoped_enum", []() {
+		// NOLINTNEXTLINE(cppcoreguidelines-use-enum-class, "intentionally testing non-class enum")
 		enum unscoped {
 			a,
 			b,
