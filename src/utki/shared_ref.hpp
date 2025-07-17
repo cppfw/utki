@@ -127,10 +127,27 @@ public:
 	}
 
 	/**
+	 * @brief Automatic conversion to weak_ptr.
+	 */
+	operator std::weak_ptr<object_type>() const noexcept
+	{
+		return this->p;
+	}
+
+	/**
 	 * @brief Automatic conversion to shared_ptr pointing to const object.
 	 */
 	template <typename enable_type = object_type>
 	operator std::shared_ptr<std::enable_if_t<!std::is_const_v<enable_type>, const enable_type>>() const noexcept
+	{
+		return this->p;
+	}
+
+	/**
+	 * @brief Automatic conversion to weak_ptr pointing to const object.
+	 */
+	template <typename enable_type = object_type>
+	operator std::weak_ptr<std::enable_if_t<!std::is_const_v<enable_type>, const enable_type>>() const noexcept
 	{
 		return this->p;
 	}

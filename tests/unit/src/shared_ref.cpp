@@ -215,7 +215,7 @@ const tst::set set("shared_ref", [](tst::suite& suite) {
 		tst::check_eq(vec[2].get().a_0, 1, SL);
 	});
 
-	suite.add("operator_shared_ptr", []() {
+	suite.add("operator_convert_to_shared_ptr", []() {
 		auto a = utki::make_shared<a1>(13);
 
 		utki::shared_ref<const a1> ca = a;
@@ -241,6 +241,37 @@ const tst::set set("shared_ref", [](tst::suite& suite) {
 
 		tst::check(cp2, SL);
 		tst::check_eq(cp2, ca.to_shared_ptr(), SL);
+	});
+
+	suite.add("operator_convert_to_weak_ptr", []() {
+		auto a = utki::make_shared<a1>(13);
+
+		utki::shared_ref<const a1> ca = a;
+
+		std::weak_ptr<a1> p;
+		std::weak_ptr<const a1> cp1;
+		std::weak_ptr<const a1> cp2;
+
+		tst::check(a.to_shared_ptr(), SL);
+		tst::check(ca.to_shared_ptr(), SL);
+		tst::check(p.expired(), SL);
+		tst::check(cp1.expired(), SL);
+
+		p = a;
+		cp1 = a;
+		cp2 = ca;
+
+		tst::check(!p.expired(), SL);
+		tst::check(p.lock(), SL);
+		tst::check_eq(p.lock(), a.to_shared_ptr(), SL);
+
+		tst::check(!cp1.expired(), SL);
+		tst::check(cp1.lock(), SL);
+		tst::check_eq(cp1.lock(), ca.to_shared_ptr(), SL);
+
+		tst::check(!cp2.expired(), SL);
+		tst::check(cp2.lock(), SL);
+		tst::check_eq(cp2.lock(), ca.to_shared_ptr(), SL);
 	});
 });
 
