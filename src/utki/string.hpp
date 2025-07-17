@@ -396,7 +396,11 @@ public:
 
 		if constexpr (std::is_floating_point_v<number_type>) {
 			// TODO: use std::from_chars() when float/double/long double versions of it are well supported by compilers
-			res = utki::from_chars(this->view.data(), this->view.data() + this->view.size(), value);
+			res = utki::from_chars(
+				this->view.data(), //
+				&*this->view.end(),
+				value
+			);
 		} else {
 			int base = to_int(integer_base::dec);
 
@@ -444,7 +448,12 @@ public:
 				}
 			}
 
-			res = std::from_chars(this->view.data(), this->view.data() + this->view.size(), value, base);
+			res = std::from_chars(
+				this->view.data(), //
+				&*this->view.end(),
+				value,
+				base
+			);
 		}
 
 		if (res.ec == std::errc::invalid_argument) {

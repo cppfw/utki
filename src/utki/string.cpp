@@ -168,7 +168,7 @@ std::vector<std::string> utki::word_wrap(std::string_view str, unsigned width)
 	auto line_begin = str.begin();
 	auto span_begin = str.begin(); // span is either series of spaces or series of non-spaces
 	unsigned word_ended = false; // indicates that at least one word in the current line has ended
-	for (auto i = str.begin(); i != str.end(); ++i) {
+	for (auto i = str.begin(); i != str.end(); i = std::next(i)) {
 		ASSERT(std::distance(line_begin, i) >= 0)
 		if (
 			*i != '\n' &&
@@ -390,7 +390,7 @@ char string_parser::skip_inclusive_until_one_of(utki::span<const char> c)
 
 std::string_view string_parser::read_word()
 {
-	for (auto i = this->view.begin(); i != this->view.end(); ++i) {
+	for (auto i = this->view.begin(); i != this->view.end(); i = std::next(i)) {
 		if (string_parser::is_space(*i)) {
 			auto dist = std::distance(this->view.begin(), i);
 			auto ret = this->view.substr(0, dist);
@@ -408,7 +408,7 @@ std::string_view string_parser::read_word()
 
 std::string_view string_parser::read_word_until(char until_char)
 {
-	for (auto i = this->view.begin(); i != this->view.end(); ++i) {
+	for (auto i = this->view.begin(); i != this->view.end(); i = std::next(i)) {
 		if (string_parser::is_space(*i) || *i == until_char) {
 			auto dist = std::distance(this->view.begin(), i);
 			auto ret = this->view.substr(0, dist);
@@ -474,7 +474,7 @@ std::string_view string_parser::read_chars(size_t n)
 
 std::string_view string_parser::read_chars_until(char until_char)
 {
-	for (auto i = this->view.begin(); i != this->view.end(); ++i) {
+	for (auto i = this->view.begin(); i != this->view.end(); i = std::next(i)) {
 		if (*i == until_char) {
 			auto dist = std::distance(this->view.begin(), i);
 			auto ret = this->view.substr(0, dist);

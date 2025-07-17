@@ -100,13 +100,13 @@ std::vector<uint8_t> utki::base64_decode(std::string_view str)
 		ASSERT(i < str.end())
 		ASSERT(std::next(i, 4) <= str.end())
 		auto a = *i;
-		++i;
+		i = std::next(i);
 		auto b = *i;
-		++i;
+		i = std::next(i);
 		auto c = *i;
-		++i;
+		i = std::next(i);
 		auto d = *i;
-		++i;
+		i = std::next(i);
 		auto bytes = base64_decode_quad(a, b, c, d);
 
 		ret.insert(ret.end(), bytes.begin(), bytes.end());
@@ -118,9 +118,11 @@ std::vector<uint8_t> utki::base64_decode(std::string_view str)
 		return ret;
 	}
 
-	auto a = *(i++);
+	auto a = *i;
+	i = std::next(i);
 	ASSERT(i != str.end())
-	auto b = *(i++);
+	auto b = *i;
+	i = std::next(i);
 
 	if (i == str.end()) {
 		auto bytes = base64_decode_quad(a, b, 'A', 'A');
@@ -128,7 +130,7 @@ std::vector<uint8_t> utki::base64_decode(std::string_view str)
 		return ret;
 	}
 
-	auto c = *(i++);
+	auto c = *i;
 	auto bytes = base64_decode_quad(a, b, c, 'A');
 	ret.push_back(bytes[0]);
 	ret.push_back(bytes[1]);

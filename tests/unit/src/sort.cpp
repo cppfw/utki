@@ -45,7 +45,7 @@ static_assert(
 		if (arr.size() != expected.size()) {
 			return false;
 		}
-		for (auto i = arr.begin(), j = expected.begin(); i != arr.end(); ++i, ++j) {
+		for (auto i = arr.begin(), j = expected.begin(); i != arr.end(); i = std::next(i), j = std::next(j)) {
 			if (*i == *j) {
 				continue;
 			}

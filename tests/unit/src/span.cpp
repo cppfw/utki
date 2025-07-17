@@ -467,13 +467,19 @@ const tst::set set("span", [](tst::suite& suite) {
 
 		using utki::overlaps;
 
+		// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic)
 		tst::check(!overlaps(s, str.data() - 1), SL);
 		// NOLINTNEXTLINE(bugprone-suspicious-stringview-data-usage, "false positive")
 		tst::check(overlaps(s, str.data()), SL);
+		// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic)
 		tst::check(overlaps(s, str.data() + 1), SL);
+		// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic)
 		tst::check(overlaps(s, str.data() + 2), SL);
+		// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic)
 		tst::check(overlaps(s, str.data() + str.size() - 1), SL);
+		// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic)
 		tst::check(!overlaps(s, str.data() + str.size()), SL);
+		// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic)
 		tst::check(!overlaps(s, str.data() + str.size() + 1), SL);
 	});
 

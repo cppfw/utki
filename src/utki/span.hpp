@@ -336,6 +336,7 @@ public:
 		ASSERT(i < this->size(), [&](auto& o) {
 			o << "operator[](" << i << "): index out of bounds, this->size() = " << this->size();
 		})
+		// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic, "implement operator[]")
 		return this->buf[i];
 	}
 
@@ -349,6 +350,7 @@ public:
 		ASSERT(i < this->size(), [&](auto& o) {
 			o << "operator[](" << i << "): index out of bounds, this->size() = " << this->size();
 		})
+		// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic, "implement operator[]")
 		return this->buf[i];
 	}
 
@@ -357,6 +359,7 @@ public:
 		if (i >= this->size()) {
 			throw std::out_of_range("span::at(): index is out of range");
 		}
+		// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic, "implement at() for plain array")
 		return this->buf[i];
 	}
 
@@ -365,6 +368,7 @@ public:
 		if (i >= this->size()) {
 			throw std::out_of_range("span::at(): index is out of range");
 		}
+		// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic, "implement at() for plain array")
 		return this->buf[i];
 	}
 
@@ -392,6 +396,7 @@ public:
 	 */
 	iterator end() const noexcept
 	{
+		// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic, "implement end() for plain array")
 		return this->buf + this->buf_size;
 	}
 
@@ -401,6 +406,7 @@ public:
 	 */
 	iterator cend() const noexcept
 	{
+		// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic, "implement cend() for plain array")
 		return this->buf + this->buf_size;
 	}
 
@@ -463,6 +469,7 @@ public:
 		size_type count = std::numeric_limits<size_type>::max()
 	) const noexcept
 	{
+		// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic, "implement subspan()")
 		pointer new_p = this->data() + offset;
 		ASSERT(new_p <= this->end())
 		size_type new_s = count == std::numeric_limits<size_type>::max() ? this->end() - new_p : count;

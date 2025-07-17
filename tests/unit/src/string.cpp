@@ -715,7 +715,12 @@ const tst::set set("string", [](tst::suite& suite) {
 		// NOLINTNEXTLINE(cppcoreguidelines-init-variables)
 		float v;
 
-		auto r = utki::from_chars(str.data(), str.data() + str.size(), v);
+		auto r = utki::from_chars(
+			// NOLINTNEXTLINE(bugprone-suspicious-stringview-data-usage, "false positive")
+			str.data(), //
+			&*str.end(),
+			v
+		);
 
 		tst::check_ne(r.ptr, str.data(), SL);
 		tst::check(r.ec == std::errc(), SL);
@@ -728,7 +733,12 @@ const tst::set set("string", [](tst::suite& suite) {
 		// NOLINTNEXTLINE(cppcoreguidelines-init-variables)
 		double v;
 
-		auto r = utki::from_chars(str.data(), str.data() + str.size(), v);
+		auto r = utki::from_chars(
+			// NOLINTNEXTLINE(bugprone-suspicious-stringview-data-usage, "false positive")
+			str.data(), //
+			&*str.end(),
+			v
+		);
 
 		tst::check_ne(r.ptr, str.data(), SL);
 		tst::check(r.ec == std::errc(), SL);
@@ -933,9 +943,15 @@ const tst::set set("string", [](tst::suite& suite) {
 	suite.add("from_chars_small_float", []() {
 		std::string_view str = "5.47382e-48";
 		float val = 100.0f;
-		auto res = utki::from_chars(str.data(), str.data() + str.size(), val, utki::chars_format::general);
+		auto res = utki::from_chars(
+			// NOLINTNEXTLINE(bugprone-suspicious-stringview-data-usage, "false positive")
+			str.data(), //
+			&*str.end(),
+			val,
+			utki::chars_format::general
+		);
 
-		tst::check(res.ptr == str.data() + str.size(), SL);
+		tst::check(res.ptr == &*str.end(), SL);
 
 		tst::check_eq(val, 0.0f, SL);
 
