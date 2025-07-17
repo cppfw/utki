@@ -1,3 +1,9 @@
+libutki (1.1.279) unstable; urgency=medium
+
+  * add shared_ref::operator weak_ptr()
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 18 Jul 2025 02:26:11 +0300
+
 libutki (1.1.278) unstable; urgency=medium
 
   * vcpkg: update
