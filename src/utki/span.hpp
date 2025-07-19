@@ -435,6 +435,7 @@ public:
 		return this->buf;
 	}
 
+	[[deprecated("use utki::end_pointer() free floating function")]]
 	pointer end_pointer() const noexcept
 	{
 		return this->data() + this->size();
@@ -495,7 +496,12 @@ bool overlaps(const span<element_type>& s, typename span<element_type>::const_po
 template <typename lhs_element_type, typename rhs_element_type>
 constexpr bool deep_equals(const span<lhs_element_type>& lhs, const span<rhs_element_type>& rhs)
 {
-	return std::equal(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
+	return std::equal(
+		lhs.begin(), //
+		lhs.end(),
+		rhs.begin(),
+		rhs.end()
+	);
 }
 
 template <typename lhs_element_type, typename rhs_element_type>

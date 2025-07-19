@@ -29,12 +29,13 @@ SOFTWARE.
 #include "unicode.hpp"
 
 #include "debug.hpp"
+#include "utility.hpp"
 
 using namespace utki;
 
 utf8_iterator::utf8_iterator(utki::span<const uint8_t> str) :
 	p(str.data()),
-	end(&*str.end())
+	end(utki::end_pointer(str))
 {
 	this->operator++();
 }

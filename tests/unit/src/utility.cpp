@@ -13,6 +13,59 @@ using namespace std::string_view_literals;
 
 namespace {
 const tst::set set("util", [](tst::suite& suite) {
+	suite.add("end_pointer__std_array", []() {
+		std::array<int, 13> buf{};
+
+		auto end_ptr = utki::end_pointer(buf);
+
+		// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic, "intentional")
+		tst::check_eq(end_ptr, buf.data() + buf.size(), SL);
+	});
+
+	suite.add("end_pointer__std_string", []() {
+		std::string str = "Hello world"s;
+
+		auto end_ptr = utki::end_pointer(str);
+
+		// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic, "intentional")
+		tst::check_eq(end_ptr, str.data() + str.size(), SL);
+	});
+
+	suite.add("end_pointer__std_string_view", []() {
+		std::string_view sv = "Hello world"sv;
+
+		auto end_ptr = utki::end_pointer(sv);
+
+		// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic, "intentional")
+		tst::check_eq(end_ptr, sv.data() + sv.size(), SL);
+	});
+
+	suite.add("end_pointer__std_vector", []() {
+		std::vector<int> v(13);
+
+		tst::check(!v.empty(), SL);
+		tst::check_eq(v.size(), size_t(13), SL);
+
+		auto end_ptr = utki::end_pointer(v);
+
+		// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic, "intentional")
+		tst::check_eq(end_ptr, v.data() + v.size(), SL);
+	});
+
+	suite.add("end_pointer__utki_span", []() {
+		std::vector<int> vec(13);
+
+		auto s = utki::make_span(vec);
+
+		tst::check(!s.empty(), SL);
+		tst::check_eq(s.size(), size_t(13), SL);
+
+		auto end_ptr = utki::end_pointer(s);
+
+		// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic, "intentional")
+		tst::check_eq(end_ptr, s.data() + s.size(), SL);
+	});
+
 	suite.add("serialization_16_bit_little_endian", []() {
 		for (uint32_t i = 0; i <= uint16_t(-1); ++i) {
 			std::array<uint8_t, sizeof(uint16_t)> buf = {0};
@@ -20,7 +73,7 @@ const tst::set set("util", [](tst::suite& suite) {
 
 			tst::check_eq(buf[0], uint8_t(i & 0xff), SL);
 			tst::check_eq(buf[1], uint8_t((i >> 8) & 0xff), SL);
-			tst::check_eq(retp, &*utki::make_span(buf).end(), SL);
+			tst::check_eq(retp, utki::end_pointer(utki::make_span(buf)), SL);
 
 			uint16_t res = utki::deserialize16le(buf.data());
 			tst::check_eq(res, uint16_t(i), SL);
@@ -34,7 +87,7 @@ const tst::set set("util", [](tst::suite& suite) {
 
 			tst::check_eq(buf[0], uint8_t((i >> 8) & 0xff), SL);
 			tst::check_eq(buf[1], uint8_t(i & 0xff), SL);
-			tst::check_eq(retp, &*utki::make_span(buf).end(), SL);
+			tst::check_eq(retp, utki::end_pointer(utki::make_span(buf)), SL);
 
 			uint16_t res = utki::deserialize16be(buf.data());
 			tst::check_eq(res, uint16_t(i), SL);
@@ -93,7 +146,7 @@ const tst::set set("util", [](tst::suite& suite) {
 			std::array<uint8_t, 4> buf{};
 			auto ret = utki::serialize_float_le(p.first, buf.data());
 
-			tst::check(ret == &*buf.end(), SL);
+			tst::check(ret == utki::end_pointer(buf), SL);
 
 			// std::cout << "p.second = " << std::hex << unsigned(p.second[0]) << " " << unsigned(p.second[1]) << " "
 			// 		  << unsigned(p.second[2]) << " " << unsigned(p.second[3]) << std::endl

@@ -391,14 +391,13 @@ public:
 
 		number_type value = 0;
 
-		// NOLINTNEXTLINE(cppcoreguidelines-pro-type-member-init)
-		std::from_chars_result res;
+		std::from_chars_result res{};
 
 		if constexpr (std::is_floating_point_v<number_type>) {
 			// TODO: use std::from_chars() when float/double/long double versions of it are well supported by compilers
 			res = utki::from_chars(
 				this->view.data(), //
-				&*this->view.end(),
+				utki::end_pointer(this->view),
 				value
 			);
 		} else {
@@ -450,7 +449,7 @@ public:
 
 			res = std::from_chars(
 				this->view.data(), //
-				&*this->view.end(),
+				utki::end_pointer(this->view),
 				value,
 				base
 			);
@@ -556,13 +555,7 @@ std::string to_string(number_type value, integer_base conversion_base = integer_
 	constexpr size_t buf_size = 128;
 	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-member-init, cppcoreguidelines-pro-type-vararg)
 	std::array<char, buf_size> buf;
-	// under MSVC compiler the &*buf.end() is not a pointer to the past-the-end of the buffer,
-	// so we wrap the buffer to span and use the span's iterators
-	auto span = utki::make_span(buf);
-	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-vararg)
-	auto begin = span.begin();
-	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-vararg)
-	auto end = span.end();
+	auto begin = buf.begin();
 
 	if constexpr (std::is_unsigned_v<number_type>) {
 		switch (conversion_base) {
@@ -585,16 +578,24 @@ std::string to_string(number_type value, integer_base conversion_base = integer_
 		}
 	}
 
-	auto res = std::to_chars(&*begin, &*end, value, to_int(conversion_base));
+	auto res = std::to_chars(
+		&*begin, //
+		utki::end_pointer(buf),
+		value,
+		to_int(conversion_base)
+	);
 
 	if (res.ec != std::errc()) {
 		// std::to_chars() returned error
 		return {};
 	}
 
-	ASSERT(res.ptr <= &*end)
+	ASSERT(res.ptr <= utki::end_pointer(buf))
 
-	return std::string(buf.data(), res.ptr - buf.data());
+	return std::string(
+		buf.data(), //
+		res.ptr - buf.data()
+	);
 }
 
 /**

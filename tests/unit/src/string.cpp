@@ -718,7 +718,7 @@ const tst::set set("string", [](tst::suite& suite) {
 		auto r = utki::from_chars(
 			// NOLINTNEXTLINE(bugprone-suspicious-stringview-data-usage, "false positive")
 			str.data(), //
-			&*str.end(),
+			utki::end_pointer(str),
 			v
 		);
 
@@ -736,7 +736,7 @@ const tst::set set("string", [](tst::suite& suite) {
 		auto r = utki::from_chars(
 			// NOLINTNEXTLINE(bugprone-suspicious-stringview-data-usage, "false positive")
 			str.data(), //
-			&*str.end(),
+			utki::end_pointer(str),
 			v
 		);
 
@@ -946,12 +946,12 @@ const tst::set set("string", [](tst::suite& suite) {
 		auto res = utki::from_chars(
 			// NOLINTNEXTLINE(bugprone-suspicious-stringview-data-usage, "false positive")
 			str.data(), //
-			&*str.end(),
+			utki::end_pointer(str),
 			val,
 			utki::chars_format::general
 		);
 
-		tst::check(res.ptr == &*str.end(), SL);
+		tst::check(res.ptr == utki::end_pointer(str), SL);
 
 		tst::check_eq(val, 0.0f, SL);
 
@@ -975,6 +975,60 @@ const tst::set set("string", [](tst::suite& suite) {
 		// clang-format on
 		[](const auto& p) {
 			auto s = utki::to_string(p.first);
+
+			tst::check_eq(s, p.second, SL);
+		}
+	);
+
+	suite.add<std::pair<size_t, std::string>>(
+		"to_string__unsigned__hex",
+		// clang-format off
+		{
+			{ 0, "0x0"},
+			{ 1, "0x1"},
+			{ 13, "0xd"},
+
+			{std::numeric_limits<uint32_t>::max(), "0xffffffff"}
+		},
+		// clang-format on
+		[](const auto& p) {
+			auto s = utki::to_string(p.first, utki::integer_base::hex);
+
+			tst::check_eq(s, p.second, SL);
+		}
+	);
+
+	suite.add<std::pair<size_t, std::string>>(
+		"to_string__unsigned__oct",
+		// clang-format off
+		{
+			{ 0, "00"},
+			{ 1, "01"},
+			{ 13, "015"},
+
+			{std::numeric_limits<uint32_t>::max(), "037777777777"}
+		},
+		// clang-format on
+		[](const auto& p) {
+			auto s = utki::to_string(p.first, utki::integer_base::oct);
+
+			tst::check_eq(s, p.second, SL);
+		}
+	);
+
+	suite.add<std::pair<size_t, std::string>>(
+		"to_string__unsigned__bin",
+		// clang-format off
+		{
+			{ 0, "0b0"},
+			{ 1, "0b1"},
+			{ 13, "0b1101"},
+
+			{std::numeric_limits<uint32_t>::max(), "0b11111111111111111111111111111111"}
+		},
+		// clang-format on
+		[](const auto& p) {
+			auto s = utki::to_string(p.first, utki::integer_base::bin);
 
 			tst::check_eq(s, p.second, SL);
 		}

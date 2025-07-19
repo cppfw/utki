@@ -106,6 +106,18 @@ iterator_type prev(iterator_type iter, size_t n)
 }
 
 /**
+ * @brief Get pointer to the element past the contiguous sequence end.
+ */
+// TODO: for C++20 write concept constraints to only allow contiguous containers
+template <typename contiguous_type>
+// NOLINTNEXTLINE(cppcoreguidelines-missing-std-forward, "")
+decltype(std::declval<contiguous_type>().data()) end_pointer(contiguous_type&& contiguous_container)
+{
+	// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic)
+	return std::data(contiguous_container) + std::size(contiguous_container);
+}
+
+/**
  * @brief Offset std::index_sequence by constant value.
  * Adds constant value to each index of a given std::index_sequence type.
  * @tparam offset - index offset to add.
@@ -280,7 +292,7 @@ uint8_t* serialize_le(unsigned_type value, uint8_t* out_buf) noexcept
 		++index;
 	}
 
-	return &*span.end();
+	return utki::end_pointer(span);
 }
 
 /**
@@ -429,7 +441,7 @@ uint8_t* serialize_be(unsigned_type value, uint8_t* out_buf) noexcept
 		b = uint8_t((value >> num_bits_to_shift) & byte_mask);
 	}
 
-	return &*span.end();
+	return utki::end_pointer(span);
 }
 
 /**
