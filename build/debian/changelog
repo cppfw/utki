@@ -1,3 +1,9 @@
+libutki (1.1.280) unstable; urgency=medium
+
+  * add utki::end_pointer()
+
+ -- Ivan Gagis <igagis@gmail.com>  Sun, 20 Jul 2025 00:48:09 +0300
+
 libutki (1.1.279) unstable; urgency=medium
 
   * add shared_ref::operator weak_ptr()
