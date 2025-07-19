@@ -4,9 +4,14 @@
 
 #include <tst/check.hpp>
 #include <tst/set.hpp>
+#include <utki/config.hpp>
 #include <utki/string.hpp>
 #include <utki/type_traits.hpp>
 #include <utki/utility.hpp>
+
+#if CFG_CPP >= 20
+#	include <span>
+#endif
 
 using namespace std::string_literals;
 using namespace std::string_view_literals;
@@ -65,6 +70,24 @@ const tst::set set("util", [](tst::suite& suite) {
 		// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic, "intentional")
 		tst::check_eq(end_ptr, s.data() + s.size(), SL);
 	});
+
+#if CFG_CPP >= 20
+	suite.add("end_pointer__std_span", []() {
+		std::vector<int> vec(13);
+
+		auto s = std::span(vec);
+
+		tst::check(!s.empty(), SL);
+		tst::check_eq(s.size(), size_t(13), SL);
+
+		auto end_ptr = utki::end_pointer(s);
+
+		// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic, "intentional")
+		tst::check_eq(end_ptr, s.data() + s.size(), SL);
+		// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic, "intentional")
+		tst::check_eq(end_ptr, vec.data() + vec.size(), SL);
+	});
+#endif
 
 	suite.add("serialization_16_bit_little_endian", []() {
 		for (uint32_t i = 0; i <= uint16_t(-1); ++i) {
