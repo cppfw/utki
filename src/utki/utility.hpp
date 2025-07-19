@@ -110,6 +110,10 @@ iterator_type prev(iterator_type iter, size_t n)
  */
 // TODO: for C++20 write concept constraints to only allow contiguous containers
 template <typename contiguous_type>
+#if CFG_CPP >= 20
+// TODO: uncomment when utki::span::iterator satisfies the std::contiguous_iterator concept
+// requires std::contiguous_iterator<typename contiguous_type::iterator>
+#endif
 // NOLINTNEXTLINE(cppcoreguidelines-missing-std-forward, "")
 decltype(std::declval<contiguous_type>().data()) end_pointer(contiguous_type&& contiguous_container)
 {
