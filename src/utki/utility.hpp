@@ -106,16 +106,17 @@ iterator_type prev(iterator_type iter, size_t n)
 }
 
 /**
- * @brief Get pointer to the element past the contiguous sequence end.
+ * @brief Get pointer to the past-the-endelement of a contiguous sequence.
+ * @param contiguous_container - sequence to get end pointr for.
+ * @return pointer to the past-the-end element of the sequence.
  */
-// TODO: for C++20 write concept constraints to only allow contiguous containers
 template <typename contiguous_type>
 #if CFG_CPP >= 20
 // TODO: uncomment when utki::span::iterator satisfies the std::contiguous_iterator concept
 // requires std::contiguous_iterator<typename contiguous_type::iterator>
 #endif
-// NOLINTNEXTLINE(cppcoreguidelines-missing-std-forward, "")
-decltype(std::declval<contiguous_type>().data()) end_pointer(contiguous_type&& contiguous_container)
+// NOLINTNEXTLINE(cppcoreguidelines-missing-std-forward, "forwarding is not needed here")
+decltype(std::data(std::declval<contiguous_type>())) end_pointer(contiguous_type&& contiguous_container)
 {
 	// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic)
 	return std::data(contiguous_container) + std::size(contiguous_container);
