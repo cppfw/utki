@@ -46,6 +46,7 @@ const tst::set set("shared_ref", [](tst::suite& suite) {
 		" because shared_ptr can be nullptr, but shared_ref cannot"
 	);
 
+	static_assert(std::is_copy_constructible_v<utki::shared_ref<std::string>>, "shared_ref must be copy constructible");
 	static_assert(std::is_move_constructible_v<utki::shared_ref<std::string>>, "shared_ref must be move constructible");
 
 	suite.add("constructor__shared_ptr", []() {

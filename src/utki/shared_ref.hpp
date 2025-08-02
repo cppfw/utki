@@ -51,16 +51,13 @@ namespace utki {
  * This is considered okay. Because implicit moving occurs in temporary context where
  * it is not possible to dereference moved-from instance. In case of user explicitly using
  * std::move() it is possible to dereference moved-from instance, and for that it is
- * suggested to rely on lint tools (e.g. clang-tidy) to catch such misuses of shared_ref.
+ * suggested to rely on lint tools (e.g. clang-tidy) to catch such misuses of shared_ref (use after move).
  *
  * @tparam object_type - type pointed by the pointer.
  */
 template <class object_type>
 class shared_ref
 {
-	template <typename other_object_type, typename... arguments_type>
-	friend shared_ref<other_object_type> make_shared(arguments_type&&... args);
-
 	template <typename dst_type, typename src_type>
 	friend shared_ref<dst_type> dynamic_reference_cast(const shared_ref<src_type>& r);
 
