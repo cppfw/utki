@@ -31,6 +31,8 @@ SOFTWARE.
 #include <functional>
 #include <list>
 
+#include "debug.hpp"
+
 namespace utki {
 
 /**
@@ -51,6 +53,11 @@ private:
 	std::list<callback_type> callbacks;
 
 public:
+	~signal()
+	{
+		ASSERT(this->empty())
+	}
+
 	/**
 	 * @brief Connection ID.
 	 * The type name of the ID identifying the connection of a callback to the signal.

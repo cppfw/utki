@@ -1,3 +1,5 @@
+#include <algorithm>
+
 #include <tst/check.hpp>
 #include <tst/set.hpp>
 #include <utki/unique_ref.hpp>

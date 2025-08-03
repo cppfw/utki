@@ -52,6 +52,10 @@ const tst::set set("signal", [](tst::suite& suite) {
 		tst::check(!sig.empty(), SL);
 		tst::check_eq(sig.size(), size_t(1), SL);
 		tst::check_eq(num, unsigned(5), SL);
+
+		sig.disconnect(id2);
+		tst::check(sig.empty(), SL);
+		tst::check_eq(sig.size(), size_t(0), SL);
 	});
 });
 } // namespace
