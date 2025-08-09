@@ -99,22 +99,6 @@ void utki::assert(
 	abort();
 }
 
-void utki::log(const std::function<void(std::ostream&)>& print)
-{
-	if (!print) {
-		return;
-	}
-
-#if CFG_OS_NAME == CFG_OS_NAME_ANDROID
-	std::stringstream ss;
-	print(ss);
-	__android_log_write(ANDROID_LOG_INFO, "utki", ss.str().c_str());
-#else
-	print(std::cout);
-	std::cout.flush();
-#endif
-}
-
 std::string utki::demangle(const std::type_info& type_info)
 {
 #if CFG_COMPILER == CFG_COMPILER_GCC || CFG_COMPILER == CFG_COMPILER_CLANG

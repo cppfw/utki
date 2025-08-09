@@ -34,6 +34,7 @@ SOFTWARE.
 #include <sstream>
 
 #include "config.hpp"
+#include "log.hpp"
 #include "macros.hpp"
 
 #if CFG_CPP >= 20
@@ -52,14 +53,6 @@ using std_source_location = std::experimental::source_location;
 #	endif
 #endif
 
-#if CFG_OS_NAME == CFG_OS_NAME_ANDROID
-#	include <android/log.h>
-
-#else
-#	include <iostream>
-
-#endif
-
 #if defined(_DEBUG) && !defined(DEBUG)
 #	define DEBUG
 #endif
@@ -67,12 +60,6 @@ using std_source_location = std::experimental::source_location;
 #ifdef assert
 #	undef assert
 #endif
-
-namespace utki {
-
-void log(const std::function<void(std::ostream&)>& print);
-
-} // namespace utki
 
 #ifdef DEBUG
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
