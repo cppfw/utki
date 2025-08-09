@@ -61,16 +61,16 @@ public:
 	auto zip_with_enum()
 	{
 		return utki::views::zip(
-			*this, //
-			utki::enum_iterable_v<enum_type>
+			*this,
+			utki::enum_iterable_v<enum_type> //
 		);
 	}
 
 	auto zip_with_enum() const
 	{
 		return utki::views::zip(
-			*this, //
-			utki::enum_iterable_v<enum_type>
+			*this,
+			utki::enum_iterable_v<enum_type> //
 		);
 	}
 

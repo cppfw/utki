@@ -261,10 +261,9 @@ const tst::set set("tree", [](tst::suite& suite) {
 
 	suite.add("constructor_from_container_lvalue_lvalue", []() {
 		using tree_str = utki::tree<std::string>;
-		tree_str::container_type children =
-			{ //
-				tree_str("hello"),
-				tree_str("world")
+		tree_str::container_type children = { //
+			tree_str("hello"),
+			tree_str("world")
 		};
 
 		tst::check_eq(children.size(), size_t(2), SL);
@@ -305,10 +304,9 @@ const tst::set set("tree", [](tst::suite& suite) {
 
 	suite.add("constructor_from_container_lvalue_rvalue", []() {
 		using tree_str = utki::tree<std::string>;
-		tree_str::container_type children =
-			{ //
-				tree_str("hello"),
-				tree_str("world")
+		tree_str::container_type children = { //
+			tree_str("hello"),
+			tree_str("world")
 		};
 
 		tst::check_eq(children.size(), size_t(2), SL);
@@ -355,10 +353,9 @@ const tst::set set("tree", [](tst::suite& suite) {
 
 	suite.add("constructor_from_container_rvalue_rvalue", []() {
 		using tree_str = utki::tree<std::string>;
-		tree_str::container_type children =
-			{ //
-				tree_str("10"),
-				tree_str("20")
+		tree_str::container_type children = { //
+			tree_str("10"),
+			tree_str("20")
 		};
 
 		tst::check_eq(children.size(), size_t(2), SL);

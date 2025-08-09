@@ -272,7 +272,8 @@ public:
 	}
 
 	[[deprecated("use scope_exit::release()")]] //
-	decltype(f) reset() noexcept
+	decltype(f)
+	reset() noexcept
 	{
 		return this->release();
 	}
@@ -583,7 +584,8 @@ bool is_terminal_cerr();
 
 // TODO: remove deprecated stuff
 [[deprecated("use is_terminal_cerr()")]] //
-inline bool is_cerr_terminal()
+inline bool
+is_cerr_terminal()
 {
 	return is_terminal_cerr();
 }
@@ -597,7 +599,8 @@ bool is_terminal_cout();
 
 // TODO: remove deprecated stuff
 [[deprecated("use is_terminal_cout()")]] //
-inline bool is_cout_terminal()
+inline bool
+is_cout_terminal()
 {
 	return is_terminal_cout();
 }
@@ -611,7 +614,8 @@ bool is_terminal_cin();
 
 // TODO: remove deprecated stuff
 [[deprecated("use is_terminal_cin()")]] //
-inline bool is_cin_terminal()
+inline bool
+is_cin_terminal()
 {
 	return is_terminal_cin();
 }

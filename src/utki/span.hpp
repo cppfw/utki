@@ -120,24 +120,24 @@ public:
 		,
 		typename std::enable_if_t< //
 			std::is_convertible_v< // note pointers to array, this is because span points to an array of objects
-								   // NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
+				// NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
 				other_element_type (*)[], // NOLINT(modernize-avoid-c-arrays)
 				// NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
 				element_type (*)[]>, // NOLINT(modernize-avoid-c-arrays)
 			bool> = true
 #	endif
-			>
+		>
 #	if CFG_CPP >= 20
 	requires
-	// note pointers to array, this is because span points to an array of objects
-	std::convertible_to<
-		// NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
-		other_element_type (*)[], // NOLINT(modernize-avoid-c-arrays)
-		// NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
-		element_type (*)[] // NOLINT(modernize-avoid-c-arrays)
-	>
+		// note pointers to array, this is because span points to an array of objects
+		std::convertible_to<
+			// NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
+			other_element_type (*)[], // NOLINT(modernize-avoid-c-arrays)
+			// NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
+			element_type (*)[] // NOLINT(modernize-avoid-c-arrays)
+			>
 #	endif
-	constexpr span(const span<other_element_type>& sp) noexcept :
+		constexpr span(const span<other_element_type>& sp) noexcept :
 		buf(sp.data()),
 		buf_size(sp.size())
 	{}
@@ -171,24 +171,24 @@ public:
 		,
 		typename std::enable_if_t< //
 			std::is_convertible_v< //
-								   // NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
+				// NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
 				const other_element_type (*)[], // NOLINT(modernize-avoid-c-arrays)
 				// NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
 				element_type (*)[]>, // NOLINT(modernize-avoid-c-arrays)
 			bool> = true
 #	endif
-	>
+		>
 #	if CFG_CPP >= 20
 	requires
-	// note pointers to array, this is because span points to an array of objects
-	std::convertible_to<
-		// NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
-		const other_element_type (*)[], // NOLINT(modernize-avoid-c-arrays)
-		// NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
-		element_type (*)[] // NOLINT(modernize-avoid-c-arrays)
-	>
+		// note pointers to array, this is because span points to an array of objects
+		std::convertible_to<
+			// NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
+			const other_element_type (*)[], // NOLINT(modernize-avoid-c-arrays)
+			// NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
+			element_type (*)[] // NOLINT(modernize-avoid-c-arrays)
+			>
 #	endif
-	span(const std::vector<other_element_type>& v) :
+		span(const std::vector<other_element_type>& v) :
 		span(v.data(), v.size())
 	{}
 
@@ -204,13 +204,12 @@ public:
 				std::is_same_v<other_element_type, char32_t>,
 			bool> = true
 #	endif
-	>
+		>
 #	if CFG_CPP >= 20
-	requires
-	std::same_as<other_element_type, char> || //
-	std::same_as<other_element_type, wchar_t> || //
-	std::same_as<other_element_type, char16_t> || //
-	std::same_as<other_element_type, char32_t>
+	requires std::same_as<other_element_type, char> || //
+		std::same_as<other_element_type, wchar_t> || //
+		std::same_as<other_element_type, char16_t> || //
+		std::same_as<other_element_type, char32_t>
 #	endif
 	span(std::basic_string<other_element_type>& v) :
 		span(v.data(), v.size())
@@ -222,24 +221,24 @@ public:
 		,
 		typename std::enable_if_t< //
 			std::is_convertible_v< //
-								   // NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
+				// NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
 				const other_element_type (*)[], // NOLINT(modernize-avoid-c-arrays)
 				// NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
 				element_type (*)[]>, // NOLINT(modernize-avoid-c-arrays)
 			bool> = true
 #	endif
-	>
+		>
 #	if CFG_CPP >= 20
 	requires
-	// note pointers to array, this is because span points to an array of objects
-	std::convertible_to<
-		// NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
-		const other_element_type (*)[], // NOLINT(modernize-avoid-c-arrays)
-		// NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
-		element_type (*)[] // NOLINT(modernize-avoid-c-arrays)
-	>
+		// note pointers to array, this is because span points to an array of objects
+		std::convertible_to<
+			// NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
+			const other_element_type (*)[], // NOLINT(modernize-avoid-c-arrays)
+			// NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
+			element_type (*)[] // NOLINT(modernize-avoid-c-arrays)
+			>
 #	endif
-	span(const std::basic_string<other_element_type>& v) :
+		span(const std::basic_string<other_element_type>& v) :
 		span(v.data(), v.size())
 	{}
 
@@ -249,24 +248,24 @@ public:
 		,
 		typename std::enable_if_t< //
 			std::is_convertible_v< //
-								   // NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
+				// NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
 				const other_element_type (*)[], // NOLINT(modernize-avoid-c-arrays)
 				// NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
 				element_type (*)[]>, // NOLINT(modernize-avoid-c-arrays)
 			bool> = true
 #	endif
-	>
+		>
 #	if CFG_CPP >= 20
 	requires
-	// note pointers to array, this is because span points to an array of objects
-	std::convertible_to<
-		// NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
-		const other_element_type (*)[], // NOLINT(modernize-avoid-c-arrays)
-		// NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
-		element_type (*)[] // NOLINT(modernize-avoid-c-arrays)
-	>
+		// note pointers to array, this is because span points to an array of objects
+		std::convertible_to<
+			// NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
+			const other_element_type (*)[], // NOLINT(modernize-avoid-c-arrays)
+			// NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
+			element_type (*)[] // NOLINT(modernize-avoid-c-arrays)
+			>
 #	endif
-	span(std::basic_string_view<other_element_type> v) :
+		span(std::basic_string_view<other_element_type> v) :
 		span(v.data(), v.size())
 	{}
 
@@ -276,24 +275,24 @@ public:
 		,
 		typename std::enable_if_t< //
 			std::is_convertible_v< //
-								   // NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
+				// NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
 				other_element_type (*)[], // NOLINT(modernize-avoid-c-arrays)
 				// NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
 				const char (*)[]>, // NOLINT(modernize-avoid-c-arrays)
 			bool> = true
 #	endif
-	>
+		>
 #	if CFG_CPP >= 20
 	requires
-	// note pointers to array, this is because span points to an array of objects
-	std::convertible_to<
-		// NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
-		other_element_type (*)[], // NOLINT(modernize-avoid-c-arrays)
-		// NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
-		const char (*)[] // NOLINT(modernize-avoid-c-arrays)
-	>
+		// note pointers to array, this is because span points to an array of objects
+		std::convertible_to<
+			// NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
+			other_element_type (*)[], // NOLINT(modernize-avoid-c-arrays)
+			// NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays)
+			const char (*)[] // NOLINT(modernize-avoid-c-arrays)
+			>
 #	endif
-	span(other_element_type* v) :
+		span(other_element_type* v) :
 		span(v, strlen(v))
 	{}
 

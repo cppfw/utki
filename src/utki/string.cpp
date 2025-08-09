@@ -170,8 +170,7 @@ std::vector<std::string> utki::word_wrap(std::string_view str, unsigned width)
 	unsigned word_ended = false; // indicates that at least one word in the current line has ended
 	for (auto i = str.begin(); i != str.end(); i = std::next(i)) {
 		ASSERT(std::distance(line_begin, i) >= 0)
-		if (
-			*i != '\n' &&
+		if (*i != '\n' &&
 #if CFG_CPP >= 20
 			std::cmp_equal(std::distance(line_begin, i), width)
 #else

@@ -173,32 +173,28 @@ struct zip_view {
 
 	auto begin()
 	{
-		return iterator(
-			std::apply(
-				[](auto&... c) {
-					return std::make_tuple([&]() {
-						if constexpr (std::is_const_v<std::remove_reference_t<decltype(c)>>) {
-							return c.cbegin();
-						} else {
-							return c.begin();
-						}
-					}()...);
-				},
-				this->collection
-			)
-		);
+		return iterator(std::apply(
+			[](auto&... c) {
+				return std::make_tuple([&]() {
+					if constexpr (std::is_const_v<std::remove_reference_t<decltype(c)>>) {
+						return c.cbegin();
+					} else {
+						return c.begin();
+					}
+				}()...);
+			},
+			this->collection
+		));
 	}
 
 	auto end()
 	{
-		return iterator(
-			std::apply(
-				[this](auto&... c) {
-					return std::make_tuple(utki::next(c.begin(), this->min_size)...);
-				},
-				this->collection
-			)
-		);
+		return iterator(std::apply(
+			[this](auto&... c) {
+				return std::make_tuple(utki::next(c.begin(), this->min_size)...);
+			},
+			this->collection
+		));
 	}
 };
 
