@@ -9,6 +9,20 @@
 			"group": "build"
 		},
 		{
+			"label": "check-format",
+			"type": "shell",
+			"command": "make check-format",
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "lint",
+			"type": "shell",
+			"command": "make config=lint && make config=lint test",
+			"problemMatcher": [],
+			"group": "build",
+		},
+		{
 			"label": "test_",
 			"type": "shell",
 			"command": "make test",

@@ -75,6 +75,7 @@ void log(const std::function<void(std::ostream&)>& print);
 } // namespace utki
 
 #ifdef DEBUG
+// NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
 #	define LOG(print) utki::log(print);
 #else
 #	define LOG(x)
@@ -283,7 +284,9 @@ void assert(
 
 #ifdef DEBUG
 
+// NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
 #	define ASSERT1(condition) utki::assert(condition, SL);
+// NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
 #	define ASSERT2(condition, print) utki::assert(condition, print, SL);
 
 #else // no DEBUG macro defined
