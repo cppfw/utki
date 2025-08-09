@@ -28,6 +28,8 @@ SOFTWARE.
 
 #include "log.hpp"
 
+#include <sstream>
+
 #include "config.hpp"
 
 #if CFG_OS_NAME == CFG_OS_NAME_ANDROID
