@@ -105,6 +105,10 @@ inline void log_debug(const std::function<void(std::ostream&)>& print) {}
 #ifdef DEBUG
 inline void run_debug(const std::function<void()>& proc)
 {
+	if (!proc) {
+		return;
+	}
+
 	proc();
 }
 
