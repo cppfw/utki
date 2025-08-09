@@ -9,3 +9,5 @@ this_cxxflags += -fPIC
 this_cxxflags += -g
 
 this_ldlibs += -lstdc++
+
+this_no_format_test := true

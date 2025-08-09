@@ -129,6 +129,32 @@ jobs:
         run: make config=asan
       - name: test
         run: make config=asan test
+##### lint #####
+  lint:
+    runs-on: ubuntu-latest
+    container: debian:trixie
+    name: lint
+    env:
+      linux_distro: debian
+      linux_release: trixie
+    steps:
+      - name: add cppfw deb repo
+        uses: myci-actions/add-deb-repo@main
+        with:
+          repo: deb https://gagis.hopto.org/repo/cppfw/${{ env.linux_distro }} ${{ env.linux_release }} main
+          repo-name: cppfw
+          keys-asc: https://gagis.hopto.org/repo/cppfw/pubkey.gpg
+          install: myci locales git devscripts equivs
+      - name: git clone
+        uses: myci-actions/checkout@main
+      - name: prepare debian package
+        run: myci-deb-prepare.sh
+      - name: install deps
+        run: myci-deb-install-build-deps.sh
+      - name: build
+        run: make config=lint
+      - name: test
+        run: make config=lint test
 ##### cpp20 #####
   cpp20:
     strategy:
