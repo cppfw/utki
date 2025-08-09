@@ -94,7 +94,6 @@ inline void log_debug(const std::function<void(std::ostream&)>& print)
 inline void log_debug(const std::function<void(std::ostream&)>& print) {}
 
 #endif
-} // namespace utki
 
 /**
  * @brief Run procedure in debug build.
@@ -116,6 +115,7 @@ inline void run_debug(const std::function<void()>& proc)
 inline void run_debug(const std::function<void()>& proc) {}
 
 #endif
+} // namespace utki
 
 //
 //
