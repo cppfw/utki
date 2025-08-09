@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include <tst/check.hpp>
 #include <tst/set.hpp>
 #include <utki/debug.hpp>

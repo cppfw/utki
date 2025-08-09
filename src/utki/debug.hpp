@@ -61,16 +61,44 @@ using std_source_location = std::experimental::source_location;
 #	undef assert
 #endif
 
+//
+//
+// Logging
+//
+//
+
 #ifdef DEBUG
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
 #	define LOG(print) utki::log(print);
+
 #else
 #	define LOG(x)
+
 #endif
+
+namespace utki {
+
+/**
+ * @brief Log only in debug build.
+ * In debug build, logs a string provided by the passed in function.
+ * Does nothing on release build.
+ * @param print - function which will be invoked to construct the log string.
+ */
+#ifdef DEBUG
+inline void log_debug(const std::function<void(std::ostream&)>& print)
+{
+	utki::log(print);
+}
+
+#else
+inline constexpr void log_debug(const std::function<void(std::ostream&)>& print) {}
+
+#endif
+} // namespace utki
 
 //
 //
-//  Assertion definitions
+//  Assertions
 //
 //
 
