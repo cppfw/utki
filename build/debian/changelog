@@ -1,3 +1,9 @@
+libutki (1.1.281) unstable; urgency=medium
+
+  * add log_debug(), run_debug(), assert_always()
+
+ -- Ivan Gagis <igagis@gmail.com>  Sat, 09 Aug 2025 23:02:39 +0300
+
 libutki (1.1.280) unstable; urgency=medium
 
   * add utki::end_pointer()
