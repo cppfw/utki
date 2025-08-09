@@ -80,8 +80,8 @@ namespace utki {
 
 /**
  * @brief Log only in debug build.
- * In debug build, logs a string provided by the passed in function.
- * Does nothing on release build.
+ * In debug build, logs a string.
+ * Does nothing on non-debug build.
  * @param print - function which will be invoked to construct the log string.
  */
 #ifdef DEBUG
@@ -91,10 +91,27 @@ inline void log_debug(const std::function<void(std::ostream&)>& print)
 }
 
 #else
-inline constexpr void log_debug(const std::function<void(std::ostream&)>& print) {}
+inline void log_debug(const std::function<void(std::ostream&)>& print) {}
 
 #endif
 } // namespace utki
+
+/**
+ * @brief Run procedure in debug build.
+ * In debug build invokes the passed in function.
+ * In non-debug build does nothing.
+ * @param proc - procedure to invoke in debug build.
+ */
+#ifdef DEBUG
+inline void run_debug(const std::function<void()>& proc)
+{
+	proc();
+}
+
+#else
+inline void run_debug(const std::function<void()>& proc) {}
+
+#endif
 
 //
 //
