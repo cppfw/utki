@@ -166,7 +166,16 @@ private:
 
 namespace utki {
 
-void assert(
+/**
+ * @brief Assert that condion is true.
+ * If the condition is true, then nothing happens.
+ * If the condition is false, it will print the assertion failure message along with the information string
+ * provided by the passed in function and then abort the program.
+ * @param condition - condition to check for being true.
+ * @param print - fucntion providing information string to print in case the assertion fails.
+ * @param source_location - location of the assert() invocation in the source code.
+ */
+void assert_always(
 	bool condition,
 	const std::function<void(std::ostream&)>& print,
 	const utki::source_location& source_location
@@ -175,6 +184,49 @@ void assert(
 #endif
 );
 
+/**
+ * @brief Assert that condion is true.
+ * In debug build this function invokes assert_always().
+ * In non-debug build this fuction does nothing.
+ * @param condition - condition to check for being true.
+ * @param print - fucntion providing information string to print in case the assertion fails.
+ * @param source_location - location of the assert() invocation in the source code.
+ */
+#ifdef DEBUG
+inline void assert(
+	bool condition,
+	const std::function<void(std::ostream&)>& print,
+	const utki::source_location& source_location
+#	if CFG_CPP >= 20
+	= std_source_location::current()
+#	endif
+)
+{
+	assert_always(
+		condition, //
+		print,
+		source_location
+	);
+}
+#else
+inline void assert(
+	bool condition,
+	const std::function<void(std::ostream&)>& print,
+	const utki::source_location& source_location
+#	if CFG_CPP >= 20
+	= std_source_location::current()
+#	endif
+)
+{}
+#endif
+
+/**
+ * @brief Assert that condion is true.
+ * In debug build this function invokes assert_always().
+ * In non-debug build this fuction does nothing.
+ * @param condition - condition to check for being true.
+ * @param source_location - location of the assert() invocation in the source code.
+ */
 inline void assert(
 	bool condition,
 	const utki::source_location& source_location
@@ -183,7 +235,11 @@ inline void assert(
 #endif
 )
 {
-	utki::assert(condition, nullptr, source_location);
+	utki::assert(
+		condition, //
+		nullptr,
+		source_location
+	);
 }
 
 // MSVC compiler gives warning about implicit conversion of pointer to bool,
@@ -199,7 +255,11 @@ void assert(
 #endif
 )
 {
-	assert(p != nullptr, print, source_location);
+	assert(
+		p != nullptr, //
+		print,
+		source_location
+	);
 }
 
 template <class object_type>
@@ -211,7 +271,11 @@ void assert(
 #endif
 )
 {
-	assert(p != nullptr, nullptr, source_location);
+	assert(
+		p != nullptr, //
+		nullptr,
+		source_location
+	);
 }
 
 // smart pointers do not have implicit conversion to bool, so we need to define
@@ -227,7 +291,11 @@ void assert(
 #endif
 )
 {
-	assert(p != nullptr, print, source_location);
+	assert(
+		p != nullptr, //
+		print,
+		source_location
+	);
 }
 
 template <class object_type>
@@ -239,7 +307,11 @@ void assert(
 #endif
 )
 {
-	assert(p != nullptr, nullptr, source_location);
+	assert(
+		p != nullptr, //
+		nullptr,
+		source_location
+	);
 }
 
 template <class object_type>
@@ -252,7 +324,11 @@ void assert(
 #endif
 )
 {
-	assert(p != nullptr, print, source_location);
+	assert(
+		p != nullptr, //
+		print,
+		source_location
+	);
 }
 
 template <class object_type>
@@ -264,7 +340,11 @@ void assert(
 #endif
 )
 {
-	assert(p != nullptr, nullptr, source_location);
+	assert(
+		p != nullptr, //
+		nullptr,
+		source_location
+	);
 }
 
 // std::function does not have implicit conversion to bool, so we need to define
@@ -280,7 +360,11 @@ void assert(
 #endif
 )
 {
-	assert(p != nullptr, print, source_location);
+	assert(
+		p != nullptr, //
+		print,
+		source_location
+	);
 }
 
 template <class func_type>
@@ -292,7 +376,11 @@ void assert(
 #endif
 )
 {
-	assert(p != nullptr, nullptr, source_location);
+	assert(
+		p != nullptr, //
+		nullptr,
+		source_location
+	);
 }
 
 } // namespace utki

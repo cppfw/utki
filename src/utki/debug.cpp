@@ -54,7 +54,7 @@ const std::string_view colored_error_string = "\033[1;31merror\033[0m";
 const std::string_view uncolored_error_string = "error";
 } // namespace
 
-void utki::assert(
+void utki::assert_always(
 	bool condition,
 	const std::function<void(std::ostream&)>& print,
 	const utki::source_location& source_location
