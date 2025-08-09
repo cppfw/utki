@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include <utki/string.hpp>
 
 int main() {
