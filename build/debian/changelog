@@ -1,3 +1,9 @@
+libutki (1.1.283) unstable; urgency=medium
+
+  * add assert_always() without print
+
+ -- Ivan Gagis <igagis@gmail.com>  Sun, 10 Aug 2025 23:29:12 +0300
+
 libutki (1.1.282) unstable; urgency=medium
 
   * fix namespace
