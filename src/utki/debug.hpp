@@ -193,7 +193,7 @@ namespace utki {
  * If the condition is false, it will print the assertion failure message along with the information string
  * provided by the passed in function and then abort the program.
  * @param condition - condition to check for being true.
- * @param print - fucntion providing information string to print in case the assertion fails.
+ * @param print - function providing information string to print in case the assertion fails.
  * @param source_location - location of the assert() invocation in the source code.
  */
 void assert_always(
@@ -207,10 +207,33 @@ void assert_always(
 
 /**
  * @brief Assert that condion is true.
+ * If the condition is true, then nothing happens.
+ * If the condition is false, it will print the assertion failure message along with the information string
+ * provided by the passed in function and then abort the program.
+ * @param condition - condition to check for being true.
+ * @param source_location - location of the assert() invocation in the source code.
+ */
+inline void assert_always(
+	bool condition,
+	const utki::source_location& source_location
+#if CFG_CPP >= 20
+	= std_source_location::current()
+#endif
+)
+{
+	assert_always(
+		condition, //
+		nullptr,
+		source_location
+	);
+}
+
+/**
+ * @brief Assert that condion is true.
  * In debug build this function invokes assert_always().
  * In non-debug build this fuction does nothing.
  * @param condition - condition to check for being true.
- * @param print - fucntion providing information string to print in case the assertion fails.
+ * @param print - function providing information string to print in case the assertion fails.
  * @param source_location - location of the assert() invocation in the source code.
  */
 #ifdef DEBUG
