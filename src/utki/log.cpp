@@ -54,6 +54,8 @@ void utki::log(const std::function<void(std::ostream&)>& print)
 	__android_log_write(ANDROID_LOG_INFO, "utki", ss.str().c_str());
 #else
 	print(std::cout);
-	std::cout.flush(); // TODO: no flush by default?
+
+	// flush for consistency with other platforms where flush happens implicitly
+	std::cout.flush();
 #endif
 }

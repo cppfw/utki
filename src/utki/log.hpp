@@ -35,6 +35,7 @@ namespace utki {
 
 /**
  * @brief Print string to standard output.
+ * After printing performs flush of the standard output.
  * @param print - function which is called with a standard output stream parameter to output the string to the stream.
  */
 void log(const std::function<void(std::ostream&)>& print);
