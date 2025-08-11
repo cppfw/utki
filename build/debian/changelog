@@ -1,3 +1,9 @@
+libutki (1.1.284) unstable; urgency=medium
+
+  * add logcat()
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 11 Aug 2025 23:19:11 +0300
+
 libutki (1.1.283) unstable; urgency=medium
 
   * add assert_always() without print
