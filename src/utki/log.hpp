@@ -33,6 +33,25 @@ SOFTWARE.
 
 namespace utki {
 
+/**
+ * @brief Print string to standard output.
+ * @param print - function which is called with a standard output stream parameter to output the string to the stream.
+ */
 void log(const std::function<void(std::ostream&)>& print);
+
+/**
+ * @brief Concatenate and print.
+ * Concatenates all it's arguments and then prints to standard output.
+ * Then performs flush on the standard output.
+ * @param s - parameters pack to concatenate and print to standard output.
+ */
+template <typename... streamable_type>
+void logcat(const streamable_type&... s)
+{
+	log([&](std::ostream& o) {
+		(o << ... << s);
+		o.flush();
+	});
+}
 
 } // namespace utki

@@ -66,13 +66,19 @@ const tst::set set("flags", [](tst::suite& suite) {
 		tst::check(!fs.get(test_enum::eighth), SL);
 		tst::check(fs.get(test_enum::second), SL);
 
-		LOG([&](auto& o) {
-			o << "enum_size = " << size_t(test_enum::enum_size) << " sizeof(fs) = " << sizeof(fs) << std::endl;
-		})
+		utki::logcat_debug(
+			"enum_size = ", //
+			size_t(test_enum::enum_size),
+			" sizeof(fs) = ",
+			sizeof(fs),
+			'\n'
+		);
 
-		LOG([&](auto& o) {
-			o << "fs = " << fs << std::endl;
-		})
+		utki::logcat_debug(
+			"fs = ", //
+			fs,
+			'\n'
+		);
 
 		{
 			utki::flags<test_enum> fs;

@@ -271,13 +271,11 @@ const tst::set set("linq", [](tst::suite& suite) {
 			{14, "asdh"}
 		};
 
-#	ifdef DEBUG
-		for (auto& e : out) {
-			LOG([&](auto& o) { //
+		utki::log_debug([&](auto& o) { //
+			for (auto& e : out) {
 				o << "e = " << e.first << " " << e.second << std::endl;
-			})
-		}
-#	endif
+			}
+		});
 
 		tst::check(out == expected, SL);
 
@@ -314,13 +312,11 @@ const tst::set set("linq", [](tst::suite& suite) {
 			{14, "asdh"}
 		};
 
-#	ifdef DEBUG
-		for (auto& e : out) {
-			LOG([&](auto& o) { //
+		utki::log_debug([&](auto& o) { //
+			for (auto& e : out) {
 				o << "e = " << e.first << " " << e.second << std::endl;
-			})
-		}
-#	endif
+			}
+		});
 
 		tst::check(out == expected, SL);
 		tst::check(!in.empty(), SL);
@@ -355,13 +351,11 @@ const tst::set set("linq", [](tst::suite& suite) {
 			{14, "asdh"}
 		};
 
-#	ifdef DEBUG
-		for (auto& e : out) {
-			LOG([&](auto& o) { //
+		utki::log_debug([&](auto& o) { //
+			for (auto& e : out) {
 				o << "e = " << e.first << " " << e.second << std::endl;
-			})
-		}
-#	endif
+			}
+		});
 
 		tst::check(out == expected, SL);
 		tst::check(!in.empty(), SL);

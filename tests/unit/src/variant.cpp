@@ -37,13 +37,11 @@ const tst::set set("variant", [](tst::suite& suite) {
 			}
 		}
 
-#	ifdef DEBUG
-		for (auto& r : res) {
-			utki::log([&](auto& o) {
+		utki::log_debug([&](auto& o) {
+			for (auto& r : res) {
 				o << "r = " << r << std::endl;
-			});
-		}
-#	endif
+			}
+		});
 
 		std::vector<std::string> expected = {
 			{"string", "int", "const char*", "pair"}
@@ -81,13 +79,11 @@ const tst::set set("variant", [](tst::suite& suite) {
 			);
 		}
 
-#ifdef DEBUG
-		for (auto& r : res) {
-			utki::log([&](auto& o) {
+		utki::log_debug([&](auto& o) {
+			for (auto& r : res) {
 				o << "r = " << r << std::endl;
-			});
-		}
-#endif
+			}
+		});
 
 		std::vector<std::string> expected = {
 			{"std::string(): hello world!", "int = 123", "auto", "auto", "auto"}

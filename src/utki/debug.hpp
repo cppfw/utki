@@ -81,7 +81,7 @@ namespace utki {
 /**
  * @brief Log only in debug build.
  * In debug build, logs a string.
- * Does nothing on non-debug build.
+ * Does nothing in non-debug build.
  * @param print - function which will be invoked to construct the log string.
  */
 #ifdef DEBUG
@@ -92,6 +92,26 @@ inline void log_debug(const std::function<void(std::ostream&)>& print)
 
 #else
 inline void log_debug(const std::function<void(std::ostream&)>& print) {}
+
+#endif
+
+/**
+ * @brief Concatenate and print.
+ * In debug build ceffectively calls utki::logcat().
+ * Does nothing in non-debug build.
+ * @param s - parameters pack to concatenate and print to standard output.
+ */
+#ifdef DEBUG
+template <typename... streamable_type>
+void logcat_debug(const streamable_type&... s)
+{
+	utki::logcat(s...);
+}
+
+#else
+template <typename... streamable_type>
+void logcat_debug(const streamable_type&... s)
+{}
 
 #endif
 
