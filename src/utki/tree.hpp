@@ -619,7 +619,7 @@ public:
 	 * tree hierarchy, i.e. the index does not point out of the tree bounds.
 	 * @param index - index to check for validity.
 	 * @return true in case the given index is valid.
-	 * @return fals in case the given index is invalid.
+	 * @return false in case the given index is invalid.
 	 */
 	bool is_valid(utki::span<const size_type> index) const
 	{
@@ -643,8 +643,9 @@ public:
 	 * tree hierarchy, i.e. the index does not point out of the tree bounds.
 	 * @param index - index to check for validity.
 	 * @return true in case the given index is valid.
-	 * @return fals in case the given index is invalid.
+	 * @return false in case the given index is invalid.
 	 */
+	// TODO: is needed? span overload seems enough
 	bool is_valid(const std::vector<size_type>& index) const
 	{
 		return this->is_valid(utki::make_span(index));
@@ -656,8 +657,9 @@ public:
 	 * tree hierarchy, i.e. the index does not point out of the tree bounds.
 	 * @param index - index to check for validity.
 	 * @return true in case the given index is valid.
-	 * @return fals in case the given index is invalid.
+	 * @return false in case the given index is invalid.
 	 */
+	// TODO: is needed? span overload seems enough, std::span in C++26 should support initializer lists
 	bool is_valid(std::initializer_list<size_t> index) const
 	{
 		return this->is_valid(std::vector<size_t>(index));
