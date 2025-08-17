@@ -42,19 +42,60 @@ const tst::set set("debug", [](tst::suite& suite) {
 #endif
 	});
 
+	suite.add("assert_with_checker", []() {
+		int b = 13;
+		utki::assert(
+			[&]() {
+				return b == 13;
+			},
+			SL
+		);
+#if CFG_CPP >= 20
+		utki::assert([&]() {
+			return b == 13;
+		});
+#endif
+	});
+
 	suite.add("assert_with_message", []() {
 		int b = 13;
 		utki::assert(
-			b == 13,
+			b == 13, //
 			[&](auto& o) {
 				o << "b = " << b;
 			},
 			SL
 		);
 #if CFG_CPP >= 20
-		utki::assert(b == 13, [&](auto& o) {
-			o << "b = " << b;
-		});
+		utki::assert(
+			b == 13, //
+			[&](auto& o) {
+				o << "b = " << b;
+			}
+		);
+#endif
+	});
+
+	suite.add("assert_with_message_and_checker", []() {
+		int b = 13;
+		utki::assert(
+			[&]() {
+				return b == 13;
+			},
+			[&](auto& o) {
+				o << "b = " << b;
+			},
+			SL
+		);
+#if CFG_CPP >= 20
+		utki::assert(
+			[&]() {
+				return b == 13;
+			}, //
+			[&](auto& o) {
+				o << "b = " << b;
+			}
+		);
 #endif
 	});
 

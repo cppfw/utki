@@ -250,6 +250,52 @@ inline void assert_always(
 
 /**
  * @brief Assert that condion is true.
+ * If the condition is true, then nothing happens.
+ * If the condition is false, it will print the assertion failure message along with the information string
+ * provided by the passed in function and then abort the program.
+ * @param condition_checker - function which checks for condition and returns its boolean value.
+ * @param print - function providing information string to print in case the assertion fails.
+ * @param source_location - location of the assert() invocation in the source code.
+ */
+inline void assert_always(
+	const std::function<bool()>& condition_checker,
+	const std::function<void(std::ostream&)>& print,
+	const utki::source_location& source_location
+#if CFG_CPP >= 20
+	= std_source_location::current()
+#endif
+)
+{
+	assert_always(
+		condition_checker(), //
+		print,
+		source_location
+	);
+}
+
+/**
+ * @brief Assert that condion is true.
+ * If the condition is true, then nothing happens.
+ * If the condition is false, it will print the assertion failure message and then abort the program.
+ * @param condition_checker - function which checks for condition and returns its boolean value.
+ * @param source_location - location of the assert() invocation in the source code.
+ */
+inline void assert_always(
+	const std::function<bool()>& condition_checker,
+	const utki::source_location& source_location
+#if CFG_CPP >= 20
+	= std_source_location::current()
+#endif
+)
+{
+	assert_always(
+		condition_checker(), //
+		source_location
+	);
+}
+
+/**
+ * @brief Assert that condion is true.
  * In debug build this function invokes assert_always().
  * In non-debug build this fuction does nothing.
  * @param condition - condition to check for being true.
@@ -288,6 +334,30 @@ inline void assert(
  * @brief Assert that condion is true.
  * In debug build this function invokes assert_always().
  * In non-debug build this fuction does nothing.
+ * @param condition_checker - function which checks for condition and returns its boolean value.
+ * @param print - function providing information string to print in case the assertion fails.
+ * @param source_location - location of the assert() invocation in the source code.
+ */
+inline void assert(
+	const std::function<bool()>& condition_checker,
+	const std::function<void(std::ostream&)>& print,
+	const utki::source_location& source_location
+#if CFG_CPP >= 20
+	= std_source_location::current()
+#endif
+)
+{
+	assert(
+		condition_checker(), //
+		print,
+		source_location
+	);
+}
+
+/**
+ * @brief Assert that condion is true.
+ * In debug build this function invokes assert_always().
+ * In non-debug build this fuction does nothing.
  * @param condition - condition to check for being true.
  * @param source_location - location of the assert() invocation in the source code.
  */
@@ -301,6 +371,28 @@ inline void assert(
 {
 	utki::assert(
 		condition, //
+		nullptr,
+		source_location
+	);
+}
+
+/**
+ * @brief Assert that condion is true.
+ * In debug build this function invokes assert_always().
+ * In non-debug build this fuction does nothing.
+ * @param condition_checker - function which checks for condition and returns its boolean value.
+ * @param source_location - location of the assert() invocation in the source code.
+ */
+inline void assert(
+	const std::function<bool()>& condition_checker,
+	const utki::source_location& source_location
+#if CFG_CPP >= 20
+	= std_source_location::current()
+#endif
+)
+{
+	utki::assert(
+		condition_checker(), //
 		nullptr,
 		source_location
 	);
