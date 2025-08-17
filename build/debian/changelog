@@ -1,3 +1,9 @@
+libutki (1.1.285) unstable; urgency=medium
+
+  * add assert([](){}) overloads
+
+ -- Ivan Gagis <igagis@gmail.com>  Sun, 17 Aug 2025 04:39:00 +0300
+
 libutki (1.1.284) unstable; urgency=medium
 
   * add logcat()
