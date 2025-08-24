@@ -151,7 +151,10 @@ inline std::string make_string(const std::vector<uint8_t>& buf)
  * @return vector of splitted strings.
  */
 template <typename element_type>
-std::vector<std::basic_string<element_type>> split(std::basic_string_view<element_type> str, element_type delimiter)
+std::vector<std::basic_string<element_type>> split(
+	std::basic_string_view<element_type> str, //
+	element_type delimiter
+)
 {
 	std::vector<std::basic_string<element_type>> ret;
 	size_t pos = 0;
@@ -160,11 +163,17 @@ std::vector<std::basic_string<element_type>> split(std::basic_string_view<elemen
 		auto dpos = str.find(delimiter, pos);
 
 		if (dpos == std::string::npos) {
-			ret.emplace_back(str.substr(pos, str.size() - pos));
+			ret.emplace_back(str.substr(
+				pos, //
+				str.size() - pos
+			));
 			break;
 		}
 
-		ret.emplace_back(str.substr(pos, dpos - pos));
+		ret.emplace_back(str.substr(
+			pos, //
+			dpos - pos
+		));
 
 		pos = dpos + 1;
 	}
@@ -179,12 +188,15 @@ std::vector<std::basic_string<element_type>> split(std::basic_string_view<elemen
  * @return vector of splitted strings.
  */
 template <typename char_type>
-std::vector<std::basic_string<char_type>> split( //
-	const std::basic_string<char_type>& str,
+std::vector<std::basic_string<char_type>> split(
+	const std::basic_string<char_type>& str, //
 	char_type delimiter
 )
 {
-	return split(std::basic_string_view<char_type>(str), delimiter);
+	return split(
+		std::basic_string_view<char_type>(str), //
+		delimiter
+	);
 }
 
 /**
@@ -196,7 +208,10 @@ std::vector<std::basic_string<char_type>> split( //
 template <typename element_type>
 std::vector<std::basic_string<element_type>> split(const element_type* str, element_type delimiter)
 {
-	return split(std::basic_string_view<element_type>(str), delimiter);
+	return split(
+		std::basic_string_view<element_type>(str), //
+		delimiter
+	);
 }
 
 /**
@@ -218,7 +233,7 @@ std::vector<std::string> split(std::string_view str);
  */
 template <typename strings_collection_type>
 std::basic_string<typename strings_collection_type::value_type::value_type> join(
-	const strings_collection_type& strings,
+	const strings_collection_type& strings, //
 	typename strings_collection_type::value_type::value_type delimeter
 )
 {
@@ -260,7 +275,10 @@ std::string cat(const streamable_type&... s)
  * @param width - maximum number of characters per line.
  * @return list of word wrapped lines.
  */
-std::vector<std::string> word_wrap(std::string_view str, unsigned width);
+std::vector<std::string> word_wrap(
+	std::string_view str, //
+	unsigned width
+);
 
 // TODO: doxygen
 enum class integer_base {
@@ -352,6 +370,11 @@ std::from_chars_result from_chars( //
 	chars_format fmt = chars_format::general
 ) noexcept;
 
+/**
+ * @brief String parsing helper.
+ * This helper class iterates through string characters as it was a stream of characters and
+ * allows interpreting parts of the stream.
+ */
 class string_parser
 {
 	std::string_view view;
@@ -359,31 +382,86 @@ class string_parser
 	void throw_if_empty() const;
 
 public:
+	/**
+	 * @brief Check if given character is a space-character.
+	 * Space characters are ' ', '\n', '\t', '\r', '\v', '\f'.
+	 * This function is locale-independent, unlike std::isspace().
+	 * @return true if given character is a space character.
+	 * @return flase otherwise.
+	 */
 	static bool is_space(char c);
 
+	/**
+	 * @brief Construct string_parser for a given string_view.
+	 * @param view - string_view to parse.
+	 */
 	string_parser(std::string_view view) :
 		view(view)
 	{}
 
+	/**
+	 * @brief Get current string_view.
+	 * Current string_view is the view of characters remained unparsed.
+	 * @return string_view left unparsed.
+	 */
 	std::string_view get_view() const noexcept
 	{
 		return this->view;
 	}
 
+	/**
+	 * @brief Skip whitespaces.
+	 * Skip characters until non-whitespace charater is encountered.
+	 * The whitepsace character is checked by is_space() function.
+	 */
 	void skip_whitespaces();
+
+	/**
+	 * @brief Skip whitespaces and comma.
+	 * Skip characters until non-whitespace and non-comma (',') charater is encountered.
+	 * The whitepsace character is checked by is_space() function.
+	 */
 	void skip_whitespaces_and_comma();
+
+	/**
+	 * @brief Skip until given character, including the character itself.
+	 * Skip characters until given character is encountered, then skip on more character.
+	 * @param c - character to skip until.
+	 */
 	void skip_inclusive_until(char c);
 
 	/**
 	 * @brief Skip until one of given chars inclusively.
-	 * @param c - chars to skip until.
-	 * @return the char which stopped the skipping. Can be '\0' in case of end of string reached.
+	 * Skip characters until one of the given characters is encountered, then skip on more character.
+	 * @param c - chars to skip until any of.
+	 * @return the char which stopped the skipping. '\0' in case end of the string reached.
 	 */
 	char skip_inclusive_until_one_of(utki::span<const char> c);
 
+	/**
+	 * @brief Read word.
+	 * Read characters until whitespace is encountered.
+	 * The parser remains pointing to the whitespace character which has ended the word.
+	 * @return read characters as a string.
+	 */
 	std::string_view read_word();
+
+	/**
+	 * @brief Read word terminated by the given character.
+	 * Read character until whitespace or given character is encountered.
+	 * The parser remains pointing to the character which has ended the word.
+	 * @return read characters as a string.
+	 */
 	std::string_view read_word_until(char c);
 
+	/**
+	 * @brief Read number.
+	 * Read characters representing a number.
+	 * Skip leading whitespaces before reading the number.
+	 * The parser remains pointing to the character which stopped parsing the number.
+	 * @tparam number_type - type of the number to read. Can be one of C++ integral or floating point types.
+	 * @return read number.
+	 */
 	// skips leading whitespaces
 	template <class number_type>
 	number_type read_number()
@@ -503,6 +581,7 @@ public:
 	 * This method doesn't move the parser position.
 	 * @param n - position of the character to peek.
 	 * @return Character at n-th position from the current parser's position.
+	 * @throw std::invalid_argument in case requested character is beyond the string's boundary.
 	 */
 	char peek_char(size_t n) const;
 
@@ -510,14 +589,14 @@ public:
 	 * @brief Read N characters.
 	 * @param n - number of characters to read.
 	 * @return Read characters. It can be less than requested in case string has ended before
-	 *     reading requested number of characters.
+	 *         reading requested number of characters.
 	 */
 	std::string_view read_chars(size_t n);
 
 	/**
 	 * @brief Read until specified character.
 	 * Read until specified character, not including the character,
-	 * or till the end of the string, whatever is encountered first.
+	 * or till the end of the string, whichever is encountered first.
 	 * @param c - character to read until.
 	 * @return Read characters.
 	 */
@@ -550,7 +629,10 @@ public:
  * @return String representing the converted integer value.
  */
 template <typename number_type>
-std::string to_string(number_type value, integer_base conversion_base = integer_base::dec)
+std::string to_string(
+	number_type value, //
+	integer_base conversion_base = integer_base::dec
+)
 {
 	// 128 chars is large enough to hold any built-in integral or floating point type
 	constexpr size_t buf_size = 128;
@@ -622,11 +704,21 @@ std::basic_string_view<element_type> trim_front(std::basic_string_view<element_t
 	);
 }
 
+/**
+ * @brief Trim whitespaces from front of the string.
+ * @param s - string to trim whitespaces from.
+ * @return string view with trimmed front whitespaces.
+ */
 inline std::string_view trim_front(const char* s)
 {
 	return trim_front(make_string_view(utki::make_span(s)));
 }
 
+/**
+ * @brief Trim whitespaces from front of the string.
+ * @param s - string to trim whitespaces from.
+ * @return string view with trimmed front whitespaces.
+ */
 template <typename element_type>
 std::basic_string_view<element_type> trim_front(const std::basic_string<element_type>& s)
 {
@@ -657,11 +749,21 @@ std::basic_string_view<element_type> trim_back(std::basic_string_view<element_ty
 	);
 }
 
+/**
+ * @brief Trim whitespaces from back of the string.
+ * @param s - string view to trim whitespaces from.
+ * @return string view with trimmed back whitespaces.
+ */
 inline std::string_view trim_back(const char* s)
 {
 	return trim_back(make_string_view(utki::make_span(s)));
 }
 
+/**
+ * @brief Trim whitespaces from back of the string.
+ * @param s - string view to trim whitespaces from.
+ * @return string view with trimmed back whitespaces.
+ */
 template <typename element_type>
 std::basic_string_view<element_type> trim_back(const std::basic_string<element_type>& s)
 {
@@ -680,11 +782,21 @@ std::basic_string_view<element_type> trim(std::basic_string_view<element_type> s
 	return trim_front(trim_back(s));
 }
 
+/**
+ * @brief Trim whitespaces from the string.
+ * @tparam element_type - string element type.
+ * @return string view with trimmed front and back whitespaces.
+ */
 inline std::string_view trim(const char* s)
 {
 	return trim(make_string_view(utki::make_span(s)));
 }
 
+/**
+ * @brief Trim whitespaces from the string.
+ * @tparam element_type - string element type.
+ * @return string view with trimmed front and back whitespaces.
+ */
 template <typename element_type>
 std::basic_string_view<element_type> trim(const std::basic_string<element_type>& s)
 {
