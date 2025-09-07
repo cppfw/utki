@@ -6,6 +6,7 @@
 #	include <tst/set.hpp>
 #	include <utki/unicode.hpp>
 #	include <utki/config.hpp>
+#	include <utki/string.hpp>
 
 using namespace std::string_literals;
 using namespace std::string_view_literals;
@@ -13,60 +14,61 @@ using namespace std::string_view_literals;
 namespace {
 const tst::set set("unicode", [](tst::suite& suite) {
 	suite.add("utf8_iterator", []() {
+		auto do_checks = [](utki::utf8_iterator i) {
+			tst::check_eq(uint32_t(i.character()), uint32_t(U'a'), SL);
+			++i;
+			tst::check_eq(
+				uint32_t(i.character()),
+				uint32_t(0x0411),
+				[&](auto& o) {
+					o << "i.character() = " << uint32_t(i.character());
+				},
+				SL
+			); // capital russian B
+			++i;
+			tst::check_eq(uint32_t(i.character()), uint32_t(0x0446), SL); // small russian C
+			++i;
+			tst::check_eq(
+				uint32_t(i.character()),
+				uint32_t(0xfeb6),
+				[&](auto& o) {
+					o << "i.character() = " << uint32_t(i.character());
+				},
+				SL
+			); // some arabic stuff
+			++i;
+			tst::check_eq(
+				uint32_t(i.character()),
+				uint32_t(0x2000b),
+				[&](auto& o) {
+					o << "i.character() = " << uint32_t(i.character());
+				},
+				SL
+			); // some compatibility char
+			++i;
+			tst::check_eq(
+				uint32_t(i.character()),
+				uint32_t(0),
+				[&](auto& o) {
+					o << "i.character() = " << uint32_t(i.character());
+				},
+				SL
+			);
+			tst::check(i.is_end(), SL);
+		};
+
 		// string in utf8 = aБцﺶ𠀋
 		std::vector<uint8_t> buf = {0x61, 0xd0, 0x91, 0xd1, 0x86, 0xef, 0xba, 0xb6, 0xf0, 0xa0, 0x80, 0x8b};
 
-		std::vector<uint8_t> str(buf.size() + 1);
-#	if CFG_CPP >= 20
-		std::ranges::copy(buf, str.begin());
-#	else
-		std::copy(buf.begin(), buf.end(), str.begin());
-#	endif
-		str.back() = 0; // null-terminate
+		// test constructor(span<uint8_t>)
+		do_checks(utki::utf8_iterator(buf));
 
-		// NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast)
-		utki::utf8_iterator i(reinterpret_cast<char*>(str.data()));
+		// test constructor(string_view)
+		do_checks(utki::utf8_iterator(utki::make_string_view(buf)));
+		do_checks(utki::utf8_iterator(utki::make_string(buf)));
 
-		tst::check_eq(uint32_t(i.character()), uint32_t(U'a'), SL);
-		++i;
-		tst::check_eq(
-			uint32_t(i.character()),
-			uint32_t(0x0411),
-			[&](auto& o) {
-				o << "i.character() = " << uint32_t(i.character());
-			},
-			SL
-		); // capital russian B
-		++i;
-		tst::check_eq(uint32_t(i.character()), uint32_t(0x0446), SL); // small russian C
-		++i;
-		tst::check_eq(
-			uint32_t(i.character()),
-			uint32_t(0xfeb6),
-			[&](auto& o) {
-				o << "i.character() = " << uint32_t(i.character());
-			},
-			SL
-		); // some arabic stuff
-		++i;
-		tst::check_eq(
-			uint32_t(i.character()),
-			uint32_t(0x2000b),
-			[&](auto& o) {
-				o << "i.character() = " << uint32_t(i.character());
-			},
-			SL
-		); // some compatibility char
-		++i;
-		tst::check_eq(
-			uint32_t(i.character()),
-			uint32_t(0),
-			[&](auto& o) {
-				o << "i.character() = " << uint32_t(i.character());
-			},
-			SL
-		);
-		tst::check(i.is_end(), SL);
+		// test constructor(const char*)
+		do_checks(utki::utf8_iterator(utki::make_string(buf).c_str()));
 	});
 
 	suite.add("utf32_to_utf8_zero", []() {

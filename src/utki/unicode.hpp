@@ -51,7 +51,19 @@ public:
 	 */
 	utf8_iterator() = default;
 
+	/**
+	 * @brief Create iterator pointing to the begin of the given utf-8 encoded string.
+	 * @param str - utf-8 encoded string.
+	 */
 	utf8_iterator(utki::span<const uint8_t> str);
+
+	/**
+	 * @brief Create iterator pointing to the begin of the given utf-8 encoded string.
+	 * @param str - utf-8 encoded string.
+	 */
+	utf8_iterator(std::string_view str) :
+		utf8_iterator(utki::to_uint8_t(utki::make_span(str)))
+	{}
 
 	/**
 	 * @brief Create iterator pointing to the begin of the given utf-8 encoded string.
