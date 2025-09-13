@@ -1,9 +1,11 @@
 #include <algorithm>
+#include <set>
 
 #include <tst/check.hpp>
 #include <tst/set.hpp>
 #include <utki/config.hpp>
 #include <utki/shared_ref.hpp>
+#include <utki/utility.hpp>
 
 namespace {
 const std::string etalon = "hello world!";
@@ -22,6 +24,16 @@ struct a0 {
 	a0& operator=(a0&&) = default;
 
 	virtual ~a0() = default;
+
+	bool operator<(const a0& r) const noexcept
+	{
+		return this < &r;
+	}
+
+	bool operator==(const a0& r) const noexcept
+	{
+		return this == &r;
+	}
 };
 
 struct a1 : public a0 {
@@ -273,6 +285,27 @@ const tst::set set("shared_ref", [](tst::suite& suite) {
 		tst::check(!cp2.expired(), SL);
 		tst::check(cp2.lock(), SL);
 		tst::check_eq(cp2.lock(), ca.to_shared_ptr(), SL);
+	});
+
+	suite.add("use_with_std_set", []() {
+		std::set<utki::shared_ref<a0>> set;
+
+		auto v1 = utki::make_shared<a0>(1);
+		auto v2 = utki::make_shared<a1>(2);
+		auto v3 = utki::make_shared<a1>(3);
+
+		set.insert(v1);
+		set.insert(v2);
+
+		tst::check_eq(set.size(), size_t(2), SL);
+
+		tst::check(utki::contains(set, v1), SL);
+		tst::check(utki::contains(set, v2), SL);
+		tst::check(!utki::contains(set, v3), SL);
+
+		tst::check(utki::contains(set, v1.get()), SL);
+		tst::check(utki::contains(set, v2.get()), SL);
+		tst::check(!utki::contains(set, v3.get()), SL);
 	});
 });
 

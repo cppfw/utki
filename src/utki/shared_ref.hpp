@@ -168,6 +168,30 @@ public:
 	{
 		return this->get();
 	}
+
+	/**
+	 * @brief Less-than operator for comparison with another object.
+	 * Needed for using shared_ref in ordered containers (e.g. std::set).
+	 * Effecively calls opearator<() of the pointed-to object.
+	 * @return true if this object is less than the other object.
+	 * @return false otherwise.
+	 */
+	constexpr bool operator<(const object_type& o) const noexcept
+	{
+		return *this->p < o;
+	}
+
+	/**
+	 * @brief Equality operator for comparison with another object.
+	 * Needed for using shared_ref in ordered containers (e.g. std::set).
+	 * Effectively calls operator==() of the pointed-to object.
+	 * @return true if this object is equal to the other object.
+	 * @return false otherwise.
+	 */
+	constexpr bool operator==(const object_type& o) const noexcept
+	{
+		return *this->p == o;
+	}
 };
 
 /**
