@@ -35,6 +35,6 @@ endforeach()
 
 # if the library is compiled by vcpkg during the port build,
 # then we don't need to build unit tests
-if(MYCI_VCPKG_PORT_BUILD)
+if(NOT MYCI_VCPKG_PORT_BUILD)
     include(unit_tests.cmake)
 endif()
