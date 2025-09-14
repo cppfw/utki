@@ -25,4 +25,8 @@ myci_declare_library(${name}
         ../../src/${name}
 )
 
-include(unit_tests.cmake)
+# if the library is compiled by vcpkg during the library package installation,
+# then we don't need to build unit tests
+if(NOT DEFINED VCPKG_INSTALL_PREFIX)
+    include(unit_tests.cmake)
+endif()
