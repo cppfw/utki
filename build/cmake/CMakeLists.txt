@@ -25,6 +25,12 @@ myci_declare_library(${name}
         ../../src/${name}
 )
 
+get_cmake_property(_variableNames VARIABLES)
+list (SORT _variableNames)
+foreach (_variableName ${_variableNames})
+    message(STATUS "${_variableName}=${${_variableName}}")
+endforeach()
+
 # if the library is compiled by vcpkg during the library package installation,
 # then we don't need to build unit tests
 if(NOT DEFINED VCPKG_TOOLCHAIN_FILE)
