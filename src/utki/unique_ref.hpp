@@ -69,10 +69,13 @@ public:
 	 *              Must not be null, otherwise it causes undefined behaviour.
 	 */
 	explicit unique_ref(std::unique_ptr<object_type> ptr) :
-		p(std::move(ptr)){ASSERT(this->p)}
+		p(std::move(ptr))
+	{
+		utki::assert(this->p, SL);
+	}
 
-		// there should be no default constructor, as unique_ref cannot be nullptr
-		unique_ref() = delete;
+	// there should be no default constructor, as unique_ref cannot be nullptr
+	unique_ref() = delete;
 
 	unique_ref(const unique_ref&) = delete;
 	unique_ref& operator=(const unique_ref&) = delete;
@@ -96,7 +99,7 @@ public:
 	unique_ref(unique_ref<other_object_type>&& sr) noexcept :
 		p(std::move(sr.p))
 	{
-		ASSERT(this->p)
+		utki::assert(this->p, SL);
 	}
 
 	/**
@@ -106,7 +109,7 @@ public:
 	 */
 	constexpr object_type& get() const noexcept
 	{
-		ASSERT(this->p)
+		utki::assert(this->p, SL);
 		return *this->p;
 	}
 
@@ -117,6 +120,49 @@ public:
 	constexpr operator object_type&() const noexcept
 	{
 		return this->get();
+	}
+
+	/**
+	 * @brief Less-than operator for comparison with another object.
+	 * Needed for using unique_ref in ordered containers (e.g. std::set).
+	 * Effecively calls opearator<() of the pointed-to object.
+	 * @return true if this object is less than the other object.
+	 * @return false otherwise.
+	 */
+	friend constexpr bool operator<(const unique_ref& r, const object_type& o) noexcept
+	{
+		return r.get() < o;
+	}
+
+	/**
+	 * @brief Equality operator for comparison with another object.
+	 * Needed for using unique_ref in ordered containers (e.g. std::set).
+	 * Effectively calls operator==() of the pointed-to object.
+	 * @param r - left hand side of the operator.
+	 * @param o - right hand side of the operator.
+	 * @return true if this object is equal to the other object.
+	 * @return false otherwise.
+	 */
+	friend constexpr bool operator==(const unique_ref& r, const object_type& o) noexcept
+	{
+		return r.get() == o;
+	}
+
+	/**
+	 * @brief Equality operator for comparison with another object.
+	 * Needed for using unique_ref in ordered containers (e.g. std::set).
+	 * Effectively calls operator==() of the pointed-to object.
+	 * @param l - left hand side of the operator.
+	 * @param r - right hand side of the operator.
+	 * @return true if this object is equal to the other object.
+	 * @return false otherwise.
+	 */
+	friend constexpr bool operator==(
+		const unique_ref& l, //
+		const unique_ref& r
+	) noexcept
+	{
+		return l.get() == r.get();
 	}
 };
 

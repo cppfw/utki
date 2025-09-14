@@ -1,8 +1,10 @@
 #include <algorithm>
+#include <set>
 
 #include <tst/check.hpp>
 #include <tst/set.hpp>
 #include <utki/unique_ref.hpp>
+#include <utki/utility.hpp>
 
 namespace {
 const std::string etalon = "hello world!";
@@ -21,6 +23,16 @@ struct a0 {
 	a0& operator=(a0&&) = default;
 
 	virtual ~a0() = default;
+
+	bool operator<(const a0& r) const noexcept
+	{
+		return this < &r;
+	}
+
+	bool operator==(const a0& r) const noexcept
+	{
+		return this == &r;
+	}
 };
 
 struct a1 : public a0 {
@@ -164,6 +176,33 @@ const tst::set set("unique_ref", [](tst::suite& suite) {
 		tst::check_eq(vec[0].get().a_0, 2, SL);
 		tst::check_eq(vec[1].get().a_0, 3, SL);
 		tst::check_eq(vec[2].get().a_0, 1, SL);
+	});
+
+	suite.add("use_with_std_set", []() {
+		std::set<utki::unique_ref<a0>> set;
+
+		auto v1 = utki::make_unique<a0>(1);
+		auto v2 = utki::make_unique<a0>(2);
+		auto v3 = utki::make_unique<a0>(3);
+
+		auto& v1r = v1.get();
+		auto& v2r = v2.get();
+		auto& v3r = v3.get();
+
+		set.insert(std::move(v1));
+		set.insert(std::move(v2));
+
+		tst::check_eq(set.size(), size_t(2), SL);
+
+		for(auto& v : set) {
+			tst::check(v.get().a_0 == 1 || v.get().a_0 == 2, SL);
+		}
+
+		tst::check(!utki::contains(set, v3), SL);
+
+		tst::check(utki::contains(set, v1r), SL);
+		tst::check(utki::contains(set, v2r), SL);
+		tst::check(!utki::contains(set, v3r), SL);
 	});
 });
 } // namespace
