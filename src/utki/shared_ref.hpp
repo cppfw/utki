@@ -176,9 +176,9 @@ public:
 	 * @return true if this object is less than the other object.
 	 * @return false otherwise.
 	 */
-	constexpr bool operator<(const object_type& o) const noexcept
+	friend constexpr bool operator<(const shared_ref& r, const object_type& o) noexcept
 	{
-		return *this->p < o;
+		return r.get() < o;
 	}
 
 	/**
@@ -188,9 +188,9 @@ public:
 	 * @return true if this object is equal to the other object.
 	 * @return false otherwise.
 	 */
-	constexpr bool operator==(const object_type& o) const noexcept
+	friend constexpr bool operator==(const shared_ref& r, const object_type& o) noexcept
 	{
-		return *this->p == o;
+		return r.get() == o;
 	}
 };
 
