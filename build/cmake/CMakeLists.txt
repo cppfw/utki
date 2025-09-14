@@ -24,3 +24,5 @@ myci_declare_library(${name}
     INSTALL_INCLUDE_DIRECTORIES
         ../../src/${name}
 )
+
+include(unit_tests.cmake)
