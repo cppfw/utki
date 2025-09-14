@@ -185,12 +185,31 @@ public:
 	 * @brief Equality operator for comparison with another object.
 	 * Needed for using shared_ref in ordered containers (e.g. std::set).
 	 * Effectively calls operator==() of the pointed-to object.
+	 * @param r - left hand side of the operator.
+	 * @param o - right hand side of the operator.
 	 * @return true if this object is equal to the other object.
 	 * @return false otherwise.
 	 */
 	friend constexpr bool operator==(const shared_ref& r, const object_type& o) noexcept
 	{
 		return r.get() == o;
+	}
+
+	/**
+	 * @brief Equality operator for comparison with another object.
+	 * Needed for using shared_ref in ordered containers (e.g. std::set).
+	 * Effectively calls operator==() of the pointed-to object.
+	 * @param l - left hand side of the operator.
+	 * @param r - right hand side of the operator.
+	 * @return true if this object is equal to the other object.
+	 * @return false otherwise.
+	 */
+	friend constexpr bool operator==(
+		const shared_ref& l, //
+		const shared_ref& r
+	) noexcept
+	{
+		return l.get() == r.get();
 	}
 };
 

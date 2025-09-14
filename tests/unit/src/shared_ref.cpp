@@ -291,8 +291,8 @@ const tst::set set("shared_ref", [](tst::suite& suite) {
 		std::set<utki::shared_ref<a0>> set;
 
 		auto v1 = utki::make_shared<a0>(1);
-		auto v2 = utki::make_shared<a1>(2);
-		auto v3 = utki::make_shared<a1>(3);
+		auto v2 = utki::make_shared<a0>(2);
+		auto v3 = utki::make_shared<a0>(3);
 
 		set.insert(v1);
 		set.insert(v2);
