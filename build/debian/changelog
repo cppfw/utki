@@ -1,3 +1,9 @@
+libutki (1.1.287) unstable; urgency=medium
+
+  * add shared_ref::operator== and <
+
+ -- Ivan Gagis <igagis@gmail.com>  Sun, 14 Sep 2025 20:23:22 +0300
+
 libutki (1.1.286) unstable; urgency=medium
 
   * add utf8_iterator(std::string_view) constructor overload
