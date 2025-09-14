@@ -25,16 +25,8 @@ myci_declare_library(${name}
         ../../src/${name}
 )
 
-message(STATUS "Printing variables!!!!!!!!!!!!!!!!!1")
-
-get_cmake_property(_variableNames VARIABLES)
-list (SORT _variableNames)
-foreach (_variableName ${_variableNames})
-    message(STATUS "${_variableName}=${${_variableName}}")
-endforeach()
-
 # if the library is compiled by vcpkg during the port build,
 # then we don't need to build unit tests
-if(NOT MYCI_VCPKG_PORT_BUILD)
+if(NOT IS_VCPKG_PORT_BUILD)
     include(unit_tests.cmake)
 endif()
