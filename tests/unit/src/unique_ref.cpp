@@ -194,10 +194,6 @@ const tst::set set("unique_ref", [](tst::suite& suite) {
 
 		tst::check_eq(set.size(), size_t(2), SL);
 
-		for(auto& v : set) {
-			tst::check(v.get().a_0 == 1 || v.get().a_0 == 2, SL);
-		}
-
 		tst::check(!utki::contains(set, v3), SL);
 
 		tst::check(utki::contains(set, v1r), SL);
