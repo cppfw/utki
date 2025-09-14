@@ -577,8 +577,8 @@ jobs:
         run: |
           cd build/vcpkg/test
           cmake .
-          make
-          ./test
+          cmake --build . --parallel
+          cmake --build . --target test
       - name: upload vcpkg logs to artifacts
         if: always() # even if previous steps fail, this one needs to be run
         uses: actions/upload-artifact@v4
@@ -601,6 +601,8 @@ jobs:
     steps:
     - name: git clone
       uses: actions/checkout@v4
+      with:
+        submodules: true
     - name: get myci scripts
       uses: actions/checkout@v4
       with:
@@ -622,7 +624,7 @@ jobs:
         cd build/vcpkg/test
         cmake .
         cmake --build . --parallel
-        ./Debug/test.exe
+        cmake --build . --target test
     - name: upload vcpkg logs to artifacts
       if: always() # even if previous steps fail, this one needs to be run
       uses: actions/upload-artifact@v4

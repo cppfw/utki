@@ -9,10 +9,4 @@ project(test)
 find_package(myci CONFIG REQUIRED)
 find_package(utki CONFIG REQUIRED)
 
-add_executable(test main.cpp)
-
-target_link_libraries(
-    test
-    PRIVATE
-        utki::utki
-)
+include(../../cmake/unit_tests.cmake)
