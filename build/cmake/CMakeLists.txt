@@ -22,8 +22,6 @@ myci_declare_library(${PROJECT_NAME}
         ../../src_deps
     INSTALL_INCLUDE_DIRECTORIES
         ../../src/${PROJECT_NAME}
-    PREPROCESSOR_DEFINITIONS
-        _UNICODE
 )
 
 # if the library is compiled by vcpkg during the port build,
