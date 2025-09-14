@@ -512,6 +512,7 @@ jobs:
         done
       if: startsWith(github.ref, 'refs/tags/')
 ##### msvs #####
+  # DEPRECATED: remove
   msvs:
     runs-on: windows-latest
     defaults:
@@ -597,7 +598,16 @@ jobs:
     defaults:
       run:
         shell: powershell
-    name: vcpkg - windows
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - Debug
+          - Release
+        arch:
+          - Win32
+          - x64
+    name: vcpkg - MSVC - ${{ matrix.arch }}|${{ matrix.config }}
     steps:
     - name: git clone
       uses: actions/checkout@v4
@@ -619,12 +629,15 @@ jobs:
       with: {name: VCPKG_ROOT, value: "C:/vcpkg/"}
     - name: prepare vcpkg port
       run: myci-vcpkg-prepare.ps1 -gitref ${{ github.sha }}
-    - name: test vcpkg port
+    - name: test vcpkg port - build
       run: |
         cd build/vcpkg/test
-        cmake .
-        cmake --build . --parallel
-        cmake --build . --target test
+        cmake . -A ${{ matrix.arch }}
+        cmake --build . --parallel --config ${{ matrix.config }}
+    - name: test vcpkg port - test
+      run: |
+        cd build/vcpkg/test
+        cmake --build . --config ${{ matrix.config}} --target test
     - name: upload vcpkg logs to artifacts
       if: always() # even if previous steps fail, this one needs to be run
       uses: actions/upload-artifact@v4
