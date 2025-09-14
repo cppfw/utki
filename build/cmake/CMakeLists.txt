@@ -33,8 +33,8 @@ foreach (_variableName ${_variableNames})
     message(STATUS "${_variableName}=${${_variableName}}")
 endforeach()
 
-# if the library is compiled by vcpkg during the library package installation,
+# if the library is compiled by vcpkg during the port build,
 # then we don't need to build unit tests
-if(NOT DEFINED VCPKG_TOOLCHAIN_FILE)
+if(MYCI_VCPKG_PORT_BUILD)
     include(unit_tests.cmake)
 endif()
