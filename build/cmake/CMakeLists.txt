@@ -25,6 +25,8 @@ myci_declare_library(${name}
         ../../src/${name}
 )
 
+message(STATUS "Printing variables!!!!!!!!!!!!!!!!!1")
+
 get_cmake_property(_variableNames VARIABLES)
 list (SORT _variableNames)
 foreach (_variableName ${_variableNames})
