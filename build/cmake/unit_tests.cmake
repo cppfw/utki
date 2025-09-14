@@ -17,7 +17,7 @@ myci_add_source_files(test_srcs
     RECURSIVE
 )
 
-myci_declare_application(${name}-tests
+myci_declare_application(${PROJECT_NAME}-tests
     GUI
     SOURCES
         ${test_srcs}
@@ -37,5 +37,5 @@ endif()
 add_custom_command(TARGET test
     POST_BUILD
     COMMAND
-        $<TARGET_FILE:${name}-tests>
+        $<TARGET_FILE:${PROJECT_NAME}-tests>
 )

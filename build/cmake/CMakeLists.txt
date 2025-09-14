@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-set(name utki)
-project(${name})
+project(utki)
 
 # !!! find_package must go after project() declaration !!!
 # Otherwise VCPKG does not set the CMAKE_PREFIX_PATH to find packages.
@@ -10,11 +9,11 @@ find_package(myci CONFIG REQUIRED)
 set(srcs)
 myci_add_source_files(srcs
     DIRECTORY
-        ../../src/${name}
+        ../../src/${PROJECT_NAME}
     RECURSIVE
 )
 
-myci_declare_library(${name}
+myci_declare_library(${PROJECT_NAME}
     SOURCES
         ${srcs}
     PUBLIC_INCLUDE_DIRECTORIES
@@ -22,7 +21,7 @@ myci_declare_library(${name}
     PRIVATE_INCLUDE_DIRECTORIES
         ../../src_deps
     INSTALL_INCLUDE_DIRECTORIES
-        ../../src/${name}
+        ../../src/${PROJECT_NAME}
 )
 
 # if the library is compiled by vcpkg during the port build,
