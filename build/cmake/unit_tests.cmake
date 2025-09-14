@@ -1,19 +1,19 @@
 set(test_srcs)
 myci_add_source_files(test_srcs
     DIRECTORY
-        ../../tests/unit/src
+        ${CMAKE_CURRENT_LIST_DIR}/../../tests/unit/src
     RECURSIVE
 )
 
 myci_add_source_files(test_srcs
     DIRECTORY
-        ../../tests/harness/tst/src
+        ${CMAKE_CURRENT_LIST_DIR}/../../tests/harness/tst/src
     RECURSIVE
 )
 
 myci_add_source_files(test_srcs
     DIRECTORY
-        ../../tests/harness/clargs/src
+        ${CMAKE_CURRENT_LIST_DIR}/../../tests/harness/clargs/src
     RECURSIVE
 )
 
@@ -22,8 +22,8 @@ myci_declare_application(${name}-tests
     SOURCES
         ${test_srcs}
     INCLUDE_DIRECTORIES
-        ../../tests/harness/tst/src
-        ../../tests/harness/clargs/src
+        ${CMAKE_CURRENT_LIST_DIR}/../../tests/harness/tst/src
+        ${CMAKE_CURRENT_LIST_DIR}/../../tests/harness/clargs/src
     PREPROCESSOR_DEFINITIONS
         TST_NO_PAR
     DEPENDENCIES
