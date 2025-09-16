@@ -1,3 +1,9 @@
+libutki (1.1.288) unstable; urgency=medium
+
+  * add version_duplet::operator< and >=
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 16 Sep 2025 23:30:32 +0300
+
 libutki (1.1.287) unstable; urgency=medium
 
   * add shared_ref::operator== and <
