@@ -5,15 +5,21 @@ myci_add_source_files(test_srcs
     RECURSIVE
 )
 
+if(CPPFW_MONOREPO)
+    set(utki_test_harness_dir ${CMAKE_CURRENT_LIST_DIR}/../../..)
+else()
+    set(utki_test_harness_dir ${CMAKE_CURRENT_LIST_DIR}/../../tests/harness)
+endif()
+
 myci_add_source_files(test_srcs
     DIRECTORY
-        ${CMAKE_CURRENT_LIST_DIR}/../../tests/harness/tst/src
+        ${utki_test_harness_dir}/tst/src
     RECURSIVE
 )
 
 myci_add_source_files(test_srcs
     DIRECTORY
-        ${CMAKE_CURRENT_LIST_DIR}/../../tests/harness/clargs/src
+        ${utki_test_harness_dir}/clargs/src
     RECURSIVE
 )
 
@@ -22,8 +28,8 @@ myci_declare_application(${PROJECT_NAME}-tests
     SOURCES
         ${test_srcs}
     INCLUDE_DIRECTORIES
-        ${CMAKE_CURRENT_LIST_DIR}/../../tests/harness/tst/src
-        ${CMAKE_CURRENT_LIST_DIR}/../../tests/harness/clargs/src
+        ${utki_test_harness_dir}/tst/src
+        ${utki_test_harness_dir}/clargs/src
     PREPROCESSOR_DEFINITIONS
         TST_NO_PAR
     DEPENDENCIES
