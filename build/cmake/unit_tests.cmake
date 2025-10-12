@@ -5,7 +5,7 @@ myci_add_source_files(test_srcs
     RECURSIVE
 )
 
-if(CPPFW_MONOREPO_BUILD)
+if(CPPFW_MONOREPO)
     set(utki_test_harness_dir ${CMAKE_CURRENT_LIST_DIR}/../../..)
 else()
     set(utki_test_harness_dir ${CMAKE_CURRENT_LIST_DIR}/../../tests/harness)
