@@ -1,8 +1,9 @@
+#include <numbers>
+
 #include <tst/check.hpp>
 #include <tst/set.hpp>
 #include <utki/config.hpp>
 #include <utki/math.hpp>
-#include <numbers>
 
 namespace {
 const tst::set set("math", [](tst::suite& suite) {
