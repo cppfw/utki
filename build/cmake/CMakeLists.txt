@@ -24,8 +24,4 @@ myci_declare_library(${PROJECT_NAME}
         ../../src/${PROJECT_NAME}
 )
 
-# if the library is compiled by vcpkg during the port build,
-# then we don't need to build unit tests
-if(NOT IS_VCPKG_PORT_BUILD)
-    include(unit_tests.cmake)
-endif()
+include(unit_tests.cmake)

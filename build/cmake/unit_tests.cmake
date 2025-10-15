@@ -1,3 +1,14 @@
+# if the library is compiled by vcpkg during the port build,
+# then we don't need to build unit tests
+if(IS_VCPKG_PORT_BUILD)
+    return()
+endif()
+
+# no unit tests for ios
+if(IOS)
+    return()
+endif()
+
 set(test_srcs)
 myci_add_source_files(test_srcs
     DIRECTORY
