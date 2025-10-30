@@ -1,3 +1,9 @@
+libutki (1.1.290) unstable; urgency=medium
+
+  * cmake: vcpkg search path
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 30 Oct 2025 16:28:29 +0200
+
 libutki (1.1.289) unstable; urgency=medium
 
   * update
