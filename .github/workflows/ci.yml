@@ -622,6 +622,62 @@ jobs:
         path: |
           vcpkg-installation/buildtrees/${{ env.PACKAGE_NAME }}/
           build/vcpkg/**/*.log
+##### vcpkg-ios #####
+  vcpkg-ios:
+    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - Debug
+          - Release
+    steps:
+    - name: workaround python2 and python3 issue when upgrading python
+      run : |
+        rm -rf /usr/local/bin/2to3*
+        rm -rf /usr/local/bin/idle3*
+        rm -rf /usr/local/bin/pydoc3*
+        rm -rf /usr/local/bin/python3
+        rm -rf /usr/local/bin/python3-config
+        rm -rf /usr/local/bin/python3*
+        rm -rf /usr/local/bin/python3*-config
+    - name: git clone
+      uses: myci-actions/checkout@main
+      with:
+        submodules: true #  non-recursive, no remote
+    - name: install vcpkg
+      run: |
+        git clone https://github.com/microsoft/vcpkg.git vcpkg-installation
+        (cd vcpkg-installation; ./bootstrap-vcpkg.sh)
+    - name: set VCPKG_ROOT
+      uses: myci-actions/export-env-var@main
+      with: {name: VCPKG_ROOT, value: "$(pwd)/vcpkg-installation"}
+    - name: add VCPKG_ROOT to PATH
+      uses: myci-actions/export-env-var@main
+      with: {name: PATH, value: "$PATH:$VCPKG_ROOT"}
+    - name: add cppfw tap
+      run: |
+        brew tap cppfw/tap
+        brew update
+    - name: install ci tools
+      run: brew install myci cmake
+    - name: prepare vcpkg port
+      run: |
+        myci-vcpkg-prepare.sh --git-ref ${{ github.sha }}
+    - name: test vcpkg port
+      run: |
+        cd build/vcpkg/test
+        cmake -G Xcode -D CMAKE_SYSTEM_NAME=iOS -D VCPKG_TARGET_TRIPLET=arm64-ios-simulator .
+        cmake --build . --parallel --config ${{ matrix.config }} -- -sdk iphonesimulator -arch arm64
+#        ./test
+    - name: upload vcpkg logs to artifacts
+      if: always() # even if previous steps fail, this one needs to be run
+      uses: actions/upload-artifact@v4
+      with:
+        name: vcpkg_ios_${{ matrix.config }}_logs
+        path: |
+          vcpkg-installation/buildtrees/${{ env.PACKAGE_NAME }}/
+          build/vcpkg/**/*.log
 ##### conan - linux #####
   conan-linux:
     strategy:
