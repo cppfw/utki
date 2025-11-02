@@ -8,4 +8,4 @@
 
 C++ utility library. Stuff missing from `std::` namespace.
 
-See link:wiki/MainPage.adoc[WiKi] for installation instructions and tutorials.
+See link:wiki/main.adoc[WiKi] for installation instructions and tutorials.
