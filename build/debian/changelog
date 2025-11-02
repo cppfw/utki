@@ -1,3 +1,9 @@
+libutki (1.1.291) unstable; urgency=medium
+
+  * vcpkg: non-host myci dep
+
+ -- Ivan Gagis <igagis@gmail.com>  Sun, 02 Nov 2025 13:47:50 +0200
+
 libutki (1.1.290) unstable; urgency=medium
 
   * cmake: vcpkg search path
