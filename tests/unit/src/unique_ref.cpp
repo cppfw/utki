@@ -201,7 +201,7 @@ const tst::set set("unique_ref", [](tst::suite& suite) {
 		tst::check(!utki::contains(set, v3r), SL);
 	});
 
-	suite.add("to_unique_ptr", [](){
+	suite.add("to_unique_ptr", []() {
 		constexpr auto str = "Hello world!";
 		utki::unique_ref<std::string> us = utki::make_unique<std::string>(str);
 
