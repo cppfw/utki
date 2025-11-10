@@ -200,5 +200,17 @@ const tst::set set("unique_ref", [](tst::suite& suite) {
 		tst::check(utki::contains(set, v2r), SL);
 		tst::check(!utki::contains(set, v3r), SL);
 	});
+
+	suite.add("to_unique_ptr", [](){
+		constexpr auto str = "Hello world!";
+		utki::unique_ref<std::string> us = utki::make_unique<std::string>(str);
+
+		tst::check_eq(us.get(), std::string(str), SL);
+
+		auto usptr = std::move(us).to_unique_ptr();
+
+		tst::check(usptr, SL);
+		tst::check_eq(*usptr, std::string(str), SL);
+	});
 });
 } // namespace

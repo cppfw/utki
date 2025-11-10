@@ -103,6 +103,17 @@ public:
 	}
 
 	/**
+	 * @brief Move this unique_ref to unique_ptr.
+	 * This method leaves the unique_ref in "nullptr" state, so it can only be called
+	 * on r-value.
+	 * @return non-null std::unique_ptr.
+	 */
+	std::unique_ptr<object_type> to_unique_ptr() &&
+	{
+		return std::move(this->p);
+	}
+
+	/**
 	 * @brief Get reference to the object.
 	 *
 	 * @return Reference to the object.
