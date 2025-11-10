@@ -1,3 +1,9 @@
+libutki (1.1.292) unstable; urgency=medium
+
+  * add unique_ref::to_unique_ptr()
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 11 Nov 2025 00:30:42 +0200
+
 libutki (1.1.291) unstable; urgency=medium
 
   * vcpkg: non-host myci dep
