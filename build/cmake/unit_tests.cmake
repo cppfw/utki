@@ -47,15 +47,4 @@ myci_declare_application(${PROJECT_NAME}-tests
         utki
 )
 
-if(NOT TARGET test)
-    add_custom_target(test)
-endif()
-
-add_custom_target(test-${PROJECT_NAME})
-add_dependencies(test test-${PROJECT_NAME})
-
-add_custom_command(TARGET test-${PROJECT_NAME}
-    POST_BUILD
-    COMMAND
-        $<TARGET_FILE:${PROJECT_NAME}-tests>
-)
+myci_declare_test(${PROJECT_NAME})
