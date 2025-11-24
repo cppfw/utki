@@ -81,4 +81,4 @@ myci_declare_application(${PROJECT_NAME}-tests
         ${tst_dep}
 )
 
-myci_declare_test(${PROJECT_NAME})
+myci_declare_test(${PROJECT_NAME}-tests)
