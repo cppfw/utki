@@ -15,7 +15,7 @@ project(${name})
 
 file(GLOB_RECURSE srcs "../../../src/utki/*.cpp")
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++20")
 
 add_library(
         ${name}

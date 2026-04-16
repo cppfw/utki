@@ -93,7 +93,7 @@ inline void log_debug(const std::function<void(std::ostream&)>& print)
 }
 
 #else
-inline void log_debug(const std::function<void(std::ostream&)>& print) {}
+inline void log_debug(const std::function<void(std::ostream&)>&) {}
 
 #endif
 
@@ -134,7 +134,7 @@ inline void run_debug(const std::function<void()>& proc)
 }
 
 #else
-inline void run_debug(const std::function<void()>& proc) {}
+inline void run_debug(const std::function<void()>&) {}
 
 #endif
 } // namespace utki
@@ -258,23 +258,36 @@ inline void assert_always(
  * @param print - function providing information string to print in case the assertion fails.
  * @param source_location - location of the assert() invocation in the source code.
  */
+#ifdef DEBUG
 inline void assert(
 	bool condition,
 	const std::function<void(std::ostream&)>& print,
 	const utki::source_location& source_location
-#if CFG_CPP >= 20
+#	if CFG_CPP >= 20
 	= std_source_location::current()
-#endif
+#	endif
 )
 {
-#ifdef DEBUG
 	assert_always(
 		condition, //
 		print,
 		source_location
 	);
-#endif
 }
+
+#else
+
+inline void assert(
+	bool,
+	const std::function<void(std::ostream&)>&,
+	const utki::source_location&
+#	if CFG_CPP >= 20
+		source_location = std_source_location::current()
+#	endif
+)
+{}
+
+#endif
 
 /**
  * @brief Assert that condion is true.
