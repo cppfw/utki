@@ -38,6 +38,7 @@ android {
             path "CMakeLists.txt"
         }
     }
+    namespace 'io.github.cppfw.utki'
 }
 
 dependencies {
