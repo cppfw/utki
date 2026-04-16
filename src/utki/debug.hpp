@@ -38,21 +38,12 @@ SOFTWARE.
 #include "macros.hpp"
 
 #if CFG_CPP >= 20
-#	if __has_include(<source_location>)
-#		include <source_location>
+#	include <source_location>
 
 namespace utki {
 using std_source_location = std::source_location;
 } // namespace utki
 
-#	else
-#		include <experimental/source_location>
-
-namespace utki {
-using std_source_location = std::experimental::source_location;
-} // namespace utki
-
-#	endif
 #endif
 
 #if defined(_DEBUG) && !defined(DEBUG)
