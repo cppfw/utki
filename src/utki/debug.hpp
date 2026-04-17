@@ -297,24 +297,33 @@ inline void assert(
  * @param print - function providing information string to print in case the assertion fails.
  * @param source_location - location of the assert() invocation in the source code.
  */
+#ifdef DEBUG
 inline void assert(
 	const std::function<bool()>& condition_checker,
 	const std::function<void(std::ostream&)>& print,
 	const utki::source_location& source_location
-#if CFG_CPP >= 20
+#	if CFG_CPP >= 20
 	= std_source_location::current()
-#endif
+#	endif
 )
 {
-// Do DEBUG macro check because condition checker function must not be invoked in non-debug build.
-#ifdef DEBUG
 	assert(
 		condition_checker(), //
 		print,
 		source_location
 	);
-#endif
 }
+#else
+inline void assert(
+	const std::function<bool()>&,
+	const std::function<void(std::ostream&)>&,
+	const utki::source_location&
+#	if CFG_CPP >= 20
+		source_location = std_source_location::current()
+#	endif
+)
+{}
+#endif
 
 /**
  * @brief Assert that condion is true.
