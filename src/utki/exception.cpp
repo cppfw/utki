@@ -42,6 +42,11 @@ using namespace std::string_literals;
 
 using namespace utki;
 
+std::string exception::to_string(std::string_view) const
+{
+	return utki::to_string(static_cast<const std::exception&>(*this));
+}
+
 std::string utki::current_exception_to_string(std::string_view indentation)
 {
 	if (!std::current_exception()) {

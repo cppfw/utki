@@ -66,10 +66,7 @@ public:
 	 * @param indentation - indentation to use for conversion.
 	 * @return Human readable string describing the exception object.
 	 */
-	virtual std::string to_string(std::string_view indentation = std::string_view()) const
-	{
-		return utki::to_string(static_cast<const std::exception&>(*this));
-	}
+	virtual std::string to_string(std::string_view indentation = std::string_view()) const;
 };
 
 // forward declaration
