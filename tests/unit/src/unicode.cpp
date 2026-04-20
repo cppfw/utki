@@ -86,30 +86,30 @@ const tst::set set("unicode", [](tst::suite& suite) {
 	suite.add("utf32_to_utf8_two_byte", []() {
 		auto ret = utki::to_utf8(0x41a); // Capital cyrillic K
 		tst::check_eq(
-			ret[0],
-			char(0xd0),
+			uint8_t(ret[0]),
+			uint8_t(0xd0),
 			[&](auto& o) {
 				o << "ret[0] = 0x" << std::hex << (unsigned(ret[0]) & 0xff);
 			},
 			SL
 		);
-		tst::check_eq(ret[1], char(0x9a), SL);
-		tst::check_eq(ret[2], char(0), SL);
+		tst::check_eq(uint8_t(ret[1]), uint8_t(0x9a), SL);
+		tst::check_eq(uint8_t(ret[2]), uint8_t(0), SL);
 	});
 
 	suite.add("utf32_to_utf8_three_byte", []() {
 		auto ret = utki::to_utf8(0xbf5); // ௵
 		tst::check_eq(
-			ret[0],
-			char(0xe0),
+			uint8_t(ret[0]),
+			uint8_t(0xe0),
 			[&](auto& o) {
 				o << "ret[0] = 0x" << std::hex << (unsigned(ret[0]) & 0xff);
 			},
 			SL
 		);
 		tst::check_eq(
-			ret[1],
-			char(0xaf),
+			uint8_t(ret[1]),
+			uint8_t(0xaf),
 			[&](auto& o) {
 				o << "ret[1] = 0x" << std::hex << (unsigned(ret[1]) & 0xff);
 			},
