@@ -115,80 +115,80 @@ const tst::set set("unicode", [](tst::suite& suite) {
 			},
 			SL
 		);
-		tst::check_eq(ret[2], char(0xb5), SL);
-		tst::check_eq(ret[3], char(0), SL);
+		tst::check_eq(uint8_t(ret[2]), uint8_t(0xb5), SL);
+		tst::check_eq(uint8_t(ret[3]), uint8_t(0), SL);
 	});
 
 	suite.add("utf32_to_utf8_four_byte", []() {
 		auto ret = utki::to_utf8(0x26218); // 𦈘
 		tst::check_eq(
-			ret[0],
-			char(0xf0),
+			uint8_t(ret[0]),
+			uint8_t(0xf0),
 			[&](auto& o) {
 				o << "ret[0] = 0x" << std::hex << (unsigned(ret[0]) & 0xff);
 			},
 			SL
 		);
 		tst::check_eq(
-			ret[1],
-			char(0xa6),
+			uint8_t(ret[1]),
+			uint8_t(0xa6),
 			[&](auto& o) {
 				o << "ret[1] = 0x" << std::hex << (unsigned(ret[1]) & 0xff);
 			},
 			SL
 		);
-		tst::check_eq(ret[2], char(0x88), SL);
-		tst::check_eq(ret[3], char(0x98), SL);
-		tst::check_eq(ret[4], char(0), SL);
+		tst::check_eq(uint8_t(ret[2]), uint8_t(0x88), SL);
+		tst::check_eq(uint8_t(ret[3]), uint8_t(0x98), SL);
+		tst::check_eq(uint8_t(ret[4]), uint8_t(0), SL);
 	});
 
 	suite.add("utf32_to_utf8_five_byte", []() {
 		auto ret = utki::to_utf8(0x3FFFFFF);
 		tst::check_eq(
-			ret[0],
-			char(0xfb),
+			uint8_t(ret[0]),
+			uint8_t(0xfb),
 			[&](auto& o) {
 				o << "ret[0] = 0x" << std::hex << (unsigned(ret[0]) & 0xff);
 			},
 			SL
 		);
 		tst::check_eq(
-			ret[1],
-			char(0xbf),
+			uint8_t(ret[1]),
+			uint8_t(0xbf),
 			[&](auto& o) {
 				o << "ret[1] = 0x" << std::hex << (unsigned(ret[1]) & 0xff);
 			},
 			SL
 		);
-		tst::check_eq(ret[2], char(0xbf), SL);
-		tst::check_eq(ret[3], char(0xbf), SL);
-		tst::check_eq(ret[4], char(0xbf), SL);
-		tst::check_eq(ret[5], char(0), SL);
+		tst::check_eq(uint8_t(ret[2]), uint8_t(0xbf), SL);
+		tst::check_eq(uint8_t(ret[3]), uint8_t(0xbf), SL);
+		tst::check_eq(uint8_t(ret[4]), uint8_t(0xbf), SL);
+		tst::check_eq(uint8_t(ret[5]), uint8_t(0), SL);
 	});
 
 	suite.add("utf32_to_utf8_six_byte", []() {
 		auto ret = utki::to_utf8(0x7FFFFFFF);
 		tst::check_eq(
-			ret[0],
-			char(0xfd),
+			uint8_t(ret[0]),
+			uint8_t(0xfd),
 			[&](auto& o) {
 				o << "ret[0] = 0x" << std::hex << (unsigned(ret[0]) & 0xff);
 			},
 			SL
 		);
 		tst::check_eq(
-			ret[1],
-			char(0xbf),
+			uint8_t(ret[1]),
+			uint8_t(0xbf),
 			[&](auto& o) {
 				o << "ret[1] = 0x" << std::hex << (unsigned(ret[1]) & 0xff);
 			},
 			SL
 		);
-		tst::check_eq(ret[2], char(0xbf), SL);
-		tst::check_eq(ret[3], char(0xbf), SL);
-		tst::check_eq(ret[4], char(0xbf), SL);
-		tst::check_eq(ret[5], char(0xbf), SL);
-		tst::check_eq(ret[6], char(0), SL);
+		tst::check_eq(uint8_t(ret[2]), uint8_t(0xbf), SL);
+		tst::check_eq(uint8_t(ret[3]), uint8_t(0xbf), SL);
+		tst::check_eq(uint8_t(ret[4]), uint8_t(0xbf), SL);
+		tst::check_eq(uint8_t(ret[5]), uint8_t(0xbf), SL);
+		tst::check_eq(uint8_t(ret[6]), uint8_t(0), SL);
 	});
 
 	suite.add("utf32_to_utf8", []() {
