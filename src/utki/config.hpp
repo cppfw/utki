@@ -30,22 +30,6 @@ SOFTWARE.
 
 // NOLINTBEGIN
 
-//====================================================|
-//            C++ standard                            |
-//                                                    |
-
-#if __cplusplus > 201703L
-#	define CFG_CPP 20
-#elif __cplusplus > 201402L
-#	define CFG_CPP 17
-#elif __cplusplus > 201103L
-#	define CFG_CPP 14
-#elif __cplusplus > 199711L
-#	define CFG_CPP 11
-#else
-#	define CFG_CPP 3
-#endif
-
 //======================================|
 //            OS definitions            |
 //                                      |
@@ -163,6 +147,31 @@ SOFTWARE.
 
 #else
 #	define CFG_COMPILER CFG_COMPILER_UNKNOWN
+#endif
+
+//====================================================|
+//            C++ standard                            |
+//                                                    |
+
+// In MSVC the __cplusplus macro is not set according to the actual standard used,
+// this is done as a workaround for legacy software which relied on __cplusplus being
+// certain values. To get the actual C++ standard in MSVC the _MSVC_LANG macro should be used.
+#if CFG_COMPILER == CFG_COMPILER_MSVC
+#	define UTKI_CPP_STANDARD _MSVC_LANG
+#else
+#	define UTKI_CPP_STANDARD __cplusplus
+#endif
+
+#if UTKI_CPP_STANDARD > 201703L
+#	define CFG_CPP 20
+#elif UTKI_CPP_STANDARD > 201402L
+#	define CFG_CPP 17
+#elif UTKI_CPP_STANDARD > 201103L
+#	define CFG_CPP 14
+#elif UTKI_CPP_STANDARD > 199711L
+#	define CFG_CPP 11
+#else
+#	define CFG_CPP 3
 #endif
 
 //====================================================|
