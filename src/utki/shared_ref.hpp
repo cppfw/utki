@@ -73,7 +73,7 @@ public:
 	explicit shared_ref(std::shared_ptr<object_type> ptr) :
 		p(std::move(ptr))
 	{
-		ASSERT(this->p)
+		utki::assert(this->p, SL);
 	}
 
 public:
@@ -102,7 +102,7 @@ public:
 	shared_ref(const shared_ref<other_object_type>& sr) noexcept :
 		p(sr.to_shared_ptr())
 	{
-		ASSERT(this->p)
+		utki::assert(this->p, SL);
 	}
 
 	/**
@@ -156,8 +156,18 @@ public:
 	 */
 	constexpr object_type& get() const noexcept
 	{
-		ASSERT(this->p)
+		utki::assert(this->p, SL);
+
+		// In GCC 14.2 with -O3 and -g3, the compiler is not able to figure out that this->p is always initialized.
+		// So, we suppress the warning.
+#if CFG_COMPILER == CFG_COMPILER_GCC && CFG_COMPILER_VERSION_MAJOR == 14 && CFG_COMPILER_VERSION_MINOR == 2
+#	pragma GCC diagnostic push
+#	pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
+#endif
 		return *this->p;
+#if CFG_COMPILER == CFG_COMPILER_GCC && CFG_COMPILER_VERSION_MAJOR == 14 && CFG_COMPILER_VERSION_MINOR == 2
+#	pragma GCC diagnostic pop
+#endif
 	}
 
 	/**
