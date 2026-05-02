@@ -1,3 +1,9 @@
+libutki (1.1.294) unstable; urgency=medium
+
+  * suppress compiler warnings on gcc 14.2
+
+ -- Ivan Gagis <igagis@gmail.com>  Sat, 02 May 2026 22:14:35 +0300
+
 libutki (1.1.293) unstable; urgency=medium
 
   * fix C++ standard detection on MSVC compiler
