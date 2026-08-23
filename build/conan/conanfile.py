@@ -48,6 +48,10 @@ class UtkiConan(ConanFile):
 		if self.settings.os == "Emscripten":
 			self.run("make $MAKE_INCLUDE_DIRS_ARG config=emsc --directory=src")
 		else:
+			self.run("echo CC=$CC")
+			self.run("echo CXX=$CXX")
+			self.run("env | grep -E '^(CC|CXX|CPP|CFLAGS|CXXFLAGS)=' || true")
+			self.run("cat conanbuild.sh || true")
 			self.run("make $MAKE_INCLUDE_DIRS_ARG lint=off")
 			self.run("make $MAKE_INCLUDE_DIRS_ARG lint=off test")
 
