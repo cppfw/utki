@@ -50,13 +50,10 @@ class UtkiConan(ConanFile):
 		else:
 			self.run("echo CC=$CC")
 			self.run("echo CXX=$CXX")
-			self.run("env | grep -E '^(CC|CXX|CPP|CFLAGS|CXXFLAGS)=' || true")
-			self.run("cat conanbuild.sh || true")
 			self.run("which make")
-			self.run("type make")
+			self.run("readlink -f $(which make)")
 			self.run("make --version")
-			self.run("make -pn -f /dev/null | grep '^CXX'")
-			self.run("make -pn -f /dev/null | grep '^CC'")
+			self.run("make -p -f /dev/null 2>/dev/null | grep -E '^(CC|CXX)[[:space:]]*='")
 			self.run("make $MAKE_INCLUDE_DIRS_ARG lint=off")
 			self.run("make $MAKE_INCLUDE_DIRS_ARG lint=off test")
 
