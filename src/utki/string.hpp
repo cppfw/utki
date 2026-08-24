@@ -439,6 +439,14 @@ public:
 	char skip_inclusive_until_one_of(utki::span<const char> c);
 
 	/**
+	 * @brief Skip expected character.
+	 * Skip one character if it is same as the given character, or throw an exception otherwise.
+	 * @param c - expected character to skip.
+	 * @throw std::invalid_argument - in case the skipped character is not as expected.
+	 */
+	void skip_char(char c);
+
+	/**
 	 * @brief Read word.
 	 * Read characters until whitespace is encountered.
 	 * The parser remains pointing to the whitespace character which has ended the word.
@@ -538,7 +546,7 @@ public:
 			throw std::invalid_argument("string_parser::read_integer(): input string does not start with a number");
 		}
 
-		ASSERT(res.ptr > this->view.data())
+		utki::assert(res.ptr > this->view.data(), SL);
 
 		size_t parsed_length = res.ptr - this->view.data();
 

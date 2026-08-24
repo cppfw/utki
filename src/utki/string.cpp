@@ -387,6 +387,17 @@ char string_parser::skip_inclusive_until_one_of(utki::span<const char> c)
 	return '\0';
 }
 
+void string_parser::skip_char(char c)
+{
+	this->throw_if_empty();
+
+	if (this->view.front() != c) {
+		throw std::invalid_argument(utki::cat("unexpected character(", c, "): ", this->view.front()));
+	}
+
+	this->view = this->view.substr(1);
+}
+
 std::string_view string_parser::read_word()
 {
 	for (auto i = this->view.begin(); i != this->view.end(); i = std::next(i)) {
