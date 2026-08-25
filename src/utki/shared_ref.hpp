@@ -221,6 +221,19 @@ public:
 	{
 		return l.get() == r.get();
 	}
+
+	/**
+	 * @brief Check if the shared_ref is valueless.
+	 * The shared_ref object can only be valueless after it has been moved from.
+	 * Dereferencing a valueless shared_ref is undefined behavior.
+	 * The method mimics std::indirect::valueless_after_move().
+	 * @return true if the shared_ref object is valueless.
+	 * @return false otherwise.
+	 */
+	constexpr bool valueless_after_move() const noexcept
+	{
+		return this->p == nullptr;
+	}
 };
 
 /**

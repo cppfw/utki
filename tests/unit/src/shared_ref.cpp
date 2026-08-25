@@ -185,6 +185,8 @@ const tst::set set("shared_ref", [](tst::suite& suite) {
 		// 'a' should remain invalid
 		// NOLINTNEXTLINE(clang-analyzer-cplusplus.Move)
 		tst::check(!a.to_shared_ptr(), SL); // NOLINT(bugprone-use-after-move)
+		// NOLINTNEXTLINE(clang-analyzer-cplusplus.Move)
+		tst::check(a.valueless_after_move(), SL); // NOLINT(bugprone-use-after-move)
 
 		tst::check_eq(b.get().a_0, 13, SL);
 	});
@@ -203,6 +205,8 @@ const tst::set set("shared_ref", [](tst::suite& suite) {
 		// 'a' should remain invalid
 		// NOLINTNEXTLINE(clang-analyzer-cplusplus.Move)
 		tst::check(!a.to_shared_ptr(), SL); // NOLINT(bugprone-use-after-move)
+		// NOLINTNEXTLINE(clang-analyzer-cplusplus.Move)
+		tst::check(a.valueless_after_move(), SL); // NOLINT(bugprone-use-after-move)
 
 		tst::check_eq(b.get().a_0, 13, SL);
 	});
