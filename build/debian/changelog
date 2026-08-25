@@ -1,3 +1,9 @@
+libutki (1.1.296) unstable; urgency=medium
+
+  * add shared_ref::valueless_after_move()
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 25 Aug 2026 12:58:06 +0300
+
 libutki (1.1.295) unstable; urgency=medium
 
   * no assert in signal destructor
