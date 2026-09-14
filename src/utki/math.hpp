@@ -54,6 +54,11 @@ constexpr number_type sign(number_type n) noexcept
 }
 
 /**
+ * @brief The 0.5 constant.
+ */
+constexpr auto half = 0.5;
+
+/**
  * @brief The pi number constant.
  */
 constexpr auto pi = 3.14159265358979323846264338327950288;
