@@ -80,7 +80,17 @@ public:
 	// there should be no default constructor, as shared_ref cannot be nullptr
 	shared_ref() = delete;
 
+	// In GCC 14.2 with -O3 and -g3, the compiler is not able to figure out that this->p is always initialized.
+	// So, we suppress the warning.
+#if CFG_COMPILER == CFG_COMPILER_GCC && CFG_COMPILER_VERSION_MAJOR == 14 && CFG_COMPILER_VERSION_MINOR == 2
+#	pragma GCC diagnostic push
+#	pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
+#endif
 	shared_ref(const shared_ref&) = default;
+#if CFG_COMPILER == CFG_COMPILER_GCC && CFG_COMPILER_VERSION_MAJOR == 14 && CFG_COMPILER_VERSION_MINOR == 2
+#	pragma GCC diagnostic pop
+#endif
+
 	shared_ref& operator=(const shared_ref&) = default;
 
 	shared_ref(shared_ref&& r) = default;
