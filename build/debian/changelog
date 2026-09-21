@@ -1,3 +1,9 @@
+libutki (1.1.298) unstable; urgency=medium
+
+  * suppress false-positive gcc warning with -O3
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 21 Sep 2026 19:42:35 +0300
+
 libutki (1.1.297) unstable; urgency=medium
 
   * add utki::half
