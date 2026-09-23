@@ -669,6 +669,7 @@ std::string to_string(
 		}
 	}
 
+	// TODO: for float types, use to_chars overload without conversion base. Add unit tests.
 	auto res = std::to_chars(
 		&*begin, //
 		utki::end_pointer(buf),
