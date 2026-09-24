@@ -669,13 +669,23 @@ std::string to_string(
 		}
 	}
 
-	// TODO: for float types, use to_chars overload without conversion base. Add unit tests.
-	auto res = std::to_chars(
-		&*begin, //
-		utki::end_pointer(buf),
-		value,
-		to_int(conversion_base)
-	);
+	auto res = [&](){
+		if constexpr (std::is_floating_point_v<number_type>) {
+			// The floating point overload of std::to_chars() does not take a conversion base.
+			return std::to_chars(
+				&*begin, //
+				utki::end_pointer(buf),
+				value
+			);
+		} else {
+			return std::to_chars(
+				&*begin, //
+				utki::end_pointer(buf),
+				value,
+				to_int(conversion_base)
+			);
+		}
+	}();
 
 	if (res.ec != std::errc()) {
 		// std::to_chars() returned error
