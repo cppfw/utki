@@ -82,6 +82,7 @@ private:
 	static_assert(int(enum_type::enum_size) >= 0, "enumeration must define enum_size item");
 	static_assert(unsigned(enum_type::enum_size) > 0, "enumeration must define at least one item");
 
+	// The default constructor of std::bitset sets all bits to 0.
 	std::bitset<size_t(enum_type::enum_size)> bitset;
 
 public:
@@ -140,7 +141,7 @@ public:
 	 */
 	bool get(enum_type flag) const noexcept
 	{
-		ASSERT(flag < enum_type::enum_size)
+		utki::assert(flag < enum_type::enum_size, SL);
 		return this->bitset[size_t(flag)];
 	}
 
@@ -152,7 +153,7 @@ public:
 	 */
 	flags& set(enum_type flag, bool value = true) noexcept
 	{
-		ASSERT(flag < enum_type::enum_size)
+		utki::assert(flag < enum_type::enum_size, SL);
 		// flag index cannot exceed the bitset size since
 		// it is taken from enum, so just wrap it into a
 		// try-catch and ignore the exception to silence linter
@@ -160,7 +161,7 @@ public:
 			this->bitset.set(size_t(flag), value);
 			// NOLINTNEXTLINE(bugprone-empty-catch)
 		} catch (...) {
-			ASSERT(false)
+			utki::assert(false, SL);
 		}
 		return *this;
 	}
@@ -187,7 +188,7 @@ public:
 	 */
 	flags& clear(enum_type flag) noexcept
 	{
-		ASSERT(flag < enum_type::enum_size)
+		utki::assert(flag < enum_type::enum_size, SL);
 		// flag index cannot exceed the bitset size since
 		// it is taken from enum, so just wrap it into a
 		// try-catch and ignore the exception to silence linter
@@ -195,7 +196,7 @@ public:
 			this->bitset.reset(size_t(flag));
 			// NOLINTNEXTLINE(bugprone-empty-catch)
 		} catch (...) {
-			ASSERT(false)
+			utki::assert(false, SL);
 		}
 		return *this;
 	}
