@@ -669,7 +669,7 @@ std::string to_string(
 		}
 	}
 
-	auto res = [&](){
+	auto res = [&]() {
 		if constexpr (std::is_floating_point_v<number_type>) {
 			// The floating point overload of std::to_chars() does not take a conversion base.
 			return std::to_chars(
