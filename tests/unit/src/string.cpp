@@ -1039,18 +1039,7 @@ const tst::set set("string", [](tst::suite& suite) {
 		// implementation-defined, so verify correctness by parsing the result back
 		// with string_parser and checking it round-trips to the original value.
 
-		const float float_vals[] = {
-			0.0f,
-			1.0f,
-			-1.0f,
-			1.5f,
-			-2.5f,
-			3.14f,
-			0.1f,
-			100.0f,
-			1.0e7f,
-			1.0e-7f
-		};
+		const float float_vals[] = {0.0f, 1.0f, -1.0f, 1.5f, -2.5f, 3.14f, 0.1f, 100.0f, 1.0e7f, 1.0e-7f};
 		for (auto v : float_vals) {
 			auto s = utki::to_string(v);
 
@@ -1063,18 +1052,7 @@ const tst::set set("string", [](tst::suite& suite) {
 			tst::check_eq(parsed, v, SL);
 		}
 
-		const double double_vals[] = {
-			0.0,
-			1.0,
-			-1.0,
-			1.5,
-			-2.5,
-			3.14,
-			0.1,
-			100.0,
-			1.0e7,
-			1.0e-7
-		};
+		const double double_vals[] = {0.0, 1.0, -1.0, 1.5, -2.5, 3.14, 0.1, 100.0, 1.0e7, 1.0e-7};
 		for (auto v : double_vals) {
 			auto s = utki::to_string(v);
 
@@ -1090,18 +1068,7 @@ const tst::set set("string", [](tst::suite& suite) {
 		// long double is not round-tripped here: the only supported parse-back path
 		// (fast_float::from_chars) is not reliable for long double, so we only check
 		// that to_string() produces a non-empty string for this type.
-		const long double long_double_vals[] = {
-			0.0L,
-			1.0L,
-			-1.0L,
-			1.5L,
-			-2.5L,
-			3.14L,
-			0.1L,
-			100.0L,
-			1.0e7L,
-			1.0e-7L
-		};
+		const long double long_double_vals[] = {0.0L, 1.0L, -1.0L, 1.5L, -2.5L, 3.14L, 0.1L, 100.0L, 1.0e7L, 1.0e-7L};
 		for (auto v : long_double_vals) {
 			auto s = utki::to_string(v);
 
