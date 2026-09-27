@@ -56,7 +56,8 @@ public:
 	~signal()
 	{
 		using namespace std::string_view_literals;
-		utki::logcat_debug("utki::signal::~signal(): not empty: "sv, this->size(), " callbacks connected\n"sv);
+		// TODO: make an assert?
+		utki::logcat_debug("utki::signal::~signal(): "sv, this->size(), " callbacks connected\n"sv);
 	}
 
 	/**
