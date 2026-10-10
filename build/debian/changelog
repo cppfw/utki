@@ -1,3 +1,9 @@
+libutki (1.1.299) unstable; urgency=medium
+
+  * add float to_string
+
+ -- Ivan Gagis <igagis@gmail.com>  Sat, 10 Oct 2026 15:10:20 +0300
+
 libutki (1.1.298) unstable; urgency=medium
 
   * suppress false-positive gcc warning with -O3
