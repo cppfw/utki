@@ -53,12 +53,12 @@ private:
 	std::list<callback_type> callbacks;
 
 public:
-	// signal is not copyable nor movable
+	// explicit special members: copyable and movable
 	signal() = default;
-	signal(const signal&) = delete;
-	signal& operator=(const signal&) = delete;
-	signal(signal&&) = delete;
-	signal& operator=(signal&&) = delete;
+	signal(const signal&) = default;
+	signal& operator=(const signal&) = default;
+	signal(signal&&) = default;
+	signal& operator=(signal&&) = default;
 
 	~signal()
 	{
