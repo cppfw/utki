@@ -44,6 +44,22 @@ SOFTWARE.
 #		define _WINSOCK_H 1234567890
 #	endif
 
+// Define the minimum Windows API version before including the windows.h header.
+// By default we target Windows 10.
+// Without this both the MS SDK and mingw-w64 headers default to the Windows XP
+// API level (0x0502) and do not declare functions like GetDpiForWindow() and
+// SetProcessDpiAwarenessContext().
+// Both WINVER and _WIN32_WINNT must be defined: MS SDK headers gate the API
+// availability on _WIN32_WINNT, while mingw-w64 headers gate it on WINVER
+// (and do not derive WINVER from _WIN32_WINNT, their default is 0x0502).
+#	if !defined(WINVER)
+#		define WINVER 0x0A00 // Windows 10
+#	endif
+
+#	if !defined(_WIN32_WINNT)
+#		define _WIN32_WINNT 0x0A00 // Windows 10
+#	endif
+
 #	include <windows.h>
 
 #	if (_WINSOCKAPI_ + 0) // if defined and is not empty
