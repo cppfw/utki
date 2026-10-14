@@ -140,7 +140,7 @@ struct zip_view {
 
 	public:
 		iterator(decltype(iters) iters) :
-			iters(iters)
+			iters(std::move(iters))
 		{}
 
 		bool operator!=(const iterator& i) const noexcept

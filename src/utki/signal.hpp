@@ -53,6 +53,13 @@ private:
 	std::list<callback_type> callbacks;
 
 public:
+	// signal is not copyable nor movable
+	signal() = default;
+	signal(const signal&) = delete;
+	signal& operator=(const signal&) = delete;
+	signal(signal&&) = delete;
+	signal& operator=(signal&&) = delete;
+
 	~signal()
 	{
 		using namespace std::string_view_literals;

@@ -50,6 +50,15 @@ template <typename... streamable_type>
 void logcat(const streamable_type&... s)
 {
 	log([&](std::ostream& o) {
+		// cppcoreguidelines-pro-bounds-array-to-pointer-decay false positive, exact diagnostic:
+		// "do not implicitly decay an array into a pointer; consider using gsl::array_view or an explicit
+		// cast instead", located at the fold expression `o << ... << s`. logcat() is a variadic template, so for a call like
+		// logcat("text") each `s` is deduced as a `const char (&)[N]` reference, and `o << s` decays it
+		// to the `const char*` overload of `operator<<`. The check cannot see through the template
+		// parameter and warns about the potential decay. The decay is the intended and only way to
+		// stream a C-string literal (std::basic_ostream has no std::string_view overload), and the
+		// literal's static storage duration outlives the use, so there is no dangling pointer risk.
+		// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-array-to-pointer-decay, "streaming a string literal requires decay to the const char* iostream overload; static lifetime rules out dangling")
 		(o << ... << s);
 		o.flush();
 	});

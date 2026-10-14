@@ -91,11 +91,14 @@ public:
 	 */
 	template < //
 		typename other_object_type,
+		// NOLINTNEXTLINE(modernize-use-constraints, "use enable_if instead of C++20 requires clause to keep the header C++17-compliant")
 		typename std::enable_if_t< //
 			std::is_convertible_v< //
 				other_object_type*,
 				object_type*>,
 			bool> = true>
+	// the parameter's contents are moved (sr.p), leaving sr moved-from, which is the intended ownership transfer
+	// NOLINTNEXTLINE(cppcoreguidelines-rvalue-reference-param-not-moved, "the parameter is effectively moved via its member")
 	unique_ref(unique_ref<other_object_type>&& sr) noexcept :
 		p(std::move(sr.p))
 	{

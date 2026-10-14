@@ -483,6 +483,7 @@ public:
 		if constexpr (std::is_floating_point_v<number_type>) {
 			// TODO: use std::from_chars() when float/double/long double versions of it are well supported by compilers
 			res = utki::from_chars(
+				// NOLINTNEXTLINE(bugprone-suspicious-stringview-data-usage, "the range end pointer is passed separately, data is not used as a C-string")
 				this->view.data(), //
 				utki::end_pointer(this->view),
 				value
@@ -535,6 +536,7 @@ public:
 			}
 
 			res = std::from_chars(
+				// NOLINTNEXTLINE(bugprone-suspicious-stringview-data-usage, "the range end pointer is passed separately, data is not used as a C-string")
 				this->view.data(), //
 				utki::end_pointer(this->view),
 				value,

@@ -363,6 +363,7 @@ struct is_flaggable : public std::false_type {};
 } // namespace utki
 
 template <class enum_type>
+// NOLINTNEXTLINE(modernize-use-constraints, "use enable_if instead of C++20 requires clause to keep the header C++17-compliant")
 typename std::enable_if_t<
 	std::is_enum_v<enum_type>
 		// TODO: add std::is_scoped_enum check when C++'23 is widely available

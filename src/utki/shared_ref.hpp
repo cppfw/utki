@@ -104,6 +104,7 @@ public:
 	 */
 	template < //
 		typename other_object_type,
+		// NOLINTNEXTLINE(modernize-use-constraints, "use enable_if instead of C++20 requires clause to keep the header C++17-compliant")
 		typename std::enable_if_t< //
 			std::is_convertible_v< //
 				other_object_type*,

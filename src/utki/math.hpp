@@ -61,6 +61,7 @@ constexpr auto half = 0.5;
 /**
  * @brief The pi number constant.
  */
+// NOLINTNEXTLINE(modernize-use-std-numbers, "std::numbers is C++20, keep utki C++17-compliant")
 constexpr auto pi = 3.14159265358979323846264338327950288;
 
 /**
@@ -98,6 +99,7 @@ constexpr number_type rad_to_deg(number_type rad) noexcept
 /**
  * @brief Natural logarithm of 2 constant, i.e. ln(2).
  */
+// NOLINTNEXTLINE(modernize-use-std-numbers, "std::numbers is C++20, keep utki C++17-compliant")
 constexpr auto log_2 = 0.693147180559945309417232121458;
 
 /**
