@@ -61,6 +61,7 @@ const tst::set set("signal", [](tst::suite& suite) {
 		utki::signal<> dst = std::move(src);
 
 		// callbacks are transferred, the source is left empty
+		// NOLINTNEXTLINE(bugprone-use-after-move, "checking the post-move state of src is the point of this test")
 		tst::check(src.empty(), SL);
 		tst::check_eq(dst.size(), size_t(1), SL);
 
@@ -81,6 +82,7 @@ const tst::set set("signal", [](tst::suite& suite) {
 		dst = std::move(src);
 
 		// callbacks are transferred, the source is left empty
+		// NOLINTNEXTLINE(bugprone-use-after-move, "checking the post-move state of src is the point of this test")
 		tst::check(src.empty(), SL);
 		tst::check_eq(dst.size(), size_t(1), SL);
 
