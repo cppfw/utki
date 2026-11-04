@@ -962,6 +962,41 @@ const tst::set set("string", [](tst::suite& suite) {
 		// tst::check(res.ec == std::errc(), SL);
 	});
 
+	suite.add("string_parser_read_number_integer_overflow_throws", []() {
+		// a number that does not fit into the target integral type throws std::out_of_range
+
+		bool thrown = false;
+		{
+			// 20 digits, larger than uint64_t max
+			utki::string_parser p("18446744073709551616");
+			try {
+				p.read_number<uint64_t>();
+			} catch (std::out_of_range&) {
+				thrown = true;
+			}
+		}
+		tst::check(thrown, SL);
+
+		thrown = false;
+		{
+			// a too small (negative) number for a signed type also throws
+			utki::string_parser p("-9223372036854775809");
+			try {
+				p.read_number<int64_t>();
+			} catch (std::out_of_range&) {
+				thrown = true;
+			}
+		}
+		tst::check(thrown, SL);
+
+		// values that fit are still parsed normally
+		{
+			utki::string_parser p("42");
+			auto n = p.read_number<int>();
+			tst::check_eq(n, 42, SL);
+		}
+	});
+
 	suite.add<std::pair<size_t, std::string>>(
 		"to_string__size_t",
 		// clang-format off

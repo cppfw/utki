@@ -469,6 +469,8 @@ public:
 	 * The parser remains pointing to the character which stopped parsing the number.
 	 * @tparam number_type - type of the number to read. Can be one of C++ integral or floating point types.
 	 * @return read number.
+	 * @throw std::invalid_argument - in case the input does not start with a number.
+	 * @throw std::out_of_range - in case the number does not fit into number_type (integral types only).
 	 */
 	// skips leading whitespaces
 	template <class number_type>
@@ -555,13 +557,20 @@ public:
 		this->view = this->view.substr(parsed_length);
 
 		if (res.ec == std::errc::result_out_of_range) {
-			// Currently, std::from_chars(float|double) returns std::errc::result_out_of_range also
-			// for cases of very small numbers below the floating type precision.
-			// In my opinion, too small numbers are not out of floating point type range.
-			// At the moment, there is no compiler-independent way to tell if it was due to too big or too small number.
-			// See https://github.com/fastfloat/fast_float/issues/261 for discussion.
-			// So, we just return 0 for both cases.
-			return {0};
+			if constexpr (std::is_floating_point_v<number_type>) {
+				// Currently, std::from_chars(float|double) returns std::errc::result_out_of_range also
+				// for cases of very small numbers below the floating type precision.
+				// In my opinion, too small numbers are not out of floating point type range.
+				// At the moment, there is no compiler-independent way to tell if it was due to too big or too small number.
+				// See https://github.com/fastfloat/fast_float/issues/261 for discussion.
+				// So, we just return 0 for both cases.
+				return {0};
+			} else {
+				// For integral types, result_out_of_range means the number does not fit
+				// into number_type, so we throw to make the error explicit
+				// instead of silently returning 0.
+				throw std::out_of_range("string_parser::read_number(): number does not fit into the target type");
+			}
 		}
 
 		if (res.ec != std::errc()) {
