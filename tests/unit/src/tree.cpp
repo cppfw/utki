@@ -178,7 +178,13 @@ const tst::set set("tree", [](tst::suite& suite) {
 		auto t = utki::tree<wrapper>(wrapper(str));
 
 		// this should use template tree::operator==()
-		tst::check(t == str.c_str(), SL) << "t = " << t.value.str;
+		tst::check(
+			t == str.c_str(),
+			[&](auto& o) {
+				o << "t = " << t.value.str;
+			},
+			SL
+		);
 	});
 
 	suite.add("tree_to_tree_comparison", []() {

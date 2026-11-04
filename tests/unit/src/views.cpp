@@ -38,11 +38,22 @@ const tst::set set("views", [](tst::suite& suite) {
 		std::vector<std::string> expected = {"031"s, "142"s, "253"s};
 
 		tst::check_eq(result.size(), expected.size(), SL);
-		tst::check(result == expected, SL)
-			<< "[0] = " << result[0] << ", [1] = " << result[1] << ", [2] = " << result[2];
+		tst::check(
+			result == expected,
+			[&](auto& o) {
+				o << "[0] = " << result[0] << ", [1] = " << result[1] << ", [2] = " << result[2];
+			},
+			SL
+		);
 
 		std::vector<int> vec_expected = {1, 2, 3, 3, 4, 5, 6};
-		tst::check(vec == vec_expected, SL) << vec[0] << vec[1] << vec[2] << vec[3] << vec[4] << vec[5] << vec[6];
+		tst::check(
+			vec == vec_expected,
+			[&](auto& o) {
+				o << vec[0] << vec[1] << vec[2] << vec[3] << vec[4] << vec[5] << vec[6];
+			},
+			SL
+		);
 	});
 
 	suite.add("zip_view__const", []() {
@@ -61,8 +72,13 @@ const tst::set set("views", [](tst::suite& suite) {
 		std::vector<std::string> expected = {"031"s, "142"s, "253"s};
 
 		tst::check_eq(result.size(), expected.size(), SL);
-		tst::check(result == expected, SL)
-			<< "[0] = " << result[0] << ", [1] = " << result[1] << ", [2] = " << result[2];
+		tst::check(
+			result == expected,
+			[&](auto& o) {
+				o << "[0] = " << result[0] << ", [1] = " << result[1] << ", [2] = " << result[2];
+			},
+			SL
+		);
 	});
 
 	suite.add("zip_view__const_non_const_mix", []() {
@@ -81,8 +97,13 @@ const tst::set set("views", [](tst::suite& suite) {
 		std::vector<std::string> expected = {"031"s, "142"s, "253"s};
 
 		tst::check_eq(result.size(), expected.size(), SL);
-		tst::check(result == expected, SL)
-			<< "[0] = " << result[0] << ", [1] = " << result[1] << ", [2] = " << result[2];
+		tst::check(
+			result == expected,
+			[&](auto& o) {
+				o << "[0] = " << result[0] << ", [1] = " << result[1] << ", [2] = " << result[2];
+			},
+			SL
+		);
 	});
 
 	suite.add("zip_view__iterate_over_span", []() {
