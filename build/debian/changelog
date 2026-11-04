@@ -1,3 +1,9 @@
+libutki (1.1.301) unstable; urgency=medium
+
+  * detect out of range when parsing integral numbers
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 05 Nov 2026 00:39:50 +0200
+
 libutki (1.1.300) unstable; urgency=medium
 
   * windows: allow Windows 10 APIs
