@@ -1,3 +1,9 @@
+libutki (1.1.302) unstable; urgency=medium
+
+  * add base64_encode()
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 10 Nov 2026 16:35:52 +0200
+
 libutki (1.1.301) unstable; urgency=medium
 
   * detect out of range when parsing integral numbers
