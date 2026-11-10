@@ -29,11 +29,16 @@ SOFTWARE.
 #pragma once
 
 #include <cstdint>
+#include <string>
 #include <string_view>
 #include <vector>
+
+#include "span.hpp"
 
 namespace utki {
 
 std::vector<uint8_t> base64_decode(std::string_view str);
+
+std::string base64_encode(utki::span<const uint8_t> data);
 
 } // namespace utki

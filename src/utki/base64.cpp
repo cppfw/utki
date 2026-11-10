@@ -137,3 +137,47 @@ std::vector<uint8_t> utki::base64_decode(std::string_view str)
 
 	return ret;
 }
+
+std::string utki::base64_encode(utki::span<const uint8_t> data)
+{
+	constexpr const std::string_view encode_table = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+	constexpr auto bits_per_char = 6;
+	constexpr auto char_mask = 0x3Fu;
+	constexpr auto bytes_per_group = 3;
+	constexpr auto chars_per_group = 4;
+
+	std::string ret;
+	ret.reserve((data.size() + bytes_per_group - 1) / bytes_per_group * chars_per_group);
+
+	size_t i = 0;
+	while (i + bytes_per_group <= data.size()) {
+		const auto triple = //
+			(uint32_t(data[i]) << utki::byte_bits * 2) | //
+			(uint32_t(data[i + 1]) << utki::byte_bits) | //
+			uint32_t(data[i + 2]);
+		ret.push_back(encode_table[(triple >> bits_per_char * 3) & char_mask]);
+		ret.push_back(encode_table[(triple >> bits_per_char * 2) & char_mask]);
+		ret.push_back(encode_table[(triple >> bits_per_char) & char_mask]);
+		ret.push_back(encode_table[triple & char_mask]);
+		i += bytes_per_group;
+	}
+
+	const auto remaining = data.size() - i;
+	if (remaining == 1) {
+		const auto b = uint32_t(data[i]) << utki::byte_bits * 2;
+		ret.push_back(encode_table[(b >> bits_per_char * 3) & char_mask]);
+		ret.push_back(encode_table[(b >> bits_per_char * 2) & char_mask]);
+		ret.push_back('=');
+		ret.push_back('=');
+	} else if (remaining == 2) {
+		const auto b = //
+			(uint32_t(data[i]) << utki::byte_bits * 2) | //
+			(uint32_t(data[i + 1]) << utki::byte_bits);
+		ret.push_back(encode_table[(b >> bits_per_char * 3) & char_mask]);
+		ret.push_back(encode_table[(b >> bits_per_char * 2) & char_mask]);
+		ret.push_back(encode_table[(b >> bits_per_char) & char_mask]);
+		ret.push_back('=');
+	}
+
+	return ret;
+}
