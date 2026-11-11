@@ -75,13 +75,18 @@ protected:
 			throw std::logic_error("singleton::singleton(): instance is already created");
 		}
 
-		instance_owner_type::instance.reset(static_cast<object_type*>(this));
+		// Note, the object is not fully constructed at this point, so a downcast to object_type would be
+		// undefined behavior. That is why we store a pointer to the base subobject (see instance_type)
+		// and only downcast it in inst(), when the object is guaranteed to be fully constructed.
+		instance_owner_type::instance.reset(this);
 	}
 
 	using singleton_type = intrusive_singleton<object_type>;
 
 	// use unique_ptr because it is automatically initialized to nullptr. Automatic object destruction is not used.
-	using instance_type = std::unique_ptr<object_type>;
+	// Note, the pointer is to the base subobject, not to the most derived object. The unique_ptr is allowed to
+	// delete the object through the base subobject pointer, because this class has a virtual destructor.
+	using instance_type = std::unique_ptr<intrusive_singleton<object_type, instance_owner_type>>;
 
 public:
 	// NOLINTNEXTLINE(bugprone-crtp-constructor-accessibility, "false positive")
@@ -110,15 +115,21 @@ public:
 	 */
 	static object_type& inst()
 	{
-		ASSERT(is_created(), [](auto& o) {
-			o << "intrusive_singleton::inst(): singleton object is not created";
-		})
-		return *instance_owner_type::instance;
+		utki::assert(
+			is_created(),
+			[](auto& o) {
+				o << "intrusive_singleton::inst(): singleton object is not created";
+			},
+			SL
+		);
+		// Note, the object is fully constructed at this point, so the downcast is well defined.
+		return *static_cast<object_type*>(instance_owner_type::instance.get());
 	}
 
 	virtual ~intrusive_singleton() noexcept
 	{
-		ASSERT(instance_owner_type::instance.get() == static_cast<object_type*>(this))
+		// Note, the comparison is between pointers to the base subobject, so no downcast is needed.
+		utki::assert(instance_owner_type::instance.get() == this, SL);
 		[[maybe_unused]] auto ptr = instance_owner_type::instance.release();
 	}
 };
