@@ -34,7 +34,14 @@ SOFTWARE.
 
 namespace utki {
 
-// TODO: doxygen all
+/**
+ * @brief Range adapter for iterating over all items of a scoped enumeration.
+ * Allows a scoped enum to be used in a range-based for loop by exposing a
+ * begin/end iterator pair.
+ * The enum type must be a scoped enum and must define a `enum_size` item as
+ * its last enumerator to indicate the number of items.
+ * @tparam enum_type - the scoped enumeration type to iterate over.
+ */
 template <typename enum_type>
 class enum_iterable
 {
@@ -47,6 +54,9 @@ class enum_iterable
 	);
 
 public:
+	/**
+	 * @brief Iterator over the items of the enumeration.
+	 */
 	class iterator
 	{
 		friend class enum_iterable;
@@ -64,16 +74,29 @@ public:
 		using reference = value_type;
 		using pointer = void;
 
+		/**
+		 * @brief Compare with another iterator.
+		 * @param i - other iterator.
+		 * @return true if the iterators do not point to the same item.
+		 */
 		constexpr bool operator!=(const iterator& i) const noexcept
 		{
 			return this->e != i.e;
 		}
 
+		/**
+		 * @brief Dereference the iterator.
+		 * @return The enumeration value the iterator points to.
+		 */
 		constexpr value_type operator*() const noexcept
 		{
 			return this->e;
 		}
 
+		/**
+		 * @brief Advance the iterator to the next enumeration item.
+		 * @return reference to this iterator.
+		 */
 		constexpr iterator& operator++() noexcept
 		{
 			this->e = enum_type(std::underlying_type_t<enum_type>(this->e) + 1);
@@ -85,16 +108,28 @@ public:
 
 	using reverse_iterator = std::reverse_iterator<iterator>;
 
+	/**
+	 * @brief Get the number of items in the enumeration.
+	 * @return number of items.
+	 */
 	constexpr size_t size() const noexcept
 	{
 		return size_t(enum_type::enum_size);
 	}
 
+	/**
+	 * @brief Get an iterator to the first item.
+	 * @return iterator to the first item.
+	 */
 	constexpr iterator begin() const noexcept
 	{
 		return iterator(enum_type(0));
 	}
 
+	/**
+	 * @brief Get an iterator past the last item.
+	 * @return iterator past the last item.
+	 */
 	constexpr iterator end() const noexcept
 	{
 		return iterator(enum_type::enum_size);

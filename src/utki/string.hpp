@@ -280,16 +280,34 @@ std::vector<std::string> word_wrap(
 	unsigned width
 );
 
-// TODO: doxygen
+/**
+ * @brief Base (radix) for integer number conversion.
+ */
 enum class integer_base {
 	// WARNING: add new items to the bottom of the enum to preserve existing item's values
+	/**
+	 * @brief Binary base (2).
+	 */
 	bin,
+	/**
+	 * @brief Octal base (8).
+	 */
 	oct,
+	/**
+	 * @brief Decimal base (10).
+	 */
 	dec,
+	/**
+	 * @brief Hexadecimal base (16).
+	 */
 	hex
 };
 
-// TODO: doxygen
+/**
+ * @brief Get the numeric base value for a given integer conversion base.
+ * @param conversion_base - the integer conversion base.
+ * @return the numeric base value (2, 8, 10 or 16).
+ */
 inline constexpr int to_int(integer_base conversion_base)
 {
 	const int bin_base = 2;

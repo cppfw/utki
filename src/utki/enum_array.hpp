@@ -43,7 +43,6 @@ namespace utki {
  *                     Must be scoped enum.
  *                     Must define 'enum_size' item as its last item.
  */
-// TODO: doxygen all
 template <typename element_type, typename enum_type>
 class enum_array : public std::array<element_type, size_t(enum_type::enum_size)>
 {
@@ -56,8 +55,15 @@ class enum_array : public std::array<element_type, size_t(enum_type::enum_size)>
 	);
 
 public:
+	/**
+	 * @brief Type of the underlying std::array.
+	 */
 	using base_type = std::array<element_type, size_t(enum_type::enum_size)>;
 
+	/**
+	 * @brief Zip the array with the enumeration it is indexed by.
+	 * @return a view pairing each element with its corresponding enum value.
+	 */
 	auto zip_with_enum()
 	{
 		return utki::views::zip(
@@ -66,6 +72,10 @@ public:
 		);
 	}
 
+	/**
+	 * @brief Zip the array with the enumeration it is indexed by.
+	 * @return a view pairing each element with its corresponding enum value.
+	 */
 	auto zip_with_enum() const
 	{
 		return utki::views::zip(
@@ -76,12 +86,22 @@ public:
 
 	using base_type::operator[];
 
+	/**
+	 * @brief Get an element by enumeration index.
+	 * @param i - enumeration index.
+	 * @return reference to the element at the given index.
+	 */
 	element_type& operator[](enum_type i) noexcept
 	{
 		ASSERT(size_t(i) < this->size())
 		return this->operator[](size_t(i));
 	}
 
+	/**
+	 * @brief Get an element by enumeration index.
+	 * @param i - enumeration index.
+	 * @return const reference to the element at the given index.
+	 */
 	const element_type& operator[](enum_type i) const noexcept
 	{
 		ASSERT(size_t(i) < this->size())
