@@ -104,8 +104,14 @@ public:
 		}
 	};
 
+	/**
+	 * @brief Const iterator type.
+	 */
 	using const_iterator = iterator;
 
+	/**
+	 * @brief Reverse iterator type.
+	 */
 	using reverse_iterator = std::reverse_iterator<iterator>;
 
 	/**
@@ -135,31 +141,55 @@ public:
 		return iterator(enum_type::enum_size);
 	}
 
+	/**
+	 * @brief Get a const iterator to the first item.
+	 * @return const iterator to the first item.
+	 */
 	constexpr iterator cbegin() const noexcept
 	{
 		return this->begin();
 	}
 
+	/**
+	 * @brief Get a const iterator past the last item.
+	 * @return const iterator past the last item.
+	 */
 	constexpr iterator cend() const noexcept
 	{
 		return this->end();
 	}
 
+	/**
+	 * @brief Get a const reverse iterator to the last item.
+	 * @return const reverse iterator to the last item.
+	 */
 	constexpr reverse_iterator crbegin() const
 	{
 		return const_reverse_iterator(this->cend());
 	}
 
+	/**
+	 * @brief Get a const reverse iterator before the first item.
+	 * @return const reverse iterator before the first item.
+	 */
 	constexpr reverse_iterator crend() const
 	{
 		return const_reverse_iterator(this->cbegin());
 	}
 
+	/**
+	 * @brief Get a reverse iterator to the last item.
+	 * @return reverse iterator to the last item.
+	 */
 	constexpr reverse_iterator rbegin() const
 	{
 		return reverse_iterator(this->end());
 	}
 
+	/**
+	 * @brief Get a reverse iterator before the first item.
+	 * @return reverse iterator before the first item.
+	 */
 	constexpr reverse_iterator rend() const
 	{
 		return reverse_iterator(this->begin());
