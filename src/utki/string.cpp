@@ -111,7 +111,9 @@ std::string utki::make_string_va_list(const char* format, va_list args)
 			break;
 		}
 
+#ifdef DEBUG
 		utki::assert(i < 1, SL);
+#endif
 	}
 
 	return ret;
