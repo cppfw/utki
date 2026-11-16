@@ -439,10 +439,10 @@ uint8_t* serialize_be(unsigned_type value, uint8_t* out_buf) noexcept
 	unsigned index = sizeof(value);
 	auto span = utki::make_span(out_buf, sizeof(value));
 	for (auto& b : span) {
-		ASSERT(index > 0)
+		utki::assert(index > 0, SL);
 		--index;
 		auto num_bits_to_shift = byte_bits * index;
-		ASSERT(num_bits_to_shift <= sizeof(value) * byte_bits)
+		utki::assert(num_bits_to_shift <= sizeof(value) * byte_bits, SL);
 		// NOLINTNEXTLINE(clang-analyzer-core.UndefinedBinaryOperatorResult, clang-analyzer-core.BitwiseShift)
 		b = uint8_t((value >> num_bits_to_shift) & byte_mask);
 	}
@@ -503,7 +503,7 @@ unsigned_type deserialize_be(const uint8_t* buf) noexcept
 
 	for (auto b : utki::make_span(buf, sizeof(ret))) {
 		--index;
-		ASSERT(index <= sizeof(ret))
+		utki::assert(index <= sizeof(ret), SL);
 		// NOLINTNEXTLINE(clang-analyzer-core.BitwiseShift)
 		ret |= (decltype(ret)(b) << (byte_bits * index));
 	}

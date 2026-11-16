@@ -16,6 +16,7 @@ class test_class
 
 namespace {
 const tst::set set("debug", [](tst::suite& suite) {
+	// these tests exercise the ASSERT macro itself, so they intentionally keep using ASSERT
 	suite.add("assert_macro", []() {
 		int a = 13;
 		ASSERT(a == 13)

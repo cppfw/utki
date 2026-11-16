@@ -97,8 +97,8 @@ std::vector<uint8_t> utki::base64_decode(std::string_view str)
 
 	auto i = str.begin();
 	for (size_t counter = 0; counter != num_quads; ++counter) {
-		ASSERT(i < str.end())
-		ASSERT(std::next(i, 4) <= str.end())
+		utki::assert(i < str.end(), SL);
+		utki::assert(std::next(i, 4) <= str.end(), SL);
 		auto a = *i;
 		i = std::next(i);
 		auto b = *i;
@@ -112,7 +112,7 @@ std::vector<uint8_t> utki::base64_decode(std::string_view str)
 		ret.insert(ret.end(), bytes.begin(), bytes.end());
 	}
 
-	ASSERT(i <= str.end())
+	utki::assert(i <= str.end(), SL);
 
 	if (i == str.end()) {
 		return ret;
@@ -120,7 +120,7 @@ std::vector<uint8_t> utki::base64_decode(std::string_view str)
 
 	auto a = *i;
 	i = std::next(i);
-	ASSERT(i != str.end())
+	utki::assert(i != str.end(), SL);
 	auto b = *i;
 	i = std::next(i);
 

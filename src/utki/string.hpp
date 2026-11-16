@@ -721,7 +721,7 @@ std::string to_string(
 		return {};
 	}
 
-	ASSERT(res.ptr <= utki::end_pointer(buf))
+	utki::assert(res.ptr <= utki::end_pointer(buf), SL);
 
 	return std::string(
 		buf.data(), //

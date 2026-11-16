@@ -28,6 +28,8 @@ SOFTWARE.
 
 #pragma once
 
+// TODO: remove the whole macros.hpp/cpp file when ASSERT macro is removed.
+
 /**
  * @brief Utility macro for defining macro overloads.
  * Allows defining macro overloads for different number of macro arguments.

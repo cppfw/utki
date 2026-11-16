@@ -130,7 +130,7 @@ utki::to_utf8(char32_t c)
 	switch (num_bytes) {
 		default:
 		case 1: // NOLINT(cppcoreguidelines-avoid-magic-numbers)
-			ASSERT(false)
+			utki::assert(false, SL);
 			break;
 		case 2: // NOLINT(cppcoreguidelines-avoid-magic-numbers)
 			// 0xc0 = 0b11000000

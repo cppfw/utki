@@ -45,7 +45,7 @@ struct skip_front_collection_wrapper {
 
 	auto begin()
 	{
-		ASSERT(this->collection.size() >= num_to_skip)
+		utki::assert(this->collection.size() >= num_to_skip, SL);
 		using std::begin;
 		return utki::next(begin(this->collection), num_to_skip);
 	}

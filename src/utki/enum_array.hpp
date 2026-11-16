@@ -93,7 +93,7 @@ public:
 	 */
 	element_type& operator[](enum_type i) noexcept
 	{
-		ASSERT(size_t(i) < this->size())
+		utki::assert(size_t(i) < this->size(), SL);
 		return this->operator[](size_t(i));
 	}
 
@@ -104,7 +104,7 @@ public:
 	 */
 	const element_type& operator[](enum_type i) const noexcept
 	{
-		ASSERT(size_t(i) < this->size())
+		utki::assert(size_t(i) < this->size(), SL);
 		return this->operator[](size_t(i));
 	}
 };

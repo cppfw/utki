@@ -139,12 +139,13 @@ void throw_with_nested(exception_type exception)
 		"nesting exception must be derived from std::exception"
 	);
 
-	ASSERT( //
+	utki::assert( //
 		std::current_exception() != nullptr,
 		[](auto& o) {
 			o << "called not from within 'catch' block";
-		}
-	)
+		},
+		SL
+	);
 	throw stacked_exception(std::move(exception));
 }
 

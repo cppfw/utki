@@ -111,7 +111,7 @@ std::string utki::make_string_va_list(const char* format, va_list args)
 			break;
 		}
 
-		ASSERT(i < 1)
+		utki::assert(i < 1, SL);
 	}
 
 	return ret;
@@ -169,7 +169,7 @@ std::vector<std::string> utki::word_wrap(std::string_view str, unsigned width)
 	auto span_begin = str.begin(); // span is either series of spaces or series of non-spaces
 	unsigned word_ended = false; // indicates that at least one word in the current line has ended
 	for (auto i = str.begin(); i != str.end(); i = std::next(i)) {
-		ASSERT(std::distance(line_begin, i) >= 0)
+		utki::assert(std::distance(line_begin, i) >= 0, SL);
 		if (*i != '\n' &&
 #if CFG_CPP >= 20
 			std::cmp_equal(std::distance(line_begin, i), width)
@@ -190,7 +190,7 @@ std::vector<std::string> utki::word_wrap(std::string_view str, unsigned width)
 					span_begin = line_begin;
 				}
 			} else if (word_ended) { // short word span
-				ASSERT(std::distance(line_begin, span_begin) >= 1)
+				utki::assert(std::distance(line_begin, span_begin) >= 1, SL);
 				ret.emplace_back(str.substr( //
 					std::distance(str.begin(), line_begin),
 					std::distance(line_begin, std::prev(span_begin, 1))

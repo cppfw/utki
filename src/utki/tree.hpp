@@ -267,14 +267,14 @@ private:
 		 */
 		iterator_internal& operator++()
 		{
-			ASSERT(!this->iter_stack.empty())
-			ASSERT(this->iter_stack.size() == this->list_stack.size())
+			utki::assert(!this->iter_stack.empty(), SL);
+			utki::assert(this->iter_stack.size() == this->list_stack.size(), SL);
 
 			{
-				ASSERT(this->list_stack.back())
+				utki::assert(this->list_stack.back(), SL);
 				auto& iter = this->iter_stack.back();
 
-				ASSERT(iter != this->list_stack.back()->end())
+				utki::assert(iter != this->list_stack.back()->end(), SL);
 				if (!iter->children.empty()) {
 					this->list_stack.push_back(&iter->children);
 					this->iter_stack.push_back(this->list_stack.back()->begin());
@@ -283,7 +283,7 @@ private:
 				++iter;
 			}
 
-			ASSERT(this->iter_stack.size() >= 1)
+			utki::assert(this->iter_stack.size() >= 1, SL);
 			for (; this->iter_stack.size() != 1;) {
 				if (this->iter_stack.back() == this->list_stack.back()->end()) {
 					this->list_stack.pop_back();
@@ -305,8 +305,8 @@ private:
 		 */
 		iterator_internal& operator--()
 		{
-			ASSERT(!this->iter_stack.empty())
-			ASSERT(!this->list_stack.empty())
+			utki::assert(!this->iter_stack.empty(), SL);
+			utki::assert(!this->list_stack.empty(), SL);
 
 			if (this->iter_stack.back() == this->list_stack.back()->begin()) {
 				this->iter_stack.pop_back();
@@ -316,7 +316,7 @@ private:
 
 			for (;;) {
 				auto& iter = this->iter_stack.back();
-				ASSERT(iter != this->list_stack.back()->begin())
+				utki::assert(iter != this->list_stack.back()->begin(), SL);
 				--iter;
 
 				if (!iter->children.empty()) {
@@ -444,7 +444,7 @@ private:
 		 */
 		std::vector<size_type> index() const
 		{
-			ASSERT(this->iter_stack.size() == this->list_stack.size())
+			utki::assert(this->iter_stack.size() == this->list_stack.size(), SL);
 			std::vector<size_type> ret;
 			for (typename decltype(this->iter_stack)::size_type i = 0; i != this->iter_stack.size(); ++i) {
 				ret.push_back(std::distance(this->list_stack[i]->begin(), this->iter_stack[i]));
@@ -672,7 +672,7 @@ public:
 	 */
 	typename collection_type::value_type& operator[](utki::span<const size_type> index)
 	{
-		ASSERT(this->is_valid(index))
+		utki::assert(this->is_valid(index), SL);
 		// TODO: rewrite without creating iterator, for more performance
 		return *this->make_iterator(index);
 	}
@@ -684,7 +684,7 @@ public:
 	 */
 	const typename collection_type::value_type& operator[](utki::span<const size_type> index) const
 	{
-		ASSERT(this->is_valid(index))
+		utki::assert(this->is_valid(index), SL);
 		// TODO: rewrite without creating iterator, for more performance
 		return *this->make_const_iterator(index);
 	}
@@ -869,7 +869,7 @@ public:
 		while (i.iter_stack.size() > 1 && i.iter_stack.back() == i.list_stack.back()->end()) {
 			i.list_stack.pop_back();
 			i.iter_stack.pop_back();
-			ASSERT(i.iter_stack.size() == i.list_stack.size())
+			utki::assert(i.iter_stack.size() == i.list_stack.size(), SL);
 			++i.iter_stack.back();
 		}
 		return i;

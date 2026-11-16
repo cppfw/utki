@@ -332,9 +332,13 @@ public:
 	 */
 	const_reference operator[](size_type i) const noexcept
 	{
-		ASSERT(i < this->size(), [&](auto& o) {
-			o << "operator[](" << i << "): index out of bounds, this->size() = " << this->size();
-		})
+		utki::assert(
+			i < this->size(),
+			[&](auto& o) {
+				o << "operator[](" << i << "): index out of bounds, this->size() = " << this->size();
+			},
+			SL
+		);
 		// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic, "implement operator[]")
 		return this->buf[i];
 	}
@@ -346,9 +350,13 @@ public:
 	 */
 	reference operator[](size_type i) noexcept
 	{
-		ASSERT(i < this->size(), [&](auto& o) {
-			o << "operator[](" << i << "): index out of bounds, this->size() = " << this->size();
-		})
+		utki::assert(
+			i < this->size(),
+			[&](auto& o) {
+				o << "operator[](" << i << "): index out of bounds, this->size() = " << this->size();
+			},
+			SL
+		);
 		// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic, "implement operator[]")
 		return this->buf[i];
 	}
@@ -442,25 +450,25 @@ public:
 
 	value_type& front() noexcept
 	{
-		ASSERT(!this->empty())
+		utki::assert(!this->empty(), SL);
 		return this->operator[](0);
 	}
 
 	const value_type& front() const noexcept
 	{
-		ASSERT(!this->empty())
+		utki::assert(!this->empty(), SL);
 		return this->operator[](0);
 	}
 
 	value_type& back() noexcept
 	{
-		ASSERT(!this->empty())
+		utki::assert(!this->empty(), SL);
 		return this->operator[](this->size() - 1);
 	}
 
 	const value_type& back() const noexcept
 	{
-		ASSERT(!this->empty())
+		utki::assert(!this->empty(), SL);
 		return this->operator[](this->size() - 1);
 	}
 
@@ -471,9 +479,9 @@ public:
 	{
 		// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic, "implement subspan()")
 		pointer new_p = this->data() + offset;
-		ASSERT(new_p <= this->end())
+		utki::assert(new_p <= this->end(), SL);
 		size_type new_s = count == std::numeric_limits<size_type>::max() ? this->end() - new_p : count;
-		ASSERT(new_p + new_s <= this->end())
+		utki::assert(new_p + new_s <= this->end(), SL);
 		return span(new_p, new_s);
 	}
 };
