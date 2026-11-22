@@ -32,6 +32,8 @@ SOFTWARE.
 #include <functional>
 #include <memory>
 #include <sstream>
+#include <type_traits>
+#include <utility>
 
 #include "config.hpp"
 #include "log.hpp"
@@ -367,6 +369,38 @@ inline void assert(
 		nullptr,
 		source_location
 	);
+}
+
+// A callable object (e.g. a capturing lambda) whose result converts to bool is
+// a lazy condition checker. Provide a dedicated overload for it so that it is
+// preferred over the plain `bool` overload. Some compilers (notably AppleClang)
+// incorrectly consider the `bool` overload a viable candidate for a lambda
+// argument (treating the lambda as convertible to bool), which makes the call
+// to assert() ambiguous. The constraint excludes pointers (which have their own
+// overloads) and callables that do not return a bool-convertible type (such as
+// std::function<void()>), which are handled by the std::function overload.
+template <
+	typename condition_checker_type,
+	typename = std::enable_if_t<
+		std::is_invocable_v<condition_checker_type>
+		&& std::is_convertible_v<std::invoke_result_t<condition_checker_type>, bool>
+		&& !std::is_pointer_v<std::remove_reference_t<condition_checker_type>>>>
+inline void assert(
+	condition_checker_type&& condition_checker,
+	const utki::source_location& source_location
+#if CFG_CPP >= 20
+	= std_source_location::current()
+#endif
+)
+{
+# ifdef DEBUG
+	const bool condition = static_cast<bool>(
+		std::invoke(std::forward<condition_checker_type>(condition_checker))
+	);
+	utki::assert(condition, source_location);
+#else
+	(void)condition_checker;
+#endif
 }
 
 // MSVC compiler gives warning about implicit conversion of pointer to bool,
