@@ -32,6 +32,7 @@ SOFTWARE.
 #include <functional>
 #include <memory>
 #include <sstream>
+#include <type_traits>
 
 #include "config.hpp"
 #include "log.hpp"
@@ -258,9 +259,18 @@ inline void assert_always(
  * @param print - function providing information string to print in case the assertion fails.
  * @param source_location - location of the assert() invocation in the source code.
  */
+// The condition_type template parameter and the SFINAE constraint make sure this overload is only
+// selected for arguments of type bool. This is important, because in Objective-C++ closure types
+// (lambdas) are implicitly convertible to bool, in which case both this overload and the
+// condition_checker overload would be viable candidates for a lambda argument, and the call would
+// become ambiguous.
 #ifdef DEBUG
+template <
+	class condition_type,
+	// NOLINTNEXTLINE(modernize-use-constraints, "requires-expressions require C++20, but this header must also compile with pre-C++20 standards")
+	class = std::enable_if_t<std::is_same_v<std::decay_t<condition_type>, bool>>>
 inline void assert(
-	bool condition,
+	condition_type condition,
 	const std::function<void(std::ostream&)>& print,
 	const utki::source_location& source_location
 #	if CFG_CPP >= 20
@@ -277,8 +287,12 @@ inline void assert(
 
 #else
 
+template <
+	class condition_type,
+	// NOLINTNEXTLINE(modernize-use-constraints, "requires-expressions require C++20, but this header must also compile with pre-C++20 standards")
+	class = std::enable_if_t<std::is_same_v<std::decay_t<condition_type>, bool>>>
 inline void assert(
-	bool,
+	condition_type,
 	const std::function<void(std::ostream&)>&,
 	const utki::source_location&
 #	if CFG_CPP >= 20
@@ -332,8 +346,12 @@ inline void assert(
  * @param condition - condition to check for being true.
  * @param source_location - location of the assert() invocation in the source code.
  */
+template <
+	class condition_type,
+	// NOLINTNEXTLINE(modernize-use-constraints, "requires-expressions require C++20, but this header must also compile with pre-C++20 standards")
+	class = std::enable_if_t<std::is_same_v<std::decay_t<condition_type>, bool>>>
 inline void assert(
-	bool condition,
+	condition_type condition,
 	const utki::source_location& source_location
 #if CFG_CPP >= 20
 	= std_source_location::current()
