@@ -32,6 +32,7 @@ SOFTWARE.
 #include <functional>
 #include <memory>
 #include <sstream>
+#include <type_traits>
 
 #include "config.hpp"
 #include "log.hpp"
@@ -293,13 +294,15 @@ inline void assert(
  * @brief Assert that condion is true.
  * In debug build this function invokes assert_always().
  * In non-debug build this fuction does nothing.
- * @param condition_checker - function which checks for condition and returns its boolean value.
+ * @param condition_checker - callable object (e.g. a lambda) which checks for condition
+ * and returns its boolean value. The checker is invoked only in debug builds.
  * @param print - function providing information string to print in case the assertion fails.
  * @param source_location - location of the assert() invocation in the source code.
  */
 #ifdef DEBUG
+template <class checker_type, std::enable_if_t<std::is_invocable_r_v<bool, const checker_type&>, int> = 0>
 inline void assert(
-	const std::function<bool()>& condition_checker,
+	const checker_type& condition_checker,
 	const std::function<void(std::ostream&)>& print,
 	const utki::source_location& source_location
 #	if CFG_CPP >= 20
@@ -314,8 +317,9 @@ inline void assert(
 	);
 }
 #else
+template <class checker_type, std::enable_if_t<std::is_invocable_r_v<bool, const checker_type&>, int> = 0>
 inline void assert(
-	const std::function<bool()>&,
+	const checker_type&,
 	const std::function<void(std::ostream&)>&,
 	const utki::source_location&
 #	if CFG_CPP >= 20
@@ -351,11 +355,13 @@ inline void assert(
  * @brief Assert that condion is true.
  * In debug build this function invokes assert_always().
  * In non-debug build this fuction does nothing.
- * @param condition_checker - function which checks for condition and returns its boolean value.
+ * @param condition_checker - callable object (e.g. a lambda) which checks for condition
+ * and returns its boolean value. The checker is invoked only in debug builds.
  * @param source_location - location of the assert() invocation in the source code.
  */
+template <class checker_type, std::enable_if_t<std::is_invocable_r_v<bool, const checker_type&>, int> = 0>
 inline void assert(
-	const std::function<bool()>& condition_checker,
+	const checker_type& condition_checker,
 	const utki::source_location& source_location
 #if CFG_CPP >= 20
 	= std_source_location::current()
@@ -364,7 +370,7 @@ inline void assert(
 {
 	utki::assert(
 		condition_checker, //
-		nullptr,
+		std::function<void(std::ostream&)>{nullptr},
 		source_location
 	);
 }
@@ -461,42 +467,6 @@ void assert(
 template <class object_type>
 void assert(
 	const std::unique_ptr<object_type>& p,
-	const utki::source_location& source_location
-#if CFG_CPP >= 20
-	= std_source_location::current()
-#endif
-)
-{
-	assert(
-		p != nullptr, //
-		nullptr,
-		source_location
-	);
-}
-
-// std::function does not have implicit conversion to bool, so we need to define
-// template overloads of the assert function for it
-
-template <class func_type>
-void assert(
-	const std::function<func_type>& p,
-	const std::function<void(std::ostream&)>& print,
-	const utki::source_location& source_location
-#if CFG_CPP >= 20
-	= std_source_location::current()
-#endif
-)
-{
-	assert(
-		p != nullptr, //
-		print,
-		source_location
-	);
-}
-
-template <class func_type>
-void assert(
-	const std::function<func_type>& p,
 	const utki::source_location& source_location
 #if CFG_CPP >= 20
 	= std_source_location::current()
