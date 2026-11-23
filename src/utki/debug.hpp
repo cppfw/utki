@@ -260,15 +260,15 @@ inline void assert_always(
  * @param source_location - location of the assert() invocation in the source code.
  */
 // The condition_type template parameter and the SFINAE constraint make sure this overload is only
-// selected for arguments of type bool. This is important, because in Objective-C++ closure types
-// (lambdas) are implicitly convertible to bool, in which case both this overload and the
-// condition_checker overload would be viable candidates for a lambda argument, and the call would
-// become ambiguous.
+// selected for scalar conditions (bool, integers, pointers, enums). Class types are excluded:
+// lambdas, smart pointers and std::function have their own overloads, and in Objective-C++
+// lambdas are implicitly convertible to bool (via a block pointer), which would make the
+// condition_checker overload ambiguous for them.
 #ifdef DEBUG
 template <
 	class condition_type,
 	// NOLINTNEXTLINE(modernize-use-constraints, "requires-expressions require C++20, but this header must also compile with pre-C++20 standards")
-	class = std::enable_if_t<std::is_same_v<std::decay_t<condition_type>, bool>>>
+	class = std::enable_if_t<!std::is_class_v<std::decay_t<condition_type>>>>
 inline void assert(
 	condition_type condition,
 	const std::function<void(std::ostream&)>& print,
@@ -290,7 +290,7 @@ inline void assert(
 template <
 	class condition_type,
 	// NOLINTNEXTLINE(modernize-use-constraints, "requires-expressions require C++20, but this header must also compile with pre-C++20 standards")
-	class = std::enable_if_t<std::is_same_v<std::decay_t<condition_type>, bool>>>
+	class = std::enable_if_t<!std::is_class_v<std::decay_t<condition_type>>>>
 inline void assert(
 	condition_type,
 	const std::function<void(std::ostream&)>&,
@@ -349,7 +349,7 @@ inline void assert(
 template <
 	class condition_type,
 	// NOLINTNEXTLINE(modernize-use-constraints, "requires-expressions require C++20, but this header must also compile with pre-C++20 standards")
-	class = std::enable_if_t<std::is_same_v<std::decay_t<condition_type>, bool>>>
+	class = std::enable_if_t<!std::is_class_v<std::decay_t<condition_type>>>>
 inline void assert(
 	condition_type condition,
 	const utki::source_location& source_location
