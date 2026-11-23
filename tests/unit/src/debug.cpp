@@ -58,6 +58,46 @@ const tst::set set("debug", [](tst::suite& suite) {
 #endif
 	});
 
+	suite.add("assert_with_checker_captureless", []() {
+		const int b = 13;
+		utki::assert(
+			[&]() { //
+				return b == 13;
+			},
+			SL
+		);
+		utki::assert(
+			[]() { //
+				return 13 == 13;
+			},
+			SL
+		);
+#if CFG_CPP >= 20
+		utki::assert([&]() { //
+			return b == 13;
+		});
+		utki::assert([]() {
+			return 13 == 13;
+		});
+#endif
+	});
+
+	suite.add("assert_with_std_function_checker", []() {
+		// a std::function<bool()> object binds to the checker overload and is invoked
+		int b = 13;
+		int calls = 0;
+		const std::function<bool()> checker = [&]() { //
+			calls++;
+			return b == 13;
+		};
+		utki::assert(checker, SL);
+		utki::assert(calls == 1, SL);
+#if CFG_CPP >= 20
+		utki::assert(checker);
+		utki::assert(calls == 2, SL);
+#endif
+	});
+
 	suite.add("assert_with_message", []() {
 		int b = 13;
 		utki::assert(
