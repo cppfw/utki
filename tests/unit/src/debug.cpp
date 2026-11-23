@@ -73,11 +73,9 @@ const tst::set set("debug", [](tst::suite& suite) {
 			SL
 		);
 #if CFG_CPP >= 20
-		utki::assert(
-			[&]() { //
-				return b == 13;
-			}
-		);
+		utki::assert([&]() { //
+			return b == 13;
+		});
 		utki::assert([]() {
 			return 13 == 13;
 		});
