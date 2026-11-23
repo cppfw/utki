@@ -290,6 +290,12 @@ inline void assert(
 
 #endif
 
+// a type invocable with no arguments, producing a value convertible to bool
+#if CFG_CPP >= 20
+template <class checker_type>
+concept assert_checker = std::is_invocable_r_v<bool, const checker_type&>;
+#endif
+
 /**
  * @brief Assert that condion is true.
  * In debug build this function invokes assert_always().
@@ -300,7 +306,16 @@ inline void assert(
  * @param source_location - location of the assert() invocation in the source code.
  */
 #ifdef DEBUG
-template <class checker_type, std::enable_if_t<std::is_invocable_r_v<bool, const checker_type&>, int> = 0>
+template < //
+	class checker_type
+#	if CFG_CPP < 20
+	,
+	typename std::enable_if_t<std::is_invocable_r_v<bool, const checker_type&>, int> = 0
+#	endif
+	>
+#	if CFG_CPP >= 20
+requires assert_checker<checker_type>
+#	endif
 inline void assert(
 	const checker_type& condition_checker,
 	const std::function<void(std::ostream&)>& print,
@@ -317,7 +332,16 @@ inline void assert(
 	);
 }
 #else
-template <class checker_type, std::enable_if_t<std::is_invocable_r_v<bool, const checker_type&>, int> = 0>
+template < //
+	class checker_type
+#	if CFG_CPP < 20
+	,
+	typename std::enable_if_t<std::is_invocable_r_v<bool, const checker_type&>, int> = 0
+#	endif
+	>
+#	if CFG_CPP >= 20
+requires assert_checker<checker_type>
+#	endif
 inline void assert(
 	const checker_type&,
 	const std::function<void(std::ostream&)>&,
@@ -359,7 +383,16 @@ inline void assert(
  * and returns its boolean value. The checker is invoked only in debug builds.
  * @param source_location - location of the assert() invocation in the source code.
  */
-template <class checker_type, std::enable_if_t<std::is_invocable_r_v<bool, const checker_type&>, int> = 0>
+template < //
+	class checker_type
+#if CFG_CPP < 20
+	,
+	typename std::enable_if_t<std::is_invocable_r_v<bool, const checker_type&>, int> = 0
+#endif
+	>
+#if CFG_CPP >= 20
+requires assert_checker<checker_type>
+#endif
 inline void assert(
 	const checker_type& condition_checker,
 	const utki::source_location& source_location
